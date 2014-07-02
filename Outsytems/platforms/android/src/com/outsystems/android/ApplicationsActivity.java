@@ -32,7 +32,7 @@ public class ApplicationsActivity extends BaseActivity {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Intent intent = new Intent(getApplicationContext(), Outsystems.class);
+            Intent intent = new Intent(getApplicationContext(), WebApplicationActivity.class);
             Application application = (Application) parent.getAdapter().getItem(position);
             if (application != null) {
                 intent.putExtra(Outsystems.KEY_APPLICATION, application);

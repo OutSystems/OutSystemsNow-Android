@@ -8,15 +8,15 @@
 
     <Button
         android:id="@+id/button_back"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_margin="10dp"
         android:background="@drawable/icon_chevron_back" />
 
     <Button
         android:id="@+id/button_forth"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_margin="10dp"
         android:layout_marginLeft="30dp"
         android:background="@drawable/icon_chevron_forth" />
@@ -28,8 +28,8 @@
 
         <Button
             android:id="@+id/button_applications"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_margin="10dp"
             android:background="@drawable/icon_apps" />
     </LinearLayout>

@@ -9,6 +9,7 @@
     android:fillViewport="true" >
 
     <LinearLayout
+        android:id="@+id/root_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
@@ -20,10 +21,10 @@
             android:id="@+id/text_view_label_application"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:text="@string/label_application"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
+            android:textColor="@color/white_color_alpha"
+            android:textSize="21sp"
             custom:fontStyle="Regular" />
 
         <com.outsystems.android.widgets.CustomFontTextView
@@ -33,8 +34,8 @@
             android:layout_marginTop="10dp"
             android:text=""
             android:textColor="@android:color/white"
-            android:textSize="16sp"
-            custom:fontStyle="Bold" />
+            android:textSize="44sp"
+            custom:fontStyle="Regular" />
 
         <com.outsystems.android.widgets.CustomFontEditText
             android:id="@+id/edit_text_user_mail"

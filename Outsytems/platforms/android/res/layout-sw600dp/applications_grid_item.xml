@@ -45,6 +45,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
             android:singleLine="true"
+            android:ellipsize="end"
             android:textColor="@color/red_color"
             android:textSize="18sp"
             custom:fontStyle="Light" />

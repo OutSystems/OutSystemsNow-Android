@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -108,6 +110,8 @@ public class HubAppActivity extends BaseActivity {
                 viewHelp.setVisibility(View.GONE);
                 imageButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.icon_help));
             } else {
+                Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_top);
+                viewHelp.startAnimation(anim);
                 viewHelp.setVisibility(View.VISIBLE);
                 imageButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.icon_close));
             }

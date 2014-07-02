@@ -273,10 +273,10 @@ public class Outsystems extends CordovaActivity {
         @SuppressWarnings("deprecation")
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-         /*   BitmapDrawable ob = new BitmapDrawable(captureScreen(getActivity()));
+            BitmapDrawable ob = new BitmapDrawable(captureScreen(getActivity()));
             imageView.setBackgroundDrawable(ob);
             // imageView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_red));
-            imageView.setVisibility(View.VISIBLE); */
+            imageView.setVisibility(View.VISIBLE);
             spinnerStart("", "Loading");
             return super.shouldOverrideUrlLoading(view, url);
         }
@@ -285,17 +285,19 @@ public class Outsystems extends CordovaActivity {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             enableDisableButtonForth();
-//            imageView.setVisibility(View.GONE);
+            imageView.setVisibility(View.GONE);
             spinnerStop();
         }
 
     }
 
+    @SuppressWarnings("unused")
     private Bitmap captureWebViewVisibleSize(WebView webView) {
         Bitmap bmp = webView.getDrawingCache();
         return bmp;
     }
 
+    @SuppressWarnings({ "unused", "deprecation" })
     private Bitmap captureWebView(WebView webView) {
         Picture snapShot = webView.capturePicture();
 

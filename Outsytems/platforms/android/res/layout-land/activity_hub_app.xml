@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
+        android:animateLayoutChanges="true"
         android:gravity="center_horizontal"
         android:orientation="vertical" >
 
@@ -38,7 +39,7 @@
                 android:layout_weight="0.8"
                 android:paddingLeft="20dp"
                 android:text="@string/label_title_hub"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white_color_alpha"
                 custom:fontStyle="Regular" />
 
             <ImageButton
@@ -125,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="@string/label_demo"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white_color_alpha"
                 custom:fontStyle="Regular" />
 
             <com.outsystems.android.widgets.CustomFontButton

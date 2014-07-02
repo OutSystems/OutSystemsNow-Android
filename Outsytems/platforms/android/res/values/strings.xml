@@ -19,6 +19,7 @@
     <string name="button_login">Login</string>
     <string name="label_back">Back</string>
     <string name="label_logout">Logout</string>
+    <string name="label_loading">Loading</string>
     
     <!-- Error Messages -->
     <string name="label_error_empty_address">Please enter a valid Outsystems network address</string>

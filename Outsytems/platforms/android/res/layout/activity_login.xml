@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/label_application"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
+        android:textColor="@color/white_color_alpha"
+        android:textSize="14sp"
         custom:fontStyle="Regular" />
 
     <com.outsystems.android.widgets.CustomFontTextView
@@ -25,8 +25,8 @@
         android:text=""
         android:layout_marginTop="10dp"
         android:textColor="@android:color/white"
-        android:textSize="16sp"
-        custom:fontStyle="Bold" />
+        android:textSize="24sp"
+        custom:fontStyle="Regular" />
 
     <com.outsystems.android.widgets.CustomFontEditText
         android:id="@+id/edit_text_user_mail"
