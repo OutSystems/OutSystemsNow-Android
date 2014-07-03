@@ -18,6 +18,13 @@ import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
 
+/**
+ * Class Applications Adapter.
+ * 
+ * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
+ * @version $Revision: 666 $
+ * 
+ */
 public class ApplicationsAdapter extends ArrayAdapter<Application> {
 
     private final Context context;
@@ -26,6 +33,12 @@ public class ApplicationsAdapter extends ArrayAdapter<Application> {
     DisplayImageOptions options;
     ImageLoader imageLoader = ImageLoader.getInstance();
 
+    /**
+     * Instantiates a new applications adapter.
+     * 
+     * @param context the context
+     * @param applications the applications
+     */
     public ApplicationsAdapter(Context context, List<Application> applications) {
         super(context, R.layout.applications_grid_item, applications);
         this.context = context;
@@ -62,12 +75,11 @@ public class ApplicationsAdapter extends ArrayAdapter<Application> {
 
         Application application = dataArray.get(position);
 
+        // Set data in the views of item gridview
         viewHolder.textViewApplication.setText(application.getName());
-
         if (viewHolder.textViewDescription != null) {
             viewHolder.textViewDescription.setText(application.getDescription());
         }
-
         String url = WebServicesClient.getAbsoluteUrlForImage(HubManagerHelper.getInstance().getApplicationHosted(),
                 application.getImageId());
         imageLoader.displayImage(url, viewHolder.imageViewApplication, options);
@@ -75,6 +87,9 @@ public class ApplicationsAdapter extends ArrayAdapter<Application> {
         return rowView;
     }
 
+    /**
+     * The Class ViewHolder.
+     */
     static class ViewHolder {
         TextView textViewApplication;
         TextView textViewDescription;

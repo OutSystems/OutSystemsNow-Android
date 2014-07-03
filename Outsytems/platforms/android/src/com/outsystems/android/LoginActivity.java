@@ -23,6 +23,13 @@ import com.outsystems.android.model.Application;
 import com.outsystems.android.model.HubApplicationModel;
 import com.outsystems.android.model.Login;
 
+/**
+ * Class description.
+ * 
+ * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
+ * @version $Revision: 666 $
+ * 
+ */
 public class LoginActivity extends BaseActivity {
 
     public static String KEY_INFRASTRUCTURE_NAME = "infrastructure";
@@ -141,14 +148,14 @@ public class LoginActivity extends BaseActivity {
                             showError(findViewById(R.id.root_view));
                         }
                     }
-
-                    @Override
-                    public void requestError(int statusCode) {
-
-                    }
                 });
     }
 
+    /**
+     * Open applications activity.
+     * 
+     * @param login the login
+     */
     @SuppressWarnings("unchecked")
     private void openApplicationsActivity(Login login) {
         Intent intent = new Intent(getApplicationContext(), ApplicationsActivity.class);
@@ -158,6 +165,11 @@ public class LoginActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    /**
+     * Open web application activity.
+     * 
+     * @param login the login
+     */
     private void openWebApplicationActivity(Login login) {
         Intent intent = new Intent(getApplicationContext(), Outsystems.class);
         Application application = login.getApplications().get(0);

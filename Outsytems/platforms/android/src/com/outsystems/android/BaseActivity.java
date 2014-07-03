@@ -18,6 +18,13 @@ import android.widget.TextView;
 
 import com.outsystems.android.widgets.TypefaceSpan;
 
+/**
+ * Class Base Activity.
+ * 
+ * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
+ * @version $Revision: 666 $
+ * 
+ */
 public class BaseActivity extends ActionBarActivity {
 
     private OnClickListener onClickListenerHyperLink = new OnClickListener() {
@@ -48,6 +55,11 @@ public class BaseActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Sets the title action bar.
+     * 
+     * @param title the new title action bar
+     */
     protected void setTitleActionBar(String title) {
         // Set text with Custom Font of app
         SpannableString titleActionBar = new SpannableString(title);
@@ -57,6 +69,9 @@ public class BaseActivity extends ActionBarActivity {
         getSupportActionBar().setTitle(titleActionBar);
     }
 
+    /**
+     * Setup action bar.
+     */
     protected void setupActionBar() {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayShowCustomEnabled(false);
@@ -69,31 +84,41 @@ public class BaseActivity extends ActionBarActivity {
         ab.setLogo(getResources().getDrawable(R.drawable.icon_chevron_back));
     }
 
+    /**
+     * About events.
+     */
     protected void aboutEvents() {
         TextView textViewLink = (TextView) findViewById(R.id.text_view_about_link);
-
-        // Code to add underline in the text
-        /*
-         * textViewLink.setMovementMethod(LinkMovementMethod.getInstance()); SpannableString spanString = new
-         * SpannableString(getString(R.string.label_about_link)); spanString.setSpan(new UnderlineSpan(), 0,
-         * spanString.length(), 0); textViewLink.setText(spanString);
-         */
-
         textViewLink.setOnClickListener(onClickListenerHyperLink);
     }
 
+    /**
+     * Show loading.
+     * 
+     * @param buttonClick the button click
+     */
     protected void showLoading(View buttonClick) {
         ProgressBar progressbar = (ProgressBar) findViewById(R.id.progress_bar);
         buttonClick.setVisibility(View.INVISIBLE);
         progressbar.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Stop loading.
+     * 
+     * @param buttonClick the button click
+     */
     protected void stopLoading(View buttonClick) {
         ProgressBar progressbar = (ProgressBar) findViewById(R.id.progress_bar);
         buttonClick.setVisibility(View.VISIBLE);
         progressbar.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * Show error.
+     * 
+     * @param viewError the view error
+     */
     protected void showError(View viewError) {
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
         viewError.startAnimation(shake);

@@ -33,6 +33,13 @@ import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Infrastructure;
 
+/**
+ * Class Hub App Activity.
+ * 
+ * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
+ * @version $Revision: 666 $
+ * 
+ */
 public class HubAppActivity extends BaseActivity {
 
     /** The on click listener. */
@@ -73,12 +80,6 @@ public class HubAppActivity extends BaseActivity {
                             showError(findViewById(R.id.root_view));
                         }
                         stopLoading(v);
-                    }
-
-                    @Override
-                    public void requestError(int statusCode) {
-                        // TODO Auto-generated method stub
-
                     }
                 });
             } else {
@@ -248,13 +249,13 @@ public class HubAppActivity extends BaseActivity {
         try {
             unregisterReceiver(mReceiver);
         } catch (Exception e) {
-            // pass.
+            Log.e("outsystems", e.toString());
         }
 
         try {
             unregisterReceiver(mBroadcastReceiver);
         } catch (Exception e) {
-            // pass through
+            Log.e("outsystems", e.toString());
         }
     }
 
@@ -311,11 +312,6 @@ public class HubAppActivity extends BaseActivity {
             public void requestFinish(Object result, boolean error, int statusCode) {
                 Log.d("outsystems", "Register Token in the server");
             }
-
-            @Override
-            public void requestError(int statusCode) {
-                Log.d("outsystems", "Error on register Token in the server");
-            }
         });
     }
 
@@ -338,7 +334,7 @@ public class HubAppActivity extends BaseActivity {
                 dialog.show();
             }
         } catch (JSONException e) {
-            // No custom JSON. Pass this exception
+            Log.e("outsystems", e.toString());
         }
     }
 }

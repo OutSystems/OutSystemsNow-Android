@@ -40,9 +40,19 @@ import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
 
+/**
+ * Class description.
+ * 
+ * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
+ * @version $Revision: 666 $
+ * 
+ */
 public class WebApplicationActivity extends BaseActivity implements CordovaInterface {
-    CordovaWebView cwv;
+
+    CordovaWebView cordovaWebView;
+
     private final ExecutorService threadPool = Executors.newCachedThreadPool();
+
     @SuppressWarnings("unused")
     private int activityState = 0; // 0=starting, 1=running (after 1st resume), 2=shutting down
 
@@ -61,12 +71,12 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         @Override
         public void onClick(View v) {
-            if (cwv.canGoBack()) {
+            if (cordovaWebView.canGoBack()) {
                 LinearLayout viewLoading = (LinearLayout) findViewById(R.id.view_loading);
                 if (viewLoading.getVisibility() != View.VISIBLE) {
                     startLoadingAnimation();
                 }
-                cwv.goBack();
+                cordovaWebView.goBack();
                 enableDisableButtonForth();
             } else {
                 finish();
@@ -78,9 +88,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         @Override
         public void onClick(View v) {
-            if (cwv.canGoForward()) {
+            if (cordovaWebView.canGoForward()) {
                 startLoadingAnimation();
-                cwv.goForward();
+                cordovaWebView.goForward();
                 enableDisableButtonForth();
             }
         }
@@ -115,7 +125,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         // Hide action bar
         getSupportActionBar().hide();
 
-        cwv = (CordovaWebView) this.findViewById(R.id.mainView);
+        cordovaWebView = (CordovaWebView) this.findViewById(R.id.mainView);
         imageView = (ImageView) this.findViewById(R.id.image_view);
         Config.init(this);
 
@@ -132,14 +142,13 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         // spinnerStart("", "Loading");
 
         // Set by <content src="index.html" /> in config.xml
-        cwv.setWebViewClient(new CordovaCustoWebClient(this, cwv));
+        cordovaWebView.setWebViewClient(new CordovaCustoWebClient(this, cordovaWebView));
 
-        //
-        String ua = cwv.getSettings().getUserAgentString();
+        // Set in the user agent OutSystemsApp
+        String ua = cordovaWebView.getSettings().getUserAgentString();
         String newUA = ua.concat(" OutSystemsApp v. ");
-        cwv.getSettings().setUserAgentString(newUA);
-        // super.loadUrl(Config.getStartUrl());
-        cwv.loadUrl(url);
+        cordovaWebView.getSettings().setUserAgentString(newUA);
+        cordovaWebView.loadUrl(url);
 
         // Customization Toolbar
         // Get Views from Xml Layout
@@ -185,9 +194,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-                if (cwv.canGoBack()) {
+                if (cordovaWebView.canGoBack()) {
                     startLoadingAnimation();
-                    cwv.goBack();
+                    cordovaWebView.goBack();
                     enableDisableButtonForth();
                 } else {
                     finish();
@@ -202,8 +211,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     protected void onDestroy() {
         Log.d("Destroying the View", "onDestroy()");
         super.onDestroy();
-        if (this.cwv != null) {
-            this.cwv.handleDestroy();
+        if (this.cordovaWebView != null) {
+            this.cordovaWebView.handleDestroy();
         }
     }
 
@@ -279,7 +288,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     private void enableDisableButtonForth() {
-        if (cwv.canGoForward()) {
+        if (cordovaWebView.canGoForward()) {
             int sdk = android.os.Build.VERSION.SDK_INT;
             if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
                 buttonForth.setBackgroundDrawable(createSelectorIconApplications(getResources().getDrawable(
@@ -338,9 +347,10 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-            if (url.contains("/cdvload/")) {
+            String identifierCordova = "/cdvload/";
+            if (url.contains(identifierCordova)) {
                 // Get path to load local file Cordova JS
-                String[] split = url.split("/cdvload/");
+                String[] split = url.split(identifierCordova);
                 String path = "";
                 if (split.length > 1) {
                     path = split[1];
@@ -362,9 +372,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Log.d("outsystems", "--------------- shouldOverrideUrlLoading ---------------");
-            BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cwv));
+            BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cordovaWebView));
             imageView.setBackgroundDrawable(ob);
-            // imageView.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_red));
             imageView.setVisibility(View.VISIBLE);
             spinnerStart();
             return super.shouldOverrideUrlLoading(view, url);
@@ -382,12 +391,15 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     @SuppressWarnings("deprecation")
     private void startLoadingAnimation() {
-        BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cwv));
+        BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cordovaWebView));
         imageView.setBackgroundDrawable(ob);
         imageView.setVisibility(View.VISIBLE);
         spinnerStart();
     }
 
+    /**
+     * Stop loading animation.
+     */
     private void stopLoadingAnimation() {
         if (imageView.getVisibility() == View.VISIBLE) {
             final Animation animationFadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadeout);
@@ -426,6 +438,12 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         flagNumberLoadings--;
     }
 
+    /**
+     * Gets the bitmap for visible region.
+     * 
+     * @param webview the webview
+     * @return the bitmap for visible region
+     */
     public static Bitmap getBitmapForVisibleRegion(WebView webview) {
         Bitmap returnedBitmap = null;
         webview.setDrawingCacheEnabled(true);

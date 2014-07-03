@@ -17,6 +17,13 @@ import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
 
+/**
+ * Class description.
+ * 
+ * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
+ * @version $Revision: 666 $
+ * 
+ */
 public class ApplicationsActivity extends BaseActivity {
 
     // Constants
@@ -87,11 +94,6 @@ public class ApplicationsActivity extends BaseActivity {
                                 loadContentInGridview(applications);
                             }
                         }
-                    }
-
-                    @Override
-                    public void requestError(int statusCode) {
-
                     }
                 });
     }
