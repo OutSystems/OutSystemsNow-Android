@@ -86,6 +86,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:textSize="19sp"
                 android:text="@string/button_login"
                 custom:fontStyle="Regular" />
         </FrameLayout>

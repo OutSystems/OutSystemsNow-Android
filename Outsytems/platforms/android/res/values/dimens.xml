@@ -5,4 +5,5 @@
     
   <dimen name="standard_padding">8dip</dimen>
   <dimen name="half_padding">4dip</dimen>
+  <dimen name="button_border">1dp</dimen>
 </resources>

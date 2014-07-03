@@ -175,6 +175,7 @@ int dimen abc_dropdownitem_text_padding_right 0x7f0a000f
 int dimen abc_panel_menu_list_width 0x7f0a000b
 int dimen abc_search_view_preferred_width 0x7f0a000d
 int dimen abc_search_view_text_min_width 0x7f0a000c
+int dimen button_border 0x7f0a0014
 int dimen half_padding 0x7f0a0013
 int dimen standard_padding 0x7f0a0012
 int dimen toolbar_height 0x7f0a0011

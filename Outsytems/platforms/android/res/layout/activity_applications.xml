@@ -9,7 +9,9 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="-1px"
         android:layout_marginRight="-1px"
-        android:background="@android:color/white"
+        android:horizontalSpacing="1dp"
+        android:verticalSpacing="1dp"
+        android:background="@color/divider_color"
         android:listSelector="@android:color/transparent"
         android:numColumns="@integer/grid_rows" >
     </GridView>

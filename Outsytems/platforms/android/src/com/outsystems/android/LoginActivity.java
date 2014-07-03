@@ -54,6 +54,8 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Log.e("outsystems", "ONCREATE");
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String infrastructure = bundle.getString(KEY_INFRASTRUCTURE_NAME);
@@ -71,8 +73,10 @@ public class LoginActivity extends BaseActivity {
                 && (hub.getPassword() != null || !"".equals(hub.getPassword()))) {
             ((EditText) findViewById(R.id.edit_text_user_mail)).setText(hub.getUserName());
             ((EditText) findViewById(R.id.edit_text_passwod)).setText(hub.getPassword());
-            if (doLogin)
+            if (doLogin) {
                 callLoginService(buttonLogin, hub.getUserName(), hub.getPassword());
+                getIntent().removeExtra(KEY_AUTOMATICLY_LOGIN);
+            }
         }
 
         // Add a custom Action Bar
@@ -103,45 +107,46 @@ public class LoginActivity extends BaseActivity {
 
     private void callLoginService(final View v, final String userName, final String password) {
         showLoading(v);
-        WebServicesClient.getInstance().loginPlattform(userName, password, HubManagerHelper.getInstance().getDeviceId(), new WSRequestHandler() {
-            @Override
-            public void requestFinish(Object result, boolean error, int statusCode) {
-                stopLoading(v);
-                Log.d("outystems", "Status Code: " + statusCode);
+        WebServicesClient.getInstance().loginPlattform(userName, password,
+                HubManagerHelper.getInstance().getDeviceId(), new WSRequestHandler() {
+                    @Override
+                    public void requestFinish(Object result, boolean error, int statusCode) {
+                        stopLoading(v);
+                        Log.d("outystems", "Status Code: " + statusCode);
 
-                if (!error) {
-                    Login login = (Login) result;
+                        if (!error) {
+                            Login login = (Login) result;
 
-                    if (login == null || !login.isSuccess()) {
-                        ((EditText) findViewById(R.id.edit_text_user_mail)).setError(getResources().getString(
-                                R.string.label_error_login));
-                        ((EditText) findViewById(R.id.edit_text_passwod)).setError(getResources().getString(
-                                R.string.label_error_login));
-                        showError(findViewById(R.id.root_view));
-                    } else {
-                        DatabaseHandler database = new DatabaseHandler(getApplicationContext());
-                        database.updateHubApplicationCredentials(HubManagerHelper.getInstance().getApplicationHosted(),
-                                userName, password);
-                        if (login.getApplications() != null && login.getApplications().size() == 1) {
-                            openWebApplicationActivity(login);
+                            if (login == null || !login.isSuccess()) {
+                                ((EditText) findViewById(R.id.edit_text_user_mail)).setError(getResources().getString(
+                                        R.string.label_error_login));
+                                ((EditText) findViewById(R.id.edit_text_passwod)).setError(getResources().getString(
+                                        R.string.label_error_login));
+                                showError(findViewById(R.id.root_view));
+                            } else {
+                                DatabaseHandler database = new DatabaseHandler(getApplicationContext());
+                                database.updateHubApplicationCredentials(HubManagerHelper.getInstance()
+                                        .getApplicationHosted(), userName, password);
+                                if (login.getApplications() != null && login.getApplications().size() == 1) {
+                                    openWebApplicationActivity(login);
+                                } else {
+                                    openApplicationsActivity(login);
+                                }
+                            }
                         } else {
-                            openApplicationsActivity(login);
+                            ((EditText) findViewById(R.id.edit_text_user_mail)).setError(getResources().getString(
+                                    R.string.label_error_login));
+                            ((EditText) findViewById(R.id.edit_text_passwod)).setError(getResources().getString(
+                                    R.string.label_error_login));
+                            showError(findViewById(R.id.root_view));
                         }
                     }
-                } else {
-                    ((EditText) findViewById(R.id.edit_text_user_mail)).setError(getResources().getString(
-                            R.string.label_error_login));
-                    ((EditText) findViewById(R.id.edit_text_passwod)).setError(getResources().getString(
-                            R.string.label_error_login));
-                    showError(findViewById(R.id.root_view));
-                }
-            }
 
-            @Override
-            public void requestError(int statusCode) {
+                    @Override
+                    public void requestError(int statusCode) {
 
-            }
-        });
+                    }
+                });
     }
 
     @SuppressWarnings("unchecked")

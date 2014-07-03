@@ -980,6 +980,7 @@ containing a value of this type.
  Minimum width of the search view text entry area. 
          */
         public static final int abc_search_view_text_min_width=0x7f0a000c;
+        public static final int button_border=0x7f0a0014;
         public static final int half_padding=0x7f0a0013;
         public static final int standard_padding=0x7f0a0012;
         /**  Outsystems Dimens 

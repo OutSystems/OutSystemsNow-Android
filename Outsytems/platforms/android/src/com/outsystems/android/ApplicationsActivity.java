@@ -19,15 +19,18 @@ import com.outsystems.android.model.Application;
 
 public class ApplicationsActivity extends BaseActivity {
 
+    // Constants
     public static String KEY_CONTENT_APPLICATIONS = "key_applications";
     public static String KEY_TITLE_ACTION_BAR = "key_title_action_bar";
 
+    // Properties
     private View mLoadingView;
     private GridView gridView;
     private boolean mContentLoaded;
 
     private int mShortAnimationDuration;
 
+    /** The on item click listener. */
     private OnItemClickListener onItemClickListener = new OnItemClickListener() {
 
         @Override

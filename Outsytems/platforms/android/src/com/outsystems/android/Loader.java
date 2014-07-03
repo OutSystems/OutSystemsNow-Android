@@ -13,6 +13,7 @@ public class Loader extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         // TODO Auto-generated method stub
         if (action.equals("echo")) {
+            @SuppressWarnings("unused")
             String message = args.getString(0);
             // this.echo(message, callbackContext);
             Toast.makeText(cordova.getActivity(), "Toast test", Toast.LENGTH_SHORT).show();

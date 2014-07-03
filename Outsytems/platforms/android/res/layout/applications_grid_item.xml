@@ -13,8 +13,8 @@
         android:id="@+id/background_image"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:background="@drawable/background_images_aplications" >
@@ -32,12 +32,12 @@
     <com.outsystems.android.widgets.CustomFontTextView
         android:id="@+id/text_view_application"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxLines="2"
+        android:layout_height="40dp"
+        android:maxLines="2"       
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
         android:textSize="16sp"
         android:textColor="@color/grid_text_color"
         custom:fontStyle="Light" />

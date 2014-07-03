@@ -14,7 +14,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
 
-@SuppressWarnings("UnusedDeclaration")
 public class RoundedImageView extends ImageView {
 
   public static final String TAG = "RoundedImageView";

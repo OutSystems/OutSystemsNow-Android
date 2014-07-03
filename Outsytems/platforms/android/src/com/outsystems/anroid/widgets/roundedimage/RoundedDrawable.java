@@ -19,7 +19,6 @@ import android.graphics.drawable.LayerDrawable;
 import android.util.Log;
 import android.widget.ImageView.ScaleType;
 
-@SuppressWarnings("UnusedDeclaration")
 public class RoundedDrawable extends Drawable {
 
   public static final String TAG = "RoundedDrawable";

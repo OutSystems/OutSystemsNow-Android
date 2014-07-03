@@ -209,7 +209,7 @@ public class WebServicesClient {
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable arg3) {
-
+                        handler.requestFinish(null, true, statusCode);
                     }
 
                     @Override

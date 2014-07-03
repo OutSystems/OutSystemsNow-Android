@@ -35,6 +35,7 @@ import com.outsystems.android.model.Infrastructure;
 
 public class HubAppActivity extends BaseActivity {
 
+    /** The on click listener. */
     private OnClickListener onClickListener = new OnClickListener() {
         @Override
         public void onClick(final View v) {

@@ -109,7 +109,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/button_text_go"
-                custom:fontStyle="Regular" />
+                android:textSize="17sp"
+                custom:fontStyle="Bold" />
         </FrameLayout>
 
         <LinearLayout
@@ -136,7 +137,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:text="@string/button_label_demo"
-                custom:fontStyle="Regular" />
+                android:textSize="17sp"
+                custom:fontStyle="Bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -159,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
                     android:text="@string/label_about_link"
-                    android:textColor="@android:color/white"
+                    android:textColor="@drawable/button_text_selector"
                     custom:fontStyle="Regular" />
             </LinearLayout>
         </LinearLayout>

@@ -39,7 +39,7 @@
                 android:layout_marginTop="40dp"
                 android:paddingLeft="20dp"
                 android:text="@string/label_title_hub"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white_color_alpha"
                 android:textSize="22sp"
                 custom:fontStyle="Regular" />
 
@@ -106,6 +106,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginTop="10dp"
                     android:visibility="gone" />
 
                 <com.outsystems.android.widgets.CustomFontButton
@@ -118,7 +121,8 @@
                     android:layout_marginRight="40dp"
                     android:layout_marginTop="10dp"
                     android:text="@string/button_text_go"
-                    custom:fontStyle="Regular" />
+                    android:textSize="19sp"
+                    custom:fontStyle="Bold" />
             </FrameLayout>
 
             <LinearLayout
@@ -135,19 +139,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:text="@string/label_demo"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/white_color_alpha"
                     android:textSize="18sp"
                     custom:fontStyle="Regular" />
 
                 <com.outsystems.android.widgets.CustomFontButton
                     android:id="@+id/button_demo"
                     style="@style/Widget.Button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:layout_marginLeft="20dp"
                     android:text="@string/button_label_demo"
-                    custom:fontStyle="Regular" />
+                    android:textSize="19sp"
+                    custom:fontStyle="Bold" />
             </LinearLayout>
         </LinearLayout>
 
@@ -174,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:text="@string/label_about_link"
-                android:textColor="@android:color/white"
+                android:textColor="@drawable/button_text_selector"
                 android:textSize="16sp"
                 custom:fontStyle="Regular" />
         </LinearLayout>

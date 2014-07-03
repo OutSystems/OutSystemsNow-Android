@@ -1,3 +1,10 @@
+/*
+ * Outsystems Project
+ *
+ * Copyright (C) 2014 Xpand IT.
+ *
+ * This software is proprietary.
+ */
 package com.outsystems.android;
 
 import com.crashlytics.android.Crashlytics;
@@ -12,6 +19,13 @@ import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.HubApplicationModel;
 
+/**
+ * Class description.
+ *
+ * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
+ * @version $Revision: 666 $
+ *
+ */
 public class SplashScreen extends Activity {
 
     public static int TIME_SPLASH_SCREEN = 2000;
@@ -19,7 +33,7 @@ public class SplashScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Crashlytics.start(this);
+        Crashlytics.start(this);
         setContentView(R.layout.activity_splashscreen);
 
         // Add delay to show splashscreen

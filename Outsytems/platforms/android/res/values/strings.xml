@@ -16,7 +16,7 @@
     <string name="label_application">Application at</string>
     <string name="edit_text_hint_user">user email</string>
     <string name="edit_text_hint_password">password</string>
-    <string name="button_login">Login</string>
+    <string name="button_login">LOGIN</string>
     <string name="label_back">Back</string>
     <string name="label_logout">Logout</string>
     <string name="label_loading">Loading</string>
