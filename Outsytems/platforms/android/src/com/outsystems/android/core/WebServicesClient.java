@@ -1,3 +1,10 @@
+/*
+ * Outsystems Project
+ * 
+ * Copyright (C) 2014 Outsystems.
+ * 
+ * This software is proprietary.
+ */
 package com.outsystems.android.core;
 
 import java.io.IOException;
@@ -9,6 +16,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,6 +37,13 @@ import com.outsystems.android.model.Application;
 import com.outsystems.android.model.Infrastructure;
 import com.outsystems.android.model.Login;
 
+/**
+ * Class description.
+ * 
+ * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
+ * @version $Revision: 666 $
+ * 
+ */
 public class WebServicesClient {
 
     public static final String URL_WEB_APPLICATION = "https://%1$s/%2$s";
@@ -39,10 +54,17 @@ public class WebServicesClient {
     private static volatile WebServicesClient instance = null;
     private AsyncHttpClient client = null;
 
+    private List<String> trustedHosts;
+
     // private constructor
     private WebServicesClient() {
         client = new AsyncHttpClient();
         client.addHeader("Content-Type", CONTENT_TYPE);
+
+        trustedHosts = new ArrayList<String>();
+        trustedHosts.add("outsystems.com");
+        trustedHosts.add("outsystems.net");
+        trustedHosts.add("outsystemscloud.com");
     }
 
     public static WebServicesClient getInstance() {
@@ -76,7 +98,14 @@ public class WebServicesClient {
             AsyncHttpResponseHandler asyncHttpResponseHandler) {
 
         StringEntity entity = null;
-        client.setSSLSocketFactory(getSSLMySSLSocketFactory());
+        if (trustedHosts != null && hubApp != null) {
+            for (String trustedHost : trustedHosts) {
+                if (hubApp.contains(trustedHost)) {
+                    client.setSSLSocketFactory(getSSLMySSLSocketFactory());
+                    break;
+                }
+            }
+        }
         client.post(null, getAbsoluteUrl(hubApp, urlPath), entity, CONTENT_TYPE, asyncHttpResponseHandler);
     }
 
@@ -86,7 +115,14 @@ public class WebServicesClient {
         if (parameters != null) {
             params = new RequestParams(parameters);
         }
-        client.setSSLSocketFactory(getSSLMySSLSocketFactory());
+        if (trustedHosts != null && hubApp != null) {
+            for (String trustedHost : trustedHosts) {
+                if (hubApp.contains(trustedHost)) {
+                    client.setSSLSocketFactory(getSSLMySSLSocketFactory());
+                    break;
+                }
+            }
+        }
         client.get(getAbsoluteUrl(hubApp, urlPath), params, asyncHttpResponseHandler);
     }
 
@@ -279,25 +315,25 @@ public class WebServicesClient {
             trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
             trustStore.load(null, null);
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            Log.e("outsystems", e.toString());
         } catch (CertificateException e) {
-            e.printStackTrace();
+            Log.e("outsystems", e.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("outsystems", e.toString());
         } catch (KeyStoreException e1) {
-            e1.printStackTrace();
+            Log.e("outsystems", e1.toString());
         }
         MySSLSocketFactory sf = null;
         try {
             sf = new MySSLSocketFactory(trustStore);
         } catch (KeyManagementException e) {
-            e.printStackTrace();
+            Log.e("outsystems", e.toString());
         } catch (UnrecoverableKeyException e) {
-            e.printStackTrace();
+            Log.e("outsystems", e.toString());
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            Log.e("outsystems", e.toString());
         } catch (KeyStoreException e) {
-            e.printStackTrace();
+            Log.e("outsystems", e.toString());
         }
         sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
         return sf;

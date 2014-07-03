@@ -5,7 +5,7 @@
     <string name="image_logo">LogoOutsystems</string>
     <string name="image_button_help">IconHelp</string>
     <string name="image_application">ApplicationImage</string>
-    <string name="label_title_hub">Access my application hosted on:</string>
+    <string name="label_title_hub">Access my applications hosted on:</string>
     <string name="label_help">Please fill in the location of your OutSystems environment. This is the base URL that you use to access any of your Platform applications.</string>
     <string name="edit_text_hint_host">yourpersonal.outsystemscloud.com</string>
     <string name="button_text_go">GO</string>
@@ -13,7 +13,7 @@
     <string name="button_label_demo">TRY OUR DEMO</string>
     <string name="label_about">Discover more at</string>
     <string name="label_about_link">www.outsystems.com</string>
-    <string name="label_application">Application at</string>
+    <string name="label_application">Applications on:</string>
     <string name="edit_text_hint_user">user email</string>
     <string name="edit_text_hint_password">password</string>
     <string name="button_login">LOGIN</string>

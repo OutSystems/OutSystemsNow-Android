@@ -1,7 +1,20 @@
+/*
+ * Outsystems Project
+ *
+ * Copyright (C) 2014 Outsystems.
+ *
+ * This software is proprietary.
+ */
 package com.outsystems.android.model;
 
 import java.util.Date;
-
+/**
+ * Class description.
+ * 
+ * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
+ * @version $Revision: 666 $
+ * 
+ */
 public class HubApplicationModel {
 
     private String host;

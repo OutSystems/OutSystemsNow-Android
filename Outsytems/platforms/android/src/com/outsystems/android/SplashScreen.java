@@ -1,7 +1,7 @@
 /*
  * Outsystems Project
  *
- * Copyright (C) 2014 Xpand IT.
+ * Copyright (C) 2014 Outsystems.
  *
  * This software is proprietary.
  */

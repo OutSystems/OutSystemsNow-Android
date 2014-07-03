@@ -1,3 +1,10 @@
+/*
+ * Outsystems Project
+ *
+ * Copyright (C) 2014 Outsystems.
+ *
+ * This software is proprietary.
+ */
 package com.outsystems.android.core;
 
 import java.text.ParseException;
@@ -18,7 +25,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.outsystems.android.model.HubApplicationModel;
-
+/**
+ * Class description.
+ * 
+ * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
+ * @version $Revision: 666 $
+ * 
+ */
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables

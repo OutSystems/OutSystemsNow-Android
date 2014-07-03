@@ -1,3 +1,10 @@
+/*
+ * Outsystems Project
+ *
+ * Copyright (C) 2014 Outsystems.
+ *
+ * This software is proprietary.
+ */
 package com.outsystems.android;
 
 import java.util.ArrayList;
@@ -98,6 +105,11 @@ public class ApplicationsActivity extends BaseActivity {
                 });
     }
 
+    /**
+     * Load content in gridview.
+     *
+     * @param applications the applications
+     */
     private void loadContentInGridview(ArrayList<Application> applications) {
         ApplicationsAdapter applicationsAdapter = new ApplicationsAdapter(getApplicationContext(), applications);
         gridView.setAdapter(applicationsAdapter);

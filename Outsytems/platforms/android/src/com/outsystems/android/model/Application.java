@@ -1,7 +1,20 @@
+/*
+ * Outsystems Project
+ *
+ * Copyright (C) 2014 Outsystems.
+ *
+ * This software is proprietary.
+ */
 package com.outsystems.android.model;
 
 import java.io.Serializable;
-
+/**
+ * Class description.
+ * 
+ * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
+ * @version $Revision: 666 $
+ * 
+ */
 public class Application implements Serializable {
 
     private static final long serialVersionUID = 1L;

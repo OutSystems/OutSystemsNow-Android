@@ -1,3 +1,10 @@
+/*
+ * Outsystems Project
+ *
+ * Copyright (C) 2014 Outsystems.
+ *
+ * This software is proprietary.
+ */
 package com.outsystems.android.widgets;
 
 import com.outsystems.android.R;
@@ -7,7 +14,13 @@ import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.EditText;
-
+/**
+ * Class description.
+ * 
+ * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
+ * @version $Revision: 666 $
+ * 
+ */
 public class CustomFontEditText extends EditText {
 
     public CustomFontEditText(Context context) {

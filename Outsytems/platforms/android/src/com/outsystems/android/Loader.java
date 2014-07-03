@@ -1,3 +1,10 @@
+/*
+ * Outsystems Project
+ *
+ * Copyright (C) 2014 Outsystems.
+ *
+ * This software is proprietary.
+ */
 package com.outsystems.android;
 
 import org.apache.cordova.CallbackContext;

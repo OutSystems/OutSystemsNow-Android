@@ -50,7 +50,13 @@ import android.widget.LinearLayout.LayoutParams;
 import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
-
+/**
+ * Class description.
+ * 
+ * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
+ * @version $Revision: 666 $
+ * 
+ */
 public class Outsystems extends CordovaActivity {
 
     public static String KEY_APPLICATION = "key_application";

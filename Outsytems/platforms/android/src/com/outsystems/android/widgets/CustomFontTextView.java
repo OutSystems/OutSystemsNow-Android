@@ -1,3 +1,10 @@
+/*
+ * Outsystems Project
+ * 
+ * Copyright (C) 2014 Outsystems.
+ * 
+ * This software is proprietary.
+ */
 package com.outsystems.android.widgets;
 
 import android.content.Context;
@@ -8,6 +15,13 @@ import android.widget.TextView;
 
 import com.outsystems.android.R;
 
+/**
+ * Class description.
+ * 
+ * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
+ * @version $Revision: 666 $
+ * 
+ */
 public class CustomFontTextView extends TextView {
 
     public CustomFontTextView(Context context) {
@@ -23,7 +37,7 @@ public class CustomFontTextView extends TextView {
         super(context, attrs, defStyle);
         setCustomFont(context, attrs);
     }
-    
+
     private void setCustomFont(Context ctx, AttributeSet attrs) {
         TypedArray a = ctx.obtainStyledAttributes(attrs, R.styleable.CustomFontTextView);
         String customFontStyle = a.getString(R.styleable.CustomFontTextView_fontStyle);
