@@ -1,8 +1,8 @@
 /*
- * Outsystems Project
- *
- * Copyright (C) 2014 Outsystems.
- *
+ * OutSystems Project
+ * 
+ * Copyright (C) 2014 OutSystems.
+ * 
  * This software is proprietary.
  */
 package com.outsystems.android;
@@ -21,10 +21,10 @@ import com.outsystems.android.model.HubApplicationModel;
 
 /**
  * Class description.
- *
+ * 
  * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
  * @version $Revision: 666 $
- *
+ * 
  */
 public class SplashScreen extends Activity {
 
@@ -56,9 +56,10 @@ public class SplashScreen extends Activity {
         openHubActivity();
         if (hubApplications != null && hubApplications.size() > 0) {
             HubApplicationModel hubApplication = hubApplications.get(0);
-            HubManagerHelper.getInstance().setApplicationHosted(hubApplication.getHost());
-            HubManagerHelper.getInstance().setJSFApplicationServer(hubApplication.isJSF());
-
+            if (hubApplication != null) {
+                HubManagerHelper.getInstance().setApplicationHosted(hubApplication.getHost());
+                HubManagerHelper.getInstance().setJSFApplicationServer(hubApplication.isJSF());
+            }
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             if (hubApplication != null) {
                 intent.putExtra(LoginActivity.KEY_INFRASTRUCTURE_NAME, hubApplication.getName());

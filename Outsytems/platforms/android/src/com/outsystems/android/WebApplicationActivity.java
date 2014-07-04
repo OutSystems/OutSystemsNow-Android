@@ -1,8 +1,8 @@
 /*
- * Outsystems Project
- *
- * Copyright (C) 2014 Outsystems.
- *
+ * OutSystems Project
+ * 
+ * Copyright (C) 2014 OutSystems.
+ * 
  * This software is proprietary.
  */
 package com.outsystems.android;
@@ -143,8 +143,11 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         }
 
         // Local Url to load application
-        String url = String.format(WebServicesClient.URL_WEB_APPLICATION, HubManagerHelper.getInstance()
-                .getApplicationHosted(), application.getPath());
+        String url = "";
+        if (application != null) {
+            url = String.format(WebServicesClient.URL_WEB_APPLICATION, HubManagerHelper.getInstance()
+                    .getApplicationHosted(), application.getPath());
+        }
 
         // spinnerStart("", "Loading");
 
@@ -393,7 +396,13 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             enableDisableButtonForth();
             stopLoadingAnimation();
         }
-
+        
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            super.onReceivedError(view, errorCode, description, failingUrl);
+            Log.d("outsystems", "________________ ONRECEIVEDERROR _________________");
+            spinnerStop();
+        }
     }
 
     @SuppressWarnings("deprecation")

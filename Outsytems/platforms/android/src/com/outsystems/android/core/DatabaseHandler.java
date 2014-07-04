@@ -1,8 +1,8 @@
 /*
- * Outsystems Project
- *
- * Copyright (C) 2014 Outsystems.
- *
+ * OutSystems Project
+ * 
+ * Copyright (C) 2014 OutSystems.
+ * 
  * This software is proprietary.
  */
 package com.outsystems.android.core;
@@ -25,6 +25,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.outsystems.android.model.HubApplicationModel;
+
 /**
  * Class description.
  * 
@@ -117,17 +118,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        if (cursor.getCount() > 0) {
-            // boolean value =cursor.getString(5).contains("true");
-            HubApplicationModel hubApplication = new HubApplicationModel(cursor.getString(0), cursor.getString(1),
-                    cursor.getString(2), convertStringToDate(cursor.getColumnName(3)), cursor.getString(4),
-                    cursor.getInt(5) > 0);
-            // return contact
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                // boolean value =cursor.getString(5).contains("true");
+                HubApplicationModel hubApplication = new HubApplicationModel(cursor.getString(0), cursor.getString(1),
+                        cursor.getString(2), convertStringToDate(cursor.getColumnName(3)), cursor.getString(4),
+                        cursor.getInt(5) > 0);
+                // return contact
+                cursor.close();
+                db.close();
+                return hubApplication;
+            }
             cursor.close();
-            db.close();
-            return hubApplication;
         }
-        cursor.close();
         db.close();
         return null;
     }
@@ -192,7 +195,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_ISJSF, hubApplicationModel.isJSF());
 
         // updating row
-        int result =  db.update(TABLE_HUB_APPLICATION, values, KEY_HOST + " = ?",
+        int result = db.update(TABLE_HUB_APPLICATION, values, KEY_HOST + " = ?",
                 new String[] { String.valueOf(hubApplicationModel.getHost()) });
         db.close();
         return result;
@@ -207,7 +210,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_DATE_LAST_LOGIN, getDateTime(new Date()));
 
         // updating row
-        int result = db.update(TABLE_HUB_APPLICATION, values, KEY_HOST + " = ?", new String[] { String.valueOf(hostname) });
+        int result = db.update(TABLE_HUB_APPLICATION, values, KEY_HOST + " = ?",
+                new String[] { String.valueOf(hostname) });
         db.close();
         return result;
     }

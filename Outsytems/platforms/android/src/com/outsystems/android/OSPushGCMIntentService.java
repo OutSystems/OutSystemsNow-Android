@@ -1,7 +1,7 @@
 /*
- * Outsystems Project
+ * OutSystems Project
  * 
- * Copyright (C) 2014 Outsystems.
+ * Copyright (C) 2014 OutSystems.
  * 
  * This software is proprietary.
  */

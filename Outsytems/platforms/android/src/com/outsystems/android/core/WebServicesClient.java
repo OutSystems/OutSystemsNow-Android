@@ -1,7 +1,7 @@
 /*
- * Outsystems Project
+ * OutSystems Project
  * 
- * Copyright (C) 2014 Outsystems.
+ * Copyright (C) 2014 OutSystems.
  * 
  * This software is proprietary.
  */
@@ -186,6 +186,7 @@ public class WebServicesClient {
         param.put("username", username);
         param.put("password", password);
         param.put("device", device);
+        param.put("devicetype", "android");
 
         get(HubManagerHelper.getInstance().getApplicationHosted(), "login", param, new AsyncHttpResponseHandler() {
 
@@ -239,7 +240,8 @@ public class WebServicesClient {
 
         HashMap<String, String> param = new HashMap<String, String>();
         param.put("device", device);
-
+        param.put("devicetype", "android");
+        
         get(HubManagerHelper.getInstance().getApplicationHosted(), "registertoken", param,
                 new AsyncHttpResponseHandler() {
 
