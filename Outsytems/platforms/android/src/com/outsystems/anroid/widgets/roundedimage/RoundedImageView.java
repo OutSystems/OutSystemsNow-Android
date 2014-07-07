@@ -1,7 +1,5 @@
 package com.outsystems.anroid.widgets.roundedimage;
 
-import com.outsystems.android.R;
-
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -13,6 +11,8 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
+
+import com.outsystems.android.R;
 
 public class RoundedImageView extends ImageView {
 

@@ -7,13 +7,13 @@
  */
 package com.outsystems.android.widgets;
 
-import com.outsystems.android.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.Button;
+
+import com.outsystems.android.R;
 /**
  * Class description.
  * 

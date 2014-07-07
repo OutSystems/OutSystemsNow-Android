@@ -192,7 +192,12 @@ public class WebServicesClient {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable arg3) {
-
+                if (statusCode == 404 && !HubManagerHelper.getInstance().isJSFApplicationServer()) {
+                    HubManagerHelper.getInstance().setJSFApplicationServer(true);
+                    loginPlattform(username, password, device, handler);
+                } else {
+                    handler.requestFinish(null, false, statusCode);
+                }
             }
 
             @Override
@@ -241,7 +246,7 @@ public class WebServicesClient {
         HashMap<String, String> param = new HashMap<String, String>();
         param.put("device", device);
         param.put("devicetype", "android");
-        
+
         get(HubManagerHelper.getInstance().getApplicationHosted(), "registertoken", param,
                 new AsyncHttpResponseHandler() {
 
@@ -339,5 +344,23 @@ public class WebServicesClient {
         }
         sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
         return sf;
+    }
+
+    /**
+     * Gets the trusted hosts.
+     * 
+     * @return the trusted hosts
+     */
+    public List<String> getTrustedHosts() {
+        return trustedHosts;
+    }
+
+    /**
+     * Sets the trusted hosts.
+     * 
+     * @param trustedHosts the new trusted hosts
+     */
+    public void setTrustedHosts(List<String> trustedHosts) {
+        this.trustedHosts = trustedHosts;
     }
 }

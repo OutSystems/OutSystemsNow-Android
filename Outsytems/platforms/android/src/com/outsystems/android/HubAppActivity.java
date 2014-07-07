@@ -1,8 +1,8 @@
 /*
  * OutSystems Project
- *
+ * 
  * Copyright (C) 2014 OutSystems.
- *
+ * 
  * This software is proprietary.
  */
 package com.outsystems.android;
@@ -29,7 +29,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.arellomobile.android.push.BasePushMessageReceiver;
 import com.arellomobile.android.push.PushManager;
@@ -56,6 +55,7 @@ public class HubAppActivity extends BaseActivity {
             final String urlHubApp = ((EditText) findViewById(R.id.edit_text_hub_url)).getText().toString();
             HubManagerHelper.getInstance().setJSFApplicationServer(false);
             if (!"".equals(urlHubApp)) {
+                ((EditText) findViewById(R.id.edit_text_hub_url)).setError(null);
                 showLoading(v);
                 WebServicesClient.getInstance().getInfrastructure(urlHubApp, new WSRequestHandler() {
 
@@ -170,6 +170,8 @@ public class HubAppActivity extends BaseActivity {
         String hostname = HubManagerHelper.getInstance().getApplicationHosted();
         if (hostname != null && !"".equals(hostname)) {
             ((EditText) findViewById(R.id.edit_text_hub_url)).setText(hostname);
+        } else {
+            ((EditText) findViewById(R.id.edit_text_hub_url)).setText("");
         }
 
         final EditText editText = (EditText) findViewById(R.id.edit_text_hub_url);
@@ -220,6 +222,17 @@ public class HubAppActivity extends BaseActivity {
 
         setIntent(new Intent());
     }
+    
+    /* (non-Javadoc)
+     * @see android.support.v4.app.FragmentActivity#onDestroy()
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        HubManagerHelper.getInstance().setApplicationHosted(null);
+    }
+
+
 
     /** Methods to Push Notifications */
     // Registration receiver
@@ -309,7 +322,7 @@ public class HubAppActivity extends BaseActivity {
     }
 
     private void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        // Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     private void callRegisterToken(String deviceId) {

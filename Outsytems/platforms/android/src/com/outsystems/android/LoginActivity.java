@@ -1,8 +1,8 @@
 /*
  * OutSystems Project
- *
+ * 
  * Copyright (C) 2014 OutSystems.
- *
+ * 
  * This software is proprietary.
  */
 package com.outsystems.android;
@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -83,7 +84,7 @@ public class LoginActivity extends BaseActivity {
 
         DatabaseHandler database = new DatabaseHandler(getApplicationContext());
         HubApplicationModel hub = database.getHubApplication(HubManagerHelper.getInstance().getApplicationHosted());
-        if ((hub.getUserName() != null || !"".equals(hub.getUserName()))
+        if (hub != null && (hub.getUserName() != null || !"".equals(hub.getUserName()))
                 && (hub.getPassword() != null || !"".equals(hub.getPassword()))) {
             ((EditText) findViewById(R.id.edit_text_user_mail)).setText(hub.getUserName());
             ((EditText) findViewById(R.id.edit_text_passwod)).setText(hub.getPassword());
@@ -126,6 +127,8 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void requestFinish(Object result, boolean error, int statusCode) {
                         stopLoading(v);
+                        ((EditText) findViewById(R.id.edit_text_user_mail)).setError(null);
+                        ((EditText) findViewById(R.id.edit_text_passwod)).setError(null);
                         Log.d("outystems", "Status Code: " + statusCode);
 
                         if (!error) {
@@ -138,6 +141,16 @@ public class LoginActivity extends BaseActivity {
                                         R.string.label_error_login));
                                 showError(findViewById(R.id.root_view));
                             } else {
+
+                                // Using authentication in the web view
+                                WebView webView = new WebView(getApplicationContext());
+                                String url = String.format(WebServicesClient.BASE_URL,
+                                        HubManagerHelper.getInstance().getApplicationHosted()).concat(
+                                        "login.aspx?username=")
+                                        + userName + "&password=" + password;
+                                url = url.replace("https", "http");
+                                webView.loadUrl(url);
+
                                 DatabaseHandler database = new DatabaseHandler(getApplicationContext());
                                 database.updateHubApplicationCredentials(HubManagerHelper.getInstance()
                                         .getApplicationHosted(), userName, password);
