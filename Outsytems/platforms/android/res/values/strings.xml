@@ -15,7 +15,7 @@
     <string name="label_about_link">www.outsystems.com</string>
     <string name="label_application">Applications on:</string>
     <string name="edit_text_hint_user">Username</string>
-    <string name="edit_text_hint_password">password</string>
+    <string name="edit_text_hint_password">Password</string>
     <string name="button_login">LOGIN</string>
     <string name="label_back">Back</string>
     <string name="label_logout">Logout</string>
