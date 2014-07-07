@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Outsystems</string>
+    <string name="app_name">OutSystems</string>
     <string name="image_splash">SplashScreen</string>
     <string name="image_logo">LogoOutsystems</string>
     <string name="image_button_help">IconHelp</string>
@@ -14,7 +14,7 @@
     <string name="label_about">Discover more at</string>
     <string name="label_about_link">www.outsystems.com</string>
     <string name="label_application">Applications on:</string>
-    <string name="edit_text_hint_user">user email</string>
+    <string name="edit_text_hint_user">Username</string>
     <string name="edit_text_hint_password">password</string>
     <string name="button_login">LOGIN</string>
     <string name="label_back">Back</string>

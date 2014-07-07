@@ -141,7 +141,7 @@
                 android:id="@+id/button_demo"
                 style="@style/Widget.Button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginBottom="20dp"
                 android:text="@string/button_label_demo"
                 android:textSize="17sp"
