@@ -1,4 +1,4 @@
-package com.outsystems.anroid.widgets.roundedimage;
+package com.outsystems.android.widgets.roundedimage;
 
 import android.content.Context;
 import android.content.res.ColorStateList;

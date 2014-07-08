@@ -64,6 +64,12 @@ public class HubAppActivity extends BaseActivity {
                         Log.d("outystems", "Status Code: " + statusCode);
                         if (!error) {
                             Infrastructure infrastructure = (Infrastructure) result;
+                            if (infrastructure == null) {
+                                ((EditText) findViewById(R.id.edit_text_hub_url))
+                                        .setError(getString(R.string.label_error_wrong_address));
+                                showError(findViewById(R.id.root_view));
+                                return;
+                            }
 
                             // Create Entry to save hub application
                             DatabaseHandler database = new DatabaseHandler(getApplicationContext());
@@ -222,8 +228,10 @@ public class HubAppActivity extends BaseActivity {
 
         setIntent(new Intent());
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see android.support.v4.app.FragmentActivity#onDestroy()
      */
     @Override
@@ -231,8 +239,6 @@ public class HubAppActivity extends BaseActivity {
         super.onDestroy();
         HubManagerHelper.getInstance().setApplicationHosted(null);
     }
-
-
 
     /** Methods to Push Notifications */
     // Registration receiver

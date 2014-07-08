@@ -34,6 +34,7 @@ import com.outsystems.android.model.HubApplicationModel;
  */
 public class SplashScreen extends Activity {
 
+    /** The time splash screen. */
     public static int TIME_SPLASH_SCREEN = 2000;
 
     @Override

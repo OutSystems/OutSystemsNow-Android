@@ -7,14 +7,9 @@
  */
 package com.outsystems.android;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,6 +29,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -41,6 +37,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
@@ -52,6 +49,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.DownloadListener;
 import android.webkit.HttpAuthHandler;
 import android.webkit.MimeTypeMap;
 import android.webkit.SslErrorHandler;
@@ -60,7 +58,6 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
@@ -183,47 +180,22 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         // Set by <content src="index.html" /> in config.xml
         cordovaWebView.setWebViewClient(new CordovaCustoWebClient(this, cordovaWebView));
 
-        // cordovaWebView.setDownloadListener(new DownloadListener() {
-        // public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,
-        // long contentLength) {
-        //
-        // // Intent i = new Intent(Intent.ACTION_VIEW);
-        // // i.setData(Uri.parse(url));
-        // // startActivity(i);
-        // // Intent intent = new Intent(Intent.ACTION_VIEW);
-        // // intent.setData(Uri.parse(url));
-        // // intent.setType("application/x-rar-compressed");
-        // // startActivity(intent);
-        // // cordovaWebView.loadUrl(url);
-        // // Uri source = Uri.parse(url);
-        // // // Make a new request pointing to the .apk url
-        // // DownloadManager.Request request = new DownloadManager.Request(source);
-        // // // appears the same in Notification bar while downloading
-        // // request.setDescription("Description for the DownloadManager Bar");
-        // // request.setTitle(getFileName(url));
-        // // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-        // // request.allowScanningByMediaScanner();
-        // // request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        // // }
-        // // // save the file in the "Downloads" folder of SDCARD
-        // // request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, getFileName(url));
-        // // // get download service and enqueue file
-        // // DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-        // // manager.enqueue(request);
-        //
-        // // downloadfileto(url, getFileName(url));
-        // // downloadAndOpenPDF(WebApplicationActivity.this, url);
-        //
-        // // cordovaWebView.loadUrl("docs.google.com/gview?embedded=true&url=" + url);
-        // // cordovaWebView.loadUrl("http://docs.google.com/gview?embedded=true&url=" + url);
-        // }
-        // });
+        cordovaWebView.setDownloadListener(new DownloadListener() {
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,
+                    long contentLength) {
+                downloadAndOpenFile(WebApplicationActivity.this, url);
+            }
+        });
 
         // Set in the user agent OutSystemsApp
         String ua = cordovaWebView.getSettings().getUserAgentString();
         String newUA = ua.concat(" OutSystemsApp v. ");
         cordovaWebView.getSettings().setUserAgentString(newUA);
-        cordovaWebView.loadUrl(url);
+        if (savedInstanceState == null) {
+            cordovaWebView.loadUrl(url);
+        } else {
+            ((LinearLayout) findViewById(R.id.view_loading)).setVisibility(View.GONE);
+        }
 
         // Customization Toolbar
         // Get Views from Xml Layout
@@ -256,6 +228,44 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         }
 
         // cwv.loadUrl("http://causecode.com", 60000);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see android.support.v7.app.ActionBarActivity#onConfigurationChanged(android.content.res.Configuration)
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // cordovaWebView.reload();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see android.support.v4.app.FragmentActivity#onSaveInstanceState(android.os.Bundle)
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        cordovaWebView.saveState(outState);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see android.app.Activity#onRestoreInstanceState(android.os.Bundle)
+     */
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        flagNumberLoadings++;
+        imageView.setVisibility(View.VISIBLE);
+        spinnerStart();
+        cordovaWebView.restoreState(savedInstanceState);
     }
 
     @Override
@@ -465,12 +475,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Log.d("outsystems", "--------------- shouldOverrideUrlLoading ---------------");
-            // boolean value = true;
-             String extension = MimeTypeMap.getFileExtensionFromUrl(url);
-             if (extension != null && extension.contains("docx")) {
-             downloadAndOpenPDF(WebApplicationActivity.this, url);
-             return false;
-             }
 
             BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cordovaWebView));
             imageView.setBackgroundDrawable(ob);
@@ -508,7 +512,15 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
             Log.d("outsystems", "________________ ONRECEIVEDERROR _________________");
-            spinnerStop();
+            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnectedOrConnecting()) {
+                spinnerStop();
+            } else {
+                cordovaWebView.setVisibility(View.INVISIBLE);
+                imageView.setVisibility(View.VISIBLE);
+                imageView.setBackgroundColor(getResources().getColor(R.color.white_color));
+                // finish();
+            }
         }
 
         /*
@@ -555,8 +567,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             final Animation animationFadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadeout);
             imageView.setVisibility(View.GONE);
             imageView.startAnimation(animationFadeOut);
-            spinnerStop();
+
         }
+        spinnerStop();
     }
 
     /**
@@ -602,70 +615,53 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         return returnedBitmap;
     }
 
-    public void downloadfileto(String fileurl, String filename) {
-        String myString;
-        try {
-            FileOutputStream f = new FileOutputStream(filename);
-            try {
-                URL url = new URL(fileurl);
-                URLConnection urlConn = url.openConnection();
-                InputStream is = urlConn.getInputStream();
-                BufferedInputStream bis = new BufferedInputStream(is, 8000);
-                int current = 0;
-                while ((current = bis.read()) != -1) {
-                    f.write((byte) current);
-                }
-            } catch (Exception e) {
-                myString = e.getMessage();
-            }
-            f.flush();
-            f.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void downloadAndOpenPDF(final Context context, final String pdfUrl) {
+    public void downloadAndOpenFile(final Context context, final String urlDownload) {
+        String urlDirectDownload = urlDownload.replace("_download.aspx", "MyDocuments.aspx");
         // Get filename
-        // final String filename = pdfUrl.substring( pdfUrl.lastIndexOf( "/" ) + 1 );
-        final String filename = getFileName(pdfUrl);
+        final String filename = getFileName(urlDirectDownload);
         // The place where the downloaded PDF file will be put
         final File tempFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), filename);
         if (tempFile.exists()) {
             // Delete the File
             tempFile.delete();
-
-            // If we have downloaded the file before, just go ahead and show it.
-            // openPDF( context, Uri.fromFile( tempFile ) );
-            // return;
         }
 
         // Show progress dialog while downloading
-        final ProgressDialog progress = ProgressDialog.show(context, "Download", "Download Content", true);
-
+        spinnerStart();
         // Create the download request
-        DownloadManager.Request r = new DownloadManager.Request(Uri.parse(pdfUrl));
+        DownloadManager.Request r = new DownloadManager.Request(Uri.parse(urlDirectDownload));
         r.setDestinationInExternalFilesDir(context, Environment.DIRECTORY_DOWNLOADS, filename);
+        r.setMimeType("application/octet-stream");
         final DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         BroadcastReceiver onComplete = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (!progress.isShowing()) {
-                    return;
-                }
                 context.unregisterReceiver(this);
 
-                progress.dismiss();
+                spinnerStop();
                 long downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
                 Cursor c = dm.query(new DownloadManager.Query().setFilterById(downloadId));
 
                 if (c.moveToFirst()) {
                     int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
                     if (status == DownloadManager.STATUS_SUCCESSFUL) {
-                        // openPDF(context, Uri.fromFile(tempFile));
-                        Toast.makeText(context, "Acabou!!!", Toast.LENGTH_SHORT).show();
+                        try {
+                            MimeTypeMap map = MimeTypeMap.getSingleton();
+                            String ext = MimeTypeMap.getFileExtensionFromUrl(tempFile.getName());
+                            String type = map.getMimeTypeFromExtension(ext);
+
+                            if (type == null)
+                                type = "*/*";
+
+                            Intent myIntent = new Intent(android.content.Intent.ACTION_VIEW);
+                            Uri data = Uri.fromFile(tempFile);
+                            myIntent.setDataAndType(data, type);
+                            startActivity(myIntent);
+                        } catch (Exception e) {
+                            Log.e("outsystems", e.toString());
+                        }
+                    } else {
+                        Log.i("outsystems", "Reason: " + c.getInt(c.getColumnIndex(DownloadManager.COLUMN_REASON)));
                     }
                 }
                 c.close();
@@ -686,10 +682,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         } else {
             fileName = url.substring(slashIndex + 1);
         }
-        // if (fileName.contains(".")) {
-        // fileName = fileName.substring(0, fileName.lastIndexOf("."));
-        // }
-
         return fileName;
     }
 }

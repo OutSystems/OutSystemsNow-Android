@@ -1,8 +1,8 @@
 /*
  * OutSystems Project
- *
+ * 
  * Copyright (C) 2014 OutSystems.
- *
+ * 
  * This software is proprietary.
  */
 package com.outsystems.android.adapters;
@@ -87,10 +87,14 @@ public class ApplicationsAdapter extends ArrayAdapter<Application> {
         if (viewHolder.textViewDescription != null) {
             viewHolder.textViewDescription.setText(application.getDescription());
         }
-        String url = WebServicesClient.getAbsoluteUrlForImage(HubManagerHelper.getInstance().getApplicationHosted(),
-                application.getImageId());
-        imageLoader.displayImage(url, viewHolder.imageViewApplication, options);
 
+        if (application.getImageId() == 0) {
+            imageLoader.displayImage("", viewHolder.imageViewApplication, options);
+        } else {
+            String url = WebServicesClient.getAbsoluteUrlForImage(
+                    HubManagerHelper.getInstance().getApplicationHosted(), application.getImageId());
+            imageLoader.displayImage(url, viewHolder.imageViewApplication, options);
+        }
         return rowView;
     }
 

@@ -19,7 +19,7 @@
         android:gravity="center"
         android:background="@drawable/background_images_aplications" >
 
-        <com.outsystems.anroid.widgets.roundedimage.RoundedImageView
+        <com.outsystems.android.widgets.roundedimage.RoundedImageView
             android:id="@+id/image_view_application"
             android:layout_width="60dp"
             android:layout_height="60dp"

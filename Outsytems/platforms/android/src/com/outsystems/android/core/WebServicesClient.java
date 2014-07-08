@@ -26,6 +26,7 @@ import org.apache.http.entity.StringEntity;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -146,11 +147,16 @@ public class WebServicesClient {
                                 Log.e("outsystems", e.toString());
                             }
 
-                            Gson gson = new Gson();
+                            try {
+                                Gson gson = new Gson();
 
-                            Infrastructure infrastructure = gson.fromJson(contentString, Infrastructure.class);
+                                Infrastructure infrastructure = gson.fromJson(contentString, Infrastructure.class);
 
-                            return infrastructure;
+                                return infrastructure;
+                            } catch (JsonSyntaxException e) {
+                                Log.e("outsystems", e.toString());
+                            }
+                            return null;
                         }
 
                         @Override
@@ -214,11 +220,15 @@ public class WebServicesClient {
                             } catch (UnsupportedEncodingException e) {
                                 Log.e("outsystems", e.toString());
                             }
+                            try {
+                                Gson gson = new Gson();
+                                Login login = gson.fromJson(contentString, Login.class);
 
-                            Gson gson = new Gson();
-                            Login login = gson.fromJson(contentString, Login.class);
-
-                            return login;
+                                return login;
+                            } catch (JsonSyntaxException e) {
+                                Log.e("outsystems", e.toString());
+                            }
+                            return null;
                         }
 
                         @Override
@@ -286,12 +296,17 @@ public class WebServicesClient {
                                 Log.e("outsystems", e.toString());
                             }
 
-                            Gson gson = new Gson();
-                            Type collectionType = new TypeToken<List<Application>>() {
-                            }.getType();
-                            List<Application> applications = gson.fromJson(contentString, collectionType);
+                            try {
+                                Gson gson = new Gson();
+                                Type collectionType = new TypeToken<List<Application>>() {
+                                }.getType();
+                                List<Application> applications = gson.fromJson(contentString, collectionType);
 
-                            return applications;
+                                return applications;
+                            } catch (JsonSyntaxException e) {
+                                Log.e("outsystems", e.toString());
+                            }
+                            return null;
                         }
 
                         @Override
