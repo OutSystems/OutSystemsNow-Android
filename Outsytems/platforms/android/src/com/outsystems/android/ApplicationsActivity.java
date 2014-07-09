@@ -1,8 +1,8 @@
 /*
  * OutSystems Project
- *
+ * 
  * Copyright (C) 2014 OutSystems.
- *
+ * 
  * This software is proprietary.
  */
 package com.outsystems.android;
@@ -87,6 +87,20 @@ public class ApplicationsActivity extends BaseActivity {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see android.support.v4.app.FragmentActivity#onResume()
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (HubManagerHelper.getInstance().getApplicationHosted() == null) {
+            ApplicationOutsystems app = (ApplicationOutsystems) getApplication();
+            app.registerDefaultHubApplication();
+        }
+    }
+
     private void loadApplications() {
         gridView.setVisibility(View.GONE);
         WebServicesClient.getInstance().getApplications(HubManagerHelper.getInstance().getApplicationHosted(),
@@ -107,7 +121,7 @@ public class ApplicationsActivity extends BaseActivity {
 
     /**
      * Load content in gridview.
-     *
+     * 
      * @param applications the applications
      */
     private void loadContentInGridview(ArrayList<Application> applications) {

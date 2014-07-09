@@ -10,20 +10,25 @@ package com.outsystems.android;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.apache.cordova.Config;
+import org.apache.cordova.CordovaChromeClient;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaWebViewClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -53,6 +58,7 @@ import android.webkit.DownloadListener;
 import android.webkit.HttpAuthHandler;
 import android.webkit.MimeTypeMap;
 import android.webkit.SslErrorHandler;
+import android.webkit.ValueCallback;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -171,6 +177,10 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         // Local Url to load application
         String url = "";
         if (application != null) {
+            if (HubManagerHelper.getInstance().getApplicationHosted() == null) {
+                ApplicationOutsystems app = (ApplicationOutsystems) getApplication();
+                app.registerDefaultHubApplication();
+            }
             url = String.format(WebServicesClient.URL_WEB_APPLICATION, HubManagerHelper.getInstance()
                     .getApplicationHosted(), application.getPath());
         }
@@ -183,7 +193,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         cordovaWebView.setDownloadListener(new DownloadListener() {
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,
                     long contentLength) {
-                downloadAndOpenFile(WebApplicationActivity.this, url);
+                // downloadAndOpenFile(WebApplicationActivity.this, url);
+                downloadAndOpenFilePlu(WebApplicationActivity.this, url);
             }
         });
 
@@ -345,9 +356,24 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
+
+        // Code to send info about File Chooser
+        if (cordovaWebView != null && requestCode == CordovaChromeClient.FILECHOOSER_RESULTCODE) {
+            ValueCallback<Uri> mUploadMessage = this.cordovaWebView.getWebChromeClient().getValueCallback();
+            Log.d("outsystems", "did we get here?");
+            if (null == mUploadMessage)
+                return;
+            Uri result = intent == null || resultCode != Activity.RESULT_OK ? null : intent.getData();
+            Log.d("outsystems", "result = " + result);
+            // Uri filepath = Uri.parse("file://" + FileUtils.getRealPathFromURI(result, this));
+            // Log.d(TAG, "result = " + filepath);
+            mUploadMessage.onReceiveValue(result);
+            mUploadMessage = null;
+        }
+
         CordovaPlugin callback = this.activityResultCallback;
         if (callback != null) {
-            if (intent != null && intent.getAction().contains("SCAN")) {
+            if (intent != null && intent.getAction() != null && intent.getAction().contains("SCAN")) {
                 callback.onActivityResult(BarcodeScanner.REQUEST_CODE, resultCode, intent);
             } else {
                 callback.onActivityResult(requestCode, resultCode, intent);
@@ -616,7 +642,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     }
 
     public void downloadAndOpenFile(final Context context, final String urlDownload) {
-        String urlDirectDownload = urlDownload.replace("_download.aspx", "MyDocuments.aspx");
+        // String urlDirectDownload = urlDownload.replace("_download.aspx", "MyDocuments.aspx");
+        String urlDirectDownload = urlDownload;
         // Get filename
         final String filename = getFileName(urlDirectDownload);
         // The place where the downloaded PDF file will be put
@@ -661,7 +688,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                             Log.e("outsystems", e.toString());
                         }
                     } else {
-                        Log.i("outsystems", "Reason: " + c.getInt(c.getColumnIndex(DownloadManager.COLUMN_REASON)));
+                        Log.d("outsystems", "Reason: " + c.getInt(c.getColumnIndex(DownloadManager.COLUMN_REASON)));
                     }
                 }
                 c.close();
@@ -683,5 +710,98 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             fileName = url.substring(slashIndex + 1);
         }
         return fileName;
+    }
+
+    // ----------------------------------------------//
+    // Download File and Open with plugin //
+    // ----------------------------------------------//
+    private static final HashMap<String, String> MIME_TYPES;
+    static {
+        MIME_TYPES = new HashMap<String, String>();
+        MIME_TYPES.put(".pdf", "application/pdf");
+        MIME_TYPES.put(".doc", "application/msword");
+        MIME_TYPES.put(".docx", "application/msword");
+        MIME_TYPES.put(".xls", "application/vnd.ms-powerpoint");
+        MIME_TYPES.put(".xlsx", "application/vnd.ms-powerpoint");
+        MIME_TYPES.put(".rtf", "application/vnd.ms-excel");
+        MIME_TYPES.put(".wav", "audio/x-wav");
+        MIME_TYPES.put(".gif", "image/gif");
+        MIME_TYPES.put(".jpg", "image/jpeg");
+        MIME_TYPES.put(".jpeg", "image/jpeg");
+        MIME_TYPES.put(".png", "image/png");
+        MIME_TYPES.put(".txt", "text/plain");
+        MIME_TYPES.put(".mpg", "video/*");
+        MIME_TYPES.put(".mpeg", "video/*");
+        MIME_TYPES.put(".mpe", "video/*");
+        MIME_TYPES.put(".mp4", "video/*");
+        MIME_TYPES.put(".avi", "video/*");
+        MIME_TYPES.put(".ods", "application/vnd.oasis.opendocument.spreadsheet");
+        MIME_TYPES.put(".odt", "application/vnd.oasis.opendocument.text");
+        MIME_TYPES.put(".ppt", "application/vnd.ms-powerpoint");
+        MIME_TYPES.put(".pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation");
+        MIME_TYPES.put(".apk", "application/vnd.android.package-archive");
+    }
+
+    private String getMimeType(String extension) {
+        return MIME_TYPES.get(extension);
+    }
+
+    private void openFile(Uri localUri, String extension, Context context) throws JSONException {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.setDataAndType(localUri, getMimeType(extension));
+        JSONObject obj = new JSONObject();
+
+        try {
+            context.startActivity(i);
+            obj.put("message", "successfull downloading and openning");
+        } catch (ActivityNotFoundException e) {
+            obj.put("message", "Failed to open the file, no reader found");
+            obj.put("ActivityNotFoundException", e.getMessage());
+        }
+
+    }
+
+    private void downloadAndOpenFilePlu(final Context context, final String fileUrl) {
+        final String filename = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
+        final String extension = fileUrl.substring(fileUrl.lastIndexOf("."));
+        final File tempFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), filename);
+
+        if (tempFile.exists()) {
+            try {
+                openFile(Uri.fromFile(tempFile), extension, context);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+
+        DownloadManager.Request r = new DownloadManager.Request(Uri.parse(fileUrl));
+        r.setDestinationInExternalFilesDir(context, Environment.DIRECTORY_DOWNLOADS, filename);
+        final DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        BroadcastReceiver onComplete = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                context.unregisterReceiver(this);
+
+                long downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+                Cursor c = dm.query(new DownloadManager.Query().setFilterById(downloadId));
+
+                if (c.moveToFirst()) {
+                    int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
+                    if (status == DownloadManager.STATUS_SUCCESSFUL)
+                        try {
+                            openFile(Uri.fromFile(tempFile), extension, context);
+                        } catch (JSONException e) {
+                            Log.e("outsystems", e.toString());
+                        }
+                }
+                c.close();
+            }
+        };
+        context.registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+
+        dm.enqueue(r);
     }
 }

@@ -1,11 +1,12 @@
 /*
  * Outsystems Project
- *
+ * 
  * Copyright (C) 2014 Outsystems.
- *
+ * 
  * This software is proprietary.
  */
 package com.outsystems.android.helpers;
+
 /**
  * Class description.
  * 
@@ -19,11 +20,11 @@ public class HubManagerHelper {
 
     private String applicationHosted = null;
 
- // The application Server - default value .aspx
+    // The application Server - default value .aspx
     private boolean isJSFApplicationServer = false;
-    
+
     private String deviceId = "";
-    
+
     private HubManagerHelper() {
 
     }

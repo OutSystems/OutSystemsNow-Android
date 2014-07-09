@@ -146,7 +146,7 @@ public class LoginActivity extends BaseActivity {
                                 WebView webView = new WebView(getApplicationContext());
                                 String url = String.format(WebServicesClient.BASE_URL,
                                         HubManagerHelper.getInstance().getApplicationHosted()).concat(
-                                        "login.aspx?username=")
+                                        "login" + WebServicesClient.getApplicationServer() + "?username=")
                                         + userName + "&password=" + password;
                                 url = url.replace("https", "http");
                                 webView.loadUrl(url);

@@ -80,6 +80,8 @@ public class HubAppActivity extends BaseActivity {
 
                             HubManagerHelper.getInstance().setApplicationHosted(urlHubApp);
 
+                            ApplicationOutsystems app = (ApplicationOutsystems) getApplication();
+                            app.setDemoApplications(false);
                             // Start Login Activity
                             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                             intent.putExtra(LoginActivity.KEY_AUTOMATICLY_LOGIN, false);
@@ -109,6 +111,8 @@ public class HubAppActivity extends BaseActivity {
         public void onClick(View v) {
             HubManagerHelper.getInstance().setApplicationHosted(WebServicesClient.DEMO_HOST_NAME);
             HubManagerHelper.getInstance().setJSFApplicationServer(true);
+            ApplicationOutsystems app = (ApplicationOutsystems) getApplication();
+            app.setDemoApplications(true);
             Intent intent = new Intent(getApplicationContext(), ApplicationsActivity.class);
             startActivity(intent);
         }
