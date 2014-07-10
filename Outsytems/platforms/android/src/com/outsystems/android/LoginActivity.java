@@ -13,7 +13,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.outsystems.android.core.DatabaseHandler;
+import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
@@ -68,8 +68,6 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        Log.e("outsystems", "ONCREATE");
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -129,7 +127,7 @@ public class LoginActivity extends BaseActivity {
                         stopLoading(v);
                         ((EditText) findViewById(R.id.edit_text_user_mail)).setError(null);
                         ((EditText) findViewById(R.id.edit_text_passwod)).setError(null);
-                        Log.d("outystems", "Status Code: " + statusCode);
+                        EventLogger.logMessage(getClass(), "Status Code: " + statusCode);
 
                         if (!error) {
                             Login login = (Login) result;

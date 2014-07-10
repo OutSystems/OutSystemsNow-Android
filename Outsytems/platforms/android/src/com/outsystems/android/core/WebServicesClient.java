@@ -23,8 +23,6 @@ import java.util.List;
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -144,7 +142,7 @@ public class WebServicesClient {
                             try {
                                 contentString = new String(content, "UTF-8");
                             } catch (UnsupportedEncodingException e) {
-                                Log.e("outsystems", e.toString());
+                                EventLogger.logError(getClass(), e);
                             }
 
                             try {
@@ -154,7 +152,7 @@ public class WebServicesClient {
 
                                 return infrastructure;
                             } catch (JsonSyntaxException e) {
-                                Log.e("outsystems", e.toString());
+                                EventLogger.logError(getClass(), e);
                             }
                             return null;
                         }
@@ -170,7 +168,7 @@ public class WebServicesClient {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.d("outsystems", error.toString() + " " + statusCode);
+                EventLogger.logMessage(getClass(), error.toString() + " " + statusCode);
                 if (statusCode == 404 && !HubManagerHelper.getInstance().isJSFApplicationServer()) {
                     HubManagerHelper.getInstance().setJSFApplicationServer(true);
                     getInfrastructure(urlHubApp, handler);
@@ -218,7 +216,7 @@ public class WebServicesClient {
                             try {
                                 contentString = new String(content, "UTF-8");
                             } catch (UnsupportedEncodingException e) {
-                                Log.e("outsystems", e.toString());
+                                EventLogger.logError(getClass(), e);
                             }
                             try {
                                 Gson gson = new Gson();
@@ -226,7 +224,7 @@ public class WebServicesClient {
 
                                 return login;
                             } catch (JsonSyntaxException e) {
-                                Log.e("outsystems", e.toString());
+                                EventLogger.logError(getClass(), e);
                             }
                             return null;
                         }
@@ -293,7 +291,7 @@ public class WebServicesClient {
                             try {
                                 contentString = new String(content, "UTF-8");
                             } catch (UnsupportedEncodingException e) {
-                                Log.e("outsystems", e.toString());
+                                EventLogger.logError(getClass(), e);
                             }
 
                             try {
@@ -304,7 +302,7 @@ public class WebServicesClient {
 
                                 return applications;
                             } catch (JsonSyntaxException e) {
-                                Log.e("outsystems", e.toString());
+                                EventLogger.logError(getClass(), e);
                             }
                             return null;
                         }
@@ -320,7 +318,7 @@ public class WebServicesClient {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.d("outsystems", error.toString() + " " + statusCode);
+                EventLogger.logMessage(getClass(), error.toString() + " " + statusCode);
                 if (statusCode == 404 && !HubManagerHelper.getInstance().isJSFApplicationServer()) {
                     HubManagerHelper.getInstance().setJSFApplicationServer(true);
                     getApplications(urlHubApp, handler);
@@ -337,25 +335,25 @@ public class WebServicesClient {
             trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
             trustStore.load(null, null);
         } catch (NoSuchAlgorithmException e) {
-            Log.e("outsystems", e.toString());
+            EventLogger.logError(getClass(), e);
         } catch (CertificateException e) {
-            Log.e("outsystems", e.toString());
+            EventLogger.logError(getClass(), e);
         } catch (IOException e) {
-            Log.e("outsystems", e.toString());
+            EventLogger.logError(getClass(), e);
         } catch (KeyStoreException e1) {
-            Log.e("outsystems", e1.toString());
+            EventLogger.logError(getClass(), e1);
         }
         MySSLSocketFactory sf = null;
         try {
             sf = new MySSLSocketFactory(trustStore);
         } catch (KeyManagementException e) {
-            Log.e("outsystems", e.toString());
+            EventLogger.logError(getClass(), e);
         } catch (UnrecoverableKeyException e) {
-            Log.e("outsystems", e.toString());
+            EventLogger.logError(getClass(), e);
         } catch (NoSuchAlgorithmException e) {
-            Log.e("outsystems", e.toString());
+            EventLogger.logError(getClass(), e);
         } catch (KeyStoreException e) {
-            Log.e("outsystems", e.toString());
+            EventLogger.logError(getClass(), e);
         }
         sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
         return sf;

@@ -34,7 +34,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.StateSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,9 +46,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
+
 /**
  * Class description.
  * 
@@ -254,7 +255,7 @@ public class Outsystems extends CordovaActivity {
 
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-            Log.d("OUTSYSTEMS", "URL: " + url);
+            EventLogger.logInfoMessage(getClass(), "URL: " + url);
             if (url.contains(PREFIX_CORDOVA_JS)) {
 
                 // Get path to load local file Cordova JS
@@ -270,7 +271,7 @@ public class Outsystems extends CordovaActivity {
                     return response;
 
                 } catch (IOException e) {
-                    Log.e("Outsytems - WebView", e.toString());
+                    EventLogger.logError(getClass(), e);
                 }
             }
             return null;

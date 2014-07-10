@@ -16,12 +16,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
 import com.arellomobile.android.push.PushManager;
 import com.arellomobile.android.push.utils.RegisterBroadcastReceiver;
 import com.crashlytics.android.Crashlytics;
 import com.outsystems.android.core.DatabaseHandler;
+import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.HubApplicationModel;
 
@@ -57,7 +57,7 @@ public class SplashScreen extends Activity {
             pushManager.onStartup(this);
         } catch (Exception e) {
             // push notifications are not available or AndroidManifest.xml is not configured properly
-            Log.e("outsystems", e.toString());
+            EventLogger.logError(getClass(), e);
         }
 
         // Register for push!
@@ -130,7 +130,7 @@ public class SplashScreen extends Activity {
         try {
             unregisterReceiver(mBroadcastReceiver);
         } catch (Exception e) {
-            Log.e("outsystems", e.toString());
+            EventLogger.logError(getClass(), e);
         }
     }
 

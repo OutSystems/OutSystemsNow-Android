@@ -47,16 +47,15 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.util.StateSet;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
 import android.webkit.HttpAuthHandler;
-import android.webkit.MimeTypeMap;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceResponse;
@@ -65,6 +64,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
@@ -165,15 +165,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             application = (Application) bundle.get("key_application");
         }
 
-        // cordovaWebView.setHttpAuthUsernamePassword(HubManagerHelper.getInstance().getApplicationHosted(),
-        // "OutSystems", "admin", "outsystems");
-
-        // Authenticator.setDefault(new Authenticator() {
-        // protected PasswordAuthentication getPasswordAuthentication() {
-        // return new PasswordAuthentication("admin", "outsystems".toCharArray());
-        // }
-        // });
-
         // Local Url to load application
         String url = "";
         if (application != null) {
@@ -193,7 +184,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         cordovaWebView.setDownloadListener(new DownloadListener() {
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,
                     long contentLength) {
-                // downloadAndOpenFile(WebApplicationActivity.this, url);
                 downloadAndOpenFilePlu(WebApplicationActivity.this, url);
             }
         });
@@ -305,7 +295,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     @Override
     protected void onDestroy() {
-        Log.d("Destroying the View", "onDestroy()");
+        EventLogger.logMessage(getClass(), "on Destroy called");
         super.onDestroy();
         if (this.cordovaWebView != null) {
             this.cordovaWebView.handleDestroy();
@@ -360,11 +350,11 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         // Code to send info about File Chooser
         if (cordovaWebView != null && requestCode == CordovaChromeClient.FILECHOOSER_RESULTCODE) {
             ValueCallback<Uri> mUploadMessage = this.cordovaWebView.getWebChromeClient().getValueCallback();
-            Log.d("outsystems", "did we get here?");
+            EventLogger.logMessage(getClass(), "did we get here?");
             if (null == mUploadMessage)
                 return;
             Uri result = intent == null || resultCode != Activity.RESULT_OK ? null : intent.getData();
-            Log.d("outsystems", "result = " + result);
+            EventLogger.logMessage(getClass(), "result = " + result);
             // Uri filepath = Uri.parse("file://" + FileUtils.getRealPathFromURI(result, this));
             // Log.d(TAG, "result = " + filepath);
             mUploadMessage.onReceiveValue(result);
@@ -490,7 +480,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                     return response;
 
                 } catch (IOException e) {
-                    Log.e("Outsytems - WebView", e.toString());
+                    EventLogger.logError(getClass(), e);
                 }
             }
             return null;
@@ -500,8 +490,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         @SuppressWarnings("deprecation")
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Log.d("outsystems", "--------------- shouldOverrideUrlLoading ---------------");
-
+            EventLogger.logMessage(getClass(), "--------------- shouldOverrideUrlLoading ---------------");
             BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cordovaWebView));
             imageView.setBackgroundDrawable(ob);
             imageView.setVisibility(View.VISIBLE);
@@ -514,7 +503,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            Log.d("outsystems", "________________ ONPAGEFINISHED _________________");
+            EventLogger.logMessage(getClass(), "________________ ONPAGEFINISHED _________________");
             enableDisableButtonForth();
             stopLoadingAnimation();
         }
@@ -537,7 +526,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
-            Log.d("outsystems", "________________ ONRECEIVEDERROR _________________");
+            EventLogger.logMessage(getClass(), "________________ ONRECEIVEDERROR _________________");
             ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             if (cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnectedOrConnecting()) {
                 spinnerStop();
@@ -545,7 +534,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                 cordovaWebView.setVisibility(View.INVISIBLE);
                 imageView.setVisibility(View.VISIBLE);
                 imageView.setBackgroundColor(getResources().getColor(R.color.white_color));
-                // finish();
             }
         }
 
@@ -557,7 +545,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
          */
         @Override
         public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
-            Log.e("outsystems", "----------- onReceivedHttpAuthRequest ----------------");
+            EventLogger.logMessage(getClass(), "________________ onReceivedHttpAuthRequest _________________");
             super.onReceivedHttpAuthRequest(view, handler, host, realm);
             handler.proceed("admin", "outsystems");
         }
@@ -570,8 +558,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
          */
         @Override
         public void onReceivedLoginRequest(WebView view, String realm, String account, String args) {
-            // TODO Auto-generated method stub
-            Log.e("outsystems", "----------- ONRECEIVEDLOGINREQUEST ----------------");
+            EventLogger.logMessage(getClass(), "________________ ONRECEIVEDLOGINREQUEST _________________");
             super.onReceivedLoginRequest(view, realm, account, args);
         }
 
@@ -633,83 +620,17 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
      * @param webview the webview
      * @return the bitmap for visible region
      */
-    public static Bitmap getBitmapForVisibleRegion(WebView webview) {
-        Bitmap returnedBitmap = null;
-        webview.setDrawingCacheEnabled(true);
-        returnedBitmap = Bitmap.createBitmap(webview.getDrawingCache());
-        webview.setDrawingCacheEnabled(false);
-        return returnedBitmap;
-    }
-
-    public void downloadAndOpenFile(final Context context, final String urlDownload) {
-        // String urlDirectDownload = urlDownload.replace("_download.aspx", "MyDocuments.aspx");
-        String urlDirectDownload = urlDownload;
-        // Get filename
-        final String filename = getFileName(urlDirectDownload);
-        // The place where the downloaded PDF file will be put
-        final File tempFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), filename);
-        if (tempFile.exists()) {
-            // Delete the File
-            tempFile.delete();
+    public Bitmap getBitmapForVisibleRegion(WebView webview) {
+        try {
+            Bitmap returnedBitmap = null;
+            webview.setDrawingCacheEnabled(true);
+            returnedBitmap = Bitmap.createBitmap(webview.getDrawingCache());
+            webview.setDrawingCacheEnabled(false);
+            return returnedBitmap;
+        } catch (Exception e) {
+            EventLogger.logError(getClass(), e.toString());
+            return null;
         }
-
-        // Show progress dialog while downloading
-        spinnerStart();
-        // Create the download request
-        DownloadManager.Request r = new DownloadManager.Request(Uri.parse(urlDirectDownload));
-        r.setDestinationInExternalFilesDir(context, Environment.DIRECTORY_DOWNLOADS, filename);
-        r.setMimeType("application/octet-stream");
-        final DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-        BroadcastReceiver onComplete = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                context.unregisterReceiver(this);
-
-                spinnerStop();
-                long downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-                Cursor c = dm.query(new DownloadManager.Query().setFilterById(downloadId));
-
-                if (c.moveToFirst()) {
-                    int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
-                    if (status == DownloadManager.STATUS_SUCCESSFUL) {
-                        try {
-                            MimeTypeMap map = MimeTypeMap.getSingleton();
-                            String ext = MimeTypeMap.getFileExtensionFromUrl(tempFile.getName());
-                            String type = map.getMimeTypeFromExtension(ext);
-
-                            if (type == null)
-                                type = "*/*";
-
-                            Intent myIntent = new Intent(android.content.Intent.ACTION_VIEW);
-                            Uri data = Uri.fromFile(tempFile);
-                            myIntent.setDataAndType(data, type);
-                            startActivity(myIntent);
-                        } catch (Exception e) {
-                            Log.e("outsystems", e.toString());
-                        }
-                    } else {
-                        Log.d("outsystems", "Reason: " + c.getInt(c.getColumnIndex(DownloadManager.COLUMN_REASON)));
-                    }
-                }
-                c.close();
-            }
-        };
-        context.registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
-
-        // Enqueue the request
-        dm.enqueue(r);
-    }
-
-    public static String getFileName(String url) {
-        String fileName;
-        int slashIndex = url.lastIndexOf("/");
-        int qIndex = url.lastIndexOf("?");
-        if (qIndex > slashIndex) {// if has parameters
-            fileName = url.substring(slashIndex + 1, qIndex);
-        } else {
-            fileName = url.substring(slashIndex + 1);
-        }
-        return fileName;
     }
 
     // ----------------------------------------------//
@@ -747,6 +668,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     }
 
     private void openFile(Uri localUri, String extension, Context context) throws JSONException {
+        EventLogger.logError(getClass(), "URI --> " + localUri.getPath());
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.setDataAndType(localUri, getMimeType(extension));
@@ -763,9 +685,10 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     }
 
     private void downloadAndOpenFilePlu(final Context context, final String fileUrl) {
-        final String filename = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
+        String filename = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
+        filename = filename.replace("%20", "");
         final String extension = fileUrl.substring(fileUrl.lastIndexOf("."));
-        final File tempFile = new File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), filename);
+        final File tempFile = new File(getDirectorty(), filename);
 
         if (tempFile.exists()) {
             try {
@@ -777,7 +700,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         }
 
         DownloadManager.Request r = new DownloadManager.Request(Uri.parse(fileUrl));
-        r.setDestinationInExternalFilesDir(context, Environment.DIRECTORY_DOWNLOADS, filename);
+        String cookie = CookieManager.getInstance().getCookie(cordovaWebView.getUrl());
+        r.addRequestHeader("Cookie", cookie);
+        r.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
         final DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         BroadcastReceiver onComplete = new BroadcastReceiver() {
             @Override
@@ -790,12 +715,18 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
                 if (c.moveToFirst()) {
                     int status = c.getInt(c.getColumnIndex(DownloadManager.COLUMN_STATUS));
-                    if (status == DownloadManager.STATUS_SUCCESSFUL)
+                    if (status == DownloadManager.STATUS_SUCCESSFUL) {
                         try {
+                            EventLogger.logMessage(getClass(), "Download with success");
                             openFile(Uri.fromFile(tempFile), extension, context);
                         } catch (JSONException e) {
-                            Log.e("outsystems", e.toString());
+                            EventLogger.logError(getClass(), e);
                         }
+                    } else {
+                        EventLogger.logMessage(getClass(),
+                                "Reason: " + c.getInt(c.getColumnIndex(DownloadManager.COLUMN_REASON)));
+                    }
+
                 }
                 c.close();
             }
@@ -803,5 +734,33 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         context.registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
         dm.enqueue(r);
+    }
+
+    /**
+     * Gets the directorty.
+     *
+     * @return the directorty
+     */
+    private File getDirectorty() {
+        File directory = null;
+        if (Environment.getExternalStorageState() == null) {
+            // create new file directory object
+            directory = new File(Environment.getDataDirectory() + "/Download/");
+            // if no directory exists, create new directory
+            if (!directory.exists()) {
+                directory.mkdir();
+            }
+
+            // if phone DOES have sd card
+        } else if (Environment.getExternalStorageState() != null) {
+            // search for directory on SD card
+            directory = new File(Environment.getExternalStorageDirectory() + "/Download/");
+            // if no directory exists, create new directory to store test
+            // results
+            if (!directory.exists()) {
+                directory.mkdir();
+            }
+        }
+        return directory;
     }
 }

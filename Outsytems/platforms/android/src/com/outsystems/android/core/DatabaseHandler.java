@@ -22,7 +22,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.outsystems.android.model.HubApplicationModel;
 
@@ -227,10 +226,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date convertedDate = new Date();
         try {
+            EventLogger.logMessage(getClass(), "Date: " + date);
             convertedDate = dateFormat.parse(date);
             return convertedDate;
         } catch (ParseException e) {
-            Log.e("outsystems", e.toString());
+            EventLogger.logError(getClass(), e);
         }
 
         return null;

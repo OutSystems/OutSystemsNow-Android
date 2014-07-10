@@ -18,7 +18,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -34,6 +33,7 @@ import com.arellomobile.android.push.BasePushMessageReceiver;
 import com.arellomobile.android.push.PushManager;
 import com.arellomobile.android.push.utils.RegisterBroadcastReceiver;
 import com.outsystems.android.core.DatabaseHandler;
+import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
@@ -61,7 +61,7 @@ public class HubAppActivity extends BaseActivity {
 
                     @Override
                     public void requestFinish(Object result, boolean error, int statusCode) {
-                        Log.d("outystems", "Status Code: " + statusCode);
+                        EventLogger.logMessage(getClass(), "Status Code: " + statusCode);
                         if (!error) {
                             Infrastructure infrastructure = (Infrastructure) result;
                             if (infrastructure == null) {
@@ -153,7 +153,7 @@ public class HubAppActivity extends BaseActivity {
             pushManager.onStartup(this);
         } catch (Exception e) {
             // push notifications are not available or AndroidManifest.xml is not configured properly
-            Log.e("outsystems", e.toString());
+            EventLogger.logError(getClass(), e);
         }
 
         // Register for push!
@@ -279,13 +279,13 @@ public class HubAppActivity extends BaseActivity {
         try {
             unregisterReceiver(mReceiver);
         } catch (Exception e) {
-            Log.e("outsystems", e.toString());
+            EventLogger.logError(getClass(), e);
         }
 
         try {
             unregisterReceiver(mBroadcastReceiver);
         } catch (Exception e) {
-            Log.e("outsystems", e.toString());
+            EventLogger.logError(getClass(), e);
         }
     }
 
@@ -340,7 +340,7 @@ public class HubAppActivity extends BaseActivity {
 
             @Override
             public void requestFinish(Object result, boolean error, int statusCode) {
-                Log.d("outsystems", "Register Token in the server");
+                EventLogger.logMessage(getClass(), "Register Token in the server");
             }
         });
     }
@@ -364,7 +364,7 @@ public class HubAppActivity extends BaseActivity {
                 dialog.show();
             }
         } catch (JSONException e) {
-            Log.e("outsystems", e.toString());
+            EventLogger.logError(getClass(), e);
         }
     }
 }
