@@ -573,7 +573,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Gets the app version.
-     *
+     * 
      * @return the app version
      */
     private String getAppVersion() {

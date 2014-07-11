@@ -68,5 +68,4 @@ public class CordovaLoaderWebClient extends CordovaWebViewClient {
         }
         return null;
     }
-
 }
