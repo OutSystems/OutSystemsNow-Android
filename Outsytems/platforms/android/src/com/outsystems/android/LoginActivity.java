@@ -189,10 +189,10 @@ public class LoginActivity extends BaseActivity {
      * @param login the login
      */
     private void openWebApplicationActivity(Login login) {
-        Intent intent = new Intent(getApplicationContext(), Outsystems.class);
+        Intent intent = new Intent(getApplicationContext(), WebApplicationActivity.class);
         Application application = login.getApplications().get(0);
         if (application != null) {
-            intent.putExtra(Outsystems.KEY_APPLICATION, application);
+            intent.putExtra(WebApplicationActivity.KEY_APPLICATION, application);
         }
         startActivity(intent);
     }

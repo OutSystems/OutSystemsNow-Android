@@ -52,7 +52,7 @@ public class ApplicationsActivity extends BaseActivity {
             Intent intent = new Intent(getApplicationContext(), WebApplicationActivity.class);
             Application application = (Application) parent.getAdapter().getItem(position);
             if (application != null) {
-                intent.putExtra(Outsystems.KEY_APPLICATION, application);
+                intent.putExtra(WebApplicationActivity.KEY_APPLICATION, application);
             }
             startActivity(intent);
         }

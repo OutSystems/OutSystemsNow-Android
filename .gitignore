@@ -1,0 +1,57 @@
+#############################
+# Android
+gen/
+build/
+/local.properties
+# Old Android
+bin/
+proguard/
+# built application files
+*.apk
+*.ap_
+# files for the dex VM
+*.dex
+# Java class files
+*.class
+
+# suggestion: also ignore libs/*.properties files for old eclipse project
+# can't be added here because multiple libs/ directory can be around in different paths
+
+# Android Studio
+.idea/
+.gradle
+/*/local.properties
+/*/out
+/*/*/build
+/*/*/production
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
+.project
+.classpath
+.settings
+# Eclipse NDK
+.cproject
+
+# Mac
+.DS_Store
+
+# Generic
+*~
+.swp
+
+# Android NDK
+*.o
+*.o.d
+*_g
+*.a
+*.so
+*.pinfo
+*.gcno
+*.bar
+gdbserver
+gdb.setup
+
+#############################

@@ -8,8 +8,6 @@
 package com.outsystems.android;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -20,7 +18,6 @@ import org.apache.cordova.CordovaChromeClient;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.CordovaWebViewClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,8 +30,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.AssetManager;
-import android.content.res.Configuration;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -55,15 +51,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
-import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.outsystems.android.core.CordovaLoaderWebClient;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
@@ -79,6 +74,7 @@ import com.phonegap.plugins.barcodescanner.BarcodeScanner;
  */
 public class WebApplicationActivity extends BaseActivity implements CordovaInterface {
 
+    public static String KEY_APPLICATION = "key_application";
     CordovaWebView cordovaWebView;
 
     private final ExecutorService threadPool = Executors.newCachedThreadPool();
@@ -89,7 +85,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     // Plugin to call when activity result is received
     protected CordovaPlugin activityResultCallback = null;
 
-    private AssetManager mngr;
     private Button buttonForth;
     protected ProgressDialog spinnerDialog = null;
     private ImageView imageView;
@@ -150,8 +145,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_application);
 
-        mngr = getAssets();
-
         // Hide action bar
         getSupportActionBar().hide();
 
@@ -176,21 +169,20 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                     .getApplicationHosted(), application.getPath());
         }
 
-        // spinnerStart("", "Loading");
+        cordovaWebView.setWebViewClient(new CordovaCustomWebClient(this, cordovaWebView));
 
-        // Set by <content src="index.html" /> in config.xml
-        cordovaWebView.setWebViewClient(new CordovaCustoWebClient(this, cordovaWebView));
-
+        // Listener to Download Web File with Native Component - Download Manager
         cordovaWebView.setDownloadListener(new DownloadListener() {
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,
                     long contentLength) {
-                downloadAndOpenFilePlu(WebApplicationActivity.this, url);
+                downloadAndOpenFile(WebApplicationActivity.this, url);
             }
         });
 
         // Set in the user agent OutSystemsApp
         String ua = cordovaWebView.getSettings().getUserAgentString();
-        String newUA = ua.concat(" OutSystemsApp v. ");
+        String appVersion = getAppVersion();
+        String newUA = ua.concat(" OutSystemsApp v." + appVersion);
         cordovaWebView.getSettings().setUserAgentString(newUA);
         if (savedInstanceState == null) {
             cordovaWebView.loadUrl(url);
@@ -227,20 +219,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                     R.drawable.icon_chevron_forth)));
 
         }
-
-        // cwv.loadUrl("http://causecode.com", 60000);
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see android.support.v7.app.ActionBarActivity#onConfigurationChanged(android.content.res.Configuration)
-     */
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        // cordovaWebView.reload();
     }
 
     /*
@@ -440,6 +418,12 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         return drawable;
     }
 
+    /**
+     * Gets the disable button.
+     * 
+     * @param icon the icon
+     * @return the disable button
+     */
     private BitmapDrawable getDisableButton(Drawable icon) {
         Bitmap enabledBitmap = ((BitmapDrawable) icon).getBitmap();
 
@@ -457,33 +441,13 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         return disabled;
     }
 
-    public class CordovaCustoWebClient extends CordovaWebViewClient {
+    /**
+     * The Class CordovaCustomWebClient.
+     */
+    public class CordovaCustomWebClient extends CordovaLoaderWebClient {
 
-        public CordovaCustoWebClient(CordovaInterface cordova, CordovaWebView view) {
+        public CordovaCustomWebClient(CordovaInterface cordova, CordovaWebView view) {
             super(cordova, view);
-        }
-
-        @Override
-        public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-            String identifierCordova = "/cdvload/";
-            if (url.contains(identifierCordova)) {
-                // Get path to load local file Cordova JS
-                String[] split = url.split(identifierCordova);
-                String path = "";
-                if (split.length > 1) {
-                    path = split[1];
-                }
-
-                try {
-                    InputStream stream = WebApplicationActivity.this.mngr.open("www/" + path);
-                    WebResourceResponse response = new WebResourceResponse("text/javascript", "UTF-8", stream);
-                    return response;
-
-                } catch (IOException e) {
-                    EventLogger.logError(getClass(), e);
-                }
-            }
-            return null;
         }
 
         @SuppressLint("DefaultLocale")
@@ -536,32 +500,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                 imageView.setBackgroundColor(getResources().getColor(R.color.white_color));
             }
         }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.apache.cordova.CordovaWebViewClient#onReceivedHttpAuthRequest(android.webkit.WebView,
-         * android.webkit.HttpAuthHandler, java.lang.String, java.lang.String)
-         */
-        @Override
-        public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
-            EventLogger.logMessage(getClass(), "________________ onReceivedHttpAuthRequest _________________");
-            super.onReceivedHttpAuthRequest(view, handler, host, realm);
-            handler.proceed("admin", "outsystems");
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see android.webkit.WebViewClient#onReceivedLoginRequest(android.webkit.WebView, java.lang.String,
-         * java.lang.String, java.lang.String)
-         */
-        @Override
-        public void onReceivedLoginRequest(WebView view, String realm, String account, String args) {
-            EventLogger.logMessage(getClass(), "________________ ONRECEIVEDLOGINREQUEST _________________");
-            super.onReceivedLoginRequest(view, realm, account, args);
-        }
-
     }
 
     @SuppressWarnings("deprecation")
@@ -633,8 +571,23 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         }
     }
 
+    /**
+     * Gets the app version.
+     *
+     * @return the app version
+     */
+    private String getAppVersion() {
+        try {
+            String versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            return versionName;
+        } catch (NameNotFoundException e) {
+            EventLogger.logError(getClass(), e);
+        }
+        return "";
+    }
+
     // ----------------------------------------------//
-    // Download File and Open with plugin //
+    // Download File and Open with Native application//
     // ----------------------------------------------//
     private static final HashMap<String, String> MIME_TYPES;
     static {
@@ -684,7 +637,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     }
 
-    private void downloadAndOpenFilePlu(final Context context, final String fileUrl) {
+    private void downloadAndOpenFile(final Context context, final String fileUrl) {
         String filename = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
         filename = filename.replace("%20", "");
         final String extension = fileUrl.substring(fileUrl.lastIndexOf("."));
@@ -738,7 +691,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Gets the directorty.
-     *
+     * 
      * @return the directorty
      */
     private File getDirectorty() {
