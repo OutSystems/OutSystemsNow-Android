@@ -476,15 +476,17 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             List<String> trustedHosts = WebServicesClient.getInstance().getTrustedHosts();
             String host = HubManagerHelper.getInstance().getApplicationHosted();
-            if (trustedHosts != null && host != null) {
-                for (String trustedHost : trustedHosts) {
-                    if (host.contains(trustedHost)) {
+            
+          //TODO remove comments to force the check the validity of SSL certificates, except for list of trusted servers
+            //if (trustedHosts != null && host != null) {
+            //    for (String trustedHost : trustedHosts) {
+            //        if (host.contains(trustedHost)) {
                         handler.proceed();
                         return;
-                    }
-                }
-            }
-            super.onReceivedSslError(view, handler, error);
+            //        }
+            //    }
+            //}
+            //super.onReceivedSslError(view, handler, error);
         }
 
         @Override

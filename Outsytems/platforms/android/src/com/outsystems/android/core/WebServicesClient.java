@@ -67,11 +67,7 @@ public class WebServicesClient {
     }
 
     public static WebServicesClient getInstance() {
-        if (instance == null) {
-            synchronized (WebServicesClient.class) {
-                instance = new WebServicesClient();
-            }
-        }
+    	instance = new WebServicesClient();        
         return instance;
     }
 
@@ -97,14 +93,16 @@ public class WebServicesClient {
             AsyncHttpResponseHandler asyncHttpResponseHandler) {
 
         StringEntity entity = null;
-        if (trustedHosts != null && hubApp != null) {
-            for (String trustedHost : trustedHosts) {
-                if (hubApp.contains(trustedHost)) {
+        
+        //TODO remove comments to force the check the validity of SSL certificates, except for list of trusted servers 
+        //if (trustedHosts != null && hubApp != null) {
+        //    for (String trustedHost : trustedHosts) {
+        //        if (hubApp.contains(trustedHost)) {
                     client.setSSLSocketFactory(getSSLMySSLSocketFactory());
-                    break;
-                }
-            }
-        }
+        //            break;
+        //        }
+        //    }
+        //}
         client.post(null, getAbsoluteUrl(hubApp, urlPath), entity, CONTENT_TYPE, asyncHttpResponseHandler);
     }
 
@@ -114,14 +112,16 @@ public class WebServicesClient {
         if (parameters != null) {
             params = new RequestParams(parameters);
         }
-        if (trustedHosts != null && hubApp != null) {
-            for (String trustedHost : trustedHosts) {
-                if (hubApp.contains(trustedHost)) {
+        
+      //TODO remove comments to force the check the validity of SSL certificates, except for list of trusted servers
+        //if (trustedHosts != null && hubApp != null) {
+        //    for (String trustedHost : trustedHosts) {
+        //        if (hubApp.contains(trustedHost)) {
                     client.setSSLSocketFactory(getSSLMySSLSocketFactory());
-                    break;
-                }
-            }
-        }
+        //            break;
+        //        }
+        //    }
+        //}
         client.get(getAbsoluteUrl(hubApp, urlPath), params, asyncHttpResponseHandler);
     }
 

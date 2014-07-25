@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.outsystems.android"
     android:hardwareAccelerated="true"
-    android:versionCode="1"
-    android:versionName="0.0.1"
+    android:versionCode="2"
+    android:versionName="1.0.0"
     android:windowSoftInputMode="adjustPan" >
 
     <supports-screens
@@ -178,7 +178,7 @@
             android:value="32B53-F301A" />
         <meta-data
             android:name="PW_PROJECT_ID"
-            android:value="A345049534539" />
+            android:value="A705010638295" />
     </application>
 
     <uses-sdk

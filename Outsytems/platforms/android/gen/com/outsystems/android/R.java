@@ -1097,7 +1097,6 @@ containing a value of this type.
         public static final int no_app_image=0x7f02006a;
         public static final int share_via_barcode=0x7f02006b;
         public static final int shopper_icon=0x7f02006c;
-        public static final int splash_screen=0x7f02006d;
     }
     public static final class id {
         public static final int action_bar=0x7f070023;
@@ -1129,7 +1128,6 @@ containing a value of this type.
         public static final int collapseActionView=0x7f07000d;
         public static final int contents_supplement_text_view=0x7f070071;
         public static final int contents_text_view=0x7f070070;
-        public static final int cordova_webview=0x7f070059;
         public static final int decode=0x7f07001a;
         public static final int decode_failed=0x7f07001b;
         public static final int decode_succeeded=0x7f07001c;
@@ -1160,7 +1158,8 @@ containing a value of this type.
         public static final int image_view=0x7f07005d;
         public static final int image_view_application=0x7f070061;
         public static final int image_view_logo=0x7f070048;
-        public static final int image_view_splash=0x7f07005a;
+        public static final int image_view_splash_bg=0x7f070059;
+        public static final int image_view_splash_icon=0x7f07005a;
         public static final int launch_product_query=0x7f07001d;
         public static final int listMode=0x7f070001;
         public static final int list_item=0x7f070030;
@@ -1291,21 +1290,20 @@ containing a value of this type.
         public static final int activity_applications=0x7f030017;
         public static final int activity_hub_app=0x7f030018;
         public static final int activity_login=0x7f030019;
-        public static final int activity_outsystems=0x7f03001a;
-        public static final int activity_splashscreen=0x7f03001b;
-        public static final int activity_web_application=0x7f03001c;
-        public static final int applications_grid_item=0x7f03001d;
-        public static final int bookmark_picker_list_item=0x7f03001e;
-        public static final int capture=0x7f03001f;
-        public static final int encode=0x7f030020;
-        public static final int help=0x7f030021;
-        public static final int history_list_item=0x7f030022;
-        public static final int search_book_contents=0x7f030023;
-        public static final int search_book_contents_header=0x7f030024;
-        public static final int search_book_contents_list_item=0x7f030025;
-        public static final int share=0x7f030026;
-        public static final int support_simple_spinner_dropdown_item=0x7f030027;
-        public static final int toolbar_web_application=0x7f030028;
+        public static final int activity_splashscreen=0x7f03001a;
+        public static final int activity_web_application=0x7f03001b;
+        public static final int applications_grid_item=0x7f03001c;
+        public static final int bookmark_picker_list_item=0x7f03001d;
+        public static final int capture=0x7f03001e;
+        public static final int encode=0x7f03001f;
+        public static final int help=0x7f030020;
+        public static final int history_list_item=0x7f030021;
+        public static final int search_book_contents=0x7f030022;
+        public static final int search_book_contents_header=0x7f030023;
+        public static final int search_book_contents_list_item=0x7f030024;
+        public static final int share=0x7f030025;
+        public static final int support_simple_spinner_dropdown_item=0x7f030026;
+        public static final int toolbar_web_application=0x7f030027;
     }
     public static final class menu {
         public static final int capture=0x7f0f0000;
