@@ -9,19 +9,7 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Calendar\"><param name=\"android-package\" value=\"nl.xservices.plugins.Calendar\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Battery\"><param name=\"android-package\" value=\"org.apache.cordova.batterystatus.BatteryListener\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Contacts\"><param name=\"android-package\" value=\"org.apache.cordova.contacts.ContactManager\" /></feature>",
                             "count": 1
                         },
                         {
@@ -29,7 +17,23 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Contacts\"><param name=\"android-package\" value=\"org.apache.cordova.contacts.ContactManager\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.GeoBroker\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Battery\"><param name=\"android-package\" value=\"org.apache.cordova.batterystatus.BatteryListener\" /></feature>",
                             "count": 1
                         },
                         {
@@ -37,7 +41,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
+                            "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -46,10 +50,6 @@
             "AndroidManifest.xml": {
                 "parents": {
                     "/*": [
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 2
-                        },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.READ_CONTACTS\" />",
                             "count": 1
@@ -69,6 +69,10 @@
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 2
                         }
                     ],
                     "/manifest": [
@@ -594,13 +598,13 @@
         }
     },
     "installed_plugins": {
-        "org.apache.cordova.camera": {
-            "PACKAGE_NAME": "com.outsystems.android"
-        },
         "nl.x-services.plugins.calendar": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "org.apache.cordova.battery-status": {
+        "org.apache.cordova.device": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "com.phonegap.plugins.barcodescanner": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
         "org.apache.cordova.console": {
@@ -609,19 +613,19 @@
         "org.apache.cordova.contacts": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "org.apache.cordova.device": {
+        "org.apache.cordova.dialogs": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "org.apache.cordova.dialogs": {
+        "org.apache.cordova.geolocation": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "org.apache.cordova.battery-status": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
         "org.apache.cordova.file": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "com.phonegap.plugins.barcodescanner": {
-            "PACKAGE_NAME": "com.outsystems.android"
-        },
-        "org.apache.cordova.geolocation": {
+        "org.apache.cordova.camera": {
             "PACKAGE_NAME": "com.outsystems.android"
         }
     },

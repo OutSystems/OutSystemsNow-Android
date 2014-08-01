@@ -76,22 +76,3 @@
 ### 0.2.9 (Feb 26, 2014)
 * CB-6086 Fix typo in ffos part of plugin.xml: Camera -> Contacts
 * CB-5994 Switch Contact ID lookup to use Raw contact id.
-
-### 0.2.10 (Apr 17, 2014)
-* CB-6126: [BlackBerry10] Update docs quirks section for fields which are supported
-* CB-6212: [iOS] fix warnings compiled under arm64 64-bit
-* CB-6460: Update license headers
-* Add NOTICE file
-
-### 0.2.11 (Jun 05, 2014)
-* CB-6127 Spanish and French Translations added. Github close #25
-* Remove deprecated symbols for iOS < 6
-* CB-6797 Add license
-* [wp8] now pupulates contact photos
-* Update license headers format
-* Add pickContact functionality to cordova contacts plugin
-* CB-5416 - Adding support for auto-managing permissions
-* CB-6682 move windows8 command proxy into it's missing platform tag. This closes #30
-* Add ContactError codes to index.md doc (closes #28)
-* CB-6491 add CONTRIBUTING.md
-* Docs typo: navigator.contacts.length -> contacts.length

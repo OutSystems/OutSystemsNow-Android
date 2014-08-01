@@ -168,14 +168,9 @@ namespace WPCordovaClassLib.Cordova.Commands
                         notifyBox.Tag = new NotifBoxData { previous = previous, callbackId = aliasCurrentCommandCallbackId };
                         notifyBox.PageTitle.Text = title;
                         notifyBox.SubTitle.Text = message;
-
-                        //TextBox textBox = new TextBox();
-                        //textBox.Text = defaultText;
-                        //textBox.AcceptsReturn = true;
-                        //notifyBox.ContentScroller.Content = textBox;
-
-                        notifyBox.InputText.Text = defaultText;
-                        notifyBox.InputText.Visibility = Visibility.Visible;
+                        TextBox textBox = new TextBox();
+                        textBox.Text = defaultText;
+                        notifyBox.TitlePanel.Children.Add(textBox);
 
                         for (int i = 0; i < buttonLabels.Length; ++i)
                         {
@@ -183,8 +178,7 @@ namespace WPCordovaClassLib.Cordova.Commands
                             button.Content = buttonLabels[i];
                             button.Tag = i + 1;
                             button.Click += promptBoxbutton_Click;
-                            notifyBox.ButtonPanel.Orientation = Orientation.Vertical;
-                            notifyBox.ButtonPanel.Children.Add(button);
+                            notifyBox.TitlePanel.Children.Add(button);
                         }
 
                         grid.Children.Add(notifyBox);
@@ -271,10 +265,14 @@ namespace WPCordovaClassLib.Cordova.Commands
 
             if (promptBox != null)
             {
-                NotificationBox box = promptBox as NotificationBox;
-
-                text = box.InputText.Text;
-
+                foreach (UIElement element in (promptBox as NotificationBox).TitlePanel.Children)
+                {
+                    if (element is TextBox)
+                    {
+                        text = (element as TextBox).Text;
+                        break;
+                    }
+                }
                 PhoneApplicationPage page = Page;
                 if (page != null)
                 {

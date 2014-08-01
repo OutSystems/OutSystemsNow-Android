@@ -25,6 +25,22 @@ This plugin provides access to some native dialog UI elements.
 
     cordova plugin add org.apache.cordova.dialogs
 
+### Firefox OS Quirks
+
+Create __www/manifest.webapp__ as described in 
+[Manifest Docs](https://developer.mozilla.org/en-US/Apps/Developing/Manifest).
+Add permisions: 
+
+    "permissions": {
+        "desktop-notification": {
+			"description": "Describe why you need to enable notifications"
+		}
+	}
+
+Edit __www/index.html__ and add following in `head` section:
+
+	<link rel="stylesheet" type="text/css" href="css/notification.css" />
+
 ## Methods
 
 - `navigator.notification.alert`
@@ -153,7 +169,7 @@ Displays a native dialog box that is more customizable than the browser's `promp
 
 - __message__: Dialog message. _(String)_
 
-- __promptCallback__: Callback to invoke with index of button pressed (1, 2, or 3) or when the dialog is dismissed without a button press (0). _(Function)_
+- __promptCallback__: Callback to invoke when a button is pressed. _(Function)_
 
 - __title__: Dialog title _(String)_ (Optional, defaults to `Prompt`)
 
@@ -168,8 +184,6 @@ in the prompt dialog box. The `results` object passed to the callback
 contains the following properties:
 
 - __buttonIndex__: The index of the pressed button. _(Number)_ Note that the index uses one-based indexing, so the value is `1`, `2`, `3`, etc.
-
-
 
 - __input1__: The text entered in the prompt dialog box. _(String)_
 
@@ -193,7 +207,6 @@ contains the following properties:
 - Android
 - Firefox OS
 - iOS
-- Windows Phone 7 and 8
 
 ### Android Quirks
 

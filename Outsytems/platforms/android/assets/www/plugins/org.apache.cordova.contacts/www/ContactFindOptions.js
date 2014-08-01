@@ -26,10 +26,9 @@ cordova.define("org.apache.cordova.contacts.ContactFindOptions", function(requir
  * @param multiple boolean used to determine if more than one contact should be returned
  */
 
-var ContactFindOptions = function(filter, multiple, desiredFields) {
+var ContactFindOptions = function(filter, multiple) {
     this.filter = filter || '';
     this.multiple = (typeof multiple != 'undefined' ? multiple : false);
-    this.desiredFields = typeof desiredFields != 'undefined' ? desiredFields : [];
 };
 
 module.exports = ContactFindOptions;

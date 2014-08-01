@@ -54,7 +54,6 @@ attach an event listener once the `deviceready` event fires. e.g.:
 - BlackBerry 10
 - Windows Phone 7 and 8
 - Tizen
-- Firefox OS
 
 ### Windows Phone 7 and 8 Quirks
 
@@ -93,7 +92,6 @@ an event listener once the `deviceready` event fires.
 - Android
 - BlackBerry 10
 - Tizen
-- Firefox OS
 
 ### Example
 
@@ -126,7 +124,6 @@ attach an event listener once the `deviceready` event fires.
 - Android
 - BlackBerry 10
 - Tizen
-- Firefox OS
 
 ### Example
 

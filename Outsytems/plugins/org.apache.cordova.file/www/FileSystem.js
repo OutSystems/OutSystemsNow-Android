@@ -29,9 +29,9 @@ var DirectoryEntry = require('./DirectoryEntry');
  * {DirectoryEntry} root directory of the file system (readonly)
  */
 var FileSystem = function(name, root) {
-    this.name = name;
+    this.name = name || null;
     if (root) {
-        this.root = new DirectoryEntry(root.name, root.fullPath, this, root.nativeURL);
+        this.root = new DirectoryEntry(root.name, root.fullPath, this);
     } else {
         this.root = new DirectoryEntry(this.name, '/', this);
     }

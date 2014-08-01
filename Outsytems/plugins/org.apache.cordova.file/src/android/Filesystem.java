@@ -37,6 +37,11 @@ public abstract class Filesystem {
 		public void handleData(InputStream inputStream, String contentType) throws IOException;
 	}
 
+	public static JSONObject makeEntryForPath(String path, String fsName, Boolean isDir)
+			throws JSONException {
+		return makeEntryForPath(path, fsName, isDir, null);
+	}
+
 	public static JSONObject makeEntryForPath(String path, String fsName, Boolean isDir, String nativeURL)
 			throws JSONException {
         JSONObject entry = new JSONObject();
@@ -54,11 +59,15 @@ public abstract class Filesystem {
         // Backwards compatibility
         entry.put("filesystem", "temporary".equals(fsName) ? 0 : 1);
 
-        if (isDir && !nativeURL.endsWith("/")) {
-            nativeURL += "/";
+        if (nativeURL != null) {
+        	entry.put("nativeURL", nativeURL);
         }
-    	entry.put("nativeURL", nativeURL);
         return entry;
+
+    }
+
+    public static JSONObject makeEntryForURL(LocalFilesystemURL inputURL, Boolean isDir) throws JSONException {
+        return makeEntryForURL(inputURL, isDir, null);
     }
 
     public static JSONObject makeEntryForURL(LocalFilesystemURL inputURL, Boolean isDir, String nativeURL) throws JSONException {
@@ -144,7 +153,7 @@ public abstract class Filesystem {
                 // Delete original
                 srcFs.removeFileAtLocalURL(srcURL);
             }
-            return getEntryForLocalURL(destination);
+            return makeEntryForURL(destination, false);
         } else {
             throw new NoModificationAllowedException("Cannot move file at source URL");
         }

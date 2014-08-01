@@ -25,7 +25,7 @@ var exec = require('cordova/exec'),
     File = require('./File'),
     FileError = require('./FileError'),
     ProgressEvent = require('./ProgressEvent'),
-    origFileReader = modulemapper.getOriginalSymbol(window, 'FileReader');
+    origFileReader = modulemapper.getOriginalSymbol(this, 'FileReader');
 
 /**
  * This class reads the mobile device file system.

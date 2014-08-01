@@ -24,7 +24,6 @@
 #import <Cordova/NSDictionary+Extensions.h>
 #import <ImageIO/CGImageProperties.h>
 #import <AssetsLibrary/ALAssetRepresentation.h>
-#import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/CGImageSource.h>
 #import <ImageIO/CGImageProperties.h>
 #import <ImageIO/CGImageDestination.h>
@@ -85,7 +84,7 @@ static NSSet* org_apache_cordova_validArrowDirections;
 
     bool hasCamera = [UIImagePickerController isSourceTypeAvailable:sourceType];
     if (!hasCamera) {
-        NSLog(@"Camera.getPicture: source type %lu not available.", (unsigned long)sourceType);
+        NSLog(@"Camera.getPicture: source type %d not available.", sourceType);
         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"no camera available"];
         [self.commandDelegate sendPluginResult:result callbackId:callbackId];
         return;
@@ -151,7 +150,13 @@ static NSSet* org_apache_cordova_validArrowDirections;
         NSDictionary* options = [command.arguments objectAtIndex:10 withDefault:nil];
         [self displayPopover:options];
     } else {
-        [self.viewController presentViewController:cameraPicker animated:YES completion:nil];
+        SEL selector = NSSelectorFromString(@"presentViewController:animated:completion:");
+        if ([self.viewController respondsToSelector:selector]) {
+            [self.viewController presentViewController:cameraPicker animated:YES completion:nil];
+        } else {
+            // deprecated as of iOS >= 6.0
+            [self.viewController presentModalViewController:cameraPicker animated:YES];
+        }
     }
     self.hasPendingOperation = YES;
 }
@@ -165,10 +170,10 @@ static NSSet* org_apache_cordova_validArrowDirections;
 
 - (void)displayPopover:(NSDictionary*)options
 {
-    NSInteger x = 0;
-    NSInteger y = 32;
-    NSInteger width = 320;
-    NSInteger height = 480;
+    int x = 0;
+    int y = 32;
+    int width = 320;
+    int height = 480;
     UIPopoverArrowDirection arrowDirection = UIPopoverArrowDirectionAny;
 
     if (options) {
@@ -177,7 +182,7 @@ static NSSet* org_apache_cordova_validArrowDirections;
         width = [options integerValueForKey:@"width" defaultValue:320];
         height = [options integerValueForKey:@"height" defaultValue:480];
         arrowDirection = [options integerValueForKey:@"arrowDir" defaultValue:UIPopoverArrowDirectionAny];
-        if (![org_apache_cordova_validArrowDirections containsObject:[NSNumber numberWithUnsignedInteger:arrowDirection]]) {
+        if (![org_apache_cordova_validArrowDirections containsObject:[NSNumber numberWithInt:arrowDirection]]) {
             arrowDirection = UIPopoverArrowDirectionAny;
         }
     }
@@ -260,7 +265,11 @@ static NSSet* org_apache_cordova_validArrowDirections;
         cameraPicker.popoverController.delegate = nil;
         cameraPicker.popoverController = nil;
     } else {
-        [[cameraPicker presentingViewController] dismissViewControllerAnimated:YES completion:nil];
+        if ([cameraPicker respondsToSelector:@selector(presentingViewController)]) {
+            [[cameraPicker presentingViewController] dismissModalViewControllerAnimated:YES];
+        } else {
+            [[cameraPicker parentViewController] dismissModalViewControllerAnimated:YES];
+        }
     }
 
     CDVPluginResult* result = nil;
@@ -376,15 +385,14 @@ static NSSet* org_apache_cordova_validArrowDirections;
 {
     CDVCameraPicker* cameraPicker = (CDVCameraPicker*)picker;
 
-    [[cameraPicker presentingViewController] dismissViewControllerAnimated:YES completion:nil];
-
-    CDVPluginResult* result;
-    if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized) {
-        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"no image selected"];   // error callback expects string ATM
+    if ([cameraPicker respondsToSelector:@selector(presentingViewController)]) {
+        [[cameraPicker presentingViewController] dismissModalViewControllerAnimated:YES];
     } else {
-        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"has no access to assets"];   // error callback expects string ATM
+        [[cameraPicker parentViewController] dismissModalViewControllerAnimated:YES];
     }
-    
+    // popoverControllerDidDismissPopover:(id)popoverController is called if popover is cancelled
+
+    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"no image selected"];   // error callback expects string ATM
     [self.commandDelegate sendPluginResult:result callbackId:cameraPicker.callbackId];
 
     self.hasPendingOperation = NO;

@@ -41,7 +41,7 @@ function _hasId(id) {
 }
 
 // Extend mozContact prototype to provide update from Cordova
-function updateFromCordova(contact, fromContact) {
+mozContact.prototype.updateFromCordova = function(contact) {
 
     function exportContactFieldArray(contactFieldArray, key) {
         if (!key) {
@@ -100,45 +100,45 @@ function updateFromCordova(contact, fromContact) {
     var baseArrayFields = [['displayName', 'name'], ['nickname']];
     var baseStringFields = [];
     var j = 0; while(field = nameFields[j++]) {
-      if (fromContact.name[field[0]]) {
-        contact[field[1] || field[0]] = fromContact.name[field[0]].split(' ');
+      if (contact.name[field[0]]) {
+        this[field[1] || field[0]] = contact.name[field[0]].split(' ');
       }
     }
     j = 0; while(field = baseArrayFields[j++]) {
-      if (fromContact[field[0]]) {
-        contact[field[1] || field[0]] = fromContact[field[0]].split(' ');
+      if (contact[field[0]]) {
+        this[field[1] || field[0]] = contact[field[0]].split(' ');
       }
     }
     j = 0; while(field = baseStringFields[j++]) {
-      if (fromContact[field[0]]) {
-        contact[field[1] || field[0]] = fromContact[field[0]];
+      if (contact[field[0]]) {
+        this[field[1] || field[0]] = contact[field[0]];
       }
     }
-    if (fromContact.birthday) {
-      contact.bday = new Date(fromContact.birthday);
+    if (contact.birthday) {
+      this.bday = new Date(contact.birthday);
     }
-    if (fromContact.emails) {
-        var emails = exportContactField(fromContact.emails)
-        contact.email = emails;
+    if (contact.emails) {
+        var emails = exportContactField(contact.emails)
+        this.email = emails;
     }
-    if (fromContact.categories) {
-        contact.category = exportContactFieldArray(fromContact.categories);
+    if (contact.categories) {
+        this.category = exportContactFieldArray(contact.categories);
     }
-    if (fromContact.addresses) {
-        contact.adr = exportAddress(fromContact.addresses);
+    if (contact.addresses) {
+        this.adr = exportAddress(contact.addresses);
     }
-    if (fromContact.phoneNumbers) {
-        contact.tel = exportContactField(fromContact.phoneNumbers);
+    if (contact.phoneNumbers) {
+        this.tel = exportContactField(contact.phoneNumbers);
     }
-    if (fromContact.organizations) {
+    if (contact.organizations) {
         // XXX: organizations are saved in 2 arrays - org and jobTitle
         //      depending on the usecase it might generate issues
         //      where wrong title will be added to an organization
-        contact.org = exportContactFieldArray(fromContact.organizations, 'name');
-        contact.jobTitle = exportContactFieldArray(fromContact.organizations, 'title');
+        this.org = exportContactFieldArray(contact.organizations, 'name');
+        this.jobTitle = exportContactFieldArray(contact.organizations, 'title');
     }
-    if (fromContact.note) {
-        contact.note = [fromContact.note];
+    if (contact.note) {
+        this.note = [contact.note];
     }
 }
 
@@ -287,7 +287,7 @@ function createMozillaFromCordova(successCB, errorCB, contact) {
         filterBy: ['id'], filterValue: contact.id, filterOp: 'equals'});
       search.onsuccess = function() {
         moz = search.result[0];
-        updateFromCordova(moz, contact);
+        moz.updateFromCordova(contact);
         successCB(moz);
       };
       search.onerror = errorCB;
@@ -296,11 +296,11 @@ function createMozillaFromCordova(successCB, errorCB, contact) {
 
     // create empty contact
     moz = new mozContact();
-    // if ('init' in moz) {
+    if ('init' in moz) {
       // 1.2 and below compatibility
-      // moz.init();
-    // }
-    updateFromCordova(moz, contact);
+      moz.init();
+    }
+    moz.updateFromCordova(contact);
     successCB(moz);
 }
 
@@ -461,4 +461,4 @@ module.exports = {
     search: search
 };    
     
-require("cordova/firefoxos/commandProxy").add("Contacts", module.exports);
+require("cordova/firefoxos/commandProxy").add("Contacts", module.exports); 

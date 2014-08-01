@@ -157,11 +157,7 @@ module.exports = {
 
                 return stream.readAsync(buffer, readSize, Windows.Storage.Streams.InputStreamOptions.none);
             }).done(function(buffer) {
-                try{
-                    win(Windows.Security.Cryptography.CryptographicBuffer.convertBinaryToString(encoding, buffer));
-                } catch (e) {
-                    fail && fail(FileError.ENCODING_ERR);
-                }
+                win(Windows.Security.Cryptography.CryptographicBuffer.convertBinaryToString(encoding, buffer));
             },function() {
                 fail && fail(FileError.NOT_FOUND_ERR);
             });
@@ -191,47 +187,6 @@ module.exports = {
         );
     },
 
-    readAsBinaryString:function(win,fail,args) {
-        var fileName = args[0];
-
-
-        Windows.Storage.StorageFile.getFileFromPathAsync(fileName).then(
-            function (storageFile) {
-                Windows.Storage.FileIO.readBufferAsync(storageFile).done(
-                    function (buffer) {
-			var dataReader = Windows.Storage.Streams.DataReader.fromBuffer(buffer);
-			var fileContent = dataReader.readString(buffer.length);
-			dataReader.close();
-			win(fileContent);
-                    }
-                );
-            }, function () {
-                fail && fail(FileError.NOT_FOUND_ERR);
-            }
-        );
-    },
-
-    readAsArrayBuffer:function(win,fail,args) {
-        var fileName = args[0];
-
-
-        Windows.Storage.StorageFile.getFileFromPathAsync(fileName).then(
-            function (storageFile) {
-            	var blob = MSApp.createFileFromStorageFile(storageFile);
-            	var url = URL.createObjectURL(blob, { oneTimeOnly: true });
-            	var xhr = new XMLHttpRequest();
-            	xhr.open("GET", url, true);
-            	xhr.responseType = 'arraybuffer';
-            	xhr.onload = function() {
-            	    win(xhr.response);
-            	};
-            	xhr.send();
-            }, function () {
-                fail && fail(FileError.NOT_FOUND_ERR);
-            }
-        );
-    },
-    
     getDirectory:function(win,fail,args) {
         var fullPath = args[0];
         var path = args[1];
@@ -421,20 +376,9 @@ module.exports = {
     },
 
     getFile:function(win,fail,args) {
-		//not sure why, but it won't work with normal slashes...
-		var fullPath = args[0].replace(/\//g, '\\');
-        var path = args[1].replace(/\//g, '\\');
+        var fullPath = args[0];
+        var path = args[1];
         var options = args[2];
-
-        var completePath = fullPath + '\\' + path;
-		//handles trailing slash and leading slash, or just one or the other
-        completePath = completePath.replace(/\\\\\\/g, '/').replace(/\\\\/g, '\\');
-
-        var fileName = completePath.substring(completePath.lastIndexOf('\\'));
-		
-		//final adjustment
-        fullPath = completePath.substring(0, completePath.lastIndexOf('\\'));
-        path = fileName.replace(/\\/g, '');
 
         var flag = "";
         if (options !== null) {

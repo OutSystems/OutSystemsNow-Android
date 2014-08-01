@@ -71,32 +71,3 @@
 
 ### 0.2.8 (Feb 26, 2014)
 * CB-1826 Catch OOM on gallery image resize
-
-### 0.2.9 (Apr 17, 2014)
-* CB-6460: Update license headers
-* CB-6422: [windows8] use cordova/exec/proxy
-* [WP8] When only targetWidth or targetHeight is provided, use it as the only bound
-* CB-4027, CB-5102, CB-2737, CB-2387: [WP] Fix camera issues, cropping, memory leaks
-* CB-6212: [iOS] fix warnings compiled under arm64 64-bit
-* [BlackBerry10] Add rim xml namespaces declaration
-* Add NOTICE file
-
-### 0.3.0 (Jun 05, 2014)
-* CB-2083 documented saveToPhotoAlbum quirk on WP8
-* CB-5895 documented saveToPhotoAlbum quirk on WP8
-* Remove deprecated symbols for iOS < 6
-* documentation translation: cordova-plugin-camera
-* Lisa testing pulling in plugins for plugin: cordova-plugin-camera
-* Lisa testing pulling in plugins for plugin: cordova-plugin-camera
-* Lisa testing pulling in plugins for plugin: cordova-plugin-camera
-* Lisa testing pulling in plugins for plugin: cordova-plugin-camera
-* ubuntu: use application directory for images
-* CB-6795 Add license
-* Little fix in code formatting
-* CB-6613 Use WinJS functionality to get base64-encoded content of image instead of File plugin functionality
-* CB-6612 camera.getPicture now always returns encoded JPEG image
-* Removed invalid note from CB-5398
-* CB-6576 - Returns a specific error message when app has no access to library.
-* CB-6491 add CONTRIBUTING.md
-* CB-6546 android: Fix a couple bugs with allowEdit pull request
-* CB-6546 android: Add support for allowEdit Camera option

@@ -40,6 +40,7 @@ Rectangle {
             console.log(errorString);
         }
         videoRecorder.audioBitRate: 128000
+        videoRecorder.mediaContainer: "mp4"
         imageCapture {
             onImageSaved: {
                 root.exec("Camera", "onImageSaved", [path]);
@@ -99,7 +100,7 @@ Rectangle {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        camera.imageCapture.captureToLocation(ui.parent.plugin('Camera').generateLocation("jpg"));
+                        camera.imageCapture.capture();
                     }
                 }
             }

@@ -24,8 +24,14 @@ module.exports = {
         new PluginResult(args, env).ok();
     },
 
-    getHomePath: function (success, fail, args, env) {
-        var homeDir = window.qnx.webplatform.getApplication().getEnv("HOME");
-        new PluginResult(args, env).ok(homeDir);
+    isSandboxed : function (success, fail, args, env) {
+        new PluginResult(args, env).ok(require("lib/webview").getSandbox() === "1");
+    },
+
+    resolveLocalPath : function (success, fail, args, env) {
+        var homeDir = window.qnx.webplatform.getApplication().getEnv("HOME").replace("/data", "/app/native/"),
+            path = homeDir + JSON.parse(decodeURIComponent(args[0])).substring(9);
+        require("lib/webview").setSandbox(false);
+        new PluginResult(args, env).ok(path);
     }
 };

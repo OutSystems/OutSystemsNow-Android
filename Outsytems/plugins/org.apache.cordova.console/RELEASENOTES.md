@@ -40,12 +40,3 @@
 ### 0.2.7 (Feb 05, 2014)
 * Native console needs to be called DebugConsole to avoid ambiguous reference. This commit requires the 3.4.0 version of the native class factory
 * CB-4718 fixed Console plugin not working on wp
-
-### 0.2.8 (Apr 17, 2014)
-* CB-6460: Update license headers
-* Add NOTICE file
-
-### 0.2.9 (Jun 05, 2014)
-* CB-6848 Add Android quirk, list applicable platforms
-* CB-6796 Add license
-* CB-6491 add CONTRIBUTING.md
