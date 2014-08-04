@@ -47,7 +47,7 @@ public class WebServicesClient {
 
     public static final String URL_WEB_APPLICATION = "https://%1$s/%2$s";
     public static final String BASE_URL = "https://%1$s/OutSystemsAppService/";
-    public static String DEMO_HOST_NAME = "apps8.outsystems.net";
+    public static String DEMO_HOST_NAME = "apps.outsystems.net";
     private static final String CONTENT_TYPE = "application/json";
 
     private static volatile WebServicesClient instance = null;
@@ -57,8 +57,7 @@ public class WebServicesClient {
 
     // private constructor
     private WebServicesClient() {
-        client = new AsyncHttpClient();
-        client.addHeader("Content-Type", CONTENT_TYPE);
+        client = new AsyncHttpClient();        
 
         trustedHosts = new ArrayList<String>();
         trustedHosts.add("outsystems.com");
@@ -89,10 +88,13 @@ public class WebServicesClient {
     }
 
     // post for content parameters
-    private void post(String hubApp, String urlPath, HashMap<String, Object> parameters,
-            AsyncHttpResponseHandler asyncHttpResponseHandler) {
-
-        StringEntity entity = null;
+    private void post(String hubApp, String urlPath, HashMap<String, String> parameters,
+            AsyncHttpResponseHandler asyncHttpResponseHandler) {    	
+    	
+    	RequestParams params = null;
+        if (parameters != null) {
+            params = new RequestParams(parameters);
+        }
         
         //TODO remove comments to force the check the validity of SSL certificates, except for list of trusted servers 
         //if (trustedHosts != null && hubApp != null) {
@@ -103,7 +105,8 @@ public class WebServicesClient {
         //        }
         //    }
         //}
-        client.post(null, getAbsoluteUrl(hubApp, urlPath), entity, CONTENT_TYPE, asyncHttpResponseHandler);
+        
+        client.post(getAbsoluteUrl(hubApp, urlPath), params, asyncHttpResponseHandler);
     }
 
     private void get(String hubApp, String urlPath, HashMap<String, String> parameters,
@@ -126,7 +129,7 @@ public class WebServicesClient {
     }
 
     public void getInfrastructure(final String urlHubApp, final WSRequestHandler handler) {
-        post(urlHubApp, "infrastructure", null, new AsyncHttpResponseHandler() {
+        get(urlHubApp, "infrastructure", null, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(final int statusCode, Header[] headers, final byte[] content) {
@@ -192,7 +195,7 @@ public class WebServicesClient {
         param.put("device", device);
         param.put("devicetype", "android");
 
-        get(HubManagerHelper.getInstance().getApplicationHosted(), "login", param, new AsyncHttpResponseHandler() {
+        post(HubManagerHelper.getInstance().getApplicationHosted(), "login", param, new AsyncHttpResponseHandler() {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable arg3) {
@@ -275,7 +278,7 @@ public class WebServicesClient {
     }
 
     public void getApplications(final String urlHubApp, final WSRequestHandler handler) {
-        post(urlHubApp, "applications", null, new AsyncHttpResponseHandler() {
+        get(urlHubApp, "applications", null, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(final int statusCode, Header[] headers, final byte[] content) {
