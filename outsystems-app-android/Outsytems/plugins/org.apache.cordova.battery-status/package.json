@@ -1,0 +1,14 @@
+{
+    "version": "0.2.7",
+    "name": "org.apache.cordova.battery-status",
+    "cordova_name": "Battery",
+    "description": "Cordova Battery Plugin",
+    "license": "Apache 2.0",
+    "repo": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-battery-status.git",
+    "issue": "https://issues.apache.org/jira/browse/CB/component/12320643",
+    "keywords": [
+        "cordova",
+        "battery"
+    ],
+    "engines": []
+}

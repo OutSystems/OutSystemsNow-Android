@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light">
+
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+        <item name="android:actionBarStyle">@style/ActionBarOS</item>
+        <item name="android:windowAnimationStyle">@style/CustomAnimationActivity</item>
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:homeAsUpIndicator">@drawable/icon_chevron_back</item>
+
+        <!-- for ActionBar -->
+        <item name="actionBarItemBackground">@drawable/actionbar_background_selector</item>
+        <!-- for native ActionBar -->
+        <item name="android:actionBarItemBackground">@drawable/actionbar_background_selector</item>
+    </style>
+
+    <!-- Action Bar Style -->
+    <style name="ActionBarOS" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="android:background">@android:color/white</item>
+        <item name="android:titleTextStyle">@style/Theme.Outsystems.ActionBar.TitleTextStyle</item>
+    </style>
+
+    <style name="Theme.Outsystems.ActionBar.TitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/red_color</item>
+    </style>
+
+    <!-- Button Style -->
+
+    <style name="Widget.Button" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/button_background</item>
+        <item name="android:maxHeight">25dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:textColor">@drawable/button_text_selector</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <!-- Activity Animations -->
+
+    <style name="CustomAnimationActivity" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_open_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_close_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_close_exit</item>
+    </style>
+
+</resources>

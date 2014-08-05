@@ -1,0 +1,24 @@
+{
+    "version": "0.2.9",
+    "name": "org.apache.cordova.contacts",
+    "cordova_name": "Contacts",
+    "description": "Cordova Contacts Plugin",
+    "license": "Apache 2.0",
+    "repo": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-contacts.git",
+    "issue": "https://issues.apache.org/jira/browse/CB/component/12320652",
+    "keywords": [
+        "cordova",
+        "contacts"
+    ],
+    "platforms": [
+        "android",
+        "amazon-fireos",
+        "ubuntu",
+        "ios",
+        "blackberry10",
+        "wp7",
+        "wp8",
+        "firefoxos"
+    ],
+    "engines": []
+}

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:background="@drawable/bg_red"
+    android:fillViewport="true" >
+
+    <LinearLayout
+        android:id="@+id/root_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:orientation="vertical" >
+
+        <com.outsystems.android.widgets.CustomFontTextView
+            android:id="@+id/text_view_label_application"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/label_application"
+            android:textColor="@color/white_color_alpha"
+            android:textSize="14sp"
+            custom:fontStyle="Regular" />
+
+        <com.outsystems.android.widgets.CustomFontTextView
+            android:id="@+id/text_view_label_application_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text=""
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            custom:fontStyle="Regular" />
+
+        <com.outsystems.android.widgets.CustomFontEditText
+            android:id="@+id/edit_text_user_mail"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/edit_text_background"
+            android:ems="10"
+            android:hint="@string/edit_text_hint_user"
+            android:inputType="textEmailAddress"
+            android:padding="8dp"
+            custom:fontStyle="Regular" >
+
+        </com.outsystems.android.widgets.CustomFontEditText>
+
+        <com.outsystems.android.widgets.CustomFontEditText
+            android:id="@+id/edit_text_passwod"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_background"
+            android:ems="10"
+            android:hint="@string/edit_text_hint_password"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            custom:fontStyle="Regular" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" >
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone" />
+
+            <com.outsystems.android.widgets.CustomFontButton
+                android:id="@+id/button_login"
+                style="@style/Widget.Button"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/button_login"
+                android:textSize="17sp"
+                custom:fontStyle="Regular" />
+        </FrameLayout>
+
+<!--         <LinearLayout -->
+<!--             android:layout_width="match_parent" -->
+<!--             android:layout_height="match_parent" -->
+<!--             android:layout_marginBottom="10dp" -->
+<!--             android:gravity="center_horizontal|bottom" -->
+<!--             android:orientation="horizontal" > -->
+
+<!--             <com.outsystems.android.widgets.CustomFontTextView -->
+<!--                 android:id="@+id/text_view_about" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:text="@string/label_about" -->
+<!--                 android:textColor="@android:color/white" -->
+<!--                 custom:fontStyle="Regular" /> -->
+
+<!--             <com.outsystems.android.widgets.CustomFontTextView -->
+<!--                 android:id="@+id/text_view_about_link" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:layout_marginLeft="2dp" -->
+<!--                 android:text="@string/label_about_link" -->
+<!--                 android:textColor="@drawable/button_text_selector" -->
+<!--                 custom:fontStyle="Regular" /> -->
+<!--         </LinearLayout> -->
+    </LinearLayout>
+
+</ScrollView>

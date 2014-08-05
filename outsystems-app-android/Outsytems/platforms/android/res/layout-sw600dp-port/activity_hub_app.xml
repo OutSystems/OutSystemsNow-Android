@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:background="@drawable/bg_red"
+    android:fillViewport="true" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" >
+
+        <LinearLayout
+            android:id="@+id/root_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:animateLayoutChanges="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/image_view_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="70dp"
+                android:background="@drawable/logo"
+                android:contentDescription="@string/image_logo" />
+
+            <com.outsystems.android.widgets.CustomFontTextView
+                android:id="@+id/text_view_title_hub"
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:paddingLeft="20dp"
+                android:text="@string/label_title_hub"
+                android:textColor="@color/white_color_alpha"
+                android:textSize="22sp"
+                custom:fontStyle="Regular" />
+
+            <LinearLayout
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <com.outsystems.android.widgets.CustomFontEditText
+                    android:id="@+id/edit_text_hub_url"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.8"
+                    android:background="@drawable/edit_text_background"
+                    android:ems="10"
+                    android:inputType="textUri"
+                    android:padding="10dp"
+                    custom:fontStyle="Regular" >
+                </com.outsystems.android.widgets.CustomFontEditText>
+
+                <ImageButton
+                    android:id="@+id/image_button_icon"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/icon_help"
+                    android:contentDescription="@string/image_button_help" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/view_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/button_select_text_color"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <com.outsystems.android.widgets.CustomFontTextView
+                    android:id="@+id/text_view_help"
+                    android:layout_width="420dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="40dp"
+                    android:padding="15dp"
+                    android:text="@string/label_help"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    custom:fontStyle="Regular" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" >
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone" />
+
+                <com.outsystems.android.widgets.CustomFontButton
+                    android:id="@+id/button_go"
+                    style="@style/Widget.Button"
+                    android:layout_width="420dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/button_text_go"
+                    android:textSize="19sp"
+                    custom:fontStyle="Bold" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="420dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="45dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal" >
+
+                <com.outsystems.android.widgets.CustomFontTextView
+                    android:id="@+id/text_view_demo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/label_demo"
+                    android:textColor="@color/white_color_alpha"
+                    android:textSize="18sp"
+                    custom:fontStyle="Regular" />
+
+                <com.outsystems.android.widgets.CustomFontButton
+                    android:id="@+id/button_demo"
+                    style="@style/Widget.Button"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="@string/button_label_demo"
+                    android:textSize="19sp"
+                    custom:fontStyle="Bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/root_view"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal|bottom"
+            android:orientation="horizontal" >
+
+            <com.outsystems.android.widgets.CustomFontTextView
+                android:id="@+id/text_view_about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_about"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                custom:fontStyle="Regular" />
+
+            <com.outsystems.android.widgets.CustomFontTextView
+                android:id="@+id/text_view_about_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:text="@string/label_about_link"
+                android:textColor="@drawable/button_text_selector"
+                android:textSize="16sp"
+                custom:fontStyle="Regular" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>

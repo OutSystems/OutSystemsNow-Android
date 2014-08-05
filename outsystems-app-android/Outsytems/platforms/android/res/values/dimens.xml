@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <!-- Outsystems Dimens -->
+    <dimen name="toolbar_height">90dp</dimen>
+    
+  <dimen name="standard_padding">8dip</dimen>
+  <dimen name="half_padding">4dip</dimen>
+  <dimen name="button_border">1dp</dimen>
+</resources>
