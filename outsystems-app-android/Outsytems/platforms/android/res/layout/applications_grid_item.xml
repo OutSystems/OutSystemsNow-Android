@@ -38,7 +38,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:gravity="center"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textColor="@color/grid_text_color"
         custom:fontStyle="Light" />
 
