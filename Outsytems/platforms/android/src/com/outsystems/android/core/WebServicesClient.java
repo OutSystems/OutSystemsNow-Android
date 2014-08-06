@@ -45,338 +45,379 @@ import com.outsystems.android.model.Login;
  */
 public class WebServicesClient {
 
-    public static final String URL_WEB_APPLICATION = "https://%1$s/%2$s";
-    public static final String BASE_URL = "https://%1$s/OutSystemsAppService/";
-    public static String DEMO_HOST_NAME = "apps.outsystems.net";
-    private static final String CONTENT_TYPE = "application/json";
+	public static final String URL_WEB_APPLICATION = "https://%1$s/%2$s";
+	public static final String BASE_URL = "https://%1$s/OutSystemsNowService/";
+	public static String DEMO_HOST_NAME = "apps.outsystems.net";	
 
-    private static volatile WebServicesClient instance = null;
-    private AsyncHttpClient client = null;
+	private static volatile WebServicesClient instance = null;
+	private AsyncHttpClient client = null;
 
-    private List<String> trustedHosts;
+	private List<String> trustedHosts;
 
-    // private constructor
-    private WebServicesClient() {
-        client = new AsyncHttpClient();        
+	// private constructor
+	private WebServicesClient() {
+		client = new AsyncHttpClient();
 
-        trustedHosts = new ArrayList<String>();
-        trustedHosts.add("outsystems.com");
-        trustedHosts.add("outsystems.net");
-        trustedHosts.add("outsystemscloud.com");
-    }
+		trustedHosts = new ArrayList<String>();
+		trustedHosts.add("outsystems.com");
+		trustedHosts.add("outsystems.net");
+		trustedHosts.add("outsystemscloud.com");
+	}
 
-    public static WebServicesClient getInstance() {
-    	instance = new WebServicesClient();        
-        return instance;
-    }
+	public static WebServicesClient getInstance() {
+		instance = new WebServicesClient();
+		return instance;
+	}
 
-    public static String getAbsoluteUrl(String hubApp, String relativeUrl) {
-        return String.format(BASE_URL, hubApp) + relativeUrl + getApplicationServer();
-    }
+	public static String getAbsoluteUrl(String hubApp, String relativeUrl) {
+		return String.format(BASE_URL, hubApp) + relativeUrl
+				+ getApplicationServer();
+	}
 
-    public static String getAbsoluteUrlForImage(String hubApp, int idImage) {
-        return String.format(BASE_URL, hubApp) + "applicationImage" + getApplicationServer() + "?id=" + idImage;
-    }
+	public static String getAbsoluteUrlForImage(String hubApp, int idImage) {
+		return String.format(BASE_URL, hubApp) + "applicationImage"
+				+ getApplicationServer() + "?id=" + idImage;
+	}
 
-    public static String getApplicationServer() {
-        boolean jsfApplicationServer = HubManagerHelper.getInstance().isJSFApplicationServer();
-        if (jsfApplicationServer) {
-            return ".jsf";
-        } else {
-            return ".aspx";
-        }
-    }
+	public static String getApplicationServer() {
+		boolean jsfApplicationServer = HubManagerHelper.getInstance()
+				.isJSFApplicationServer();
+		if (jsfApplicationServer) {
+			return ".jsf";
+		} else {
+			return ".aspx";
+		}
+	}
 
-    // post for content parameters
-    private void post(String hubApp, String urlPath, HashMap<String, String> parameters,
-            AsyncHttpResponseHandler asyncHttpResponseHandler) {    	
-    	
-    	RequestParams params = null;
-        if (parameters != null) {
-            params = new RequestParams(parameters);
-        }
-        
-        //TODO remove comments to force the check the validity of SSL certificates, except for list of trusted servers 
-        //if (trustedHosts != null && hubApp != null) {
-        //    for (String trustedHost : trustedHosts) {
-        //        if (hubApp.contains(trustedHost)) {
-                    client.setSSLSocketFactory(getSSLMySSLSocketFactory());
-        //            break;
-        //        }
-        //    }
-        //}
-        
-        client.post(getAbsoluteUrl(hubApp, urlPath), params, asyncHttpResponseHandler);
-    }
+	// post for content parameters
+	private void post(String hubApp, String urlPath,
+			HashMap<String, String> parameters,
+			AsyncHttpResponseHandler asyncHttpResponseHandler) {
 
-    private void get(String hubApp, String urlPath, HashMap<String, String> parameters,
-            AsyncHttpResponseHandler asyncHttpResponseHandler) {
-        RequestParams params = null;
-        if (parameters != null) {
-            params = new RequestParams(parameters);
-        }
-        
-      //TODO remove comments to force the check the validity of SSL certificates, except for list of trusted servers
-        //if (trustedHosts != null && hubApp != null) {
-        //    for (String trustedHost : trustedHosts) {
-        //        if (hubApp.contains(trustedHost)) {
-                    client.setSSLSocketFactory(getSSLMySSLSocketFactory());
-        //            break;
-        //        }
-        //    }
-        //}
-        client.get(getAbsoluteUrl(hubApp, urlPath), params, asyncHttpResponseHandler);
-    }
+		RequestParams params = null;
+		if (parameters != null) {
+			params = new RequestParams(parameters);
+		}
 
-    public void getInfrastructure(final String urlHubApp, final WSRequestHandler handler) {
-        get(urlHubApp, "infrastructure", null, new AsyncHttpResponseHandler() {
+		// TODO remove comments to force the check the validity of SSL
+		// certificates, except for list of trusted servers
+		// if (trustedHosts != null && hubApp != null) {
+		// for (String trustedHost : trustedHosts) {
+		// if (hubApp.contains(trustedHost)) {
+		client.setSSLSocketFactory(getSSLMySSLSocketFactory());
+		// break;
+		// }
+		// }
+		// }
 
-            @Override
-            public void onSuccess(final int statusCode, Header[] headers, final byte[] content) {
-                if (statusCode != 200) {
-                    handler.requestFinish(null, true, statusCode);
-                } else {
+		client.post(getAbsoluteUrl(hubApp, urlPath), params,
+				asyncHttpResponseHandler);
+	}
 
-                    new GenericResponseParsingTask() {
-                        @Override
-                        public Object parsingMethod() {
+	private void get(String hubApp, String urlPath,
+			HashMap<String, String> parameters,
+			AsyncHttpResponseHandler asyncHttpResponseHandler) {
+		RequestParams params = null;
+		if (parameters != null) {
+			params = new RequestParams(parameters);
+		}
 
-                            String contentString = "";
-                            try {
-                                contentString = new String(content, "UTF-8");
-                            } catch (UnsupportedEncodingException e) {
-                                EventLogger.logError(getClass(), e);
-                            }
+		// TODO remove comments to force the check the validity of SSL
+		// certificates, except for list of trusted servers
+		// if (trustedHosts != null && hubApp != null) {
+		// for (String trustedHost : trustedHosts) {
+		// if (hubApp.contains(trustedHost)) {
+		client.setSSLSocketFactory(getSSLMySSLSocketFactory());
+		// break;
+		// }
+		// }
+		// }
+		client.get(getAbsoluteUrl(hubApp, urlPath), params,
+				asyncHttpResponseHandler);
+	}
 
-                            try {
-                                Gson gson = new Gson();
+	public void getInfrastructure(final String urlHubApp,
+			final WSRequestHandler handler) {
+		get(urlHubApp, "infrastructure", null, new AsyncHttpResponseHandler() {
 
-                                Infrastructure infrastructure = gson.fromJson(contentString, Infrastructure.class);
+			@Override
+			public void onSuccess(final int statusCode, Header[] headers,
+					final byte[] content) {
+				if (statusCode != 200) {
+					handler.requestFinish(null, true, statusCode);
+				} else {
 
-                                return infrastructure;
-                            } catch (JsonSyntaxException e) {
-                                EventLogger.logError(getClass(), e);
-                            }
-                            return null;
-                        }
+					new GenericResponseParsingTask() {
+						@Override
+						public Object parsingMethod() {
 
-                        @Override
-                        public void parsingFinishMethod(Object result) {
-                            handler.requestFinish(result, false, statusCode);
-                        }
-                    }.execute();
+							String contentString = "";
+							try {
+								contentString = new String(content, "UTF-8");
+							} catch (UnsupportedEncodingException e) {
+								EventLogger.logError(getClass(), e);
+							}
 
-                }
-            }
+							try {
+								Gson gson = new Gson();
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                EventLogger.logMessage(getClass(), error.toString() + " " + statusCode);
-                if (statusCode == 404 && !HubManagerHelper.getInstance().isJSFApplicationServer()) {
-                    HubManagerHelper.getInstance().setJSFApplicationServer(true);
-                    getInfrastructure(urlHubApp, handler);
-                } else {
-                    handler.requestFinish(null, true, statusCode);
-                }
-            }
-        });
-    }
+								Infrastructure infrastructure = gson.fromJson(
+										contentString, Infrastructure.class);
 
-    public void loginPlattform(final String username, final String password, final String device,
-            final WSRequestHandler handler) {
-        if (username == null || password == null) {
-            handler.requestFinish(null, true, -1);
-            return;
-        }
+								return infrastructure;
+							} catch (JsonSyntaxException e) {
+								EventLogger.logError(getClass(), e);
+							}
+							return null;
+						}
 
-        HashMap<String, String> param = new HashMap<String, String>();
-        param.put("username", username);
-        param.put("password", password);
-        param.put("device", device);
-        param.put("devicetype", "android");
+						@Override
+						public void parsingFinishMethod(Object result) {
+							handler.requestFinish(result, false, statusCode);
+						}
+					}.execute();
 
-        post(HubManagerHelper.getInstance().getApplicationHosted(), "login", param, new AsyncHttpResponseHandler() {
+				}
+			}
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable arg3) {
-                if (statusCode == 404 && !HubManagerHelper.getInstance().isJSFApplicationServer()) {
-                    HubManagerHelper.getInstance().setJSFApplicationServer(true);
-                    loginPlattform(username, password, device, handler);
-                } else {
-                    handler.requestFinish(null, false, statusCode);
-                }
-            }
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					byte[] responseBody, Throwable error) {
+				EventLogger.logMessage(getClass(), error.toString() + " "
+						+ statusCode);
+				if (statusCode == 404
+						&& !HubManagerHelper.getInstance()
+								.isJSFApplicationServer()) {
+					HubManagerHelper.getInstance()
+							.setJSFApplicationServer(true);
+					getInfrastructure(urlHubApp, handler);
+				} else {
+					handler.requestFinish(null, true, statusCode);
+				}
+			}
+		});
+	}
 
-            @Override
-            public void onSuccess(final int statusCode, Header[] headers, final byte[] content) {
-                if (statusCode != 200) {
-                    handler.requestFinish(null, true, statusCode);
-                } else {
-                    new GenericResponseParsingTask() {
-                        @Override
-                        public Object parsingMethod() {
-                            String contentString = "";
-                            try {
-                                contentString = new String(content, "UTF-8");
-                            } catch (UnsupportedEncodingException e) {
-                                EventLogger.logError(getClass(), e);
-                            }
-                            try {
-                                Gson gson = new Gson();
-                                Login login = gson.fromJson(contentString, Login.class);
+	public void loginPlattform(final String username, final String password,
+			final String device, final WSRequestHandler handler) {
+		if (username == null || password == null) {
+			handler.requestFinish(null, true, -1);
+			return;
+		}
 
-                                return login;
-                            } catch (JsonSyntaxException e) {
-                                EventLogger.logError(getClass(), e);
-                            }
-                            return null;
-                        }
+		HashMap<String, String> param = new HashMap<String, String>();
+		param.put("username", username);
+		param.put("password", password);
+		param.put("device", device);
+		param.put("devicetype", "android");
 
-                        @Override
-                        public void parsingFinishMethod(Object result) {
-                            if (statusCode == 404 && !HubManagerHelper.getInstance().isJSFApplicationServer()) {
-                                HubManagerHelper.getInstance().setJSFApplicationServer(true);
-                                loginPlattform(username, password, device, handler);
-                            } else {
-                                handler.requestFinish(result, false, statusCode);
-                            }
+		post(HubManagerHelper.getInstance().getApplicationHosted(), "login",
+				param, new AsyncHttpResponseHandler() {
 
-                        }
-                    }.execute();
-                }
-            }
-        });
-    }
+					@Override
+					public void onFailure(int statusCode, Header[] headers,
+							byte[] responseBody, Throwable arg3) {
+						if (statusCode == 404
+								&& !HubManagerHelper.getInstance()
+										.isJSFApplicationServer()) {
+							HubManagerHelper.getInstance()
+									.setJSFApplicationServer(true);
+							loginPlattform(username, password, device, handler);
+						} else {
+							handler.requestFinish(null, false, statusCode);
+						}
+					}
 
-    public void registerToken(final String device, final WSRequestHandler handler) {
-        if (device == null) {
-            handler.requestFinish(null, true, -1);
-            return;
-        }
+					@Override
+					public void onSuccess(final int statusCode,
+							Header[] headers, final byte[] content) {
+						if (statusCode != 200) {
+							handler.requestFinish(null, true, statusCode);
+						} else {
+							new GenericResponseParsingTask() {
+								@Override
+								public Object parsingMethod() {
+									String contentString = "";
+									try {
+										contentString = new String(content,
+												"UTF-8");
+									} catch (UnsupportedEncodingException e) {
+										EventLogger.logError(getClass(), e);
+									}
+									try {
+										Gson gson = new Gson();
+										Login login = gson.fromJson(
+												contentString, Login.class);
 
-        HashMap<String, String> param = new HashMap<String, String>();
-        param.put("device", device);
-        param.put("devicetype", "android");
+										return login;
+									} catch (JsonSyntaxException e) {
+										EventLogger.logError(getClass(), e);
+									}
+									return null;
+								}
 
-        get(HubManagerHelper.getInstance().getApplicationHosted(), "registertoken", param,
-                new AsyncHttpResponseHandler() {
+								@Override
+								public void parsingFinishMethod(Object result) {
+									if (statusCode == 404
+											&& !HubManagerHelper.getInstance()
+													.isJSFApplicationServer()) {
+										HubManagerHelper.getInstance()
+												.setJSFApplicationServer(true);
+										loginPlattform(username, password,
+												device, handler);
+									} else {
+										handler.requestFinish(result, false,
+												statusCode);
+									}
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable arg3) {
-                        handler.requestFinish(null, true, statusCode);
-                    }
+								}
+							}.execute();
+						}
+					}
+				});
+	}
 
-                    @Override
-                    public void onSuccess(final int statusCode, Header[] headers, final byte[] content) {
-                        if (statusCode != 200) {
-                            handler.requestFinish(null, true, statusCode);
-                        } else {
-                            handler.requestFinish(null, false, statusCode);
-                        }
-                    }
-                });
-    }
+	public void registerToken(final String device,
+			final WSRequestHandler handler) {
+		if (device == null) {
+			handler.requestFinish(null, true, -1);
+			return;
+		}
 
-    public void getApplications(final String urlHubApp, final WSRequestHandler handler) {
-        get(urlHubApp, "applications", null, new AsyncHttpResponseHandler() {
+		HashMap<String, String> param = new HashMap<String, String>();
+		param.put("device", device);
+		param.put("devicetype", "android");
 
-            @Override
-            public void onSuccess(final int statusCode, Header[] headers, final byte[] content) {
-                if (statusCode != 200) {
-                    handler.requestFinish(null, true, statusCode);
-                } else {
+		get(HubManagerHelper.getInstance().getApplicationHosted(),
+				"registertoken", param, new AsyncHttpResponseHandler() {
 
-                    new GenericResponseParsingTask() {
-                        @Override
-                        public Object parsingMethod() {
+					@Override
+					public void onFailure(int statusCode, Header[] headers,
+							byte[] responseBody, Throwable arg3) {
+						handler.requestFinish(null, true, statusCode);
+					}
 
-                            String contentString = "";
-                            try {
-                                contentString = new String(content, "UTF-8");
-                            } catch (UnsupportedEncodingException e) {
-                                EventLogger.logError(getClass(), e);
-                            }
+					@Override
+					public void onSuccess(final int statusCode,
+							Header[] headers, final byte[] content) {
+						if (statusCode != 200) {
+							handler.requestFinish(null, true, statusCode);
+						} else {
+							handler.requestFinish(null, false, statusCode);
+						}
+					}
+				});
+	}
 
-                            try {
-                                Gson gson = new Gson();
-                                Type collectionType = new TypeToken<List<Application>>() {
-                                }.getType();
-                                List<Application> applications = gson.fromJson(contentString, collectionType);
+	public void getApplications(final String urlHubApp,
+			final WSRequestHandler handler) {
+		get(urlHubApp, "applications", null, new AsyncHttpResponseHandler() {
 
-                                return applications;
-                            } catch (JsonSyntaxException e) {
-                                EventLogger.logError(getClass(), e);
-                            }
-                            return null;
-                        }
+			@Override
+			public void onSuccess(final int statusCode, Header[] headers,
+					final byte[] content) {
+				if (statusCode != 200) {
+					handler.requestFinish(null, true, statusCode);
+				} else {
 
-                        @Override
-                        public void parsingFinishMethod(Object result) {
-                            handler.requestFinish(result, false, statusCode);
-                        }
-                    }.execute();
+					new GenericResponseParsingTask() {
+						@Override
+						public Object parsingMethod() {
 
-                }
-            }
+							String contentString = "";
+							try {
+								contentString = new String(content, "UTF-8");
+							} catch (UnsupportedEncodingException e) {
+								EventLogger.logError(getClass(), e);
+							}
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                EventLogger.logMessage(getClass(), error.toString() + " " + statusCode);
-                if (statusCode == 404 && !HubManagerHelper.getInstance().isJSFApplicationServer()) {
-                    HubManagerHelper.getInstance().setJSFApplicationServer(true);
-                    getApplications(urlHubApp, handler);
-                } else {
-                    handler.requestFinish(null, true, statusCode);
-                }
-            }
-        });
-    }
+							try {
+								Gson gson = new Gson();
+								Type collectionType = new TypeToken<List<Application>>() {
+								}.getType();
+								List<Application> applications = gson.fromJson(
+										contentString, collectionType);
 
-    private MySSLSocketFactory getSSLMySSLSocketFactory() {
-        KeyStore trustStore = null;
-        try {
-            trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            trustStore.load(null, null);
-        } catch (NoSuchAlgorithmException e) {
-            EventLogger.logError(getClass(), e);
-        } catch (CertificateException e) {
-            EventLogger.logError(getClass(), e);
-        } catch (IOException e) {
-            EventLogger.logError(getClass(), e);
-        } catch (KeyStoreException e1) {
-            EventLogger.logError(getClass(), e1);
-        }
-        MySSLSocketFactory sf = null;
-        try {
-            sf = new MySSLSocketFactory(trustStore);
-        } catch (KeyManagementException e) {
-            EventLogger.logError(getClass(), e);
-        } catch (UnrecoverableKeyException e) {
-            EventLogger.logError(getClass(), e);
-        } catch (NoSuchAlgorithmException e) {
-            EventLogger.logError(getClass(), e);
-        } catch (KeyStoreException e) {
-            EventLogger.logError(getClass(), e);
-        }
-        sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-        return sf;
-    }
+								return applications;
+							} catch (JsonSyntaxException e) {
+								EventLogger.logError(getClass(), e);
+							}
+							return null;
+						}
 
-    /**
-     * Gets the trusted hosts.
-     * 
-     * @return the trusted hosts
-     */
-    public List<String> getTrustedHosts() {
-        return trustedHosts;
-    }
+						@Override
+						public void parsingFinishMethod(Object result) {
+							handler.requestFinish(result, false, statusCode);
+						}
+					}.execute();
 
-    /**
-     * Sets the trusted hosts.
-     * 
-     * @param trustedHosts the new trusted hosts
-     */
-    public void setTrustedHosts(List<String> trustedHosts) {
-        this.trustedHosts = trustedHosts;
-    }
+				}
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers,
+					byte[] responseBody, Throwable error) {
+				EventLogger.logMessage(getClass(), error.toString() + " "
+						+ statusCode);
+				if (statusCode == 404
+						&& !HubManagerHelper.getInstance()
+								.isJSFApplicationServer()) {
+					HubManagerHelper.getInstance()
+							.setJSFApplicationServer(true);
+					getApplications(urlHubApp, handler);
+				} else {
+					handler.requestFinish(null, true, statusCode);
+				}
+			}
+		});
+	}
+
+	private MySSLSocketFactory getSSLMySSLSocketFactory() {
+		KeyStore trustStore = null;
+		try {
+			trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+			trustStore.load(null, null);
+		} catch (NoSuchAlgorithmException e) {
+			EventLogger.logError(getClass(), e);
+		} catch (CertificateException e) {
+			EventLogger.logError(getClass(), e);
+		} catch (IOException e) {
+			EventLogger.logError(getClass(), e);
+		} catch (KeyStoreException e1) {
+			EventLogger.logError(getClass(), e1);
+		}
+		MySSLSocketFactory sf = null;
+		try {
+			sf = new MySSLSocketFactory(trustStore);
+		} catch (KeyManagementException e) {
+			EventLogger.logError(getClass(), e);
+		} catch (UnrecoverableKeyException e) {
+			EventLogger.logError(getClass(), e);
+		} catch (NoSuchAlgorithmException e) {
+			EventLogger.logError(getClass(), e);
+		} catch (KeyStoreException e) {
+			EventLogger.logError(getClass(), e);
+		}
+		sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+		return sf;
+	}
+
+	/**
+	 * Gets the trusted hosts.
+	 * 
+	 * @return the trusted hosts
+	 */
+	public List<String> getTrustedHosts() {
+		return trustedHosts;
+	}
+
+	/**
+	 * Sets the trusted hosts.
+	 * 
+	 * @param trustedHosts
+	 *            the new trusted hosts
+	 */
+	public void setTrustedHosts(List<String> trustedHosts) {
+		this.trustedHosts = trustedHosts;
+	}
 }

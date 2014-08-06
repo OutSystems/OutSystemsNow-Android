@@ -70,7 +70,7 @@ public class BaseActivity extends ActionBarActivity {
     protected void setTitleActionBar(String title) {
         // Set text with Custom Font of app
         SpannableString titleActionBar = new SpannableString(title);
-        titleActionBar.setSpan(new TypefaceSpan(this, "MyriadPro-Regular.ttf"), 0, titleActionBar.length(),
+        titleActionBar.setSpan(new TypefaceSpan(this, "OpenSans-Regular.ttf"), 0, titleActionBar.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         getSupportActionBar().setTitle(titleActionBar);

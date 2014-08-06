@@ -41,7 +41,7 @@ public class CustomFontTextView extends TextView {
     private void setCustomFont(Context ctx, AttributeSet attrs) {
         TypedArray a = ctx.obtainStyledAttributes(attrs, R.styleable.CustomFontTextView);
         String customFontStyle = a.getString(R.styleable.CustomFontTextView_fontStyle);
-        setCustomFont(ctx, "MyriadPro-" + customFontStyle + ".ttf");
+        setCustomFont(ctx, "OpenSans-" + customFontStyle + ".ttf");
         a.recycle();
     }
 
