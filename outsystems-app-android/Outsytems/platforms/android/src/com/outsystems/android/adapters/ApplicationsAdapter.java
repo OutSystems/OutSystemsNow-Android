@@ -85,7 +85,7 @@ public class ApplicationsAdapter extends ArrayAdapter<Application> {
         // Set data in the views of item gridview
         viewHolder.textViewApplication.setText(application.getName());
         if (viewHolder.textViewDescription != null) {
-            viewHolder.textViewDescription.setText(application.getDescription());
+            viewHolder.textViewDescription.setText(application.getDescription() != "" ?  application.getDescription() : "(no description)");
         }
 
         if (application.getImageId() == 0) {
