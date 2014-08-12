@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="left|center_vertical"
+    android:background="@drawable/list_selector"
+    android:gravity="left|center_vertical"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/background_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_vertical|left"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/background_images_aplications"
+        android:gravity="center" >
+
+        <com.outsystems.android.widgets.roundedimage.RoundedImageView
+            android:id="@+id/image_view_application"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:border_color="@android:color/transparent"
+            app:border_width="0dp"
+            app:corner_radius="5dp"
+            app:oval="false" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/view_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginTop="18dp"
+        android:orientation="vertical" >
+
+        <com.outsystems.android.widgets.CustomFontTextView
+            android:id="@+id/text_view_application"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="@color/red_color"
+            android:textSize="20sp"
+            custom:fontStyle="Light" />
+
+        <com.outsystems.android.widgets.CustomFontTextView
+            android:id="@+id/text_view_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"          
+            android:layout_marginRight="20dp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:textColor="@color/grid_text_color"
+            android:textSize="14sp"
+            custom:fontStyle="Regular" />
+    </LinearLayout>
+
+</LinearLayout>
