@@ -91,7 +91,7 @@ public class HubAppActivity extends BaseActivity {
                             startActivity(intent);
                         } else {
                             ((EditText) findViewById(R.id.edit_text_hub_url))
-                                    .setError(getString(R.string.label_error_wrong_address));
+                                    .setError(WebServicesClient.PrettyErrorMessage(statusCode)); // getString(R.string.label_error_wrong_address)
                             showError(findViewById(R.id.root_view));
                         }
                         stopLoading(v);

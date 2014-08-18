@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.Header;
-import org.apache.http.entity.StringEntity;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -62,6 +61,21 @@ public class WebServicesClient {
 		trustedHosts.add("outsystems.com");
 		trustedHosts.add("outsystems.net");
 		trustedHosts.add("outsystemscloud.com");
+	}
+	
+	public static String PrettyErrorMessage(int statusCode) {
+		switch(statusCode) {
+		case -1001:
+			return "The request timed out.";
+		case -1003:
+			return "Could not contact the specified server. Please verify the server name and your internet connection and try again.";
+		case -1206:
+			return "An SSL error has occurred and a secure connection to the server cannot be made.";
+		case 404:
+			return "The required OutSystems Now service was not detected. If the location entered above is accurante, please check here for instructions on preparing your installation.";		
+		default:
+			return "There was an error trying to connect to the provided environment, please try again.";		
+		}
 	}
 
 	public static WebServicesClient getInstance() {
@@ -138,6 +152,7 @@ public class WebServicesClient {
 
 	public void getInfrastructure(final String urlHubApp,
 			final WSRequestHandler handler) {
+				
 		get(urlHubApp, "infrastructure", null, new AsyncHttpResponseHandler() {
 
 			@Override
@@ -184,14 +199,23 @@ public class WebServicesClient {
 			public void onFailure(int statusCode, Header[] headers,
 					byte[] responseBody, Throwable error) {
 				EventLogger.logMessage(getClass(), error.toString() + " "
-						+ statusCode);
+						+ statusCode);				
+				
 				if (statusCode == 404
 						&& !HubManagerHelper.getInstance()
 								.isJSFApplicationServer()) {
 					HubManagerHelper.getInstance()
 							.setJSFApplicationServer(true);
 					getInfrastructure(urlHubApp, handler);
-				} else {
+				} else {					
+					if(error.getMessage().indexOf("UnknownHostException") != -1) {
+						statusCode = -1003; // NSURLErrorCannotFindHost
+					} else if (error.getMessage().indexOf("SSL handshake timed out") != -1) {
+						statusCode = -1206; // NSURLErrorClientCertificateRequired
+					} else if (error.getMessage().indexOf("SocketTimeoutException") != -1) {
+						statusCode = -1001; // NSURLErrorTimedOut 
+					}
+					
 					handler.requestFinish(null, true, statusCode);
 				}
 			}
@@ -224,7 +248,15 @@ public class WebServicesClient {
 									.setJSFApplicationServer(true);
 							loginPlattform(username, password, device, handler);
 						} else {
-							handler.requestFinish(null, false, statusCode);
+							if(arg3.getMessage().indexOf("UnknownHostException") != -1) {
+								statusCode = -1003; // NSURLErrorCannotFindHost
+							} else if (arg3.getMessage().indexOf("SSL handshake timed out") != -1) {
+								statusCode = -1206; // NSURLErrorClientCertificateRequired
+							} else if (arg3.getMessage().indexOf("SocketTimeoutException") != -1) {
+								statusCode = -1001; // NSURLErrorTimedOut 
+							}
+							
+							handler.requestFinish(null, true, statusCode);
 						}
 					}
 
