@@ -159,10 +159,7 @@ public class LoginActivity extends BaseActivity {
                                 }
                             }
                         } else {
-                            ((EditText) findViewById(R.id.edit_text_user_mail)).setError(getResources().getString(
-                                    R.string.label_error_login));
-                            ((EditText) findViewById(R.id.edit_text_passwod)).setError(getResources().getString(
-                                    R.string.label_error_login));
+                            ((EditText) findViewById(R.id.edit_text_user_mail)).setError(WebServicesClient.PrettyErrorMessage(statusCode)); // getResources().getString(R.string.label_error_login)                            
                             showError(findViewById(R.id.root_view));
                         }
                     }

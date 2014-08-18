@@ -23,7 +23,7 @@
     
     <!-- Error Messages -->
     <string name="label_error_empty_address">Please enter a valid Outsystems network address</string>
-    <string name="label_error_wrong_address">Error trying to connect to the provided network, please make sure you have an internet connection</string>
+    <string name="label_error_wrong_address">There was an error trying to connect to the provided environment, please try again.</string>
     <string name="label_error_login">Invalid Login</string>
     
     <string name="app_picker_name">Applications</string>
