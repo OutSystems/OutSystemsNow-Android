@@ -18,6 +18,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -92,6 +94,7 @@ public class HubAppActivity extends BaseActivity {
                         } else {
                             ((EditText) findViewById(R.id.edit_text_hub_url))
                                     .setError(WebServicesClient.PrettyErrorMessage(statusCode)); // getString(R.string.label_error_wrong_address)
+                            ((EditText) findViewById(R.id.edit_text_hub_url)).setMovementMethod(LinkMovementMethod.getInstance()); // enable links
                             showError(findViewById(R.id.root_view));
                         }
                         stopLoading(v);
@@ -146,7 +149,7 @@ public class HubAppActivity extends BaseActivity {
         registerReceivers();
 
         // Create and start push manager
-        PushManager pushManager = PushManager.getInstance(this);
+        /*PushManager pushManager = PushManager.getInstance(this);
 
         // Start push manager, this will count app open for Pushwoosh stats as well
         try {
@@ -159,7 +162,7 @@ public class HubAppActivity extends BaseActivity {
         // Register for push!
         pushManager.registerForPushNotifications();
 
-        checkMessage(getIntent());
+        checkMessage(getIntent());*/
 
         final Button buttonGO = (Button) findViewById(R.id.button_go);
         buttonGO.setOnClickListener(onClickListener);
@@ -290,7 +293,7 @@ public class HubAppActivity extends BaseActivity {
     }
 
     private void checkMessage(Intent intent) {
-        if (null != intent) {
+        /*if (null != intent) {
             if (intent.hasExtra(PushManager.PUSH_RECEIVE_EVENT)) {
                 // showMessage("push message is " + intent.getExtras().getString(PushManager.PUSH_RECEIVE_EVENT));
                 doOnMessageReceive(intent.getExtras().getString(PushManager.PUSH_RECEIVE_EVENT));
@@ -304,7 +307,7 @@ public class HubAppActivity extends BaseActivity {
                 showMessage("register error");
             } else if (intent.hasExtra(PushManager.UNREGISTER_ERROR_EVENT)) {
                 showMessage("unregister error");
-            }
+            }*/
 
             resetIntentValues();
         }
@@ -316,7 +319,7 @@ public class HubAppActivity extends BaseActivity {
     private void resetIntentValues() {
         Intent mainAppIntent = getIntent();
 
-        if (mainAppIntent.hasExtra(PushManager.PUSH_RECEIVE_EVENT)) {
+        /*if (mainAppIntent.hasExtra(PushManager.PUSH_RECEIVE_EVENT)) {
             mainAppIntent.removeExtra(PushManager.PUSH_RECEIVE_EVENT);
         } else if (mainAppIntent.hasExtra(PushManager.REGISTER_EVENT)) {
             mainAppIntent.removeExtra(PushManager.REGISTER_EVENT);
@@ -326,7 +329,7 @@ public class HubAppActivity extends BaseActivity {
             mainAppIntent.removeExtra(PushManager.REGISTER_ERROR_EVENT);
         } else if (mainAppIntent.hasExtra(PushManager.UNREGISTER_ERROR_EVENT)) {
             mainAppIntent.removeExtra(PushManager.UNREGISTER_ERROR_EVENT);
-        }
+        }*/
 
         setIntent(mainAppIntent);
     }

@@ -14,6 +14,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -109,6 +110,19 @@ public class ApplicationsActivity extends BaseActivity {
                     @Override
                     public void requestFinish(Object result, boolean error, int statusCode) {
                         if (!error) {
+                        	
+                        	ApplicationOutsystems app = (ApplicationOutsystems) getApplication();
+                            app.setDemoApplications(true);
+                            if(app.demoApplications) {
+                            	// Using authentication in the web view
+                                WebView webView = new WebView(getApplicationContext());
+                                String url = String.format(WebServicesClient.BASE_URL,
+                                        HubManagerHelper.getInstance().getApplicationHosted()).concat(
+                                        "applications" + WebServicesClient.getApplicationServer());
+                                url = url.replace("https", "http");
+                                webView.loadUrl(url);
+                            }
+                        	
                             @SuppressWarnings("unchecked")
                             ArrayList<Application> applications = (ArrayList<Application>) result;
                             if (applications != null && applications.size() > 0) {

@@ -19,7 +19,6 @@ import android.os.Handler;
 
 import com.arellomobile.android.push.PushManager;
 import com.arellomobile.android.push.utils.RegisterBroadcastReceiver;
-import com.crashlytics.android.Crashlytics;
 import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.helpers.HubManagerHelper;
@@ -40,7 +39,6 @@ public class SplashScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Crashlytics.start(this);
         setContentView(R.layout.activity_splashscreen);
 
         // Add delay to show splashscreen
@@ -50,7 +48,7 @@ public class SplashScreen extends Activity {
         registerReceivers();
 
         // Create and start push manager
-        PushManager pushManager = PushManager.getInstance(this);
+        /*PushManager pushManager = PushManager.getInstance(this);
 
         // Start push manager, this will count app open for Pushwoosh stats as well
         try {
@@ -63,7 +61,7 @@ public class SplashScreen extends Activity {
         // Register for push!
         pushManager.registerForPushNotifications();
 
-        checkMessage(getIntent());
+        checkMessage(getIntent());*/
 
     }
 
@@ -121,8 +119,8 @@ public class SplashScreen extends Activity {
 
     // Registration of the receivers
     public void registerReceivers() {
-        registerReceiver(mBroadcastReceiver, new IntentFilter(getPackageName() + "."
-                + PushManager.REGISTER_BROAD_CAST_ACTION));
+       /* registerReceiver(mBroadcastReceiver, new IntentFilter(getPackageName() + "."
+                + PushManager.REGISTER_BROAD_CAST_ACTION));*/
     }
 
     public void unregisterReceivers() {
@@ -150,7 +148,7 @@ public class SplashScreen extends Activity {
     private void resetIntentValues() {
         Intent mainAppIntent = getIntent();
 
-        if (mainAppIntent.hasExtra(PushManager.PUSH_RECEIVE_EVENT)) {
+        /*if (mainAppIntent.hasExtra(PushManager.PUSH_RECEIVE_EVENT)) {
             mainAppIntent.removeExtra(PushManager.PUSH_RECEIVE_EVENT);
         } else if (mainAppIntent.hasExtra(PushManager.REGISTER_EVENT)) {
             mainAppIntent.removeExtra(PushManager.REGISTER_EVENT);
@@ -160,7 +158,7 @@ public class SplashScreen extends Activity {
             mainAppIntent.removeExtra(PushManager.REGISTER_ERROR_EVENT);
         } else if (mainAppIntent.hasExtra(PushManager.UNREGISTER_ERROR_EVENT)) {
             mainAppIntent.removeExtra(PushManager.UNREGISTER_ERROR_EVENT);
-        }
+        }*/
 
         setIntent(mainAppIntent);
     }
