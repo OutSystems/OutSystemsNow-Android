@@ -148,21 +148,9 @@ public class HubAppActivity extends BaseActivity {
         // Register receivers for push notifications
         registerReceivers();
 
-        // Create and start push manager
-        /*PushManager pushManager = PushManager.getInstance(this);
 
-        // Start push manager, this will count app open for Pushwoosh stats as well
-        try {
-            pushManager.onStartup(this);
-        } catch (Exception e) {
-            // push notifications are not available or AndroidManifest.xml is not configured properly
-            EventLogger.logError(getClass(), e);
-        }
 
-        // Register for push!
-        pushManager.registerForPushNotifications();
 
-        checkMessage(getIntent());*/
 
         final Button buttonGO = (Button) findViewById(R.id.button_go);
         buttonGO.setOnClickListener(onClickListener);
@@ -293,21 +281,7 @@ public class HubAppActivity extends BaseActivity {
     }
 
     private void checkMessage(Intent intent) {
-        /*if (null != intent) {
-            if (intent.hasExtra(PushManager.PUSH_RECEIVE_EVENT)) {
-                // showMessage("push message is " + intent.getExtras().getString(PushManager.PUSH_RECEIVE_EVENT));
-                doOnMessageReceive(intent.getExtras().getString(PushManager.PUSH_RECEIVE_EVENT));
-            } else if (intent.hasExtra(PushManager.REGISTER_EVENT)) {
-                String deviceId = intent.getExtras().getString(PushManager.REGISTER_EVENT);
-                HubManagerHelper.getInstance().setDeviceId(deviceId);
-                callRegisterToken(deviceId);
-            } else if (intent.hasExtra(PushManager.UNREGISTER_EVENT)) {
-                showMessage("unregister");
-            } else if (intent.hasExtra(PushManager.REGISTER_ERROR_EVENT)) {
-                showMessage("register error");
-            } else if (intent.hasExtra(PushManager.UNREGISTER_ERROR_EVENT)) {
-                showMessage("unregister error");
-            }*/
+        if (null != intent) {
 
             resetIntentValues();
         }
@@ -319,17 +293,6 @@ public class HubAppActivity extends BaseActivity {
     private void resetIntentValues() {
         Intent mainAppIntent = getIntent();
 
-        /*if (mainAppIntent.hasExtra(PushManager.PUSH_RECEIVE_EVENT)) {
-            mainAppIntent.removeExtra(PushManager.PUSH_RECEIVE_EVENT);
-        } else if (mainAppIntent.hasExtra(PushManager.REGISTER_EVENT)) {
-            mainAppIntent.removeExtra(PushManager.REGISTER_EVENT);
-        } else if (mainAppIntent.hasExtra(PushManager.UNREGISTER_EVENT)) {
-            mainAppIntent.removeExtra(PushManager.UNREGISTER_EVENT);
-        } else if (mainAppIntent.hasExtra(PushManager.REGISTER_ERROR_EVENT)) {
-            mainAppIntent.removeExtra(PushManager.REGISTER_ERROR_EVENT);
-        } else if (mainAppIntent.hasExtra(PushManager.UNREGISTER_ERROR_EVENT)) {
-            mainAppIntent.removeExtra(PushManager.UNREGISTER_ERROR_EVENT);
-        }*/
 
         setIntent(mainAppIntent);
     }
