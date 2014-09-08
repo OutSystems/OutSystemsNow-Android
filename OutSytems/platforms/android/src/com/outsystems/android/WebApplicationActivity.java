@@ -455,6 +455,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             EventLogger.logMessage(getClass(), "--------------- shouldOverrideUrlLoading ---------------");
+			if(url.equals("about:blank")) 
+            	return super.shouldOverrideUrlLoading(view, url);
             BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cordovaWebView));
             imageView.setBackgroundDrawable(ob);
             imageView.setVisibility(View.VISIBLE);
