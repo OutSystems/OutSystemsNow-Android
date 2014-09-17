@@ -29,7 +29,6 @@ proguard/
 *.ipr
 
 # Eclipse
-.project
 .classpath
 .settings
 # Eclipse NDK
