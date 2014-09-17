@@ -7,6 +7,7 @@
     <string name="image_application">ApplicationImage</string>
     <string name="label_title_hub">Access my applications hosted on:</string>
     <string name="label_help">Please fill in the location of your OutSystems environment. This is the base URL that you use to access any of your Platform applications.</string>
+    <string name="label_no_applications">No applications found, please verify your application permissions or contact your system administrator.</string>
     <string name="edit_text_hint_host">yourpersonal.outsystemscloud.com</string>
     <string name="button_text_go">GO</string>
     <string name="label_demo">Want to see how it works?</string>

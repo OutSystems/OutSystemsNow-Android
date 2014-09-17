@@ -47,10 +47,20 @@ public class SplashScreen extends Activity {
         // Register receivers for push notifications
         registerReceivers();
 
+        // Create and start push manager
+        PushManager pushManager = PushManager.getInstance(this);
 
+        try {
+            pushManager.onStartup(this);
+        } catch (Exception e) {
+            // push notifications are not available or AndroidManifest.xml is not configured properly
+            EventLogger.logError(getClass(), e);
+        }
 
         // Register for push!
+        pushManager.registerForPushNotifications();
 
+        checkMessage(getIntent());
 
     }
 
@@ -108,6 +118,8 @@ public class SplashScreen extends Activity {
 
     // Registration of the receivers
     public void registerReceivers() {
+        registerReceiver(mBroadcastReceiver, new IntentFilter(getPackageName() + "."
+                + PushManager.REGISTER_BROAD_CAST_ACTION));
     }
 
     public void unregisterReceivers() {
@@ -135,6 +147,17 @@ public class SplashScreen extends Activity {
     private void resetIntentValues() {
         Intent mainAppIntent = getIntent();
 
+        if (mainAppIntent.hasExtra(PushManager.PUSH_RECEIVE_EVENT)) {
+            mainAppIntent.removeExtra(PushManager.PUSH_RECEIVE_EVENT);
+        } else if (mainAppIntent.hasExtra(PushManager.REGISTER_EVENT)) {
+            mainAppIntent.removeExtra(PushManager.REGISTER_EVENT);
+        } else if (mainAppIntent.hasExtra(PushManager.UNREGISTER_EVENT)) {
+            mainAppIntent.removeExtra(PushManager.UNREGISTER_EVENT);
+        } else if (mainAppIntent.hasExtra(PushManager.REGISTER_ERROR_EVENT)) {
+            mainAppIntent.removeExtra(PushManager.REGISTER_ERROR_EVENT);
+        } else if (mainAppIntent.hasExtra(PushManager.UNREGISTER_ERROR_EVENT)) {
+            mainAppIntent.removeExtra(PushManager.UNREGISTER_ERROR_EVENT);
+        }
 
         setIntent(mainAppIntent);
     }
