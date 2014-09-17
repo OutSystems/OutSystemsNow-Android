@@ -73,7 +73,7 @@ public class WebServicesClient {
 		case -1206:
 			return "An SSL error has occurred and a secure connection to the server cannot be made.";
 		case 404:
-			return "The required OutSystems Now service was not detected. If the location entered above is accurante, please check here for instructions on preparing your installation.";		
+			return "The required OutSystems Now service was not detected. If the location entered above is accurate, please check the instructions on preparing your installation at labs.outsystems.net/Native.";		
 		default:
 			return "There was an error trying to connect to the provided environment, please try again.";		
 		}
