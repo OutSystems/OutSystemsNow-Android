@@ -34,6 +34,7 @@ import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
 import com.outsystems.android.model.Infrastructure;
 import com.outsystems.android.model.Login;
+import com.squareup.okhttp.internal.spdy.ErrorCode;
 
 /**
  * Class description.
@@ -208,14 +209,20 @@ public class WebServicesClient {
 							.setJSFApplicationServer(true);
 					getInfrastructure(urlHubApp, handler);
 				} else {					
-					if(error.getMessage().indexOf("UnknownHostException") != -1) {
-						statusCode = -1003; // NSURLErrorCannotFindHost
-					} else if (error.getMessage().indexOf("SSL handshake timed out") != -1) {
-						statusCode = -1206; // NSURLErrorClientCertificateRequired
-					} else if (error.getMessage().indexOf("SocketTimeoutException") != -1) {
-						statusCode = -1001; // NSURLErrorTimedOut 
+					try {
+						if(error != null && error.getMessage() !=  null) {
+							if(error.getMessage().indexOf("UnknownHostException") != -1) {
+								statusCode = -1003; // NSURLErrorCannotFindHost
+							} else if (error.getMessage().indexOf("SSL handshake timed out") != -1) {
+								statusCode = -1206; // NSURLErrorClientCertificateRequired
+							} else if (error.getMessage().indexOf("SocketTimeoutException") != -1) {
+								statusCode = -1001; // NSURLErrorTimedOut 
+							}
+						} 
+					} catch(Exception e) {
+							statusCode = -1;
 					}
-					
+						
 					handler.requestFinish(null, true, statusCode);
 				}
 			}
@@ -248,14 +255,20 @@ public class WebServicesClient {
 									.setJSFApplicationServer(true);
 							loginPlattform(username, password, device, handler);
 						} else {
-							if(arg3.getMessage().indexOf("UnknownHostException") != -1) {
-								statusCode = -1003; // NSURLErrorCannotFindHost
-							} else if (arg3.getMessage().indexOf("SSL handshake timed out") != -1) {
-								statusCode = -1206; // NSURLErrorClientCertificateRequired
-							} else if (arg3.getMessage().indexOf("SocketTimeoutException") != -1) {
-								statusCode = -1001; // NSURLErrorTimedOut 
+							try {
+								if(arg3 != null && arg3.getMessage() !=  null) {
+									if(arg3.getMessage().indexOf("UnknownHostException") != -1) {
+										statusCode = -1003; // NSURLErrorCannotFindHost
+									} else if (arg3.getMessage().indexOf("SSL handshake timed out") != -1) {
+										statusCode = -1206; // NSURLErrorClientCertificateRequired
+									} else if (arg3.getMessage().indexOf("SocketTimeoutException") != -1) {
+										statusCode = -1001; // NSURLErrorTimedOut 
+									}
+								}
+							} catch (Exception ex) {
+								statusCode = -1;
 							}
-							
+														
 							handler.requestFinish(null, true, statusCode);
 						}
 					}

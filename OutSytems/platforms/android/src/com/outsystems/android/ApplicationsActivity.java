@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.outsystems.android.adapters.ApplicationsAdapter;
 import com.outsystems.android.core.WSRequestHandler;
@@ -125,11 +126,19 @@ public class ApplicationsActivity extends BaseActivity {
      * @param applications the applications
      */
     private void loadContentInGridview(ArrayList<Application> applications) {
-        ApplicationsAdapter applicationsAdapter = new ApplicationsAdapter(getApplicationContext(), applications);
-        gridView.setAdapter(applicationsAdapter);
-        mContentLoaded = !mContentLoaded;
-        showContentOrLoadingIndicator(mContentLoaded);
-        gridView.setOnItemClickListener(onItemClickListener);
+    	
+    	if(applications != null && !applications.isEmpty()) {    	
+	        ApplicationsAdapter applicationsAdapter = new ApplicationsAdapter(getApplicationContext(), applications);
+	        gridView.setAdapter(applicationsAdapter);
+	        mContentLoaded = !mContentLoaded;
+	        showContentOrLoadingIndicator(mContentLoaded);
+	        gridView.setOnItemClickListener(onItemClickListener);
+    	}
+    	else {
+    		TextView noAppsLabel = (TextView) findViewById(R.id.text_view_label_no_applications);
+    		noAppsLabel.setVisibility(View.VISIBLE);
+    		showContentOrLoadingIndicator(true);
+    	}
     }
 
     /**
