@@ -19,10 +19,12 @@ public class Infrastructure {
 
     @SerializedName("Name")
     private String name;
+    private String version;
 
-    public Infrastructure(String name) {
+    public Infrastructure(String name, String version) {
         super();
-        this.name = name;
+        this.setName(name);
+        this.setVersion(version);
     }
 
     public String getName() {
@@ -32,4 +34,12 @@ public class Infrastructure {
     public void setName(String name) {
         this.name = name;
     }
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
 }

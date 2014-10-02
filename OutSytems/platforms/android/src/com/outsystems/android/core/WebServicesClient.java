@@ -22,19 +22,21 @@ import java.util.List;
 
 import org.apache.http.Header;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.MySSLSocketFactory;
+import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.outsystems.android.core.parsing.GenericResponseParsingTask;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
 import com.outsystems.android.model.Infrastructure;
 import com.outsystems.android.model.Login;
-import com.squareup.okhttp.internal.spdy.ErrorCode;
 
 /**
  * Class description.
@@ -50,13 +52,16 @@ public class WebServicesClient {
 	public static String DEMO_HOST_NAME = "apps.outsystems.net";	
 
 	private static volatile WebServicesClient instance = null;
+	
 	private AsyncHttpClient client = null;
 
 	private List<String> trustedHosts;
+	
+	private Context context;
 
 	// private constructor
 	private WebServicesClient() {
-		client = new AsyncHttpClient();
+		client = new AsyncHttpClient();		
 
 		trustedHosts = new ArrayList<String>();
 		trustedHosts.add("outsystems.com");
@@ -81,6 +86,7 @@ public class WebServicesClient {
 
 	public static WebServicesClient getInstance() {
 		instance = new WebServicesClient();
+		
 		return instance;
 	}
 
@@ -112,7 +118,7 @@ public class WebServicesClient {
 		RequestParams params = null;
 		if (parameters != null) {
 			params = new RequestParams(parameters);
-		}
+		}		
 
 		// TODO remove comments to force the check the validity of SSL
 		// certificates, except for list of trusted servers
@@ -125,7 +131,7 @@ public class WebServicesClient {
 		// }
 		// }
 
-		client.post(getAbsoluteUrl(hubApp, urlPath), params,
+		client.post(context, getAbsoluteUrl(hubApp, urlPath), params,
 				asyncHttpResponseHandler);
 	}
 
@@ -229,20 +235,26 @@ public class WebServicesClient {
 		});
 	}
 
-	public void loginPlattform(final String username, final String password,
-			final String device, final WSRequestHandler handler) {
+	public void loginPlattform(final Context ctx, final String username, final String password,
+			final String device, final int width, final int height, final WSRequestHandler handler) {
 		if (username == null || password == null) {
 			handler.requestFinish(null, true, -1);
 			return;
 		}
+		
+		String widthStr =  new Integer(width).toString();
+		String heightStr =  new Integer(height).toString();
 
 		HashMap<String, String> param = new HashMap<String, String>();
 		param.put("username", username);
 		param.put("password", password);
-		param.put("device", device);
-		param.put("devicetype", "android");
-
-		post(HubManagerHelper.getInstance().getApplicationHosted(), "login",
+		param.put("device", device);		
+		param.put("devicetype", "android");		
+		param.put("screenWidth", widthStr);
+		param.put("screenHeight", heightStr);	
+		param.put("deviceHwId", Installation.id(ctx));
+				
+	    post(HubManagerHelper.getInstance().getApplicationHosted(), "login",
 				param, new AsyncHttpResponseHandler() {
 
 					@Override
@@ -253,7 +265,7 @@ public class WebServicesClient {
 										.isJSFApplicationServer()) {
 							HubManagerHelper.getInstance()
 									.setJSFApplicationServer(true);
-							loginPlattform(username, password, device, handler);
+							loginPlattform(ctx, username, password, device, width, height, handler);
 						} else {
 							try {
 								if(arg3 != null && arg3.getMessage() !=  null) {
@@ -276,9 +288,9 @@ public class WebServicesClient {
 					@Override
 					public void onSuccess(final int statusCode,
 							Header[] headers, final byte[] content) {
-						if (statusCode != 200) {
+						if (statusCode != 200) {													
 							handler.requestFinish(null, true, statusCode);
-						} else {
+						} else {														
 							new GenericResponseParsingTask() {
 								@Override
 								public Object parsingMethod() {
@@ -308,8 +320,8 @@ public class WebServicesClient {
 													.isJSFApplicationServer()) {
 										HubManagerHelper.getInstance()
 												.setJSFApplicationServer(true);
-										loginPlattform(username, password,
-												device, handler);
+										loginPlattform(ctx, username, password,
+												device, width, height, handler);
 									} else {
 										handler.requestFinish(result, false,
 												statusCode);

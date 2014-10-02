@@ -70,7 +70,15 @@ public class HubAppActivity extends BaseActivity {
                                 ((EditText) findViewById(R.id.edit_text_hub_url))
                                         .setError(getString(R.string.label_error_wrong_address));
                                 showError(findViewById(R.id.root_view));
+                                stopLoading(v);
                                 return;
+                            } else if (infrastructure.getVersion() == null || !infrastructure.getVersion().startsWith(getString(R.string.required_module_version))) {
+                            	// invalid OutSystems Now modules in the server         
+                            	((EditText) findViewById(R.id.edit_text_hub_url))
+                                	.setError(getString(R.string.label_invalid_version));
+                            	showError(findViewById(R.id.root_view));
+                            	stopLoading(v);
+                            	return;
                             }
 
                             // Create Entry to save hub application

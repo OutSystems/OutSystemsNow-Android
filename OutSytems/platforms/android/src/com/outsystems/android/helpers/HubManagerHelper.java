@@ -7,6 +7,10 @@
  */
 package com.outsystems.android.helpers;
 
+import android.content.Context;
+
+import com.loopj.android.http.PersistentCookieStore;
+
 /**
  * Class description.
  * 
@@ -58,5 +62,5 @@ public class HubManagerHelper {
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
-    }
+    }   
 }
