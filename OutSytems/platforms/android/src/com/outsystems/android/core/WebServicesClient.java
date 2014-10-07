@@ -334,7 +334,7 @@ public class WebServicesClient {
 				});
 	}
 
-	public void registerToken(final String device,
+	public void registerToken(final Context ctx, final String device,
 			final WSRequestHandler handler) {
 		if (device == null) {
 			handler.requestFinish(null, true, -1);
@@ -344,6 +344,7 @@ public class WebServicesClient {
 		HashMap<String, String> param = new HashMap<String, String>();
 		param.put("device", device);
 		param.put("devicetype", "android");
+		param.put("deviceHwId", Installation.id(ctx));
 
 		get(HubManagerHelper.getInstance().getApplicationHosted(),
 				"registertoken", param, new AsyncHttpResponseHandler() {

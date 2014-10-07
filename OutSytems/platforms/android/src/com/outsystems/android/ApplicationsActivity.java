@@ -95,7 +95,7 @@ public class ApplicationsActivity extends BaseActivity {
      * @see android.support.v4.app.FragmentActivity#onResume()
      */
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if (HubManagerHelper.getInstance().getApplicationHosted() == null) {
             ApplicationOutsystems app = (ApplicationOutsystems) getApplication();

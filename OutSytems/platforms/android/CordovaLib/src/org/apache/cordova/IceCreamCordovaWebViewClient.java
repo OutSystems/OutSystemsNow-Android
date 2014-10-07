@@ -44,7 +44,7 @@ public class IceCreamCordovaWebViewClient extends CordovaWebViewClient {
     public IceCreamCordovaWebViewClient(CordovaInterface cordova, CordovaWebView view) {
         super(cordova, view);
     }
-
+    
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
         try {

@@ -60,6 +60,7 @@ import android.widget.LinearLayout;
 
 import com.outsystems.android.core.CordovaLoaderWebClient;
 import com.outsystems.android.core.EventLogger;
+import com.outsystems.android.core.CustomWebView;
 import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
@@ -148,8 +149,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         // Hide action bar
         getSupportActionBar().hide();
 
-        cordovaWebView = (CordovaWebView) this.findViewById(R.id.mainView);                    
-        
+        cordovaWebView = (CustomWebView) this.findViewById(R.id.mainView);
         imageView = (ImageView) this.findViewById(R.id.image_view);
         Config.init(this);
 
@@ -168,11 +168,10 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             }
             url = String.format(WebServicesClient.URL_WEB_APPLICATION, HubManagerHelper.getInstance()
                     .getApplicationHosted(), application.getPath());
-        }
+        }        
 
-    
-        cordovaWebView.setWebViewClient(new CordovaCustomWebClient(this, cordovaWebView));       
-       
+        cordovaWebView.setWebViewClient(new CordovaCustomWebClient(this, cordovaWebView));
+
         // Listener to Download Web File with Native Component - Download Manager
         cordovaWebView.setDownloadListener(new DownloadListener() {
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,
@@ -185,8 +184,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         String ua = cordovaWebView.getSettings().getUserAgentString();
         String appVersion = getAppVersion();
         String newUA = ua.concat(" OutSystemsApp v." + appVersion);
-        cordovaWebView.getSettings().setUserAgentString(newUA);                
-        
+        cordovaWebView.getSettings().setUserAgentString(newUA);
         if (savedInstanceState == null) {
             cordovaWebView.loadUrl(url);
         } else {
@@ -221,7 +219,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             buttonForth.setBackground(createSelectorIconApplications(getResources().getDrawable(
                     R.drawable.icon_chevron_forth)));
 
-        }                        
+        }
     }
 
     /*
@@ -251,7 +249,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         stopLoadingAnimation();
     }
@@ -450,7 +448,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     public class CordovaCustomWebClient extends CordovaLoaderWebClient {
 
         public CordovaCustomWebClient(CordovaInterface cordova, CordovaWebView view) {
-            super(cordova, view); 
+            super(cordova, view);
         }
 
         @SuppressLint("DefaultLocale")
@@ -465,8 +463,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             imageView.setVisibility(View.VISIBLE);
             LinearLayout viewLoading = (LinearLayout) findViewById(R.id.view_loading);
             if (viewLoading.getVisibility() != View.VISIBLE)
-                spinnerStart();           
-            
+                spinnerStart();
             return super.shouldOverrideUrlLoading(view, url);
         }
 
@@ -507,7 +504,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                 imageView.setVisibility(View.VISIBLE);
                 imageView.setBackgroundColor(getResources().getColor(R.color.white_color));
             }
-        }      
+        }
     }
 
     @SuppressWarnings("deprecation")

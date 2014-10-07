@@ -544,7 +544,7 @@ static NSDictionary* org_apache_cordova_contacts_defaultFields = nil;
             if (!addrType) {
                 addrType = (NSString*)kABOtherLabel;
             }
-            NSObject* typeValue = ((prop == kABPersonInstantMessageProperty) ? (NSObject*)kABOtherLabel : addrType);
+            NSObject* typeValue = ((prop == kABPersonInstantMessageProperty) ? (NSString*)kABOtherLabel : addrType);
             // NSLog(@"typeValue: %@", typeValue);
             [addDict setObject:typeValue forKey:kW3ContactFieldType];    //  im labels will be set as Other and address labels as type from dictionary
             [addDict setObject:newDict forKey:kW3ContactFieldValue];
@@ -682,7 +682,7 @@ static NSDictionary* org_apache_cordova_contacts_defaultFields = nil;
                     if (dict) {
                         NSMutableDictionary* addDict = [NSMutableDictionary dictionaryWithCapacity:2];
                         // get the type out of the original dictionary for address
-                        NSObject* typeValue = ((prop == kABPersonInstantMessageProperty) ? (NSObject*)kABOtherLabel : (NSString*)[field valueForKey:kW3ContactFieldType]);
+                        NSObject* typeValue = ((prop == kABPersonInstantMessageProperty) ? (NSString*)kABOtherLabel : (NSString*)[field valueForKey:kW3ContactFieldType]);
                         // NSLog(@"typeValue: %@", typeValue);
                         [addDict setObject:typeValue forKey:kW3ContactFieldType];        //  im labels will be set as Other and address labels as type from dictionary
                         [addDict setObject:dict forKey:kW3ContactFieldValue];
@@ -1326,6 +1326,10 @@ static NSDictionary* org_apache_cordova_contacts_defaultFields = nil;
 
     if (ABPersonHasImageData(self.record)) {
         CFDataRef photoData = ABPersonCopyImageData(self.record);
+        if (!photoData) {
+            return nil;
+        }
+
         NSData* data = (__bridge NSData*)photoData;
         // write to temp directory and store URI in photos array
         // get the temp directory path
@@ -1706,7 +1710,7 @@ static NSDictionary* org_apache_cordova_contacts_defaultFields = nil;
     BOOL bFound = NO;
 
     NSArray* values = [self valuesForProperty:propId inRecord:self.record];  // array of dictionaries (as CFDictionaryRef)
-    int dictCount = [values count];
+    NSUInteger dictCount = [values count];
 
     // for ims dictionary contains with service (w3C type) and username (W3c value)
     // for addresses dictionary contains street, city, state, zip, country
