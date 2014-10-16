@@ -9,18 +9,13 @@ package com.outsystems.android;
 
 import java.util.ArrayList;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EncodingUtils;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -35,8 +30,10 @@ import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.Installation;
 import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
+import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
+import com.outsystems.android.model.DeepLink;
 import com.outsystems.android.model.HubApplicationModel;
 import com.outsystems.android.model.Login;
 
@@ -91,6 +88,20 @@ public class LoginActivity extends BaseActivity {
 
         DatabaseHandler database = new DatabaseHandler(getApplicationContext());
         HubApplicationModel hub = database.getHubApplication(HubManagerHelper.getInstance().getApplicationHosted());
+        
+        // Check if deep link has valid settings                
+        if(DeepLinkController.getInstance().hasValidSettings()){
+        	String user = DeepLinkController.getInstance().getParameterValue(DeepLink.KEY_USERNAME_PARAMETER);
+        	String pass = DeepLinkController.getInstance().getParameterValue(DeepLink.KEY_PASSWORD_PARAMETER);
+        	
+        	if(hub != null){
+	        	hub.setUserName(user);
+	        	hub.setPassword(pass);       
+	        	
+	        	DeepLinkController.getInstance().resolveOperation(this);
+        	}
+        }
+        
         if (hub != null && (hub.getUserName() != null || !"".equals(hub.getUserName()))
                 && (hub.getPassword() != null || !"".equals(hub.getPassword()))) {
             ((EditText) findViewById(R.id.edit_text_user_mail)).setText(hub.getUserName());
@@ -127,7 +138,7 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private void callLoginService(final View v, final String userName, final String password) {
+    public void callLoginService(final View v, final String userName, final String password) {
         showLoading(v);
         
 		final DisplayMetrics displaymetrics = new DisplayMetrics();		
@@ -221,4 +232,6 @@ public class LoginActivity extends BaseActivity {
         }
         startActivity(intent);
     }
+    
+   
 }
