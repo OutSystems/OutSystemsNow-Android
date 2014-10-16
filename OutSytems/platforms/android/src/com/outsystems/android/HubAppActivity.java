@@ -174,7 +174,7 @@ public class HubAppActivity extends BaseActivity {
         
         // Check if deep link has valid settings                
         if(DeepLinkController.getInstance().hasValidSettings()){        	
-        	DeepLinkController.getInstance().resolveOperation(this);
+        	DeepLinkController.getInstance().resolveOperation(this, null);
         }
         else{
         	getInfrastructure = false;

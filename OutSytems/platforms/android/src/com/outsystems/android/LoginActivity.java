@@ -33,7 +33,6 @@ import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
-import com.outsystems.android.model.DeepLink;
 import com.outsystems.android.model.HubApplicationModel;
 import com.outsystems.android.model.Login;
 
@@ -91,15 +90,12 @@ public class LoginActivity extends BaseActivity {
         
         // Check if deep link has valid settings                
         if(DeepLinkController.getInstance().hasValidSettings()){
-        	String user = DeepLinkController.getInstance().getParameterValue(DeepLink.KEY_USERNAME_PARAMETER);
-        	String pass = DeepLinkController.getInstance().getParameterValue(DeepLink.KEY_PASSWORD_PARAMETER);
+
+        	Object[] params = new Object[1];
+        	params[0] = hub;
         	
-        	if(hub != null){
-	        	hub.setUserName(user);
-	        	hub.setPassword(pass);       
-	        	
-	        	DeepLinkController.getInstance().resolveOperation(this);
-        	}
+        	DeepLinkController.getInstance().resolveOperation(this, params);
+
         }
         
         if (hub != null && (hub.getUserName() != null || !"".equals(hub.getUserName()))

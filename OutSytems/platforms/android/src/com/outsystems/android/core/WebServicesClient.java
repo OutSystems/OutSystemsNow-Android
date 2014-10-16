@@ -30,7 +30,6 @@ import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.MySSLSocketFactory;
-import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.outsystems.android.core.parsing.GenericResponseParsingTask;
 import com.outsystems.android.helpers.HubManagerHelper;

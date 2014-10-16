@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.outsystems.android.adapters.ApplicationsAdapter;
 import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
+import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
 
@@ -87,6 +88,14 @@ public class ApplicationsActivity extends BaseActivity {
         } else {
             loadApplications();
         }
+        
+        // Check if deep link has valid settings                
+        if(DeepLinkController.getInstance().hasValidSettings()){
+        	
+        	DeepLinkController.getInstance().resolveOperation(this, null);
+
+        }
+        
     }
 
     /*

@@ -62,6 +62,7 @@ import com.outsystems.android.core.CordovaLoaderWebClient;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.CustomWebView;
 import com.outsystems.android.core.WebServicesClient;
+import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
 import com.phonegap.plugins.barcodescanner.BarcodeScanner;
@@ -179,7 +180,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                 downloadAndOpenFile(WebApplicationActivity.this, url);
             }
         });
-
+               
+        
         // Set in the user agent OutSystemsApp
         String ua = cordovaWebView.getSettings().getUserAgentString();
         String appVersion = getAppVersion();
@@ -190,7 +192,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         } else {
             ((LinearLayout) findViewById(R.id.view_loading)).setVisibility(View.GONE);
         }
-
+        
+        startLoadingAnimation();
+        
         // Customization Toolbar
         // Get Views from Xml Layout
         Button buttonApplications = (Button) findViewById(R.id.button_applications);

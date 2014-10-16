@@ -19,7 +19,7 @@ public class DeepLink {
 	private static final String TAG = "DeepLink";
 
 	private String environment;
-	private String operation;
+	private DLOperationType operation;
 	private boolean isValid;
 	
 
@@ -40,11 +40,11 @@ public class DeepLink {
 		this.environment = environment;
 	}
 
-	public String getOperation() {
+	public DLOperationType getOperation() {
 		return operation;
 	}
 
-	public void setOperation(String operation) {
+	public void setOperation(DLOperationType operation) {
 		this.operation = operation;
 	}
 
@@ -66,6 +66,12 @@ public class DeepLink {
 
 	
 	public void createSettings(String environment, String operation, String parameters){
+
+		if(this.getParameters() == null)
+			this.setParameters(new HashMap<String,String>());
+		else
+			this.getParameters().clear();
+		
 		if(environment != null && operation != null && environment.length() > 0 && operation.length() > 0 ){
 			this.setValid(true);
 		}
@@ -73,27 +79,17 @@ public class DeepLink {
 			this.setValid(false);
 			this.setEnvironment(null);
 			this.setOperation(null);
-			
-			if(this.getParameters() == null)
-				this.setParameters(new HashMap<String,String>());
-			else
-				this.getParameters().clear();
-			
+					
 			return;
 		}
 		
 		
 		this.setEnvironment(environment);
-		this.setOperation(operation.toLowerCase());
+		this.setOperation(DLOperationType.getOperationType(operation.toLowerCase()));
 		
 		LOG.v(TAG, "Deep Link - Environment: "+environment);
 		LOG.v(TAG, "Deep Link - Operation: "+operation);
-		
-		if(this.getParameters() == null)
-			this.setParameters(new HashMap<String,String>());
-		else
-			this.getParameters().clear();
-		
+			
 		
 		if(parameters != null){
 			StringTokenizer st = new StringTokenizer(parameters,"&");

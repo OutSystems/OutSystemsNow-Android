@@ -38,7 +38,6 @@ import com.arellomobile.android.push.utils.RegisterBroadcastReceiver;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
-import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.widgets.TypefaceSpan;
 
@@ -311,12 +310,5 @@ public class BaseActivity extends ActionBarActivity {
 
         setIntent(new Intent());
     }
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		// Invalidate deep link settings when the given operation it's over or user logout
-		DeepLinkController.getInstance().invalidate();
-	}
     
 }
