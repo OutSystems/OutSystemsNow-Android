@@ -96,8 +96,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     protected boolean activityResultKeepRunning;
     private int flagNumberLoadings = 0;
     
-    private boolean viewFinishedLoad = false;
-
     private OnClickListener onClickListenerBack = new OnClickListener() {
 
         @Override
@@ -105,7 +103,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             if (cordovaWebView.canGoBack()) {
                 LinearLayout viewLoading = (LinearLayout) findViewById(R.id.view_loading);
                 if (viewLoading.getVisibility() != View.VISIBLE) {
-                	queueLoadingAnimation();
+                	startLoadingAnimation();                	
                 }
                 cordovaWebView.goBack();
                 enableDisableButtonForth();
@@ -120,7 +118,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         @Override
         public void onClick(View v) {
             if (cordovaWebView.canGoForward()) {
-                queueLoadingAnimation();
+            	startLoadingAnimation();
                 cordovaWebView.goForward();
                 enableDisableButtonForth();
             }
@@ -266,7 +264,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 if (cordovaWebView.canGoBack()) {
-                	queueLoadingAnimation();
+                	startLoadingAnimation();
                 	
                     cordovaWebView.goBack();
                     enableDisableButtonForth();
@@ -466,8 +464,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 			if(url.equals("about:blank")) 
             	return super.shouldOverrideUrlLoading(view, url);
            
-			viewFinishedLoad = false;
-			queueLoadingAnimation();
+			startLoadingAnimation();
 			
             return super.shouldOverrideUrlLoading(view, url);
         }
@@ -475,7 +472,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            viewFinishedLoad = true;
             EventLogger.logMessage(getClass(), "________________ ONPAGEFINISHED _________________");
             enableDisableButtonForth();
             stopLoadingAnimation();
@@ -512,23 +508,17 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             }
         }
     }
-    
-    private void queueLoadingAnimation(){
-    	LoadingTask loadingTask = new LoadingTask();
-	    Timer timer = new Timer();
-
-	    timer.schedule(loadingTask, 800);
-    }
-    
+       
 
     @SuppressWarnings("deprecation")
-    private void startLoadingAnimation() {
-    	if (!viewFinishedLoad){
-	        BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cordovaWebView));
-	        imageView.setBackgroundDrawable(ob);
-	        imageView.setVisibility(View.VISIBLE);
-	        spinnerStart();
-    	}
+    private void startLoadingAnimation() {    	
+	    BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cordovaWebView));
+	    imageView.setBackgroundDrawable(ob);
+	    imageView.setVisibility(View.VISIBLE);
+       	        
+	    LoadingTask loadingTask = new LoadingTask();
+		Timer timer = new Timer();
+		timer.schedule(loadingTask, 500);    	
     }
 
     /**
@@ -542,7 +532,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         }
         spinnerStop();
-        viewFinishedLoad = true;
     }
 
     /**
@@ -750,7 +739,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 		
 		    @Override
 		    public void run() {
-		     startLoadingAnimation();
+		    	if (imageView.getVisibility() == View.VISIBLE)
+		    		spinnerStart();
 		    }});
 		  }
 			  
