@@ -11,8 +11,10 @@ import java.util.ArrayList;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -114,7 +116,12 @@ public class ApplicationsActivity extends BaseActivity {
 
     private void loadApplications() {
         gridView.setVisibility(View.GONE);
-        WebServicesClient.getInstance().getApplications(HubManagerHelper.getInstance().getApplicationHosted(),
+        
+    	final DisplayMetrics displaymetrics = new DisplayMetrics();		
+		getWindowManager().getDefaultDisplay().getRealMetrics(displaymetrics);
+        
+        WebServicesClient.getInstance().getApplications(getApplicationContext(), HubManagerHelper.getInstance().getApplicationHosted(), 
+        		(int)(displaymetrics.widthPixels / displaymetrics.density), (int)(displaymetrics.heightPixels / displaymetrics.density),
                 new WSRequestHandler() {
 
                     @Override

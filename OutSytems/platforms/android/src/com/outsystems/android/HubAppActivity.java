@@ -92,7 +92,8 @@ public class HubAppActivity extends BaseActivity {
                 } else {
                     ((EditText) findViewById(R.id.edit_text_hub_url))
                             .setError(WebServicesClient.PrettyErrorMessage(statusCode)); // getString(R.string.label_error_wrong_address)
-                    ((EditText) findViewById(R.id.edit_text_hub_url)).setMovementMethod(LinkMovementMethod.getInstance()); // enable links
+                    // avoid crashes
+                    //  ((EditText) findViewById(R.id.edit_text_hub_url)).setMovementMethod(LinkMovementMethod.getInstance()); // enable links
                     showError(findViewById(R.id.root_view));
                 }
                 stopLoading(v);

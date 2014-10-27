@@ -48,7 +48,7 @@ public class WebServicesClient {
 
 	public static final String URL_WEB_APPLICATION = "https://%1$s/%2$s";
 	public static final String BASE_URL = "https://%1$s/OutSystemsNowService/";
-	public static String DEMO_HOST_NAME = "apps.outsystems.net";	
+	public static String DEMO_HOST_NAME = "apps.outsystems.net";
 
 	private static volatile WebServicesClient instance = null;
 	
@@ -366,9 +366,19 @@ public class WebServicesClient {
 				});
 	}
 
-	public void getApplications(final String urlHubApp,
+	public void getApplications(final Context ctx, final String urlHubApp, final int width, final int height,
 			final WSRequestHandler handler) {
-		get(urlHubApp, "applications", null, new AsyncHttpResponseHandler() {
+		
+		String widthStr =  new Integer(width).toString();
+		String heightStr =  new Integer(height).toString();
+		
+		HashMap<String, String> param = new HashMap<String, String>();
+		param.put("devicetype", "android");		
+		param.put("screenWidth", widthStr);
+		param.put("screenHeight", heightStr);	
+		param.put("deviceHwId", Installation.id(ctx));		
+		
+		get(urlHubApp, "applications", param, new AsyncHttpResponseHandler() {
 
 			@Override
 			public void onSuccess(final int statusCode, Header[] headers,
@@ -421,7 +431,7 @@ public class WebServicesClient {
 								.isJSFApplicationServer()) {
 					HubManagerHelper.getInstance()
 							.setJSFApplicationServer(true);
-					getApplications(urlHubApp, handler);
+					getApplications(ctx,urlHubApp,width,height, handler);
 				} else {
 					handler.requestFinish(null, true, statusCode);
 				}
