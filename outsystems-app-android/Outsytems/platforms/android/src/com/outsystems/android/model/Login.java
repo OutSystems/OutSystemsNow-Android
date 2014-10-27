@@ -22,12 +22,15 @@ public class Login {
     private String errorMessage;
 
     private List<Application> applications;
+    
+    private String version;
 
-    public Login(boolean success, String errorMessage, List<Application> applications) {
+    public Login(boolean success, String version, String errorMessage, List<Application> applications) {
         super();
         this.success = success;
         this.errorMessage = errorMessage;
         this.applications = applications;
+        this.version = version;
     }
 
     public boolean isSuccess() {
@@ -53,5 +56,13 @@ public class Login {
     public void setApplications(List<Application> applications) {
         this.applications = applications;
     }
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
 
 }

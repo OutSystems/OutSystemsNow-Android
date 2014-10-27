@@ -11,8 +11,10 @@ import java.util.ArrayList;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import com.outsystems.android.adapters.ApplicationsAdapter;
 import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
+import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
 
@@ -87,6 +90,14 @@ public class ApplicationsActivity extends BaseActivity {
         } else {
             loadApplications();
         }
+        
+        // Check if deep link has valid settings                
+        if(DeepLinkController.getInstance().hasValidSettings()){
+        	
+        	DeepLinkController.getInstance().resolveOperation(this, null);
+
+        }
+        
     }
 
     /*
@@ -95,7 +106,7 @@ public class ApplicationsActivity extends BaseActivity {
      * @see android.support.v4.app.FragmentActivity#onResume()
      */
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if (HubManagerHelper.getInstance().getApplicationHosted() == null) {
             ApplicationOutsystems app = (ApplicationOutsystems) getApplication();
@@ -105,7 +116,12 @@ public class ApplicationsActivity extends BaseActivity {
 
     private void loadApplications() {
         gridView.setVisibility(View.GONE);
-        WebServicesClient.getInstance().getApplications(HubManagerHelper.getInstance().getApplicationHosted(),
+        
+    	final DisplayMetrics displaymetrics = new DisplayMetrics();		
+		getWindowManager().getDefaultDisplay().getRealMetrics(displaymetrics);
+        
+        WebServicesClient.getInstance().getApplications(getApplicationContext(), HubManagerHelper.getInstance().getApplicationHosted(), 
+        		(int)(displaymetrics.widthPixels / displaymetrics.density), (int)(displaymetrics.heightPixels / displaymetrics.density),
                 new WSRequestHandler() {
 
                     @Override

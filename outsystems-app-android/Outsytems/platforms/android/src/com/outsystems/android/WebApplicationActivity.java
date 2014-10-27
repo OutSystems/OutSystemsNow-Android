@@ -10,6 +10,8 @@ package com.outsystems.android;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -60,7 +62,9 @@ import android.widget.LinearLayout;
 
 import com.outsystems.android.core.CordovaLoaderWebClient;
 import com.outsystems.android.core.EventLogger;
+import com.outsystems.android.core.CustomWebView;
 import com.outsystems.android.core.WebServicesClient;
+import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
 import com.phonegap.plugins.barcodescanner.BarcodeScanner;
@@ -91,7 +95,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     protected boolean activityResultKeepRunning;
     private int flagNumberLoadings = 0;
-
+    
     private OnClickListener onClickListenerBack = new OnClickListener() {
 
         @Override
@@ -99,7 +103,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             if (cordovaWebView.canGoBack()) {
                 LinearLayout viewLoading = (LinearLayout) findViewById(R.id.view_loading);
                 if (viewLoading.getVisibility() != View.VISIBLE) {
-                    startLoadingAnimation();
+                	startLoadingAnimation();                	
                 }
                 cordovaWebView.goBack();
                 enableDisableButtonForth();
@@ -114,7 +118,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         @Override
         public void onClick(View v) {
             if (cordovaWebView.canGoForward()) {
-                startLoadingAnimation();
+            	startLoadingAnimation();
                 cordovaWebView.goForward();
                 enableDisableButtonForth();
             }
@@ -148,7 +152,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         // Hide action bar
         getSupportActionBar().hide();
 
-        cordovaWebView = (CordovaWebView) this.findViewById(R.id.mainView);
+        cordovaWebView = (CustomWebView) this.findViewById(R.id.mainView);
         imageView = (ImageView) this.findViewById(R.id.image_view);
         Config.init(this);
 
@@ -167,7 +171,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             }
             url = String.format(WebServicesClient.URL_WEB_APPLICATION, HubManagerHelper.getInstance()
                     .getApplicationHosted(), application.getPath());
-        }
+        }        
 
         cordovaWebView.setWebViewClient(new CordovaCustomWebClient(this, cordovaWebView));
 
@@ -178,7 +182,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                 downloadAndOpenFile(WebApplicationActivity.this, url);
             }
         });
-
+               
+        
         // Set in the user agent OutSystemsApp
         String ua = cordovaWebView.getSettings().getUserAgentString();
         String appVersion = getAppVersion();
@@ -189,7 +194,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         } else {
             ((LinearLayout) findViewById(R.id.view_loading)).setVisibility(View.GONE);
         }
-
+        
         // Customization Toolbar
         // Get Views from Xml Layout
         Button buttonApplications = (Button) findViewById(R.id.button_applications);
@@ -248,7 +253,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         stopLoadingAnimation();
     }
@@ -259,7 +264,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 if (cordovaWebView.canGoBack()) {
-                    startLoadingAnimation();
+                	startLoadingAnimation();
+                	
                     cordovaWebView.goBack();
                     enableDisableButtonForth();
                 } else {
@@ -457,12 +463,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             EventLogger.logMessage(getClass(), "--------------- shouldOverrideUrlLoading ---------------");
 			if(url.equals("about:blank")) 
             	return super.shouldOverrideUrlLoading(view, url);
-            BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cordovaWebView));
-            imageView.setBackgroundDrawable(ob);
-            imageView.setVisibility(View.VISIBLE);
-            LinearLayout viewLoading = (LinearLayout) findViewById(R.id.view_loading);
-            if (viewLoading.getVisibility() != View.VISIBLE)
-                spinnerStart();
+           
+			startLoadingAnimation();
+			
             return super.shouldOverrideUrlLoading(view, url);
         }
 
@@ -505,13 +508,17 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             }
         }
     }
+       
 
     @SuppressWarnings("deprecation")
-    private void startLoadingAnimation() {
-        BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cordovaWebView));
-        imageView.setBackgroundDrawable(ob);
-        imageView.setVisibility(View.VISIBLE);
-        spinnerStart();
+    private void startLoadingAnimation() {    	
+	    BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cordovaWebView));
+	    imageView.setBackgroundDrawable(ob);
+	    imageView.setVisibility(View.VISIBLE);
+       	        
+	    LoadingTask loadingTask = new LoadingTask();
+		Timer timer = new Timer();
+		timer.schedule(loadingTask, 500);    	
     }
 
     /**
@@ -720,4 +727,22 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         }
         return directory;
     }
+    
+    
+    
+	private class LoadingTask extends TimerTask {
+
+		  @Override
+		  public void run() {
+		   
+		   runOnUiThread(new Runnable(){
+		
+		    @Override
+		    public void run() {
+		    	if (imageView.getVisibility() == View.VISIBLE)
+		    		spinnerStart();
+		    }});
+		  }
+			  
+	}
 }

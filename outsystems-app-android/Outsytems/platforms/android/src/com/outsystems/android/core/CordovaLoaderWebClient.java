@@ -12,11 +12,13 @@ import java.io.InputStream;
 
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.CordovaWebViewClient;
+import org.apache.cordova.IceCreamCordovaWebViewClient;
+
 
 import android.content.res.AssetManager;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
+
 
 /**
  * Class description.
@@ -25,7 +27,7 @@ import android.webkit.WebView;
  * @version $Revision: 666 $
  * 
  */
-public class CordovaLoaderWebClient extends CordovaWebViewClient {
+public class CordovaLoaderWebClient extends IceCreamCordovaWebViewClient {
 
     /** The identifier cordova. */
     private static String IDENTIFIER_CORDOVA = "/cdvload/";

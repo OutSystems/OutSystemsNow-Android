@@ -7,6 +7,7 @@
  */
 package com.outsystems.android.helpers;
 
+
 /**
  * Class description.
  * 
@@ -25,7 +26,7 @@ public class HubManagerHelper {
 
     private String deviceId = "";
 
-    private HubManagerHelper() {
+	private HubManagerHelper() {
 
     }
 
@@ -35,6 +36,7 @@ public class HubManagerHelper {
         }
         return _instance;
     }
+	
 
     public String getApplicationHosted() {
         return applicationHosted;
@@ -58,5 +60,5 @@ public class HubManagerHelper {
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
-    }
+    }   
 }

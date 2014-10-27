@@ -9,10 +9,13 @@ package com.outsystems.android;
 
 import java.util.ArrayList;
 
+import org.apache.http.util.EncodingUtils;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -24,8 +27,10 @@ import android.widget.TextView;
 
 import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
+import com.outsystems.android.core.Installation;
 import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
+import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
 import com.outsystems.android.model.HubApplicationModel;
@@ -82,6 +87,17 @@ public class LoginActivity extends BaseActivity {
 
         DatabaseHandler database = new DatabaseHandler(getApplicationContext());
         HubApplicationModel hub = database.getHubApplication(HubManagerHelper.getInstance().getApplicationHosted());
+        
+        // Check if deep link has valid settings                
+        if(DeepLinkController.getInstance().hasValidSettings()){
+
+        	Object[] params = new Object[1];
+        	params[0] = hub;
+        	
+        	DeepLinkController.getInstance().resolveOperation(this, params);
+
+        }
+        
         if (hub != null && (hub.getUserName() != null || !"".equals(hub.getUserName()))
                 && (hub.getPassword() != null || !"".equals(hub.getPassword()))) {
             ((EditText) findViewById(R.id.edit_text_user_mail)).setText(hub.getUserName());
@@ -118,10 +134,14 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private void callLoginService(final View v, final String userName, final String password) {
+    public void callLoginService(final View v, final String userName, final String password) {
         showLoading(v);
-        WebServicesClient.getInstance().loginPlattform(userName, password,
-                HubManagerHelper.getInstance().getDeviceId(), new WSRequestHandler() {
+        
+		final DisplayMetrics displaymetrics = new DisplayMetrics();		
+		getWindowManager().getDefaultDisplay().getRealMetrics(displaymetrics);
+		
+        WebServicesClient.getInstance().loginPlattform(getApplicationContext(), userName, password,
+                HubManagerHelper.getInstance().getDeviceId(), (int)(displaymetrics.widthPixels / displaymetrics.density), (int)(displaymetrics.heightPixels / displaymetrics.density), new WSRequestHandler() {
                     @Override
                     public void requestFinish(Object result, boolean error, int statusCode) {
                         stopLoading(v);
@@ -138,17 +158,31 @@ public class LoginActivity extends BaseActivity {
                                 ((EditText) findViewById(R.id.edit_text_passwod)).setError(getResources().getString(
                                         R.string.label_error_login));
                                 showError(findViewById(R.id.root_view));
+                            } else if (login.getVersion() == null || !login.getVersion().startsWith(getString(R.string.required_module_version))) {
+                            	
+                            	// invalid OutSystems Now modules in the server   
+                            	 ((EditText) findViewById(R.id.edit_text_user_mail)).setError(getResources().getString(
+                                         R.string.label_invalid_version));
+                                 ((EditText) findViewById(R.id.edit_text_passwod)).setError(getResources().getString(
+                                         R.string.label_invalid_version));
+                            	showError(findViewById(R.id.root_view));
                             } else {
-
-                                // Using authentication in the web view
+                            	
+                            	// Using authentication in the web view
                                 WebView webView = new WebView(getApplicationContext());
                                 String url = String.format(WebServicesClient.BASE_URL,
                                         HubManagerHelper.getInstance().getApplicationHosted()).concat(
-                                        "login" + WebServicesClient.getApplicationServer() + "?username=")
-                                        + userName + "&password=" + password;
+                                        "login" + WebServicesClient.getApplicationServer());
                                 url = url.replace("https", "http");
-                                webView.loadUrl(url);
-
+                                
+                                String postData = "username=" + userName + "&password=" + password + "&screenWidth=" + 
+                                		(int)(displaymetrics.widthPixels / displaymetrics.density) + "&screenHeight="  + 
+                                		(int)(displaymetrics.heightPixels / displaymetrics.density) + "&devicetype=android&deviceHwId=" + 
+                                		Installation.id(getApplicationContext());
+                                
+                                
+                                webView.postUrl(url, EncodingUtils.getBytes(postData, "BASE64"));
+                                                            	
                                 DatabaseHandler database = new DatabaseHandler(getApplicationContext());
                                 database.updateHubApplicationCredentials(HubManagerHelper.getInstance()
                                         .getApplicationHosted(), userName, password);
@@ -164,6 +198,7 @@ public class LoginActivity extends BaseActivity {
                         }
                     }
                 });
+               
     }
 
     /**
@@ -193,4 +228,6 @@ public class LoginActivity extends BaseActivity {
         }
         startActivity(intent);
     }
+    
+   
 }

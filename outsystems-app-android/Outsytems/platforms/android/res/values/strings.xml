@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">OutSystems</string>
+    <string name="required_module_version">1.1</string>
     <string name="image_splash">SplashScreen</string>
     <string name="image_logo">LogoOutsystems</string>
     <string name="image_button_help">IconHelp</string>
@@ -8,6 +9,7 @@
     <string name="label_title_hub">Access my applications hosted on:</string>
     <string name="label_help">Please fill in the location of your OutSystems environment. This is the base URL that you use to access any of your Platform applications.</string>
     <string name="label_no_applications">No applications found, please verify your application permissions or contact your system administrator.</string>
+    <string name="label_invalid_version">Incompatible module version in your installation, please contact your system administrator to update the OutSystems Now modules.</string>
     <string name="edit_text_hint_host">yourpersonal.outsystemscloud.com</string>
     <string name="button_text_go">GO</string>
     <string name="label_demo">Want to see how it works?</string>
@@ -23,7 +25,7 @@
     <string name="label_loading">Loading</string>
     
     <!-- Error Messages -->
-    <string name="label_error_empty_address">Please enter a valid Outsystems network address</string>
+    <string name="label_error_empty_address">Please enter a valid OutSystems network address</string>
     <string name="label_error_wrong_address">There was an error trying to connect to the provided environment, please try again.</string>
     <string name="label_error_login">Invalid Login</string>
     
