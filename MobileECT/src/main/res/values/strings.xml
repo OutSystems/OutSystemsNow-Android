@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OutSystemsMobileECT</string>
+    <string name="send_button">Send</string>
+    <color name="outsystems_red">#c20</color>
+</resources>

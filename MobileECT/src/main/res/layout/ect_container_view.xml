@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    tools:context="com.outsystems.android.mobileect.view.OSECTContainer"
+    android:id="@+id/ectContainerFrag">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/helper_gradient"
+        android:id="@+id/ectHelperGroup">
+
+        <ImageView
+            android:id="@+id/ectHelperView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ectScreenCapture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp" />
+
+    <include
+        layout="@layout/ect_toolbar_view"
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:id="@+id/ectToolbarInclude" />
+
+
+</LinearLayout>

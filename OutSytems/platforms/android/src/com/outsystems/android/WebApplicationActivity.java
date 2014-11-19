@@ -64,8 +64,9 @@ import com.outsystems.android.core.CordovaLoaderWebClient;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.CustomWebView;
 import com.outsystems.android.core.WebServicesClient;
-import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
+import com.outsystems.android.mobileect.MobileECTController;
+import com.outsystems.android.mobileect.view.OSECTContainer;
 import com.outsystems.android.model.Application;
 import com.phonegap.plugins.barcodescanner.BarcodeScanner;
 
@@ -76,7 +77,7 @@ import com.phonegap.plugins.barcodescanner.BarcodeScanner;
  * @version $Revision: 666 $
  * 
  */
-public class WebApplicationActivity extends BaseActivity implements CordovaInterface {
+public class WebApplicationActivity extends BaseActivity implements CordovaInterface, OSECTContainer.OnECTContainerClickListener {
 
     public static String KEY_APPLICATION = "key_application";
     CordovaWebView cordovaWebView;
@@ -95,8 +96,10 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     protected boolean activityResultKeepRunning;
     private int flagNumberLoadings = 0;
-    
-    private OnClickListener onClickListenerBack = new OnClickListener() {
+
+    private MobileECTController mobileECTController;
+
+    public OnClickListener onClickListenerBack = new OnClickListener() {
 
         @Override
         public void onClick(View v) {
@@ -132,6 +135,19 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             finish();
         }
     };
+
+
+    private OnClickListener onClickListenerOpenECT = new OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            mobileECTController.openECTView();
+        }
+    };
+
+    public void onCloseECTListener(){
+        mobileECTController.closeECTView();
+    }
 
     /*
      * The variables below are used to cache some of the activity properties.
@@ -224,6 +240,17 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                     R.drawable.icon_chevron_forth)));
 
         }
+
+        View containerView = findViewById(R.id.ectViewGroup);
+
+        // Mobile ECT Feature
+        mobileECTController = new MobileECTController(this,
+                                                      containerView,
+                                                      this.cordovaWebView,
+                                                      HubManagerHelper.getInstance().getApplicationHosted());
+
+
+        containerView.setVisibility(View.GONE);
     }
 
     /*
@@ -475,6 +502,16 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             EventLogger.logMessage(getClass(), "________________ ONPAGEFINISHED _________________");
             enableDisableButtonForth();
             stopLoadingAnimation();
+
+            Button buttonECT = (Button) findViewById(R.id.button_ect);
+
+            // Check if Mobile ECT feature is available
+            if(!mobileECTController.isECTFeatureAvailable()){
+                buttonECT.setVisibility(View.GONE);
+            }
+            else{
+                buttonECT.setOnClickListener(onClickListenerOpenECT);
+            }
         }
 
         @Override
@@ -536,9 +573,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Show the spinner. Must be called from the UI thread.
-     * 
-     * @param title Title of the dialog
-     * @param message The message of the dialog
      */
     public void spinnerStart() {
         flagNumberLoadings++;

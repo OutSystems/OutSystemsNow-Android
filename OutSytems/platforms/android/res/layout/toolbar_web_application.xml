@@ -3,28 +3,53 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:gravity="center_vertical"
-    android:orientation="horizontal" >
-
-    <Button
-        android:id="@+id/button_back"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/icon_chevron_back" />
-
-    <Button
-        android:id="@+id/button_forth"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_margin="10dp"
-        android:layout_marginLeft="30dp"
-        android:background="@drawable/icon_chevron_forth" />
+    android:orientation="horizontal"
+    android:weightSum="1"
+    android:gravity="center_vertical|center_horizontal">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical|start"
+        android:layout_weight="0.33">
+
+        <Button
+            android:id="@+id/button_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/icon_chevron_back"
+            android:layout_margin="10dp" />
+
+        <Button
+            android:id="@+id/button_forth"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/icon_chevron_forth" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_weight="0.33">
+
+        <Button
+            android:id="@+id/button_ect"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/icon_speech_bubble" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="right|center_vertical" >
+        android:layout_weight="0.33"
+        android:gravity="center_vertical|end">
 
         <Button
             android:id="@+id/button_applications"

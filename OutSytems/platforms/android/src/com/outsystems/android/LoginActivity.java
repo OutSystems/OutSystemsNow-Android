@@ -209,8 +209,9 @@ public class LoginActivity extends BaseActivity {
     @SuppressWarnings("unchecked")
     private void openApplicationsActivity(Login login) {
         Intent intent = new Intent(getApplicationContext(), ApplicationsActivity.class);
+        ArrayList arrayList = (ArrayList)login.getApplications();
         intent.putParcelableArrayListExtra(ApplicationsActivity.KEY_CONTENT_APPLICATIONS,
-                (ArrayList<? extends Parcelable>) login.getApplications());
+                (ArrayList<? extends Parcelable>)arrayList);
         intent.putExtra(ApplicationsActivity.KEY_TITLE_ACTION_BAR, getResources().getString(R.string.label_logout));
         startActivity(intent);
     }
