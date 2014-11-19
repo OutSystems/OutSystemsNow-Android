@@ -126,7 +126,7 @@ public class HubAppActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             HubManagerHelper.getInstance().setApplicationHosted(WebServicesClient.DEMO_HOST_NAME);
-            HubManagerHelper.getInstance().setJSFApplicationServer(true);
+            HubManagerHelper.getInstance().setJSFApplicationServer(false);
             ApplicationOutsystems app = (ApplicationOutsystems) getApplication();
             app.setDemoApplications(true);
             Intent intent = new Intent(getApplicationContext(), ApplicationsActivity.class);
