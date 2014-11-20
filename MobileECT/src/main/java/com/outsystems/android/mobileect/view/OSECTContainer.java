@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.outsystems.android.mobileect.R;
 
@@ -26,6 +27,9 @@ import com.outsystems.android.mobileect.R;
  */
 public class OSECTContainer extends Fragment {
     private Bitmap screenCapture;
+
+    public static final int ECT_STATUS_SENDING_MESSAGE = 0;
+    public static final int ECT_STATUS_FAILED_MESSAGE = 1;
 
 
     OnECTContainerClickListener mCallback;
@@ -57,37 +61,59 @@ public class OSECTContainer extends Fragment {
         // Inflate the layout for this fragment
         View ectContainerView = inflater.inflate(R.layout.ect_container_view, container, false);
 
-        EditText feedbackMessage = (EditText) ectContainerView.findViewById(R.id.ectFeedbackMessage);
+        Animation fadeInAnimation = AnimationUtils.loadAnimation(container.getContext(), R.anim.fade_in);
+        ectContainerView.startAnimation(fadeInAnimation);
+
+        this.configToolbarView(ectContainerView);
+
+        this.configScreenCaptureView(ectContainerView);
+
+        this.configHelperView(ectContainerView);
+
+        this.configStatusView(ectContainerView);
+
+        return ectContainerView;
+    }
+
+    private void configToolbarView(View container) {
+
+        EditText feedbackMessage = (EditText) container.findViewById(R.id.ectFeedbackMessage);
         feedbackMessage.setOnFocusChangeListener(onFocusChangeFeedbackMessage);
 
-        Button closeButton = (Button)ectContainerView.findViewById(R.id.buttonClose);
+        Button closeButton = (Button)container.findViewById(R.id.buttonClose);
         closeButton.setOnClickListener(onClickListenerCloseECT);
 
-        OSCanvasView screenCaptureView = (OSCanvasView)ectContainerView.findViewById(R.id.ectScreenCapture);
+        Button sendButton = (Button)container.findViewById(R.id.buttonSend);
+        sendButton.setOnClickListener(onClickListenerSendFeedback);
+    }
+
+    private void configScreenCaptureView(View container) {
+
+        OSCanvasView screenCaptureView = (OSCanvasView)container.findViewById(R.id.ectScreenCapture);
         screenCaptureView.setBackgroundImage(this.screenCapture);
         screenCaptureView.setVisibility(View.GONE);
 
-        ImageView helperView = (ImageView)ectContainerView.findViewById(R.id.ectHelperView);
+        View ectScreenContainer = container.findViewById(R.id.ectScreenContainer);
+        ViewGroup.LayoutParams ectScreenContainerLayoutParams = ectScreenContainer.getLayoutParams();
+        ectScreenContainerLayoutParams.height = this.screenCapture.getHeight();
+        ectScreenContainerLayoutParams.width = this.screenCapture.getWidth();
+    }
+
+    private void configHelperView(View container){
+
+        ImageView helperView = (ImageView)container.findViewById(R.id.ectHelperView);
         helperView.setBackgroundResource(R.drawable.ect_instructions_portrait);
         helperView.setOnClickListener(this.onClickListenerHelperImage);
 
         ViewGroup.LayoutParams helperLayoutParams = helperView.getLayoutParams();
         helperLayoutParams.height = this.screenCapture.getHeight();
         helperLayoutParams.width = this.screenCapture.getWidth();
-
-        Animation fadeInAnimation = AnimationUtils.loadAnimation(container.getContext(), R.anim.fade_in);
-        ectContainerView.startAnimation(fadeInAnimation);
-
-
-        View ectScreenContainer = ectContainerView.findViewById(R.id.ectScreenContainer);
-        ViewGroup.LayoutParams ectScreenContainerLayoutParams = ectScreenContainer.getLayoutParams();
-        ectScreenContainerLayoutParams.height = this.screenCapture.getHeight();
-        ectScreenContainerLayoutParams.width = this.screenCapture.getWidth();
-
-        return ectContainerView;
     }
 
-
+    private void configStatusView(View container) {
+        View ectStatusView = container.findViewById(R.id.ectStatusInclude);
+        ectStatusView.setVisibility(View.GONE);
+    }
 
 
     @Override
@@ -113,29 +139,6 @@ public class OSECTContainer extends Fragment {
         this.screenCapture = screenCapture;
     }
 
-    public void hideHelperView(){
-        View helperGroup = getView().findViewById(R.id.ectHelperGroup);
-        Animation fadeOutAnimation = AnimationUtils.loadAnimation(helperGroup.getContext(), R.anim.fade_out);
-
-        fadeOutAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                View screenCaptureView = getView().findViewById(R.id.ectScreenCapture);
-                screenCaptureView.setVisibility(View.VISIBLE);
-                View helperGroup = getView().findViewById(R.id.ectHelperGroup);
-                helperGroup.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) { }
-
-            @Override
-            public void onAnimationStart(Animation animation) { }
-        });
-        helperGroup.startAnimation(fadeOutAnimation);
-
-
-    }
 
     private void hideECTView(){
         View ectScreenCapture = getView().findViewById(R.id.ectScreenCapture);
@@ -174,10 +177,90 @@ public class OSECTContainer extends Fragment {
         ectScreenCapture.startAnimation(fadeOut);
         ectToolbar.startAnimation(slideOutAnimation);
 
+        this.hideKeyboard();
+    }
+
+    private void hideKeyboard(){
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         if (getActivity().getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+
+    /**
+     *  Helper View
+     */
+
+    public void hideHelperView(){
+        View helperGroup = getView().findViewById(R.id.ectHelperGroup);
+        Animation fadeOutAnimation = AnimationUtils.loadAnimation(helperGroup.getContext(), R.anim.fade_out);
+
+        fadeOutAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                View screenCaptureView = getView().findViewById(R.id.ectScreenCapture);
+                screenCaptureView.setVisibility(View.VISIBLE);
+                View helperGroup = getView().findViewById(R.id.ectHelperGroup);
+                helperGroup.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) { }
+
+            @Override
+            public void onAnimationStart(Animation animation) { }
+        });
+        helperGroup.startAnimation(fadeOutAnimation);
+
+
+    }
+
+    /**
+     * Status View
+     */
+
+    private void setStatusMessage(int message){
+        TextView ectStatusMessage = (TextView)getView().findViewById(R.id.ectStatusMessage);
+        View closeButton = getView().findViewById(R.id.ectStatusCloseButton);
+        View progressBar = getView().findViewById(R.id.ectStatusIndicator);
+        View retryButton = getView().findViewById(R.id.ectStatusRetryButton);
+
+        switch (message){
+            case ECT_STATUS_SENDING_MESSAGE:
+                ectStatusMessage.setText(R.string.status_sending_message);
+                closeButton.setVisibility(View.GONE);
+                retryButton.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+
+                break;
+            case ECT_STATUS_FAILED_MESSAGE:
+                ectStatusMessage.setText(R.string.status_failed_message);
+                closeButton.setVisibility(View.VISIBLE);
+                retryButton.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    public void showStatusView(boolean show, int message){
+        View ectToolbar = getView().findViewById(R.id.ectToolbarInclude);
+        View ectStatus =  getView().findViewById(R.id.ectStatusInclude);
+        OSCanvasView canvasView = (OSCanvasView)getView().findViewById(R.id.ectScreenCapture);
+        canvasView.setCanvasLocked(show);
+
+        if(show){
+            ectToolbar.setVisibility(View.GONE);
+            ectStatus.setVisibility(View.VISIBLE);
+            this.setStatusMessage(message);
+        }
+        else{
+            ectToolbar.setVisibility(View.VISIBLE);
+            ectStatus.setVisibility(View.GONE);
         }
     }
 
@@ -218,6 +301,15 @@ public class OSECTContainer extends Fragment {
             hideHelperView();
         }
     };
+
+    private View.OnClickListener onClickListenerSendFeedback = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            hideKeyboard();
+            showStatusView(true, ECT_STATUS_SENDING_MESSAGE);
+        }
+    };
+
 
 
     /**

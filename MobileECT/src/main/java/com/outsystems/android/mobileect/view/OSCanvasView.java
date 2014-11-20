@@ -25,6 +25,16 @@ public class OSCanvasView extends View implements View.OnTouchListener{
     private Paint paint;
     private int counter;
 
+    public boolean isCanvasLocked() {
+        return canvasLocked;
+    }
+
+    public void setCanvasLocked(boolean canvasLocked) {
+        this.canvasLocked = canvasLocked;
+    }
+
+    private boolean canvasLocked;
+
 
     public OSCanvasView(Context context) {
         super(context);
@@ -57,6 +67,7 @@ public class OSCanvasView extends View implements View.OnTouchListener{
 
         this.points = new Point[5];
         this.counter = 0;
+        this.canvasLocked = false;
     }
 
     @Override
@@ -70,6 +81,9 @@ public class OSCanvasView extends View implements View.OnTouchListener{
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
+        if(canvasLocked)
+            return false;
+
         Point touchPoint = new Point(motionEvent.getX(),motionEvent.getY());
         boolean result;
 

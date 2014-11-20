@@ -21,20 +21,19 @@ import com.outsystems.android.mobileect.view.OSECTContainer;
 public class MobileECTController {
 
     private Activity currentActivity;
+    private View mainView;
     private View containerView;
     private WebView webView;
     private String hostname;
 
     private OSECTContainer ectContainerFragment;
 
-    private boolean deviceOrientationLocked;
-
-    public MobileECTController(Activity currentActivity,View containerView, WebView webView, String hostname){
+    public MobileECTController(Activity currentActivity, View mainView, View containerView, WebView webView, String hostname){
+        this.mainView = mainView;
         this.containerView = containerView;
         this.webView = webView;
         this.hostname = hostname;
         this.currentActivity = currentActivity;
-        this.setDeviceOrientationLocked(false);
     }
 
 
@@ -94,6 +93,7 @@ public class MobileECTController {
             fragmentTransaction.commit ();
 
             containerView.setVisibility(View.VISIBLE);
+            mainView.setVisibility(View.GONE);
         }
         else
         {
@@ -103,14 +103,8 @@ public class MobileECTController {
             fragmentTransaction.commit ();
 
             containerView.setVisibility(View.GONE);
+            mainView.setVisibility(View.VISIBLE);
         }
     }
 
-    public boolean isDeviceOrientationLocked() {
-        return deviceOrientationLocked;
-    }
-
-    public void setDeviceOrientationLocked(boolean deviceOrientationLocked) {
-        this.deviceOrientationLocked = deviceOrientationLocked;
-    }
 }

@@ -8,71 +8,72 @@
     android:baselineAligned="false">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
+        android:layout_weight="0.15"
         android:gravity="center_vertical|center_horizontal"
-        android:layout_weight="0.15">
+        android:orientation="horizontal">
 
         <Button
+            android:id="@+id/ectStatusCloseButton"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:id="@+id/buttonClose"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="6dp"
             android:background="@drawable/icon_cross_white"
             android:gravity="center"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="6dp"/>
+            android:visibility="gone"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
+        android:layout_weight="0.70"
         android:gravity="center_vertical|center_horizontal"
-        android:layout_weight="0.70">
+        android:orientation="horizontal">
+         <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:id="@+id/ectStatusIndicator"
+             android:layout_marginRight="5dp"/>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="15"
-            android:id="@+id/ectFeedbackMessage"
-            android:editable="true"
-            android:enabled="true"
-            android:background="@drawable/edit_text_roundedcorners"
-            android:autoText="false"
+        <TextView
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
-            android:maxLength="500"
-            android:maxLines="5"
-            android:minLines="1"
+            android:gravity="center_vertical|clip_horizontal"
             android:minHeight="36dp"
-            android:scrollbars="vertical"
-            android:scrollHorizontally="false"
-            android:hint="@string/feedback_message_prompt"
-            android:padding="3dp"/>
+            android:textColor="@android:color/white"
+            android:id="@+id/ectStatusMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status_sending_message"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
+
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
+        android:layout_weight="0.15"
         android:gravity="center_vertical|center_horizontal"
-        android:layout_weight="0.15">
+        android:orientation="horizontal">
 
         <Button
+            android:id="@+id/ectStatusRetryButton"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
-            android:id="@+id/buttonSend"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="@string/send_button"
             android:layout_gravity="bottom"
             android:layout_marginBottom="6dp"
             android:background="@android:color/transparent"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/retry_button"
             android:textColor="@android:color/white"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:visibility="gone"/>
+
 
     </LinearLayout>
 </LinearLayout>

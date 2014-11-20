@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">OutSystemsMobileECT</string>
+    <color name="outSystems_red">#c20</color>
+
+    <!-- ECT Toolbar -->
     <string name="send_button">Send</string>
-    <color name="outsystems_red">#c20</color>
     <string name="feedback_message_prompt">Type your feedback...</string>
+
+    <!-- ECT Status -->
+    <string name="retry_button">Retry</string>
+    <string name="status_sending_message">Sending your feedback...</string>
+    <string name="status_failed_message">Failed to send feedback</string>
+
 </resources>

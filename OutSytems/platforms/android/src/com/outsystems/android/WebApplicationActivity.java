@@ -244,8 +244,11 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         View containerView = findViewById(R.id.ectViewGroup);
 
+        View mainView = findViewById(R.id.mainViewGroup);
+
         // Mobile ECT Feature
         mobileECTController = new MobileECTController(this,
+                                                      mainView,
                                                       containerView,
                                                       this.cordovaWebView,
                                                       HubManagerHelper.getInstance().getApplicationHosted());
