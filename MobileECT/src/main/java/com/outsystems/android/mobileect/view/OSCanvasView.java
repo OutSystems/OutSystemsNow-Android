@@ -28,17 +28,20 @@ public class OSCanvasView extends View implements View.OnTouchListener{
 
     public OSCanvasView(Context context) {
         super(context);
-        this.init();
+        init(context);
     }
-
 
     public OSCanvasView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.init();
-     }
+        init(context);
+    }
 
+    public OSCanvasView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(context);
+    }
 
-    private void init(){
+    private void init(Context context){
         setFocusable(true);
         setFocusableInTouchMode(true);
 

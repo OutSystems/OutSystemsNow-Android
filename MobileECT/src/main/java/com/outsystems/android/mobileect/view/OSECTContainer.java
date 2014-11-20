@@ -5,19 +5,16 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.outsystems.android.mobileect.R;
 
@@ -28,8 +25,8 @@ import com.outsystems.android.mobileect.R;
  * create an instance of this fragment.
  */
 public class OSECTContainer extends Fragment {
-
     private Bitmap screenCapture;
+
 
     OnECTContainerClickListener mCallback;
 
@@ -89,6 +86,7 @@ public class OSECTContainer extends Fragment {
 
         return ectContainerView;
     }
+
 
 
 
@@ -182,6 +180,7 @@ public class OSECTContainer extends Fragment {
             inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
         }
     }
+
 
     /**
      * Listeners

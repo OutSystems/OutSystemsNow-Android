@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_height="48dp"
     android:background="@color/outsystems_red"
     android:orientation="horizontal"
     android:weightSum="1"
-    android:gravity="center_vertical|center_horizontal"
     android:baselineAligned="false">
 
     <LinearLayout
@@ -22,7 +21,8 @@
             android:id="@+id/buttonClose"
             android:background="@drawable/icon_cross_white"
             android:gravity="center"
-            android:layout_gravity="center" />
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="6dp"/>
 
     </LinearLayout>
 
@@ -34,7 +34,7 @@
         android:layout_weight="0.70">
 
         <EditText
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:ems="15"
@@ -47,11 +47,14 @@
             android:layout_marginBottom="6dp"
             android:maxLength="500"
             android:maxLines="5"
+            android:minLines="1"
             android:minHeight="36dp"
-            android:layout_gravity="center_vertical"
-            android:gravity="left" />
+            android:scrollbars="vertical"
+            android:scrollHorizontally="false"
+            android:hint="@string/feedback_message_prompt"
+            android:padding="3dp"/>
     </LinearLayout>
-
+<!--
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -66,7 +69,33 @@
             android:id="@+id/buttonSend"
             android:background="@android:color/transparent"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
-    </LinearLayout>
+            android:textSize="18sp"
+            android:layout_gravity="bottom"
+            />
 
+    </LinearLayout>
+-->
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_weight="0.15">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:id="@+id/buttonSend"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="@string/send_button"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="6dp"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"/>
+
+
+    </LinearLayout>
 </LinearLayout>
