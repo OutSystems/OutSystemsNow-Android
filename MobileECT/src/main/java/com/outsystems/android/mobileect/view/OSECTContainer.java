@@ -57,8 +57,8 @@ public class OSECTContainer extends Fragment {
         Button closeButton = (Button)ectContainerView.findViewById(R.id.buttonClose);
         closeButton.setOnClickListener(onClickListenerCloseECT);
 
-        ImageView screenCaptureView = (ImageView)ectContainerView.findViewById(R.id.ectScreenCapture);
-        screenCaptureView.setImageBitmap(this.screenCapture);
+        OSCanvasView screenCaptureView = (OSCanvasView)ectContainerView.findViewById(R.id.ectScreenCapture);
+        screenCaptureView.setBackgroundImage(this.screenCapture);
         screenCaptureView.setVisibility(View.GONE);
 
         ImageView helperView = (ImageView)ectContainerView.findViewById(R.id.ectHelperView);
@@ -71,6 +71,12 @@ public class OSECTContainer extends Fragment {
 
         Animation fadeInAnimation = AnimationUtils.loadAnimation(container.getContext(), R.anim.fade_in);
         ectContainerView.startAnimation(fadeInAnimation);
+
+
+        View ectScreenContainer = ectContainerView.findViewById(R.id.ectScreenContainer);
+        ViewGroup.LayoutParams ectScreenContainerLayoutParams = ectScreenContainer.getLayoutParams();
+        ectScreenContainerLayoutParams.height = this.screenCapture.getHeight();
+        ectScreenContainerLayoutParams.width = this.screenCapture.getWidth();
 
         return ectContainerView;
     }
@@ -112,8 +118,8 @@ public class OSECTContainer extends Fragment {
         fadeOutAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation animation) {
-                 ImageView imageView = (ImageView)getView().findViewById(R.id.ectScreenCapture);
-                imageView.setVisibility(View.VISIBLE);
+                View screenCaptureView = getView().findViewById(R.id.ectScreenCapture);
+                screenCaptureView.setVisibility(View.VISIBLE);
                 View helperGroup = getView().findViewById(R.id.ectHelperGroup);
                 helperGroup.setVisibility(View.GONE);
             }
@@ -129,7 +135,24 @@ public class OSECTContainer extends Fragment {
 
     }
 
-    private void hideToolbarView(){
+    private void hideECTView(){
+        View ectScreenCapture = getView().findViewById(R.id.ectScreenCapture);
+        Animation fadeOut = AnimationUtils.loadAnimation(getView().getContext(), R.anim.fade_out);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                View ectScreenCapture = getView().findViewById(R.id.ectScreenCapture);
+                ectScreenCapture.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) { }
+
+            @Override
+            public void onAnimationStart(Animation animation) { }
+        });
+
+
         View ectToolbar = getView().findViewById(R.id.ectToolbarInclude);
         Animation slideOutAnimation = AnimationUtils.loadAnimation(getView().getContext(), R.anim.slide_out_bottom);
 
@@ -146,6 +169,7 @@ public class OSECTContainer extends Fragment {
             public void onAnimationStart(Animation animation) { }
         });
 
+        ectScreenCapture.startAnimation(fadeOut);
         ectToolbar.startAnimation(slideOutAnimation);
     }
 
@@ -162,7 +186,7 @@ public class OSECTContainer extends Fragment {
             if(helperGroup.getVisibility() == View.VISIBLE)
                 hideHelperView();
             else
-                hideToolbarView();
+                hideECTView();
 
         }
     };

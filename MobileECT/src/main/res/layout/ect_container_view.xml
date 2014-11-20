@@ -10,31 +10,40 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/helper_gradient"
-        android:id="@+id/ectHelperGroup">
+        android:id="@+id/ectScreenContainer">
 
-        <ImageView
-            android:id="@+id/ectHelperView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/helper_gradient"
+            android:id="@+id/ectHelperGroup">
+
+            <ImageView
+                android:id="@+id/ectHelperView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp" />
+        </LinearLayout>
+
+        <com.outsystems.android.mobileect.view.OSCanvasView
             android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp" />
+            android:layout_marginTop="0dp"
+            android:id="@+id/ectScreenCapture"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.50" />
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/ectScreenCapture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp" />
 
     <include
         layout="@layout/ect_toolbar_view"
         android:layout_width="fill_parent"
         android:layout_height="48dp"
-        android:id="@+id/ectToolbarInclude" />
+        android:id="@+id/ectToolbarInclude"
+        />
 
 
 </LinearLayout>
