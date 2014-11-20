@@ -3,8 +3,13 @@ package com.outsystems.android.mobileect;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 
 import com.outsystems.android.mobileect.view.OSECTContainer;
@@ -22,12 +27,14 @@ public class MobileECTController {
 
     private OSECTContainer ectContainerFragment;
 
+    private boolean deviceOrientationLocked;
 
     public MobileECTController(Activity currentActivity,View containerView, WebView webView, String hostname){
         this.containerView = containerView;
         this.webView = webView;
         this.hostname = hostname;
         this.currentActivity = currentActivity;
+        this.setDeviceOrientationLocked(false);
     }
 
 
@@ -44,11 +51,23 @@ public class MobileECTController {
         this.ectContainerFragment = OSECTContainer.newInstance(screenCapture);
         showOrHideContainerFragment(this.ectContainerFragment);
 
+        int currentOrientation = this.currentActivity.getResources().getConfiguration().orientation;
+        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            this.currentActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        }
+        else {
+            this.currentActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        }
+
+        this.currentActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     public void closeECTView(){
         showOrHideContainerFragment(this.ectContainerFragment);
         this.ectContainerFragment = null;
+
+        this.currentActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+
     }
 
 
@@ -87,4 +106,11 @@ public class MobileECTController {
         }
     }
 
+    public boolean isDeviceOrientationLocked() {
+        return deviceOrientationLocked;
+    }
+
+    public void setDeviceOrientationLocked(boolean deviceOrientationLocked) {
+        this.deviceOrientationLocked = deviceOrientationLocked;
+    }
 }

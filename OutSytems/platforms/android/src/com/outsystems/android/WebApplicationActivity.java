@@ -33,6 +33,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -779,4 +780,5 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 		  }
 			  
 	}
+
 }

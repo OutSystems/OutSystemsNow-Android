@@ -35,18 +35,21 @@
 
         <EditText
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/editText"
+            android:ems="15"
+            android:id="@+id/ectFeedbackMessage"
             android:editable="true"
             android:enabled="true"
             android:background="@drawable/edit_text_roundedcorners"
-            android:gravity="center_vertical|center_horizontal"
             android:autoText="false"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
-            />
+            android:maxLength="500"
+            android:maxLines="5"
+            android:minHeight="36dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="left" />
     </LinearLayout>
 
     <LinearLayout

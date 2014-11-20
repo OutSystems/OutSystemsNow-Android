@@ -5,13 +5,19 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.outsystems.android.mobileect.R;
 
@@ -53,6 +59,9 @@ public class OSECTContainer extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View ectContainerView = inflater.inflate(R.layout.ect_container_view, container, false);
+
+        EditText feedbackMessage = (EditText) ectContainerView.findViewById(R.id.ectFeedbackMessage);
+        feedbackMessage.setOnFocusChangeListener(onFocusChangeFeedbackMessage);
 
         Button closeButton = (Button)ectContainerView.findViewById(R.id.buttonClose);
         closeButton.setOnClickListener(onClickListenerCloseECT);
@@ -100,11 +109,6 @@ public class OSECTContainer extends Fragment {
     public void onDetach() {
         super.onDetach();
 
-    }
-
-
-    public Bitmap getScreenCapture() {
-        return screenCapture;
     }
 
     public void setScreenCapture(Bitmap screenCapture) {
@@ -171,11 +175,28 @@ public class OSECTContainer extends Fragment {
 
         ectScreenCapture.startAnimation(fadeOut);
         ectToolbar.startAnimation(slideOutAnimation);
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        if (getActivity().getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+        }
     }
 
     /**
-     * Click Listeners
+     * Listeners
      */
+
+
+    private View.OnFocusChangeListener onFocusChangeFeedbackMessage =new View.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            View helperGroup = getView().findViewById(R.id.ectHelperGroup);
+            if(helperGroup.getVisibility() == View.VISIBLE)
+                hideHelperView();
+        }
+    };
+
 
     private View.OnClickListener onClickListenerCloseECT = new View.OnClickListener() {
 
