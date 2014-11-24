@@ -173,7 +173,7 @@ public class LoginActivity extends BaseActivity {
                                 String url = String.format(WebServicesClient.BASE_URL,
                                         HubManagerHelper.getInstance().getApplicationHosted()).concat(
                                         "login" + WebServicesClient.getApplicationServer());
-                                url = url.replace("https", "http");
+                              //  url = url.replace("https", "http");
                                 
                                 String postData = "username=" + userName + "&password=" + password + "&screenWidth=" + 
                                 		(int)(displaymetrics.widthPixels / displaymetrics.density) + "&screenHeight="  + 

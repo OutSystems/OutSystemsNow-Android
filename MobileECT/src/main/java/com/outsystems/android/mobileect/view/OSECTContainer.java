@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.outsystems.android.mobileect.R;
+import com.outsystems.android.mobileect.interfaces.OSECTContainerListener;
 
 
 /**
@@ -32,7 +33,7 @@ public class OSECTContainer extends Fragment {
     public static final int ECT_STATUS_FAILED_MESSAGE = 1;
 
 
-    OnECTContainerClickListener mCallback;
+    OSECTContainerListener mCallback;
 
     /**
      * Use this factory method to create a new instance of
@@ -122,7 +123,7 @@ public class OSECTContainer extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            mCallback = (OnECTContainerClickListener) activity;
+            mCallback = (OSECTContainerListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnECTContainerClickListener");
@@ -164,7 +165,7 @@ public class OSECTContainer extends Fragment {
         slideOutAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation animation) {
-                mCallback.onCloseECTListener();
+                mCallback.onCloseECTClickListener();
             }
 
             @Override
@@ -307,17 +308,9 @@ public class OSECTContainer extends Fragment {
         public void onClick(View view) {
             hideKeyboard();
             showStatusView(true, ECT_STATUS_SENDING_MESSAGE);
+            mCallback.onSendFeedbackClickListener();
         }
     };
 
-
-
-    /**
-     *  ECTContainer Click Listener Interface
-     */
-
-    public interface OnECTContainerClickListener {
-        public void onCloseECTListener();
-    }
 
 }

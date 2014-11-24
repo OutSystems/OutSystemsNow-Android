@@ -33,7 +33,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -67,6 +66,7 @@ import com.outsystems.android.core.CustomWebView;
 import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.mobileect.MobileECTController;
+import com.outsystems.android.mobileect.interfaces.OSECTContainerListener;
 import com.outsystems.android.mobileect.view.OSECTContainer;
 import com.outsystems.android.model.Application;
 import com.phonegap.plugins.barcodescanner.BarcodeScanner;
@@ -78,7 +78,7 @@ import com.phonegap.plugins.barcodescanner.BarcodeScanner;
  * @version $Revision: 666 $
  * 
  */
-public class WebApplicationActivity extends BaseActivity implements CordovaInterface, OSECTContainer.OnECTContainerClickListener {
+public class WebApplicationActivity extends BaseActivity implements CordovaInterface, OSECTContainerListener {
 
     public static String KEY_APPLICATION = "key_application";
     CordovaWebView cordovaWebView;
@@ -146,9 +146,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         }
     };
 
-    public void onCloseECTListener(){
-        mobileECTController.closeECTView();
-    }
 
     /*
      * The variables below are used to cache some of the activity properties.
@@ -206,6 +203,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         String appVersion = getAppVersion();
         String newUA = ua.concat(" OutSystemsApp v." + appVersion);
         cordovaWebView.getSettings().setUserAgentString(newUA);
+
         if (savedInstanceState == null) {
             cordovaWebView.loadUrl(url);
         } else {
@@ -253,8 +251,15 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                                                       this.cordovaWebView,
                                                       HubManagerHelper.getInstance().getApplicationHosted());
 
-
         containerView.setVisibility(View.GONE);
+
+
+        // Hide ECT Button
+        Button buttonECT = (Button) findViewById(R.id.button_ect);
+        if(buttonECT != null) {
+            buttonECT.setOnClickListener(this.onClickListenerOpenECT);
+            buttonECT.setVisibility(View.GONE);
+        }
     }
 
     /*
@@ -479,6 +484,32 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     }
 
     /**
+     *  Mobile ECT Container
+     */
+    public void showMobileECTButton(boolean show){
+        Button buttonECT = (Button) findViewById(R.id.button_ect);
+        if(buttonECT != null) {
+            buttonECT.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    @Override
+    public void onSendFeedbackClickListener() {
+        mobileECTController.sendFeedback();
+    }
+
+    @Override
+    public void onCloseECTClickListener() {
+        mobileECTController.closeECTView();
+    }
+
+    @Override
+    public void onShowECTFeatureListener(boolean show) {
+        this.showMobileECTButton(show);
+    }
+
+
+    /**
      * The Class CordovaCustomWebClient.
      */
     public class CordovaCustomWebClient extends CordovaLoaderWebClient {
@@ -507,15 +538,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             enableDisableButtonForth();
             stopLoadingAnimation();
 
-            Button buttonECT = (Button) findViewById(R.id.button_ect);
+            // Get Mobile ECT Api Info
+            mobileECTController.getECTAPIInfo();
 
-            // Check if Mobile ECT feature is available
-            if(!mobileECTController.isECTFeatureAvailable()){
-                buttonECT.setVisibility(View.GONE);
-            }
-            else{
-                buttonECT.setOnClickListener(onClickListenerOpenECT);
-            }
         }
 
         @Override
