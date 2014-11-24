@@ -114,6 +114,12 @@ public class OSECTContainer extends Fragment {
     private void configStatusView(View container) {
         View ectStatusView = container.findViewById(R.id.ectStatusInclude);
         ectStatusView.setVisibility(View.GONE);
+
+        Button closeButton = (Button)container.findViewById(R.id.ectStatusCloseButton);
+        closeButton.setOnClickListener(onClickListenerCloseStatus);
+
+        Button sendButton = (Button)container.findViewById(R.id.ectStatusRetryButton);
+        sendButton.setOnClickListener(onClickListenerSendFeedback);
     }
 
 
@@ -141,7 +147,7 @@ public class OSECTContainer extends Fragment {
     }
 
 
-    private void hideECTView(){
+    public void hideECTView(){
         View ectScreenCapture = getView().findViewById(R.id.ectScreenCapture);
         Animation fadeOut = AnimationUtils.loadAnimation(getView().getContext(), R.anim.fade_out);
         fadeOut.setAnimationListener(new Animation.AnimationListener() {
@@ -241,6 +247,10 @@ public class OSECTContainer extends Fragment {
                 closeButton.setVisibility(View.VISIBLE);
                 retryButton.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
+
+                Animation shake = AnimationUtils.loadAnimation(ectStatusMessage.getContext(), R.anim.shake_it);
+                ectStatusMessage.setAnimation(shake);
+
                 break;
             default:
                 break;
@@ -255,9 +265,10 @@ public class OSECTContainer extends Fragment {
         canvasView.setCanvasLocked(show);
 
         if(show){
+            this.setStatusMessage(message);
             ectToolbar.setVisibility(View.GONE);
             ectStatus.setVisibility(View.VISIBLE);
-            this.setStatusMessage(message);
+
         }
         else{
             ectToolbar.setVisibility(View.VISIBLE);
@@ -277,6 +288,15 @@ public class OSECTContainer extends Fragment {
             View helperGroup = getView().findViewById(R.id.ectHelperGroup);
             if(helperGroup.getVisibility() == View.VISIBLE)
                 hideHelperView();
+        }
+    };
+
+
+    private View.OnClickListener onClickListenerCloseStatus = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            showStatusView(false,-1);
         }
     };
 
@@ -312,5 +332,22 @@ public class OSECTContainer extends Fragment {
         }
     };
 
+
+    /**
+     * Get Feedback Content
+     */
+
+    public String getFeedbackMessage(){
+        String result = null;
+        EditText editText = (EditText)getView().findViewById(R.id.ectFeedbackMessage);
+        if(editText != null)
+            result = editText.getText().toString();
+
+        return result;
+    }
+
+    public Bitmap getScreenCapture(){
+        return this.screenCapture;
+    }
 
 }

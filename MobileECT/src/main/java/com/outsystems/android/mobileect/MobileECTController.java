@@ -6,18 +6,19 @@ import android.app.FragmentTransaction;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.util.Base64;
 import android.util.JsonReader;
 import android.util.JsonToken;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
+import com.outsystems.android.mobileect.clients.OSECTWSRequestHandler;
+import com.outsystems.android.mobileect.clients.OSECTWebServicesClient;
 import com.outsystems.android.mobileect.interfaces.OSECTContainerListener;
 import com.outsystems.android.mobileect.interfaces.OSECTListener;
 import com.outsystems.android.mobileect.javascript.OSECTJavaScriptAPI;
@@ -27,12 +28,13 @@ import com.outsystems.android.mobileect.parsing.OSECTApiVersion;
 import com.outsystems.android.mobileect.parsing.OSECTWebAppInfo;
 import com.outsystems.android.mobileect.view.OSECTContainer;
 
-import org.json.JSONObject;
-
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -92,6 +94,8 @@ public class MobileECTController implements OSECTListener {
     private WebView webView;
     private String hostname;
 
+    private boolean hasAudioComments;
+
     private OSECTContainer ectContainerFragment;
 
     private OSECTWebAppInfo ectWebAppInfo;
@@ -99,7 +103,7 @@ public class MobileECTController implements OSECTListener {
 
     private OSECTJavaScriptAPI javaScriptAPI;
 
-    public MobileECTController(Activity currentActivity, View mainView, View containerView, WebView webView, String hostname){
+    public MobileECTController(Activity currentActivity, View mainView, View containerView, WebView webView, String hostname) {
         this.currentActivity = currentActivity;
         this.mainView = mainView;
         this.containerView = containerView;
@@ -110,27 +114,28 @@ public class MobileECTController implements OSECTListener {
     }
 
 
-    private void init(){
+    private void init() {
         this.supportedAPIVersions = new OSECTSupportedAPIVersions();
         this.javaScriptAPI = new OSECTJavaScriptAPI(this.webView, this);
+        this.hasAudioComments = false;
     }
 
     /**
      * ECT API
      */
-    public void getECTAPIInfo(){
+    public void getECTAPIInfo() {
 
         String javaScriptFunction = "(\n" +
                 "function(){\n" +
                 " var obj = new Object();\n" +
                 " obj.ECTAvailable = typeof ECT_JavaScript != 'undefined';\n" +
-                " obj."+ECT_FEEDBACK_EnvironmentUID+" = " + ECT_JS_EnvironmentUID + "; \n" +
-                " obj."+ECT_FEEDBACK_EspaceUID+" = " + ECT_JS_EspaceUID + "; \n" +
-                " obj."+ECT_FEEDBACK_ApplicationUID+" = " + ECT_JS_ApplicationUID + "; \n" +
-                " obj."+ECT_FEEDBACK_ScreenUID+" = " + ECT_JS_ScreenUID + "; \n" +
-                " obj."+ECT_FEEDBACK_ScreenName+" = " + ECT_JS_ScreenName + "; \n" +
-                " obj."+ECT_FEEDBACK_UserId+" = " + ECT_JS_UserId + "; \n" +
-                " obj."+ECT_FEEDBACK_UserAgentHeader+" = " + ECT_JS_UserAgentHeader + "; \n" +
+                " obj." + ECT_FEEDBACK_EnvironmentUID + " = " + ECT_JS_EnvironmentUID + "; \n" +
+                " obj." + ECT_FEEDBACK_EspaceUID + " = " + ECT_JS_EspaceUID + "; \n" +
+                " obj." + ECT_FEEDBACK_ApplicationUID + " = " + ECT_JS_ApplicationUID + "; \n" +
+                " obj." + ECT_FEEDBACK_ScreenUID + " = " + ECT_JS_ScreenUID + "; \n" +
+                " obj." + ECT_FEEDBACK_ScreenName + " = " + ECT_JS_ScreenName + "; \n" +
+                " obj." + ECT_FEEDBACK_UserId + " = " + ECT_JS_UserId + "; \n" +
+                " obj." + ECT_FEEDBACK_UserAgentHeader + " = " + ECT_JS_UserAgentHeader + "; \n" +
                 " obj.SupportedApiVersions = " + ECT_JS_SupportedApiVersions + "; \n" +
 
                 " var jsonString= JSON.stringify(obj);\n" +
@@ -144,12 +149,11 @@ public class MobileECTController implements OSECTListener {
     }
 
 
-
     /**
      * ECT Features
      */
 
-    public void openECTView(){
+    public void openECTView() {
         Bitmap screenCapture = getBitmapForVisibleRegion(webView);
         this.ectContainerFragment = OSECTContainer.newInstance(screenCapture);
         showOrHideContainerFragment(this.ectContainerFragment);
@@ -157,15 +161,14 @@ public class MobileECTController implements OSECTListener {
         int currentOrientation = this.currentActivity.getResources().getConfiguration().orientation;
         if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
             this.currentActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-        }
-        else {
+        } else {
             this.currentActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
         }
 
         this.currentActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
-    public void closeECTView(){
+    public void closeECTView() {
         showOrHideContainerFragment(this.ectContainerFragment);
         this.ectContainerFragment = null;
 
@@ -188,23 +191,21 @@ public class MobileECTController implements OSECTListener {
     }
 
 
-    private void showOrHideContainerFragment(OSECTContainer containerFrag){
-        if(containerView.getVisibility() == View.GONE){
+    private void showOrHideContainerFragment(OSECTContainer containerFrag) {
+        if (containerView.getVisibility() == View.GONE) {
             FragmentManager fragmentManager = currentActivity.getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add (containerView.getId(), containerFrag);
-            fragmentTransaction.addToBackStack ("ectContainerFrag");
-            fragmentTransaction.commit ();
+            fragmentTransaction.add(containerView.getId(), containerFrag);
+            fragmentTransaction.addToBackStack("ectContainerFrag");
+            fragmentTransaction.commit();
 
             containerView.setVisibility(View.VISIBLE);
             mainView.setVisibility(View.GONE);
-        }
-        else
-        {
+        } else {
             FragmentManager fragmentManager = currentActivity.getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.remove (containerFrag);
-            fragmentTransaction.commit ();
+            fragmentTransaction.remove(containerFrag);
+            fragmentTransaction.commit();
 
             containerView.setVisibility(View.GONE);
             mainView.setVisibility(View.VISIBLE);
@@ -212,22 +213,17 @@ public class MobileECTController implements OSECTListener {
     }
 
 
-
-    public void sendFeedback(){
-        //this.isECTFeatureAvailable();
-//TODO
-    }
-
+    /**
+     * ECT API
+     */
 
     @Override
     public void updateECTApiInfo() {
-        String jsResult =  this.javaScriptAPI.getResultValue();
+        String jsResult = this.javaScriptAPI.getResultValue();
         boolean showECT = false;
-        if(jsResult != null){
+        if (jsResult != null) {
             // Parse ectInfo
-
             JsonReader reader = new JsonReader(new StringReader(jsResult));
-// Must set lenient to parse single values
             reader.setLenient(true);
             try {
                 if (reader.peek() != JsonToken.NULL) {
@@ -235,19 +231,19 @@ public class MobileECTController implements OSECTListener {
                         String jsonString = reader.nextString();
 
                         try {
-
+                            // Create objects from JSON
                             Gson gson = new Gson();
                             this.ectWebAppInfo = gson.fromJson(jsonString, OSECTWebAppInfo.class);
 
                         } catch (Exception e) {
-                            Log.e(TAG,"Error parsing to JSON: "+e.getMessage());
+                            Log.e(TAG, "Error parsing to JSON: " + e.getMessage());
                             this.ectWebAppInfo = null;
                         }
 
                     }
                 }
             } catch (IOException e) {
-                Log.e(TAG,"Error parsing jsResult: "+e.getMessage());
+                Log.e(TAG, "Error parsing jsResult: " + e.getMessage());
             } finally {
                 try {
                     reader.close();
@@ -255,23 +251,23 @@ public class MobileECTController implements OSECTListener {
                 }
             }
 
-
             // check if ECT feature is available
-            if(this.ectWebAppInfo != null){
-                if(this.ectWebAppInfo.isECTAvailable()){
+            if (this.ectWebAppInfo != null) {
+                if (this.ectWebAppInfo.isECTAvailable()) {
 
                     this.supportedAPIVersions.removeAllVersions();
 
                     List<OSECTApiVersion> apiVersions = this.ectWebAppInfo.getSupportedApiVersions();
-                    if(apiVersions != null){
+                    if (apiVersions != null) {
                         Iterator<OSECTApiVersion> iterator = apiVersions.iterator();
-                        while (iterator.hasNext()){
+                        while (iterator.hasNext()) {
                             OSECTApiVersion current = iterator.next();
 
                             OSECTApi api = new OSECTApi(current.getApiVersion(), current.isCurrentVersion(), current.getURL());
                             this.supportedAPIVersions.addVersion(api);
                         }
 
+                        // check if there is one compatible version with the current supported api version
                         this.supportedAPIVersions.checkCompatibilityWithVersion(ECT_SUPPORTED_API_VERSION);
                     }
 
@@ -281,7 +277,138 @@ public class MobileECTController implements OSECTListener {
         }
 
         // Update activity
-        OSECTContainerListener containerListener = (OSECTContainerListener)this.currentActivity;
+        OSECTContainerListener containerListener = (OSECTContainerListener) this.currentActivity;
         containerListener.onShowECTFeatureListener(showECT);
+    }
+
+    /**
+     * ECT Feedback
+     */
+
+    public void sendFeedback() {
+
+        OSECTWebServicesClient ectWSClient = OSECTWebServicesClient.getInstance();
+
+        OSECTWSRequestHandler requestHandler = new OSECTWSRequestHandler() {
+            @Override
+            public void requestFinish(Object result, boolean error, int statusCode) {
+
+                Log.d(TAG, "Status Code: " + statusCode);
+
+                if (error) {
+                    // show status view with error message
+                    ectContainerFragment.showStatusView(true, OSECTContainer.ECT_STATUS_FAILED_MESSAGE);
+                }
+                else{
+                    // close ect feature
+                    ectContainerFragment.hideECTView();
+                }
+            }
+        };
+
+        // Get feedback parameters map
+        Map<String, String> feedbackParams = this.getFeedbackDictionary();
+
+        ectWSClient.saveFeedback(this.currentActivity.getBaseContext(),
+                                 this.hostname,
+                                 this.supportedAPIVersions.getAPIVersionURL(),
+                                 feedbackParams,
+                                 requestHandler);
+    }
+
+
+    private Map<String, String> getFeedbackDictionary() {
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        // Message
+        String messageString = "";
+
+        if(!this.hasAudioComments)
+            messageString = ectContainerFragment.getFeedbackMessage();
+
+        map.put(ECT_FEEDBACK_Message,messageString);
+
+        // EnvironmentUID - Available in outsystems.api.requestInfo.getEnvironmentKey()
+        String environmentUID = this.ectWebAppInfo.getEnvironmentUID();
+        map.put(ECT_FEEDBACK_EnvironmentUID,environmentUID);
+
+        // EspaceUID - Available in outsystems.api.requestInfo.getEspaceKey()
+        String espaceUID = this.ectWebAppInfo.getEspaceUID();
+        map.put(ECT_FEEDBACK_EspaceUID,espaceUID);
+
+        // ApplicationUID - Available in outsystems.api.requestInfo.getApplicationKey()
+        String applicationUID =  this.ectWebAppInfo.getApplicationUID();
+        map.put(ECT_FEEDBACK_ApplicationUID, applicationUID);
+
+        // ScreenUID - Available in outsystems.api.requestInfo.getWebScreenKey()
+        String screenUID = this.ectWebAppInfo.getScreenUID();
+        map.put(ECT_FEEDBACK_ScreenUID, screenUID);
+
+        // ScreenName - Available in outsystems.api.requestInfo.getWebScreenName()
+        String screenName =  this.ectWebAppInfo.getScreenName();
+        map.put(ECT_FEEDBACK_ScreenName, screenName);
+
+        // UserId - Available in ECT_JavaScript.userId
+        String userId =  this.ectWebAppInfo.getUserId();
+        map.put(ECT_FEEDBACK_UserId, userId);
+
+        Display display = this.currentActivity.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
+        // ViewportWidth
+        int width = size.x;
+        String viewportWidth = String.valueOf(width);
+        map.put(ECT_FEEDBACK_ViewportWidth, viewportWidth);
+
+       // ViewportHeight
+        int height = size.y;
+        String viewportHeight =  String.valueOf(height);
+        map.put(ECT_FEEDBACK_ViewportHeight,viewportHeight);
+
+        // UserAgentHeader - Use this JS navigator.userAgent
+        String userAgentHeader = this.ectWebAppInfo.getUserAgentHeader();
+        map.put(ECT_FEEDBACK_UserAgentHeader,userAgentHeader);
+
+        // RequestURL
+        String requestURL = this.webView.getUrl();
+        map.put(ECT_FEEDBACK_RequestURL,requestURL);
+
+        // FeedbackSoundMessageBase64
+        String audioString = "";
+
+        if(this.hasAudioComments){
+          // TODO: capture audio and send as feedback
+        }
+
+        String feedbackSoundMessageBase64 = audioString;
+        map.put(ECT_FEEDBACK_SoundMessageBase64, feedbackSoundMessageBase64);
+
+        // FeedbackSoundMessageMimeType
+        String feedbackSoundMessageMimeType = ECT_Audio_MimeType;
+        map.put(ECT_FEEDBACK_SoundMessageMimeType,feedbackSoundMessageMimeType);
+
+
+        //  FeedbackScreenshotBase64
+        Bitmap imageBitmap = this.ectContainerFragment.getScreenCapture();
+        String imageString = "";
+
+        if(imageBitmap != null) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+            imageString = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        }
+
+        String feedbackScreenshotBase64 = imageString;
+        map.put(ECT_FEEDBACK_ScreenshotBase64,feedbackScreenshotBase64);
+
+        // FeedbackScreenshotMimeType
+        String feedbackScreenshotMimeType = ECT_Image_MimeType;
+        map.put(ECT_FEEDBACK_ScreenshotMimeType,feedbackScreenshotMimeType);
+
+
+        return map;
     }
 }
