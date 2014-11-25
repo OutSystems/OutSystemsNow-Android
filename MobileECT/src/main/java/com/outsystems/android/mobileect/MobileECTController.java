@@ -29,12 +29,15 @@ import com.outsystems.android.mobileect.parsing.OSECTWebAppInfo;
 import com.outsystems.android.mobileect.view.OSECTContainer;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.io.FileUtils;
 
 
 /**
@@ -94,7 +97,6 @@ public class MobileECTController implements OSECTListener {
     private WebView webView;
     private String hostname;
 
-    private boolean hasAudioComments;
 
     private OSECTContainer ectContainerFragment;
 
@@ -117,7 +119,6 @@ public class MobileECTController implements OSECTListener {
     private void init() {
         this.supportedAPIVersions = new OSECTSupportedAPIVersions();
         this.javaScriptAPI = new OSECTJavaScriptAPI(this.webView, this);
-        this.hasAudioComments = false;
     }
 
     /**
@@ -170,6 +171,7 @@ public class MobileECTController implements OSECTListener {
 
     public void closeECTView() {
         showOrHideContainerFragment(this.ectContainerFragment);
+        this.ectContainerFragment.releaseMedia();
         this.ectContainerFragment = null;
 
         this.currentActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
@@ -323,7 +325,7 @@ public class MobileECTController implements OSECTListener {
         // Message
         String messageString = "";
 
-        if(!this.hasAudioComments)
+        if(!this.ectContainerFragment.hasAudioComments())
             messageString = ectContainerFragment.getFeedbackMessage();
 
         map.put(ECT_FEEDBACK_Message,messageString);
@@ -375,10 +377,24 @@ public class MobileECTController implements OSECTListener {
         map.put(ECT_FEEDBACK_RequestURL,requestURL);
 
         // FeedbackSoundMessageBase64
+        File audioFile = this.ectContainerFragment.getAudioComments();
         String audioString = "";
 
-        if(this.hasAudioComments){
-          // TODO: capture audio and send as feedback
+        if(this.ectContainerFragment.hasAudioComments() ){
+            if(audioFile != null) {
+
+                byte[] byteArray = new byte[0];
+                try {
+                    byteArray = FileUtils.readFileToByteArray(audioFile);
+                    audioString = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                } catch (IOException e) {
+                    Log.e(TAG,"Error reading file: "+e.getMessage());
+                }
+                            }
+            else {
+                Log.e(TAG,"No audio file found!");
+            }
         }
 
         String feedbackSoundMessageBase64 = audioString;
@@ -411,4 +427,7 @@ public class MobileECTController implements OSECTListener {
 
         return map;
     }
+
+
+
 }

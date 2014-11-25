@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">OutSystemsMobileECT</string>
+
     <color name="outSystems_red">#c20</color>
 
     <!-- ECT Toolbar -->
@@ -11,5 +13,10 @@
     <string name="retry_button">Retry</string>
     <string name="status_sending_message">Sending your feedback...</string>
     <string name="status_failed_message">Failed to send feedback</string>
+
+    <!-- ECT Audio Recorder -->
+    <string name="audio_recorder_alert_message">Your feedback is being recorded...</string>
+    <string name="audio_recorder_dialog_cancel">Cancel</string>
+    <string name="audio_recorder_dialog_done">Done</string>
 
 </resources>
