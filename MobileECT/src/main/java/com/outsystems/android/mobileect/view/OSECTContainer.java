@@ -8,6 +8,8 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +100,13 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
 
         EditText feedbackMessage = (EditText) container.findViewById(R.id.ectFeedbackMessage);
         feedbackMessage.setOnFocusChangeListener(onFocusChangeFeedbackMessage);
+        feedbackMessage.addTextChangedListener(new TextWatcher(){
+            public void afterTextChanged(Editable s) {
+                   showSendButton(s.length() > 0);
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+            public void onTextChanged(CharSequence s, int start, int before, int count){}
+        });
 
         Button closeButton = (Button)container.findViewById(R.id.buttonClose);
         closeButton.setOnClickListener(onClickListenerCloseECT);
