@@ -75,7 +75,8 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/ectViewGroup">
+        android:id="@+id/ectViewGroup"
+        android:background="@android:color/transparent">
 
     </RelativeLayout>
 

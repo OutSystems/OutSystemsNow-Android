@@ -121,7 +121,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             if (cursor.getCount() > 0) {
                 // boolean value =cursor.getString(5).contains("true");
                 HubApplicationModel hubApplication = new HubApplicationModel(cursor.getString(0), cursor.getString(1),
-                        cursor.getString(2), convertStringToDate(cursor.getColumnName(3)), cursor.getString(4),
+                        cursor.getString(2), convertStringToDate(cursor.getString(3)), cursor.getString(4),
                         cursor.getInt(5) > 0);
                 // return contact
                 cursor.close();

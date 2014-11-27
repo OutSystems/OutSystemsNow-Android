@@ -377,10 +377,10 @@ public class MobileECTController implements OSECTListener {
         map.put(ECT_FEEDBACK_RequestURL,requestURL);
 
         // FeedbackSoundMessageBase64
-        File audioFile = this.ectContainerFragment.getAudioComments();
         String audioString = "";
 
         if(this.ectContainerFragment.hasAudioComments() ){
+            File audioFile = this.ectContainerFragment.getAudioComments();
             if(audioFile != null) {
 
                 byte[] byteArray = new byte[0];

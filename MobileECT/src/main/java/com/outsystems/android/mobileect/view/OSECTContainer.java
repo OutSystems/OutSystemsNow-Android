@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -185,24 +186,16 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
 
 
     public void hideECTView(){
-        View ectScreenCapture = getView().findViewById(R.id.ectScreenCapture);
-        Animation fadeOut = AnimationUtils.loadAnimation(getView().getContext(), R.anim.fade_out);
-        fadeOut.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                View ectScreenCapture = getView().findViewById(R.id.ectScreenCapture);
-                ectScreenCapture.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) { }
-
-            @Override
-            public void onAnimationStart(Animation animation) { }
-        });
-
 
         View ectToolbar = getView().findViewById(R.id.ectToolbarInclude);
+        View statusToolbar = getView().findViewById(R.id.ectStatusInclude);
+
+        View currentToolbar = ectToolbar;
+
+        if(ectToolbar.getVisibility() == View.GONE && statusToolbar.getVisibility() == View.VISIBLE)
+            currentToolbar = statusToolbar;
+
+
         Animation slideOutAnimation = AnimationUtils.loadAnimation(getView().getContext(), R.anim.slide_out_bottom);
 
         slideOutAnimation.setAnimationListener(new Animation.AnimationListener() {
@@ -218,8 +211,7 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
             public void onAnimationStart(Animation animation) { }
         });
 
-        ectScreenCapture.startAnimation(fadeOut);
-        ectToolbar.startAnimation(slideOutAnimation);
+        currentToolbar.startAnimation(slideOutAnimation);
 
         this.hideKeyboard();
     }
@@ -301,15 +293,102 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
         OSCanvasView canvasView = (OSCanvasView)getView().findViewById(R.id.ectScreenCapture);
         canvasView.setCanvasLocked(show);
 
+
+        Animation fadeIn = AnimationUtils.loadAnimation(ectToolbar.getContext(), R.anim.fade_in);
+        Animation fadeOut = AnimationUtils.loadAnimation(ectToolbar.getContext(), R.anim.fade_out);
+
+
         if(show){
             this.setStatusMessage(message);
-            ectToolbar.setVisibility(View.GONE);
-            ectStatus.setVisibility(View.VISIBLE);
+
+            fadeOut.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    View ectToolbar = getView().findViewById(R.id.ectToolbarInclude);
+                    ectToolbar.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+
+            fadeIn.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    View ectStatus =  getView().findViewById(R.id.ectStatusInclude);
+                    ectStatus.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+
+            if(ectStatus.getVisibility() == View.GONE)
+                ectStatus.startAnimation(fadeIn);
+
+            if(ectToolbar.getVisibility() == View.VISIBLE)
+                ectToolbar.startAnimation(fadeOut);
 
         }
         else{
-            ectToolbar.setVisibility(View.VISIBLE);
-            ectStatus.setVisibility(View.GONE);
+
+            fadeOut.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    View ectStatus = getView().findViewById(R.id.ectStatusInclude);
+                    ectStatus.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+
+            fadeIn.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    View ectToolbar =  getView().findViewById(R.id.ectToolbarInclude);
+                    ectToolbar.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+
+
+            if(ectToolbar.getVisibility() == View.GONE)
+                ectToolbar.startAnimation(fadeIn);
+
+            if(ectStatus.getVisibility() == View.VISIBLE)
+                ectStatus.startAnimation(fadeOut);
+
         }
     }
 
@@ -523,16 +602,64 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
     }
 
 
-    private void showPlayOrStopButton(boolean play){
+    private void showPlayOrStopButton(final boolean play){
+
+
+        Animation fadeOut = AnimationUtils.loadAnimation(getView().getContext(), R.anim.fade_out);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                if(play){
+                    View stopButton = getView().findViewById(R.id.buttonStopAudio);
+                    stopButton.setVisibility(View.GONE);
+                }
+                else{
+                    View playButton = getView().findViewById(R.id.buttonPlayAudio);
+                    playButton.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) { }
+
+            @Override
+            public void onAnimationStart(Animation animation) { }
+        });
+
+        Animation fadeIn = AnimationUtils.loadAnimation(getView().getContext(), R.anim.fade_in);
+        fadeIn.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                if(play){
+                    View playButton = getView().findViewById(R.id.buttonPlayAudio);
+                    playButton.setVisibility(View.VISIBLE);
+                }
+                else{
+                    View stopButton = getView().findViewById(R.id.buttonStopAudio);
+                    stopButton.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) { }
+
+            @Override
+            public void onAnimationStart(Animation animation) { }
+        });
+
         View playButton = getView().findViewById(R.id.buttonPlayAudio);
-        if(playButton != null){
-            playButton.setVisibility(play ? View.VISIBLE : View.GONE);
+        View stopButton = getView().findViewById(R.id.buttonStopAudio);
+
+        if(play){
+            stopButton.startAnimation(fadeOut);
+            playButton.startAnimation(fadeIn);
+        }
+        else{
+            playButton.startAnimation(fadeOut);
+            stopButton.startAnimation(fadeIn);
         }
 
-        View stopButton = getView().findViewById(R.id.buttonStopAudio);
-        if(stopButton != null){
-            stopButton.setVisibility(!play ? View.VISIBLE : View.GONE);
-        }
     }
 
     public void releaseMedia(){
