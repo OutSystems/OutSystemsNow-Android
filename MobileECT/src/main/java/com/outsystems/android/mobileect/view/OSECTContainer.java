@@ -46,6 +46,7 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
     private MediaRecorder mediaRecorder;
     private MediaPlayer mediaPlayer;
     private String audioFile;
+    private boolean skipHelper;
 
     public boolean hasAudioComments() {
         return hasAudioComments;
@@ -62,9 +63,10 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
      *
      * @return A new instance of fragment OSECTContainer.
      */
-    public static OSECTContainer newInstance(Bitmap screenCapture) {
+    public static OSECTContainer newInstance(Bitmap screenCapture, boolean skipHelper) {
         OSECTContainer fragment = new OSECTContainer();
         fragment.setScreenCapture(screenCapture);
+        fragment.setSkipHelper(skipHelper);
         return fragment;
     }
 
@@ -84,7 +86,6 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
         View ectContainerView = inflater.inflate(R.layout.ect_container_view, container, false);
 
         Animation fadeInAnimation = AnimationUtils.loadAnimation(container.getContext(), R.anim.fade_in);
-        ectContainerView.startAnimation(fadeInAnimation);
 
         this.configToolbarView(ectContainerView);
 
@@ -93,6 +94,22 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
         this.configHelperView(ectContainerView);
 
         this.configStatusView(ectContainerView);
+
+        View ectToolbar = ectContainerView.findViewById(R.id.ectToolbarInclude);
+        ectToolbar.startAnimation(fadeInAnimation);
+
+        if(skipHelper){
+
+            View helperGroup = ectContainerView.findViewById(R.id.ectHelperGroup);
+            helperGroup.setVisibility(View.GONE);
+
+            View ectScreenCapture = ectContainerView.findViewById(R.id.ectScreenCapture);
+            ectScreenCapture.setVisibility(View.VISIBLE);
+        }
+        else{
+            View helperGroup = ectContainerView.findViewById(R.id.ectHelperGroup);
+            helperGroup.startAnimation(fadeInAnimation);
+        }
 
         return ectContainerView;
     }
@@ -147,6 +164,7 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
         ViewGroup.LayoutParams helperLayoutParams = helperView.getLayoutParams();
         helperLayoutParams.height = this.screenCapture.getHeight();
         helperLayoutParams.width = this.screenCapture.getWidth();
+
     }
 
     private void configStatusView(View container) {
@@ -178,6 +196,14 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
     public void onDetach() {
         super.onDetach();
 
+    }
+
+    public boolean isSkipHelper() {
+        return skipHelper;
+    }
+
+    public void setSkipHelper(boolean skipHelper) {
+        this.skipHelper = skipHelper;
     }
 
     public void setScreenCapture(Bitmap screenCapture) {
@@ -233,11 +259,12 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
         View helperGroup = getView().findViewById(R.id.ectHelperGroup);
         Animation fadeOutAnimation = AnimationUtils.loadAnimation(helperGroup.getContext(), R.anim.fade_out);
 
+        View screenCaptureView = getView().findViewById(R.id.ectScreenCapture);
+        screenCaptureView.setVisibility(View.VISIBLE);
+
         fadeOutAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation animation) {
-                View screenCaptureView = getView().findViewById(R.id.ectScreenCapture);
-                screenCaptureView.setVisibility(View.VISIBLE);
                 View helperGroup = getView().findViewById(R.id.ectHelperGroup);
                 helperGroup.setVisibility(View.GONE);
             }
@@ -250,6 +277,8 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
         });
         helperGroup.startAnimation(fadeOutAnimation);
 
+        // Close ECT Helper
+        mCallback.onCloseECTHelperClickListener();
 
     }
 

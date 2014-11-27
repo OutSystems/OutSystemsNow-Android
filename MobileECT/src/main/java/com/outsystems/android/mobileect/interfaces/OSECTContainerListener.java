@@ -6,5 +6,6 @@ package com.outsystems.android.mobileect.interfaces;
 public interface OSECTContainerListener {
     public void onSendFeedbackClickListener();
     public void onCloseECTClickListener();
+    public void onCloseECTHelperClickListener();
     public void onShowECTFeatureListener(boolean show);
 }

@@ -97,6 +97,7 @@ public class MobileECTController implements OSECTListener {
     private WebView webView;
     private String hostname;
 
+    private boolean skipECTHelper;
 
     private OSECTContainer ectContainerFragment;
 
@@ -105,21 +106,27 @@ public class MobileECTController implements OSECTListener {
 
     private OSECTJavaScriptAPI javaScriptAPI;
 
-    public MobileECTController(Activity currentActivity, View mainView, View containerView, WebView webView, String hostname) {
+    public MobileECTController(Activity currentActivity, View mainView, View containerView, WebView webView, String hostname, boolean skipECTHelper) {
         this.currentActivity = currentActivity;
         this.mainView = mainView;
         this.containerView = containerView;
         this.webView = webView;
         this.hostname = hostname;
+        this.skipECTHelper = skipECTHelper;
 
-        this.init();
-    }
-
-
-    private void init() {
         this.supportedAPIVersions = new OSECTSupportedAPIVersions();
         this.javaScriptAPI = new OSECTJavaScriptAPI(this.webView, this);
     }
+
+
+    public boolean isSkipECTHelper() {
+        return skipECTHelper;
+    }
+
+    public void setSkipECTHelper(boolean skipECTHelper) {
+        this.skipECTHelper = skipECTHelper;
+    }
+
 
     /**
      * ECT API
@@ -156,7 +163,7 @@ public class MobileECTController implements OSECTListener {
 
     public void openECTView() {
         Bitmap screenCapture = getBitmapForVisibleRegion(webView);
-        this.ectContainerFragment = OSECTContainer.newInstance(screenCapture);
+        this.ectContainerFragment = OSECTContainer.newInstance(screenCapture, this.skipECTHelper);
         showOrHideContainerFragment(this.ectContainerFragment);
 
         int currentOrientation = this.currentActivity.getResources().getConfiguration().orientation;
@@ -427,6 +434,7 @@ public class MobileECTController implements OSECTListener {
 
         return map;
     }
+
 
 
 

@@ -61,6 +61,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.outsystems.android.core.CordovaLoaderWebClient;
+import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.CustomWebView;
 import com.outsystems.android.core.WebServicesClient;
@@ -69,6 +70,7 @@ import com.outsystems.android.mobileect.MobileECTController;
 import com.outsystems.android.mobileect.interfaces.OSECTContainerListener;
 import com.outsystems.android.mobileect.view.OSECTContainer;
 import com.outsystems.android.model.Application;
+import com.outsystems.android.model.MobileECT;
 import com.phonegap.plugins.barcodescanner.BarcodeScanner;
 
 /**
@@ -245,13 +247,21 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         View mainView = findViewById(R.id.mainViewGroup);
 
         // Mobile ECT Feature
+
+        DatabaseHandler database = new DatabaseHandler(getApplicationContext());
+        MobileECT mobileECT = database.getMobileECT();
+
+        boolean skipHelper = mobileECT != null && !mobileECT.isFirstLoad();
+
         mobileECTController = new MobileECTController(this,
                                                       mainView,
                                                       containerView,
                                                       this.cordovaWebView,
-                                                      HubManagerHelper.getInstance().getApplicationHosted());
+                                                      HubManagerHelper.getInstance().getApplicationHosted(),
+                                                      skipHelper);
 
         containerView.setVisibility(View.GONE);
+
 
 
         // Hide ECT Button
@@ -501,6 +511,14 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     @Override
     public void onCloseECTClickListener() {
         mobileECTController.closeECTView();
+    }
+
+    @Override
+    public void onCloseECTHelperClickListener() {
+
+        DatabaseHandler database = new DatabaseHandler(getApplicationContext());
+        database.addMobileECT(false);
+        mobileECTController.setSkipECTHelper(true);
     }
 
     @Override
