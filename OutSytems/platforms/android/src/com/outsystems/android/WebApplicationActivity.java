@@ -57,6 +57,7 @@ import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -265,7 +266,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
 
         // Hide ECT Button
-        Button buttonECT = (Button) findViewById(R.id.button_ect);
+        ImageButton buttonECT = (ImageButton) findViewById(R.id.button_ect);
         if(buttonECT != null) {
             buttonECT.setOnClickListener(this.onClickListenerOpenECT);
             buttonECT.setVisibility(View.GONE);
@@ -497,7 +498,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
      *  Mobile ECT Container
      */
     public void showMobileECTButton(boolean show){
-        Button buttonECT = (Button) findViewById(R.id.button_ect);
+        ImageButton buttonECT = (ImageButton) findViewById(R.id.button_ect);
         if(buttonECT != null) {
             buttonECT.setVisibility(show ? View.VISIBLE : View.GONE);
         }

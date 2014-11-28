@@ -11,18 +11,18 @@
         android:layout_width="0dp"
         android:layout_height="fill_parent"
         android:layout_weight="0.15"
-        android:gravity="center_vertical|center_horizontal"
+        android:gravity="bottom|center_horizontal"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/buttonClose"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="6dp"
-            android:background="@drawable/icon_cross_white"
-            android:gravity="center" />
+            android:src="@drawable/icon_cross_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            android:layout_marginBottom="3dp"/>
+
 
     </LinearLayout>
 
@@ -55,30 +55,26 @@
             android:scrollbars="vertical"
             android:visibility="visible" />
 
-        <Button
+        <ImageButton
             android:id="@+id/buttonPlayAudio"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="25dp"
-            android:layout_height="26dp"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginBottom="11dp"
-            android:layout_marginTop="11dp"
-            android:background="@drawable/icon_play_white"
-            android:gravity="center_horizontal|center_vertical"
-            android:visibility="gone" />
+            android:src="@drawable/icon_play_white"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            android:layout_marginBottom="0dp"/>
 
-
-        <Button
+        <ImageButton
             android:id="@+id/buttonStopAudio"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="25dp"
-            android:layout_height="26dp"
-            android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginBottom="11dp"
-            android:layout_marginTop="11dp"
-            android:background="@drawable/icon_stop_white"
-            android:gravity="center_horizontal|center_vertical"
-            android:visibility="gone" />
+            android:src="@drawable/icon_stop_white"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            android:layout_marginBottom="0dp"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -93,24 +89,24 @@
             android:id="@+id/buttonSend"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="6dp"
+            android:layout_marginBottom="0dp"
             android:background="@android:color/transparent"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/send_button"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/buttonRecordAudio"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="6dp"
-            android:background="@drawable/icon_microphone_white"
-            android:gravity="center_horizontal|center_vertical" />
+            android:src="@drawable/icon_microphone_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            android:layout_marginBottom="0dp"/>
+
     </LinearLayout>
 </LinearLayout>

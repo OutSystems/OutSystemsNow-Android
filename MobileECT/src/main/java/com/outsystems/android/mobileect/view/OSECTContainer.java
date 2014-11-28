@@ -20,6 +20,7 @@ import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -126,19 +127,19 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
             public void onTextChanged(CharSequence s, int start, int before, int count){}
         });
 
-        Button closeButton = (Button)container.findViewById(R.id.buttonClose);
+        ImageButton closeButton = (ImageButton)container.findViewById(R.id.buttonClose);
         closeButton.setOnClickListener(onClickListenerCloseECT);
 
         Button sendButton = (Button)container.findViewById(R.id.buttonSend);
         sendButton.setOnClickListener(onClickListenerSendFeedback);
 
-        Button recordButton = (Button)container.findViewById(R.id.buttonRecordAudio);
+        ImageButton recordButton = (ImageButton)container.findViewById(R.id.buttonRecordAudio);
         recordButton.setOnClickListener(onClickListenerRecordAudio);
 
-        Button playButton = (Button)container.findViewById(R.id.buttonPlayAudio);
+        ImageButton playButton = (ImageButton)container.findViewById(R.id.buttonPlayAudio);
         playButton.setOnClickListener(onClickListenerPlayAudio);
 
-        Button stopButton = (Button)container.findViewById(R.id.buttonStopAudio);
+        ImageButton stopButton = (ImageButton)container.findViewById(R.id.buttonStopAudio);
         stopButton.setOnClickListener(onClickListenerStopPlay);
 
     }
@@ -171,7 +172,7 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
         View ectStatusView = container.findViewById(R.id.ectStatusInclude);
         ectStatusView.setVisibility(View.GONE);
 
-        Button closeButton = (Button)container.findViewById(R.id.ectStatusCloseButton);
+        ImageButton closeButton = (ImageButton)container.findViewById(R.id.ectStatusCloseButton);
         closeButton.setOnClickListener(onClickListenerCloseStatus);
 
         Button sendButton = (Button)container.findViewById(R.id.ectStatusRetryButton);

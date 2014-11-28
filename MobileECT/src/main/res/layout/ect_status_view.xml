@@ -14,16 +14,14 @@
         android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/ectStatusCloseButton"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="6dp"
-            android:background="@drawable/icon_cross_white"
-            android:gravity="center"
-            android:visibility="gone"/>
+            android:src="@drawable/icon_cross_white"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="10dp"/>
 
     </LinearLayout>
 
@@ -64,9 +62,8 @@
             android:id="@+id/ectStatusRetryButton"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="6dp"
             android:background="@android:color/transparent"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/retry_button"
