@@ -162,7 +162,7 @@ public class MobileECTController implements OSECTListener {
      */
 
     public void openECTView() {
-        Bitmap screenCapture = getBitmapForVisibleRegion(webView);
+        Bitmap screenCapture = getBitmapForVisibleRegion(mainView);
         this.ectContainerFragment = OSECTContainer.newInstance(screenCapture, this.skipECTHelper);
         showOrHideContainerFragment(this.ectContainerFragment);
 
@@ -186,12 +186,12 @@ public class MobileECTController implements OSECTListener {
     }
 
 
-    private Bitmap getBitmapForVisibleRegion(WebView webview) {
+    private Bitmap getBitmapForVisibleRegion(View view) {
         try {
             Bitmap returnedBitmap = null;
-            webview.setDrawingCacheEnabled(true);
-            returnedBitmap = Bitmap.createBitmap(webview.getDrawingCache());
-            webview.setDrawingCacheEnabled(false);
+            view.setDrawingCacheEnabled(true);
+            returnedBitmap = Bitmap.createBitmap(view.getDrawingCache());
+            view.setDrawingCacheEnabled(false);
             return returnedBitmap;
         } catch (Exception e) {
 
