@@ -61,7 +61,7 @@ public class OSCanvasView extends View implements View.OnTouchListener{
         this.paint.setColor(Color.RED);
         this.paint.setAntiAlias(true);
         this.paint.setStyle(Paint.Style.STROKE);
-        this.paint.setStrokeWidth(5.0f);
+        this.paint.setStrokeWidth(8.0f);
 
         this.path = new Path();
 

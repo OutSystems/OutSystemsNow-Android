@@ -94,7 +94,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     // Plugin to call when activity result is received
     protected CordovaPlugin activityResultCallback = null;
 
-    private Button buttonForth;
+    private ImageButton buttonForth;
     protected ProgressDialog spinnerDialog = null;
     private ImageView imageView;
 
@@ -215,9 +215,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         
         // Customization Toolbar
         // Get Views from Xml Layout
-        Button buttonApplications = (Button) findViewById(R.id.button_applications);
-        Button buttonBack = (Button) findViewById(R.id.button_back);
-        buttonForth = (Button) findViewById(R.id.button_forth);
+        ImageButton buttonApplications = (ImageButton) findViewById(R.id.button_applications);
+        ImageButton buttonBack = (ImageButton) findViewById(R.id.button_back);
+        buttonForth = (ImageButton) findViewById(R.id.button_forth);
 
         // Actions onClick
         buttonApplications.setOnClickListener(onClickListenerApplication);
@@ -227,19 +227,19 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         // Background with differents states
         int sdk = android.os.Build.VERSION.SDK_INT;
         if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            buttonApplications.setBackgroundDrawable(createSelectorIconApplications(getResources().getDrawable(
-                    R.drawable.icon_apps)));
-            buttonBack.setBackgroundDrawable(createSelectorIconApplications(getResources().getDrawable(
-                    R.drawable.icon_chevron_back)));
-            buttonForth.setBackgroundDrawable(createSelectorIconApplications(getResources().getDrawable(
-                    R.drawable.icon_chevron_forth)));
+            buttonApplications.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                    R.drawable.icon_app_list)));
+            buttonBack.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                    R.drawable.icon_chevron_left)));
+            buttonForth.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                    R.drawable.icon_chevron_right)));
         } else {
-            buttonApplications.setBackground(createSelectorIconApplications(getResources().getDrawable(
-                    R.drawable.icon_apps)));
-            buttonBack.setBackground(createSelectorIconApplications(getResources().getDrawable(
-                    R.drawable.icon_chevron_back)));
-            buttonForth.setBackground(createSelectorIconApplications(getResources().getDrawable(
-                    R.drawable.icon_chevron_forth)));
+            buttonApplications.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                    R.drawable.icon_app_list)));
+            buttonBack.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                    R.drawable.icon_chevron_left)));
+            buttonForth.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                    R.drawable.icon_chevron_right)));
 
         }
 
@@ -434,21 +434,21 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         if (cordovaWebView.canGoForward()) {
             int sdk = android.os.Build.VERSION.SDK_INT;
             if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                buttonForth.setBackgroundDrawable(createSelectorIconApplications(getResources().getDrawable(
-                        R.drawable.icon_chevron_forth)));
+                buttonForth.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                        R.drawable.icon_chevron_right)));
             } else {
-                buttonForth.setBackground(createSelectorIconApplications(getResources().getDrawable(
-                        R.drawable.icon_chevron_forth)));
+                buttonForth.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                        R.drawable.icon_chevron_right)));
             }
         } else {
-            Drawable iconForth = getResources().getDrawable(R.drawable.icon_chevron_forth);
+            Drawable iconForth = getResources().getDrawable(R.drawable.icon_chevron_right_inactive);
 
             BitmapDrawable disabled = getDisableButton(iconForth);
             int sdk = android.os.Build.VERSION.SDK_INT;
             if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                buttonForth.setBackgroundDrawable(disabled);
+                buttonForth.setImageDrawable(disabled);
             } else {
-                buttonForth.setBackground(disabled);
+                buttonForth.setImageDrawable(disabled);
             }
         }
     }
