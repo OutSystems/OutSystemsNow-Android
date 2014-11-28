@@ -50,7 +50,8 @@
             android:maxLines="5"
             android:minHeight="36dp"
             android:minLines="1"
-            android:padding="3dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:scrollHorizontally="false"
             android:scrollbars="vertical"
             android:visibility="visible" />
