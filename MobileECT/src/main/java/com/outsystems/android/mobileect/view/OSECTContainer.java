@@ -3,13 +3,16 @@ package com.outsystems.android.mobileect.view;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -159,13 +162,65 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
     private void configHelperView(View container){
 
         ImageView helperView = (ImageView)container.findViewById(R.id.ectHelperView);
-        helperView.setBackgroundResource(R.drawable.ect_instructions_portrait);
         helperView.setOnClickListener(this.onClickListenerHelperImage);
+        this.calculateHelperImage(helperView);
 
         ViewGroup.LayoutParams helperLayoutParams = helperView.getLayoutParams();
         helperLayoutParams.height = this.screenCapture.getHeight();
         helperLayoutParams.width = this.screenCapture.getWidth();
 
+    }
+
+    private void calculateHelperImage(ImageView helperView){
+
+        int screenLayout = getResources().getConfiguration().screenLayout;
+        screenLayout &= Configuration.SCREENLAYOUT_SIZE_MASK;
+
+        boolean landscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+
+        switch (screenLayout) {
+            case Configuration.SCREENLAYOUT_SIZE_SMALL:
+                if(landscape){
+                    helperView.setBackgroundResource(R.drawable.ect_sketch_small_landscape);
+                }
+                else{
+                    helperView.setBackgroundResource(R.drawable.ect_sketch_small_portrait);
+                }
+                break;
+            case Configuration.SCREENLAYOUT_SIZE_NORMAL:
+                if(landscape){
+                    helperView.setBackgroundResource(R.drawable.ect_sketch_normal_landscape);
+                }
+                else{
+                    helperView.setBackgroundResource(R.drawable.ect_sketch_normal_portrait);
+                }
+                break;
+            case Configuration.SCREENLAYOUT_SIZE_LARGE:
+                if(landscape){
+                    helperView.setBackgroundResource(R.drawable.ect_sketch_large_landscape);
+                }
+                else{
+                    helperView.setBackgroundResource(R.drawable.ect_sketch_large_portrait);
+                }
+                break;
+            case Configuration.SCREENLAYOUT_SIZE_XLARGE:
+                if(landscape){
+                    helperView.setBackgroundResource(R.drawable.ect_sketch_extra_landscape);
+                }
+                else{
+                    helperView.setBackgroundResource(R.drawable.ect_sketch_extra_portrait);
+                }
+                break;
+            default:
+                // if undefined use the normal screen configuration
+                if(landscape){
+                    helperView.setBackgroundResource(R.drawable.ect_sketch_normal_landscape);
+                }
+                else{
+                    helperView.setBackgroundResource(R.drawable.ect_sketch_normal_portrait);
+                }
+                break;
+        }
     }
 
     private void configStatusView(View container) {

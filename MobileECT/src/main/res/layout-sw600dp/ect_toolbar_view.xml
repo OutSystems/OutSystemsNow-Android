@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:padding="10dp"
-            android:layout_marginBottom="3dp"/>
+            android:layout_marginBottom="2dp"/>
 
 
     </LinearLayout>
@@ -34,22 +34,22 @@
         android:orientation="vertical">
 
         <EditText
+            android:minHeight="52dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
             android:id="@+id/ectFeedbackMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoText="false"
             android:background="@drawable/edit_text_roundedcorners"
             android:editable="true"
-            android:ems="15"
+            android:ems="22"
             android:enabled="true"
             android:hint="@string/feedback_message_prompt"
             android:inputType="textMultiLine"
             android:maxLength="500"
             android:maxLines="5"
             android:minLines="1"
-            android:minHeight="36dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:scrollHorizontally="false"
@@ -92,13 +92,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="0dp"
+            android:layout_marginBottom="4dp"
             android:background="@android:color/transparent"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/send_button"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:textSize="24sp"/>
 
         <ImageButton
             android:id="@+id/buttonRecordAudio"

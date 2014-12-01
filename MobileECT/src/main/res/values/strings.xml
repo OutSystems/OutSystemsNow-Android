@@ -7,7 +7,7 @@
 
     <!-- ECT Toolbar -->
     <string name="send_button">Send</string>
-    <string name="feedback_message_prompt">Type your feedback...</string>
+    <string name="feedback_message_prompt">Type or record your feedback...</string>
 
     <!-- ECT Status -->
     <string name="retry_button">Retry</string>

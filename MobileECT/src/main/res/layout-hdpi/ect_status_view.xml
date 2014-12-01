@@ -11,13 +11,12 @@
         android:layout_width="0dp"
         android:layout_height="fill_parent"
         android:layout_weight="0.15"
-        android:gravity="center_vertical|center_horizontal"
+        android:gravity="bottom|center_horizontal"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/ectStatusCloseButton"
             android:src="@drawable/icon_cross_white"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -27,7 +26,7 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="0.70"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal">
@@ -42,7 +41,7 @@
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
             android:gravity="center_vertical|clip_horizontal"
-            android:minHeight="36dp"
+            android:minHeight="32dp"
             android:textColor="@android:color/white"
             android:id="@+id/ectStatusMessage"
             android:layout_width="wrap_content"
@@ -62,13 +61,12 @@
             android:id="@+id/ectStatusRetryButton"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:background="@android:color/transparent"
             android:gravity="center_horizontal|center_vertical"
             android:text="@string/retry_button"
-            android:textColor="@android:color/white"
-            android:visibility="gone"
-            android:textSize="18sp"/>
+            android:textSize="16sp"
+            android:textColor="@android:color/white"/>
 
 
     </LinearLayout>

@@ -33,16 +33,17 @@
         android:orientation="horizontal">
          <ProgressBar
             style="?android:attr/progressBarStyleLarge"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:id="@+id/ectStatusIndicator"
              android:layout_marginRight="5dp"/>
 
         <TextView
+            android:minHeight="54dp"
+            android:textSize="24sp"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
             android:gravity="center_vertical|clip_horizontal"
-            android:minHeight="36dp"
             android:textColor="@android:color/white"
             android:id="@+id/ectStatusMessage"
             android:layout_width="wrap_content"
@@ -64,11 +65,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:gravity="center_horizontal|center_vertical"
             android:text="@string/retry_button"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center_horizontal|center_vertical"
             android:textColor="@android:color/white"
-            android:visibility="gone"
-            android:textSize="18sp"/>
+            android:textSize="24sp"
+            android:visibility="gone"/>
 
 
     </LinearLayout>

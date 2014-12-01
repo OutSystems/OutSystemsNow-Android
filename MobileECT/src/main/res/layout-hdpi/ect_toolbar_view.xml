@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:padding="10dp"
-            android:layout_marginBottom="3dp"/>
+            android:layout_marginBottom="0dp"/>
 
 
     </LinearLayout>
@@ -30,6 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="fill_parent"
         android:layout_weight="0.70"
+        android:minHeight="44dp"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="vertical">
 
@@ -40,21 +41,21 @@
             android:autoText="false"
             android:background="@drawable/edit_text_roundedcorners"
             android:editable="true"
-            android:ems="15"
             android:enabled="true"
             android:hint="@string/feedback_message_prompt"
             android:inputType="textMultiLine"
             android:maxLength="500"
             android:maxLines="5"
             android:minLines="1"
-            android:minHeight="36dp"
+            android:minHeight="32dp"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:scrollHorizontally="false"
             android:scrollbars="vertical"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:textSize="14sp" />
 
         <ImageButton
             android:id="@+id/buttonPlayAudio"
@@ -82,7 +83,7 @@
         android:layout_width="0dp"
         android:layout_height="fill_parent"
         android:layout_weight="0.15"
-        android:gravity="center_vertical|center_horizontal"
+        android:gravity="bottom|center_horizontal"
         android:orientation="horizontal">
 
 
@@ -90,15 +91,14 @@
             android:id="@+id/buttonSend"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="0dp"
+            android:layout_height="42dp"
             android:background="@android:color/transparent"
-            android:gravity="center_horizontal|center_vertical"
             android:text="@string/send_button"
+            android:textSize="16sp"
+            android:visibility="gone"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:visibility="gone"/>
+            />
+
 
         <ImageButton
             android:id="@+id/buttonRecordAudio"
@@ -110,4 +110,5 @@
             android:layout_marginBottom="0dp"/>
 
     </LinearLayout>
+
 </LinearLayout>
