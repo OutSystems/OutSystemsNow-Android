@@ -57,7 +57,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="0.8"
-                    android:background="@drawable/edit_text_roundedcorners"
+                    android:background="@drawable/edit_text_background"
                     android:ems="10"
                     android:inputType="textUri"
                     android:padding="10dp"
