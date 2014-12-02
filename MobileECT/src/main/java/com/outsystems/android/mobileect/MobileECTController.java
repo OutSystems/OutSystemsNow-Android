@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.JsonReader;
 import android.util.JsonToken;
 import android.util.Log;
@@ -361,17 +362,16 @@ public class MobileECTController implements OSECTListener {
         String userId =  this.ectWebAppInfo.getUserId();
         map.put(ECT_FEEDBACK_UserId, userId);
 
-        Display display = this.currentActivity.getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
+        final DisplayMetrics displaymetrics = new DisplayMetrics();
+        this.currentActivity.getWindowManager().getDefaultDisplay().getRealMetrics(displaymetrics);
 
         // ViewportWidth
-        int width = size.x;
+        int width = (int)(displaymetrics.widthPixels / displaymetrics.density);
         String viewportWidth = String.valueOf(width);
         map.put(ECT_FEEDBACK_ViewportWidth, viewportWidth);
 
-       // ViewportHeight
-        int height = size.y;
+        // ViewportHeight
+        int height = (int)(displaymetrics.heightPixels / displaymetrics.density);
         String viewportHeight =  String.valueOf(height);
         map.put(ECT_FEEDBACK_ViewportHeight,viewportHeight);
 
