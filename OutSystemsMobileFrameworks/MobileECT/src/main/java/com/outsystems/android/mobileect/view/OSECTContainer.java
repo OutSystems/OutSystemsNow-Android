@@ -105,6 +105,7 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
         if(skipHelper){
 
             View helperGroup = ectContainerView.findViewById(R.id.ectHelperGroup);
+            helperGroup.setBackgroundResource(android.R.color.transparent);
             helperGroup.setVisibility(View.GONE);
 
             View ectScreenCapture = ectContainerView.findViewById(R.id.ectScreenCapture);
@@ -114,6 +115,8 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
             View helperGroup = ectContainerView.findViewById(R.id.ectHelperGroup);
             helperGroup.startAnimation(fadeInAnimation);
         }
+
+        this.screenCapture = null;
 
         return ectContainerView;
     }
@@ -251,6 +254,30 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
     @Override
     public void onDetach() {
         super.onDetach();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.v("OSECTContainer","onDestroy");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.v("OSECTContainer","onDestroyView");
+        if(this.screenCapture != null) {
+            this.screenCapture = null;
+            Log.v("OSECTContainer","onDestroyView::screenCapture=null");
+        }
+
+        OSCanvasView screenCaptureView = (OSCanvasView)getView().findViewById(R.id.ectScreenCapture);
+        if(screenCaptureView != null){
+            screenCaptureView.getBackgroundImage().recycle();
+            screenCaptureView.setBackgroundImage(null);
+            Log.v("OSECTContainer", "onDestroyView::screenCaptureView.setBackgroundImage(null)");
+        }
 
     }
 
