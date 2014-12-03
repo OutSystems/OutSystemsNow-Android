@@ -182,6 +182,8 @@ public class MobileECTController implements OSECTListener {
         this.ectContainerFragment.releaseMedia();
         this.ectContainerFragment = null;
 
+        this.supportedAPIVersions.removeAllVersions();
+        this.ectWebAppInfo = null;
         this.currentActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
     }

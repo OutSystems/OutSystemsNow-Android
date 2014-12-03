@@ -15,8 +15,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -110,6 +112,8 @@ public class HubAppActivity extends BaseActivity {
             final String urlHubApp = ((EditText) findViewById(R.id.edit_text_hub_url)).getText().toString();
             HubManagerHelper.getInstance().setJSFApplicationServer(false);
 
+            hideKeyboard();
+
             if (!"".equals(urlHubApp)) {
                 ((EditText) findViewById(R.id.edit_text_hub_url)).setError(null);
                 callInfrastructureService(v, urlHubApp);
@@ -139,6 +143,8 @@ public class HubAppActivity extends BaseActivity {
         @SuppressWarnings("deprecation")
         @Override
         public void onClick(View v) {
+            hideKeyboard();
+
             ImageButton imageButton = (ImageButton) findViewById(R.id.image_button_icon);
             LinearLayout viewHelp = (LinearLayout) findViewById(R.id.view_help);
             if (viewHelp.getVisibility() == View.VISIBLE) {
@@ -219,5 +225,12 @@ public class HubAppActivity extends BaseActivity {
 
     }
 
+    private void hideKeyboard(){
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        if (this.getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(this.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+        }
+    }
     
 }

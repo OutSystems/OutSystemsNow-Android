@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,6 +56,8 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onClick(View v) {
+            hideKeyboard();
+
             String userName = ((EditText) findViewById(R.id.edit_text_user_mail)).getText().toString();
             String password = ((EditText) findViewById(R.id.edit_text_passwod)).getText().toString();
 
@@ -229,6 +233,12 @@ public class LoginActivity extends BaseActivity {
         }
         startActivity(intent);
     }
-    
-   
+
+    private void hideKeyboard(){
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        if (this.getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(this.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+        }
+    }
 }
