@@ -6,32 +6,30 @@
     android:baselineAligned="false"
     android:orientation="horizontal"
     android:weightSum="1">
+    <!--
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.15"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="horizontal">
 
+            <ImageButton
+                android:id="@+id/buttonClose"
+                android:src="@drawable/icon_cross_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:padding="10dp"
+                android:layout_marginBottom="0dp"/>
+        </LinearLayout>
+    -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:layout_weight="0.15"
-        android:gravity="bottom|center_horizontal"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/buttonClose"
-            android:src="@drawable/icon_cross_white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:padding="10dp"
-            android:layout_marginBottom="0dp"/>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.70"
+        android:layout_weight="0.85"
         android:minHeight="44dp"
-        android:gravity="center_vertical|center_horizontal"
+        android:gravity="center_vertical|left"
         android:orientation="vertical">
 
         <EditText
@@ -48,6 +46,8 @@
             android:maxLines="5"
             android:minLines="1"
             android:minHeight="32dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginLeft="14dp"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
             android:paddingLeft="10dp"
@@ -102,11 +102,10 @@
 
         <ImageButton
             android:id="@+id/buttonRecordAudio"
-            android:src="@drawable/icon_microphone_white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:src="@drawable/icon_microphone_roundedwhitebg"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:background="@android:color/transparent"
-            android:padding="10dp"
             android:layout_marginBottom="0dp"/>
 
     </LinearLayout>

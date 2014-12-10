@@ -5,13 +5,14 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ import android.widget.TextView;
 import com.outsystems.android.mobileect.R;
 import com.outsystems.android.mobileect.interfaces.OSECTAudioRecorderListener;
 import com.outsystems.android.mobileect.interfaces.OSECTContainerListener;
+import com.outsystems.android.mobileect.interfaces.OSECTTouchListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,10 +42,11 @@ import java.io.IOException;
  * Use the {@link OSECTContainer#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OSECTContainer extends Fragment implements OSECTAudioRecorderListener {
+public class OSECTContainer extends Fragment implements OSECTAudioRecorderListener, OSECTTouchListener {
 
     public static final int ECT_STATUS_SENDING_MESSAGE = 0;
     public static final int ECT_STATUS_FAILED_MESSAGE = 1;
+    public static final int ECT_STATUS_SUCCESS_MESSAGE = 2;
 
     private Bitmap screenCapture;
 
@@ -57,7 +60,7 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
     }
 
     private boolean hasAudioComments = false;
-
+    private boolean hidingNavigationBar = false;
 
     OSECTContainerListener mCallback;
 
@@ -91,6 +94,8 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
 
         Animation fadeInAnimation = AnimationUtils.loadAnimation(container.getContext(), R.anim.fade_in);
 
+        this.configNavigationView(ectContainerView);
+
         this.configToolbarView(ectContainerView);
 
         this.configScreenCaptureView(ectContainerView);
@@ -99,13 +104,15 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
 
         this.configStatusView(ectContainerView);
 
+        View ectNavBar = ectContainerView.findViewById(R.id.ectNavigationInclude);
+        ectNavBar.startAnimation(fadeInAnimation);
+
         View ectToolbar = ectContainerView.findViewById(R.id.ectToolbarInclude);
         ectToolbar.startAnimation(fadeInAnimation);
 
         if(skipHelper){
 
             View helperGroup = ectContainerView.findViewById(R.id.ectHelperGroup);
-            helperGroup.setBackgroundResource(android.R.color.transparent);
             helperGroup.setVisibility(View.GONE);
 
             View ectScreenCapture = ectContainerView.findViewById(R.id.ectScreenCapture);
@@ -121,6 +128,124 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
         return ectContainerView;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        OSCanvasView screenCaptureView = (OSCanvasView)getView().findViewById(R.id.ectScreenCapture);
+        screenCaptureView.setTouchListener(this);
+    }
+
+    private void configNavigationView(View container){
+        ImageButton closeButton = (ImageButton)container.findViewById(R.id.ectCloseButton);
+        closeButton.setOnClickListener(onClickListenerCloseECT);
+        closeButton.setVisibility(View.VISIBLE);
+
+        ImageButton helperButton = (ImageButton)container.findViewById(R.id.ectHelperButton);
+        helperButton.setOnClickListener(onClickListenerOpenHelper);
+        helperButton.setVisibility(View.VISIBLE);
+    }
+
+    private void hideNavigationBar(){
+        this.hidingNavigationBar = true;
+
+        final View navigationBar = getView().findViewById(R.id.ectNavigationInclude);
+
+        final TranslateAnimation slideOut = new TranslateAnimation(0, 0, 0, -100);
+        slideOut.setDuration(400);
+
+        slideOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                navigationBar.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        if( navigationBar.getAnimation() != null) {
+            navigationBar.getAnimation().setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    navigationBar.startAnimation(slideOut);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+        }
+        else {
+            if(navigationBar.getVisibility() != View.INVISIBLE)
+                navigationBar.startAnimation(slideOut);
+        }
+
+
+    }
+
+    private void showNavigationBar(){
+
+        final View navigationBar = getView().findViewById(R.id.ectNavigationInclude);
+
+        final TranslateAnimation slideIn = new TranslateAnimation(0, 0, -100, 0);
+        slideIn.setDuration(400);
+        slideIn.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                navigationBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+
+        if( navigationBar.getAnimation() != null) {
+            navigationBar.getAnimation().setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    navigationBar.startAnimation(slideIn);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+        }
+        else {
+            if(navigationBar.getVisibility() != View.VISIBLE)
+                navigationBar.startAnimation(slideIn);
+        }
+
+
+    }
+
+
+
     private void configToolbarView(View container) {
 
         EditText feedbackMessage = (EditText) container.findViewById(R.id.ectFeedbackMessage);
@@ -132,9 +257,6 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
             public void onTextChanged(CharSequence s, int start, int before, int count){}
         });
-
-        ImageButton closeButton = (ImageButton)container.findViewById(R.id.buttonClose);
-        closeButton.setOnClickListener(onClickListenerCloseECT);
 
         Button sendButton = (Button)container.findViewById(R.id.buttonSend);
         sendButton.setOnClickListener(onClickListenerSendFeedback);
@@ -229,12 +351,13 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
     private void configStatusView(View container) {
         View ectStatusView = container.findViewById(R.id.ectStatusInclude);
         ectStatusView.setVisibility(View.GONE);
-
+/*
         ImageButton closeButton = (ImageButton)container.findViewById(R.id.ectStatusCloseButton);
         closeButton.setOnClickListener(onClickListenerCloseStatus);
 
         Button sendButton = (Button)container.findViewById(R.id.ectStatusRetryButton);
         sendButton.setOnClickListener(onClickListenerSendFeedback);
+        */
     }
 
 
@@ -295,19 +418,22 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
 
 
     public void hideECTView(){
-
+        View ectNavBar = getView().findViewById(R.id.ectNavigationInclude);
         View ectToolbar = getView().findViewById(R.id.ectToolbarInclude);
         View statusToolbar = getView().findViewById(R.id.ectStatusInclude);
 
         View currentToolbar = ectToolbar;
 
+        this.hideKeyboard();
+
         if(ectToolbar.getVisibility() == View.GONE && statusToolbar.getVisibility() == View.VISIBLE)
             currentToolbar = statusToolbar;
 
+        Animation slideOutTop = AnimationUtils.loadAnimation(getView().getContext(),R.anim.slide_out_top);
+        Animation slideOutBottom = AnimationUtils.loadAnimation(getView().getContext(), R.anim.slide_out_bottom);
 
-        Animation slideOutAnimation = AnimationUtils.loadAnimation(getView().getContext(), R.anim.slide_out_bottom);
 
-        slideOutAnimation.setAnimationListener(new Animation.AnimationListener() {
+        slideOutTop.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationEnd(Animation animation) {
                 mCallback.onCloseECTClickListener();
@@ -320,9 +446,8 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
             public void onAnimationStart(Animation animation) { }
         });
 
-        currentToolbar.startAnimation(slideOutAnimation);
-
-        this.hideKeyboard();
+        currentToolbar.startAnimation(slideOutBottom);
+        ectNavBar.startAnimation(slideOutTop);
     }
 
     private void hideKeyboard(){
@@ -341,9 +466,6 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
     public void hideHelperView(){
         View helperGroup = getView().findViewById(R.id.ectHelperGroup);
         Animation fadeOutAnimation = AnimationUtils.loadAnimation(helperGroup.getContext(), R.anim.fade_out);
-
-        View screenCaptureView = getView().findViewById(R.id.ectScreenCapture);
-        screenCaptureView.setVisibility(View.VISIBLE);
 
         fadeOutAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -365,34 +487,67 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
 
     }
 
+    public void showHelperView(){
+        View helperGroup = getView().findViewById(R.id.ectHelperGroup);
+        Animation fadeInAnimation = AnimationUtils.loadAnimation(helperGroup.getContext(), R.anim.fade_in);
+
+        fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                View helperGroup = getView().findViewById(R.id.ectHelperGroup);
+                helperGroup.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) { }
+
+            @Override
+            public void onAnimationStart(Animation animation) { }
+        });
+
+        helperGroup.setVisibility(View.INVISIBLE);
+        helperGroup.startAnimation(fadeInAnimation);
+
+    }
+
+
     /**
      * Status View
      */
 
     private void setStatusMessage(int message){
         TextView ectStatusMessage = (TextView)getView().findViewById(R.id.ectStatusMessage);
-        View closeButton = getView().findViewById(R.id.ectStatusCloseButton);
         View progressBar = getView().findViewById(R.id.ectStatusIndicator);
+/*
+        View closeButton = getView().findViewById(R.id.ectStatusCloseButton);
         View retryButton = getView().findViewById(R.id.ectStatusRetryButton);
-
+*/
         switch (message){
             case ECT_STATUS_SENDING_MESSAGE:
                 ectStatusMessage.setText(R.string.status_sending_message);
+  /*
                 closeButton.setVisibility(View.GONE);
                 retryButton.setVisibility(View.GONE);
+   */
                 progressBar.setVisibility(View.VISIBLE);
 
                 break;
             case ECT_STATUS_FAILED_MESSAGE:
                 ectStatusMessage.setText(R.string.status_failed_message);
+  /*
                 closeButton.setVisibility(View.VISIBLE);
                 retryButton.setVisibility(View.VISIBLE);
+   */
                 progressBar.setVisibility(View.GONE);
 
                 Animation shake = AnimationUtils.loadAnimation(ectStatusMessage.getContext(), R.anim.shake_it);
                 ectStatusMessage.setAnimation(shake);
 
                 break;
+            case ECT_STATUS_SUCCESS_MESSAGE:
+                ectStatusMessage.setText(R.string.status_success_message);
+                progressBar.setVisibility(View.GONE);
+
             default:
                 break;
         }
@@ -535,10 +690,20 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
         public void onClick(View v) {
 
             View helperGroup = getView().findViewById(R.id.ectHelperGroup);
-            if(helperGroup.getVisibility() == View.VISIBLE)
+            if(helperGroup.getVisibility() == View.VISIBLE) {
                 hideHelperView();
-            else
-                hideECTView();
+            }
+            else{
+
+                View ectStatusBar =  getView().findViewById(R.id.ectStatusInclude);
+
+                if(ectStatusBar.getVisibility() == View.VISIBLE){
+                    showStatusView(false,-1);
+                }
+                else {
+                    hideECTView();
+                }
+            }
 
         }
     };
@@ -556,6 +721,7 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
         public void onClick(View view) {
             hideKeyboard();
             showStatusView(true, ECT_STATUS_SENDING_MESSAGE);
+            showNavigationBarButtons(false);
             mCallback.onSendFeedbackClickListener();
         }
     };
@@ -590,6 +756,23 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
         }
     };
 
+    private View.OnClickListener onClickListenerOpenHelper = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            View helperGroup = getView().findViewById(R.id.ectHelperGroup);
+
+            if(helperGroup.getVisibility() == View.GONE) {
+                showHelperView();
+            }
+            else{
+                hideHelperView();
+            }
+
+        }
+    };
+
+
+
     /**
      * Get Feedback Content
      */
@@ -607,6 +790,16 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
         return this.screenCapture;
     }
 
+    public Bitmap getFinalScreenCapture(){
+        OSCanvasView screenCaptureView = (OSCanvasView)getView().findViewById(R.id.ectScreenCapture);
+        Bitmap result = null;
+
+        if(screenCaptureView != null)
+            result = screenCaptureView.getBackgroundImage();
+
+        return result;
+    }
+
 
     public File getAudioComments(){
         return new File(audioFile);
@@ -618,12 +811,12 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
      */
 
     private void initAudioRecorder(){
-        audioFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ECTComment.3gpp";
+        audioFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ECTComment.mp4";
 
         mediaRecorder = new MediaRecorder();
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         mediaRecorder.setOutputFile(audioFile);
 
     }
@@ -807,5 +1000,51 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
     }
 
 
+    /**
+     *  Navigation Bar
+     */
+
+    public void showNavigationBarButtons(boolean show){
+        View closeButton = getView().findViewById(R.id.ectCloseButton);
+        View helperButton = getView().findViewById(R.id.ectHelperButton);
+
+        closeButton.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+        helperButton.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    private boolean touchNearByNavigationBar(OSCanvasView.Point touchPoint){
+        View navigationBar = getView().findViewById(R.id.ectNavigationInclude);
+        Rect navBarRect = new Rect();
+
+        navigationBar.measure(View.MeasureSpec.UNSPECIFIED,View.MeasureSpec.UNSPECIFIED);
+        int height = navigationBar.getMeasuredHeight();
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        this.getActivity().getWindowManager().getDefaultDisplay().getRealMetrics(displaymetrics);
+        int width = displaymetrics.widthPixels;
+        navBarRect.set(0,0,width,height*2);
+
+        boolean result = navBarRect.contains((int)touchPoint.x,(int)touchPoint.y);
+
+        return result;
+    }
+
+    @Override
+    public void onTouchBeganNearROI(OSCanvasView.Point point){
+        if(this.touchNearByNavigationBar(point) && !hidingNavigationBar)
+            this.hideNavigationBar();
+    }
+
+    @Override
+    public void onTouchMovedNearROI(OSCanvasView.Point point){
+        if(this.touchNearByNavigationBar(point) && !hidingNavigationBar)
+            this.hideNavigationBar();
+    }
+
+    @Override
+    public void onTouchEndNearROI(OSCanvasView.Point point){
+        hidingNavigationBar = false;
+        this.showNavigationBar();
+    }
 
 }

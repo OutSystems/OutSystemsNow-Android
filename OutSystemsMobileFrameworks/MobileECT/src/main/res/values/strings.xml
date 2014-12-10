@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">OutSystemsMobileECT</string>
+    <string name="ect_feature_name">OutSystems Feedback</string>
 
     <color name="outSystems_red">#c20</color>
 
@@ -13,10 +13,19 @@
     <string name="retry_button">Retry</string>
     <string name="status_sending_message">Sending your feedback...</string>
     <string name="status_failed_message">Failed to send feedback</string>
+    <string name="status_success_message">Your feedback was sent! Thanks!</string>
 
     <!-- ECT Audio Recorder -->
     <string name="audio_recorder_alert_message">Your feedback is being recorded...</string>
     <string name="audio_recorder_dialog_cancel">Cancel</string>
     <string name="audio_recorder_dialog_done">Done</string>
+
+    <!-- ECT Error Dialog -->
+    <string name="ect_dialog_cancel_button">Cancel</string>
+    <string name="ect_dialog_retry_button">Retry</string>
+
+
+    <string name="ect_send_feedback_failed_title">Sorry, we didn\'t manage to send your feedback.</string>
+    <string name="ect_send_feedback_failed_message">Do you want to try submitting again?</string>
 
 </resources>

@@ -17,21 +17,6 @@
         android:layout_alignParentTop="true"
         android:background="@android:color/transparent">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/helper_gradient"
-            android:id="@+id/ectHelperGroup">
-
-            <ImageView
-                android:id="@+id/ectHelperView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="0dp" />
-        </LinearLayout>
-
         <com.outsystems.android.mobileect.view.OSCanvasView
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
@@ -40,12 +25,28 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/helper_gradient"
+        android:id="@+id/ectHelperGroup">
+
+        <ImageView
+            android:id="@+id/ectHelperView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp" />
+    </LinearLayout>
+
     <include
-        layout="@layout/ect_toolbar_view"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ectToolbarInclude"
-        android:layout_alignParentBottom="true" />
+        layout="@layout/ect_navigation_view"
+        android:id="@+id/ectNavigationInclude"
+        android:layout_alignParentTop="true"/>
+
 
     <include
         android:layout_width="fill_parent"
@@ -54,5 +55,11 @@
         android:layout_alignParentBottom="true"
         layout="@layout/ect_status_view" />
 
+    <include
+        layout="@layout/ect_toolbar_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ectToolbarInclude"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

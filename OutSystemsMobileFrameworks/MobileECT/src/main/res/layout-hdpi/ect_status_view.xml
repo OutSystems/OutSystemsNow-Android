@@ -6,28 +6,27 @@
     android:orientation="horizontal"
     android:weightSum="1"
     android:baselineAligned="false">
+    <!--
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.15"
+            android:gravity="bottom|center_horizontal"
+            android:orientation="horizontal">
 
+            <ImageButton
+                android:id="@+id/ectStatusCloseButton"
+                android:src="@drawable/icon_cross_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:padding="10dp"/>
+
+        </LinearLayout>
+        -->
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.15"
-        android:gravity="bottom|center_horizontal"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/ectStatusCloseButton"
-            android:src="@drawable/icon_cross_white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:padding="10dp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.70"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal">
          <ProgressBar
@@ -49,7 +48,7 @@
             android:text="@string/status_sending_message"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
-
+<!--
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="fill_parent"
@@ -68,6 +67,6 @@
             android:textSize="16sp"
             android:textColor="@android:color/white"/>
 
-
     </LinearLayout>
+    -->
 </LinearLayout>

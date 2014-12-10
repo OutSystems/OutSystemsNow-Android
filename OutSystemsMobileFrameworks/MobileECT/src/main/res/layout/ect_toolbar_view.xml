@@ -10,27 +10,8 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:layout_weight="0.15"
-        android:gravity="bottom|center_horizontal"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/buttonClose"
-            android:src="@drawable/icon_cross_white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:padding="10dp"
-            android:layout_marginBottom="3dp"/>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.70"
-        android:gravity="center_vertical|center_horizontal"
+        android:layout_weight="0.85"
+        android:gravity="center_vertical|left"
         android:orientation="vertical">
 
         <EditText
@@ -47,9 +28,12 @@
             android:maxLength="500"
             android:maxLines="5"
             android:minLines="1"
+            android:textSize="12sp"
             android:minHeight="36dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginBottom="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:scrollHorizontally="false"
@@ -102,12 +86,10 @@
 
         <ImageButton
             android:id="@+id/buttonRecordAudio"
-            android:src="@drawable/icon_microphone_white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:padding="10dp"
-            android:layout_marginBottom="0dp"/>
+            android:src="@drawable/icon_microphone_roundedwhitebg"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@android:color/transparent"/>
 
     </LinearLayout>
 </LinearLayout>

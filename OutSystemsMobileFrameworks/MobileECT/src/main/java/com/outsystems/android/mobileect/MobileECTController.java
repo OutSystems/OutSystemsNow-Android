@@ -1,18 +1,20 @@
 package com.outsystems.android.mobileect;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.os.Handler;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.JsonReader;
 import android.util.JsonToken;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebView;
@@ -27,6 +29,7 @@ import com.outsystems.android.mobileect.model.OSECTApi;
 import com.outsystems.android.mobileect.model.OSECTSupportedAPIVersions;
 import com.outsystems.android.mobileect.parsing.OSECTApiVersion;
 import com.outsystems.android.mobileect.parsing.OSECTWebAppInfo;
+import com.outsystems.android.mobileect.view.OSAlertMessageDialog;
 import com.outsystems.android.mobileect.view.OSECTContainer;
 
 import java.io.ByteArrayOutputStream;
@@ -84,7 +87,7 @@ public class MobileECTController implements OSECTListener {
 
     // Mobile ECT Types
 
-    private static final String ECT_Audio_MimeType = "audio/mp3";
+    private static final String ECT_Audio_MimeType = "audio/mp4";
     private static final String ECT_Image_MimeType = "image/jpeg";
 
     // ECT Api Version
@@ -182,10 +185,7 @@ public class MobileECTController implements OSECTListener {
         this.ectContainerFragment.releaseMedia();
         this.ectContainerFragment = null;
 
-        this.supportedAPIVersions.removeAllVersions();
-        this.ectWebAppInfo = null;
         this.currentActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-
     }
 
 
@@ -250,6 +250,7 @@ public class MobileECTController implements OSECTListener {
                         } catch (Exception e) {
                             Log.e(TAG, "Error parsing to JSON: " + e.getMessage());
                             this.ectWebAppInfo = null;
+                            showECT = false;
                         }
 
                     }
@@ -297,35 +298,84 @@ public class MobileECTController implements OSECTListener {
      * ECT Feedback
      */
 
-    public void sendFeedback() {
+    private void showErrorAlertDialog() {
 
-        OSECTWebServicesClient ectWSClient = OSECTWebServicesClient.getInstance();
-
-        OSECTWSRequestHandler requestHandler = new OSECTWSRequestHandler() {
-            @Override
-            public void requestFinish(Object result, boolean error, int statusCode) {
-
-                Log.d(TAG, "Status Code: " + statusCode);
-
-                if (error) {
-                    // show status view with error message
-                    ectContainerFragment.showStatusView(true, OSECTContainer.ECT_STATUS_FAILED_MESSAGE);
-                }
-                else{
-                    // close ect feature
-                    ectContainerFragment.hideECTView();
-                }
+        DialogInterface.OnClickListener positiveClickListener = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                sendFeedback();
             }
         };
 
-        // Get feedback parameters map
-        Map<String, String> feedbackParams = this.getFeedbackDictionary();
+        DialogInterface.OnClickListener negativeClickListener = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                ectContainerFragment.showNavigationBarButtons(true);
+                ectContainerFragment.showStatusView(false, -1);
+            }
+        };
 
-        ectWSClient.saveFeedback(this.currentActivity.getBaseContext(),
-                                 this.hostname,
-                                 this.supportedAPIVersions.getAPIVersionURL(),
-                                 feedbackParams,
-                                 requestHandler);
+        OSAlertMessageDialog alertDialog = OSAlertMessageDialog.newInstance(R.string.ect_send_feedback_failed_title,
+                R.string.ect_send_feedback_failed_message, R.string.ect_dialog_retry_button,
+                R.string.ect_dialog_cancel_button, positiveClickListener, negativeClickListener);
+
+
+        ectContainerFragment.showNavigationBarButtons(false);
+        alertDialog.show(this.currentActivity.getFragmentManager(),"AlertMessageDialog");
+    }
+
+    public void sendFeedback() {
+
+        try{
+
+            ectContainerFragment.showNavigationBarButtons(false);
+
+            OSECTWebServicesClient ectWSClient = OSECTWebServicesClient.getInstance();
+
+            OSECTWSRequestHandler requestHandler = new OSECTWSRequestHandler() {
+                @Override
+                public void requestFinish(Object result, boolean error, int statusCode) {
+
+                    Log.d(TAG, "Status Code: " + statusCode);
+
+                    if (error) {
+                        // show status view with error message
+                        // ectContainerFragment.showStatusView(true, OSECTContainer.ECT_STATUS_FAILED_MESSAGE);
+                        showErrorAlertDialog();
+
+                        Log.e(TAG, "HTTP Result: " + result);
+                    }
+                    else{
+                        // show success message
+                        ectContainerFragment.showStatusView(true, OSECTContainer.ECT_STATUS_SUCCESS_MESSAGE);
+
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // close ect feature
+                                ectContainerFragment.hideECTView();
+                            }
+                        }, 1000);
+
+                    }
+                }
+            };
+
+            // Get feedback parameters map
+            Map<String, String> feedbackParams = this.getFeedbackDictionary();
+
+            ectWSClient.saveFeedback(this.currentActivity.getBaseContext(),
+                                     this.hostname,
+                                     this.supportedAPIVersions.getAPIVersionURL(),
+                                     feedbackParams,
+                                     requestHandler);
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            Log.d(TAG, "SendFeedback: " + e.getMessage());
+            ectContainerFragment.showStatusView(true, OSECTContainer.ECT_STATUS_FAILED_MESSAGE);
+            ectContainerFragment.showNavigationBarButtons(true);
+        }
     }
 
 
@@ -415,7 +465,7 @@ public class MobileECTController implements OSECTListener {
 
 
         //  FeedbackScreenshotBase64
-        Bitmap imageBitmap = this.ectContainerFragment.getScreenCapture();
+        Bitmap imageBitmap = this.ectContainerFragment.getFinalScreenCapture();
         String imageString = "";
 
         if(imageBitmap != null) {

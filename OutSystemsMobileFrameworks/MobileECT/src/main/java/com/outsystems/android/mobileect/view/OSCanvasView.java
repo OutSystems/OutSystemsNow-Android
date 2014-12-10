@@ -7,9 +7,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.outsystems.android.mobileect.R;
+import com.outsystems.android.mobileect.interfaces.OSECTTouchListener;
 
 
 /**
@@ -24,6 +29,14 @@ public class OSCanvasView extends View implements View.OnTouchListener{
     private Point[] points;
     private Paint paint;
     private int counter;
+
+
+    OSECTTouchListener touchListener;
+
+    public void setTouchListener(OSECTTouchListener touchListener) {
+        this.touchListener = touchListener;
+    }
+
 
     public boolean isCanvasLocked() {
         return canvasLocked;
@@ -79,6 +92,8 @@ public class OSCanvasView extends View implements View.OnTouchListener{
         canvas.drawPath(path, paint);
     }
 
+
+
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         if(canvasLocked)
@@ -91,6 +106,10 @@ public class OSCanvasView extends View implements View.OnTouchListener{
             case MotionEvent.ACTION_DOWN:
                 this.counter = 0;
                 this.points[0] = touchPoint;
+
+                if(touchListener != null) {
+                        touchListener.onTouchBeganNearROI(touchPoint);
+                }
 
                 result = true;
                 break;
@@ -117,6 +136,10 @@ public class OSCanvasView extends View implements View.OnTouchListener{
 
                 this.invalidate();
 
+                if(touchListener != null) {
+                    touchListener.onTouchMovedNearROI(touchPoint);
+                }
+
                 result = true;
                 break;
             case MotionEvent.ACTION_UP:
@@ -126,11 +149,13 @@ public class OSCanvasView extends View implements View.OnTouchListener{
 
                 this.invalidate();
 
+                if(touchListener != null) {
+                    touchListener.onTouchEndNearROI(touchPoint);
+                }
                 result = true;
                 break;
 
             default:
-                // Do nothing
                 result = super.onTouchEvent(motionEvent);
                 break;
         }
@@ -163,7 +188,7 @@ public class OSCanvasView extends View implements View.OnTouchListener{
     }
 
 
-    class Point {
+    public class Point {
         float x, y;
 
         public Point(float x, float y){
