@@ -25,6 +25,20 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ectStatusInclude"
+        android:layout_alignParentBottom="true"
+        layout="@layout/ect_status_view" />
+
+    <include
+        layout="@layout/ect_toolbar_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ectToolbarInclude"
+        android:layout_alignParentBottom="true" />
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
@@ -47,19 +61,5 @@
         android:id="@+id/ectNavigationInclude"
         android:layout_alignParentTop="true"/>
 
-
-    <include
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ectStatusInclude"
-        android:layout_alignParentBottom="true"
-        layout="@layout/ect_status_view" />
-
-    <include
-        layout="@layout/ect_toolbar_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ectToolbarInclude"
-        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>
