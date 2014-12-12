@@ -13,6 +13,11 @@
         Apache Cordova Team
     </author>
     <content src="index.html" />
+	<access origin="tel:*" launch-external="yes"/>
+<access origin="geo:*" launch-external="yes"/>
+<access origin="mailto:*" launch-external="yes"/>
+<access origin="sms:*" launch-external="yes"/>
+<access origin="market:*" launch-external="yes"/>
     <access origin="*" />
     <feature name="Loader">
         <param name="android-package" value="com.outsystems.android.Loader" />
