@@ -109,14 +109,13 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
 
         View ectToolbar = ectContainerView.findViewById(R.id.ectToolbarInclude);
         ectToolbar.startAnimation(fadeInAnimation);
+        View ectScreenCapture = ectContainerView.findViewById(R.id.ectScreenCapture);
+        ectScreenCapture.setVisibility(View.VISIBLE);
 
         if(skipHelper){
 
             View helperGroup = ectContainerView.findViewById(R.id.ectHelperGroup);
             helperGroup.setVisibility(View.GONE);
-
-            View ectScreenCapture = ectContainerView.findViewById(R.id.ectScreenCapture);
-            ectScreenCapture.setVisibility(View.VISIBLE);
         }
         else{
             View helperGroup = ectContainerView.findViewById(R.id.ectHelperGroup);
