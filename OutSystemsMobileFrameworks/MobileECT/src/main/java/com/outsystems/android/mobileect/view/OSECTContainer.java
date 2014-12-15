@@ -125,6 +125,8 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
 
         this.screenCapture = null;
 
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         return ectContainerView;
     }
 
@@ -488,6 +490,8 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
     }
 
     public void showHelperView(){
+        this.hideKeyboard();
+
         View helperGroup = getView().findViewById(R.id.ectHelperGroup);
         Animation fadeInAnimation = AnimationUtils.loadAnimation(helperGroup.getContext(), R.anim.fade_in);
 
