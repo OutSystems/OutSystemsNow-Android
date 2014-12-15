@@ -23,7 +23,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:antialias="true"
-            android:src="@drawable/icon_microphone_red" />
+            android:src="@drawable/alert_record_whiteroundedbg" />
 
         <Chronometer
             android:id="@+id/audioRecorderChronometer"
