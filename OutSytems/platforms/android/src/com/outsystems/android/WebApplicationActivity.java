@@ -43,6 +43,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.StateSet;
@@ -55,6 +56,7 @@ import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -84,6 +86,8 @@ import com.phonegap.plugins.barcodescanner.BarcodeScanner;
 public class WebApplicationActivity extends BaseActivity implements CordovaInterface, OSECTContainerListener {
 
     public static String KEY_APPLICATION = "key_application";
+    private static String OPEN_URL_EXTERNAL_BROWSER_PREFIX = "external:";
+
     CordovaWebView cordovaWebView;
 
     private final ExecutorService threadPool = Executors.newCachedThreadPool();
@@ -207,12 +211,39 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         String newUA = ua.concat(" OutSystemsApp v." + appVersion);
         cordovaWebView.getSettings().setUserAgentString(newUA);
 
+        // Mobile ECT Feature
+
+        View containerView = findViewById(R.id.ectViewGroup);
+        View mainView = findViewById(R.id.mainViewGroup);
+        DatabaseHandler database = new DatabaseHandler(getApplicationContext());
+        MobileECT mobileECT = database.getMobileECT();
+
+        boolean skipHelper = mobileECT != null && !mobileECT.isFirstLoad();
+
+        mobileECTController = new MobileECTController(this,
+                mainView,
+                containerView,
+                this.cordovaWebView,
+                HubManagerHelper.getInstance().getApplicationHosted(),
+                skipHelper);
+
+        containerView.setVisibility(View.GONE);
+
+        // Hide ECT Button
+        ImageButton buttonECT = (ImageButton) findViewById(R.id.button_ect);
+        if(buttonECT != null) {
+            buttonECT.setOnClickListener(this.onClickListenerOpenECT);
+            buttonECT.setVisibility(View.GONE);
+        }
+
+        // Load Application
+
         if (savedInstanceState == null) {
             cordovaWebView.loadUrl(url);
         } else {
             ((LinearLayout) findViewById(R.id.view_loading)).setVisibility(View.GONE);
         }
-        
+
         // Customization Toolbar
         // Get Views from Xml Layout
         ImageButton buttonApplications = (ImageButton) findViewById(R.id.button_applications);
@@ -243,34 +274,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         }
 
-        View containerView = findViewById(R.id.ectViewGroup);
 
-        View mainView = findViewById(R.id.mainViewGroup);
-
-        // Mobile ECT Feature
-
-        DatabaseHandler database = new DatabaseHandler(getApplicationContext());
-        MobileECT mobileECT = database.getMobileECT();
-
-        boolean skipHelper = mobileECT != null && !mobileECT.isFirstLoad();
-
-        mobileECTController = new MobileECTController(this,
-                                                      mainView,
-                                                      containerView,
-                                                      this.cordovaWebView,
-                                                      HubManagerHelper.getInstance().getApplicationHosted(),
-                                                      skipHelper);
-
-        containerView.setVisibility(View.GONE);
-
-
-
-        // Hide ECT Button
-        ImageButton buttonECT = (ImageButton) findViewById(R.id.button_ect);
-        if(buttonECT != null) {
-            buttonECT.setOnClickListener(this.onClickListenerOpenECT);
-            buttonECT.setVisibility(View.GONE);
-        }
     }
 
     /*
@@ -501,7 +505,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         ImageButton buttonECT = (ImageButton) findViewById(R.id.button_ect);
         if(buttonECT != null) {
             buttonECT.setVisibility(show ? View.VISIBLE : View.GONE);
+            findViewById(R.id.toolbar).invalidate();
         }
+
     }
 
     @Override
@@ -544,7 +550,14 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             EventLogger.logMessage(getClass(), "--------------- shouldOverrideUrlLoading ---------------");
 			if(url.equals("about:blank")) 
             	return super.shouldOverrideUrlLoading(view, url);
-           
+
+            if(url.startsWith(OPEN_URL_EXTERNAL_BROWSER_PREFIX)){
+                String urlString = url.substring(OPEN_URL_EXTERNAL_BROWSER_PREFIX.length());
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
+                startActivity(browserIntent);
+                return true;
+            }
+
 			startLoadingAnimation();
 			
             return super.shouldOverrideUrlLoading(view, url);
@@ -559,7 +572,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
             // Get Mobile ECT Api Info
             mobileECTController.getECTAPIInfo();
-
         }
 
         @Override

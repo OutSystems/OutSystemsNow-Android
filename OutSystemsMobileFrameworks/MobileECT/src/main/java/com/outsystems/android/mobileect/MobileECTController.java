@@ -35,6 +35,7 @@ import com.outsystems.android.mobileect.view.OSECTContainer;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -120,6 +121,7 @@ public class MobileECTController implements OSECTListener {
 
         this.supportedAPIVersions = new OSECTSupportedAPIVersions();
         this.javaScriptAPI = new OSECTJavaScriptAPI(this.webView, this);
+        this.javaScriptAPI.configJavaScriptAPI(this.webView);
     }
 
 
@@ -254,6 +256,20 @@ public class MobileECTController implements OSECTListener {
                             showECT = false;
                         }
 
+                    }
+                    else{
+                        if(reader.peek() == JsonToken.BEGIN_OBJECT){
+                            try {
+                                // Create objects from JSON
+                                Gson gson = new Gson();
+                                this.ectWebAppInfo = gson.fromJson(jsResult, OSECTWebAppInfo.class);
+
+                            } catch (Exception e) {
+                                Log.e(TAG, "Error parsing to JSON: " + e.getMessage());
+                                this.ectWebAppInfo = null;
+                                showECT = false;
+                            }
+                        }
                     }
                 }
             } catch (IOException e) {

@@ -30,12 +30,25 @@ public class OSECTJavaScriptAPI implements OSECTJavaScriptListener {
 
     private String resultValue;
 
+    OSECTJavaScriptCallback jsCallback;
+    OSECTJavaScriptInterface jsInterface;
 
     public OSECTJavaScriptAPI(WebView webView, OSECTListener ectListener) {
         this.webView = webView;
         this.ectController = ectListener;
     }
 
+
+    public void configJavaScriptAPI(WebView webView){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            this.jsCallback = new OSECTJavaScriptCallback(this);
+
+        } else {
+            this.jsInterface = new OSECTJavaScriptInterface(this);
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.addJavascriptInterface(jsInterface,jsInterface.getInterfaceName());
+        }
+    }
 
     public void evaluateJavascript(String expression) {
         if (webView == null)
@@ -44,13 +57,23 @@ public class OSECTJavaScriptAPI implements OSECTJavaScriptListener {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
 
+        /*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             OSECTJavaScriptCallback jsCallback = new OSECTJavaScriptCallback(this);
             jsCallback.getJSValue(webView,expression);
 
         } else {
             OSECTJavaScriptInterface jsInterface = new OSECTJavaScriptInterface(this);
+            webView.getSettings().setJavaScriptEnabled(true);
             webView.addJavascriptInterface(jsInterface,jsInterface.getInterfaceName());
+            jsInterface.getJSValue(webView,expression);
+        }
+
+        */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            jsCallback.getJSValue(webView,expression);
+
+        } else {
             jsInterface.getJSValue(webView,expression);
         }
 
