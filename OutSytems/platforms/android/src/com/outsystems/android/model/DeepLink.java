@@ -103,14 +103,15 @@ public class DeepLink {
 		
 		if(this.getParameters() == null)
 			this.setParameters(new HashMap<String,String>());
+
+        int separator = parameter.indexOf("=");
+
 		
-		StringTokenizer st = new StringTokenizer(parameter,"=");
-		
-		if (st.countTokens() < 2)
+		if (separator < 0)
 			return;
-		
-		String key = st.nextToken().toLowerCase();
-		String value = st.nextToken();
+
+		String key = parameter.substring(0,separator).toLowerCase();
+		String value = parameter.substring(separator+1);
 			
 		if(key.contains("password"))
 			LOG.v(TAG, "Deep Link - Parameter: "+key+" - ******"); // Just to ensure that password value was passed
