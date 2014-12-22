@@ -8,6 +8,7 @@
 package com.outsystems.android;
 
 import java.io.File;
+import java.net.CookieHandler;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -20,6 +21,9 @@ import org.apache.cordova.CordovaChromeClient;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.CordovaWebViewClient;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,13 +50,17 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.StateSet;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
@@ -192,9 +200,12 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             }
             url = String.format(WebServicesClient.URL_WEB_APPLICATION, HubManagerHelper.getInstance()
                     .getApplicationHosted(), application.getPath());
-        }        
+        }
 
         cordovaWebView.setWebViewClient(new CordovaCustomWebClient(this, cordovaWebView));
+        cordovaWebView.setWebChromeClient(new CordovaChromeClient(this, cordovaWebView));
+        cordovaWebView.getSettings().setJavaScriptEnabled(true);
+        cordovaWebView.getSettings().setLightTouchEnabled(true);
 
         // Listener to Download Web File with Native Component - Download Manager
         cordovaWebView.setDownloadListener(new DownloadListener() {
@@ -203,13 +214,44 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                 downloadAndOpenFile(WebApplicationActivity.this, url);
             }
         });
-               
-        
+
+
+        // Synchronize WebView cookies with Login Request cookies
+        CookieSyncManager.createInstance(getApplicationContext());
+        android.webkit.CookieManager.getInstance().removeAllCookie();
+
+        List<String> cookies = WebServicesClient.getInstance().getLoginCookies();
+        if (cookies != null && !cookies.isEmpty()){
+            for(String cookieString : cookies){
+                //String cookieString = cookie.getName() + "=" + cookie.getValue(); // + ";"; //" domain=" + HubManagerHelper.getInstance().getApplicationHosted();
+                android.webkit.CookieManager.getInstance().setCookie(HubManagerHelper.getInstance().getApplicationHosted(), cookieString);
+                EventLogger.logMessage(getClass(), "Cookie: "+cookieString);
+                CookieSyncManager.getInstance().sync();
+            }
+        }
+
+
+        // Remove this code: just for debug
+
+        List<Cookie> httpCookies= WebServicesClient.getInstance().getHttpCookies();
+        Cookie sessionInfo;
+        if (httpCookies != null && !httpCookies.isEmpty()){
+            for(Cookie cookie : httpCookies){
+                sessionInfo = cookie;
+                String cookieString = sessionInfo.getName() + "=" + sessionInfo.getValue() + "; domain=" + sessionInfo.getDomain();
+                android.webkit.CookieManager.getInstance().setCookie(HubManagerHelper.getInstance().getApplicationHosted(), cookieString);
+                EventLogger.logMessage(getClass(), "HttpCookie: "+cookieString);
+            }
+        }
+        // ---------
+
+
         // Set in the user agent OutSystemsApp
         String ua = cordovaWebView.getSettings().getUserAgentString();
         String appVersion = getAppVersion();
         String newUA = ua.concat(" OutSystemsApp v." + appVersion);
         cordovaWebView.getSettings().setUserAgentString(newUA);
+
 
         // Mobile ECT Feature
 
@@ -235,6 +277,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             buttonECT.setOnClickListener(this.onClickListenerOpenECT);
             buttonECT.setVisibility(View.GONE);
         }
+
+
+
 
         // Load Application
 
@@ -574,6 +619,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             mobileECTController.getECTAPIInfo();
         }
 
+
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             List<String> trustedHosts = WebServicesClient.getInstance().getTrustedHosts();
@@ -626,7 +672,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             final Animation animationFadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadeout);
             imageView.setVisibility(View.GONE);
             imageView.startAnimation(animationFadeOut);
-
         }
         spinnerStop();
     }

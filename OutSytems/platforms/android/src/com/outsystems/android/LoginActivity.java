@@ -171,22 +171,7 @@ public class LoginActivity extends BaseActivity {
                                          R.string.label_invalid_version));
                             	showError(findViewById(R.id.root_view));
                             } else {
-                            	
-                            	// Using authentication in the web view
-                                WebView webView = new WebView(getApplicationContext());
-                                String url = String.format(WebServicesClient.BASE_URL,
-                                        HubManagerHelper.getInstance().getApplicationHosted()).concat(
-                                        "login" + WebServicesClient.getApplicationServer());
-                              //  url = url.replace("https", "http");
-                                
-                                String postData = "username=" + userName + "&password=" + password + "&screenWidth=" + 
-                                		(int)(displaymetrics.widthPixels / displaymetrics.density) + "&screenHeight="  + 
-                                		(int)(displaymetrics.heightPixels / displaymetrics.density) + "&devicetype=android&deviceHwId=" + 
-                                		Installation.id(getApplicationContext());
-                                
-                                
-                                webView.postUrl(url, EncodingUtils.getBytes(postData, "BASE64"));
-                                                            	
+
                                 DatabaseHandler database = new DatabaseHandler(getApplicationContext());
                                 database.updateHubApplicationCredentials(HubManagerHelper.getInstance()
                                         .getApplicationHosted(), userName, password);
