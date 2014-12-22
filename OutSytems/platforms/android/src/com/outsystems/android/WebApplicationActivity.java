@@ -8,7 +8,6 @@
 package com.outsystems.android;
 
 import java.io.File;
-import java.net.CookieHandler;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -21,9 +20,7 @@ import org.apache.cordova.CordovaChromeClient;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.CordovaWebViewClient;
 import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,16 +44,12 @@ import android.graphics.drawable.StateListDrawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.util.StateSet;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.CookieManager;
@@ -64,9 +57,7 @@ import android.webkit.CookieSyncManager;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -79,21 +70,21 @@ import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.mobileect.MobileECTController;
 import com.outsystems.android.mobileect.interfaces.OSECTContainerListener;
-import com.outsystems.android.mobileect.view.OSECTContainer;
 import com.outsystems.android.model.Application;
 import com.outsystems.android.model.MobileECT;
 import com.phonegap.plugins.barcodescanner.BarcodeScanner;
 
 /**
  * Class description.
- * 
+ *
  * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
  * @version $Revision: 666 $
- * 
+ *
  */
 public class WebApplicationActivity extends BaseActivity implements CordovaInterface, OSECTContainerListener {
 
     public static String KEY_APPLICATION = "key_application";
+    public static String KEY_SINGLE_APPLICATION ="single_application";
     private static String OPEN_URL_EXTERNAL_BROWSER_PREFIX = "external:";
 
     CordovaWebView cordovaWebView;
@@ -122,7 +113,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             if (cordovaWebView.canGoBack()) {
                 LinearLayout viewLoading = (LinearLayout) findViewById(R.id.view_loading);
                 if (viewLoading.getVisibility() != View.VISIBLE) {
-                	startLoadingAnimation();                	
+                	startLoadingAnimation();
                 }
                 cordovaWebView.goBack();
                 enableDisableButtonForth();
@@ -186,9 +177,12 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         Config.init(this);
 
         Application application = null;
+        boolean singleApp = false;
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             application = (Application) bundle.get("key_application");
+
+            singleApp  =  bundle.get(KEY_SINGLE_APPLICATION) != null && (Boolean) bundle.get(KEY_SINGLE_APPLICATION);
         }
 
         // Local Url to load application
@@ -319,6 +313,11 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         }
 
+        // Check if it's a single application
+        if(singleApp){
+            buttonApplications.setVisibility(View.INVISIBLE);
+            buttonApplications.setOnClickListener(null);
+        }
 
     }
 
@@ -361,7 +360,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             case KeyEvent.KEYCODE_BACK:
                 if (cordovaWebView.canGoBack()) {
                 	startLoadingAnimation();
-                	
+
                     cordovaWebView.goBack();
                     enableDisableButtonForth();
                 } else {
@@ -390,7 +389,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     /**
      * Launch an activity for which you would like a result when it finished. When this activity exits, your
      * onActivityResult() method is called.
-     * 
+     *
      * @param command The command object
      * @param intent The intent to start
      * @param requestCode The request code that is passed to callback to identify the activity
@@ -454,7 +453,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Get the Android activity.
-     * 
+     *
      * @return
      */
     public Activity getActivity() {
@@ -463,7 +462,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Called when a message is sent to plugin.
-     * 
+     *
      * @param id The message id
      * @param data The message data
      * @return Object or null
@@ -504,7 +503,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Creates the selector icon applications.
-     * 
+     *
      * @param icon the icon
      * @return the drawable
      */
@@ -522,7 +521,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Gets the disable button.
-     * 
+     *
      * @param icon the icon
      * @return the disable button
      */
@@ -593,7 +592,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             EventLogger.logMessage(getClass(), "--------------- shouldOverrideUrlLoading ---------------");
-			if(url.equals("about:blank")) 
+			if(url.equals("about:blank"))
             	return super.shouldOverrideUrlLoading(view, url);
 
             if(url.startsWith(OPEN_URL_EXTERNAL_BROWSER_PREFIX)){
@@ -604,7 +603,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             }
 
 			startLoadingAnimation();
-			
+
             return super.shouldOverrideUrlLoading(view, url);
         }
 
@@ -624,7 +623,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             List<String> trustedHosts = WebServicesClient.getInstance().getTrustedHosts();
             String host = HubManagerHelper.getInstance().getApplicationHosted();
-            
+
           //TODO remove comments to force the check the validity of SSL certificates, except for list of trusted servers
             //if (trustedHosts != null && host != null) {
             //    for (String trustedHost : trustedHosts) {
@@ -651,17 +650,17 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             }
         }
     }
-       
+
 
     @SuppressWarnings("deprecation")
-    private void startLoadingAnimation() {    	
+    private void startLoadingAnimation() {
 	    BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cordovaWebView));
 	    imageView.setBackgroundDrawable(ob);
 	    imageView.setVisibility(View.VISIBLE);
-       	        
+
 	    LoadingTask loadingTask = new LoadingTask();
 		Timer timer = new Timer();
-		timer.schedule(loadingTask, 500);    	
+		timer.schedule(loadingTask, 500);
     }
 
     /**
@@ -704,7 +703,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Gets the bitmap for visible region.
-     * 
+     *
      * @param webview the webview
      * @return the bitmap for visible region
      */
@@ -723,7 +722,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Gets the app version.
-     * 
+     *
      * @return the app version
      */
     private String getAppVersion() {
@@ -841,7 +840,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Gets the directorty.
-     * 
+     *
      * @return the directorty
      */
     private File getDirectorty() {
@@ -866,23 +865,23 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         }
         return directory;
     }
-    
-    
-    
+
+
+
 	private class LoadingTask extends TimerTask {
 
 		  @Override
 		  public void run() {
-		   
+
 		   runOnUiThread(new Runnable(){
-		
+
 		    @Override
 		    public void run() {
 		    	if (imageView.getVisibility() == View.VISIBLE)
 		    		spinnerStart();
 		    }});
 		  }
-			  
+
 	}
 
 }

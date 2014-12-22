@@ -215,6 +215,7 @@ public class LoginActivity extends BaseActivity {
         Application application = login.getApplications().get(0);
         if (application != null) {
             intent.putExtra(WebApplicationActivity.KEY_APPLICATION, application);
+            intent.putExtra(WebApplicationActivity.KEY_SINGLE_APPLICATION, true);
         }
         startActivity(intent);
     }
