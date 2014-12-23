@@ -10,7 +10,6 @@ package com.outsystems.android;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -108,7 +107,7 @@ public class HubAppActivity extends BaseActivity {
 	
     }
 
-    private String checkUrlString(String url){
+    private String checkEnvironmentURL(String url){
         String result = url.replaceAll(" ", "");
 
         try {
@@ -125,6 +124,11 @@ public class HubAppActivity extends BaseActivity {
             else{
                 if(result.startsWith(https)){
                     result = result.substring(https.length());
+                }
+                else{
+                    int slash = result.indexOf("/");
+                    if(slash > 0)
+                        result = result.substring(0,slash);
                 }
             }
         }
@@ -145,7 +149,7 @@ public class HubAppActivity extends BaseActivity {
             if (!"".equals(urlHubApp)) {
                 ((EditText) findViewById(R.id.edit_text_hub_url)).setError(null);
 
-                String urlHub = checkUrlString(urlHubApp);
+                String urlHub = checkEnvironmentURL(urlHubApp);
 
                 if(!urlHub.equals(urlHubApp)){
                     ((EditText) findViewById(R.id.edit_text_hub_url)).setText(urlHub);
