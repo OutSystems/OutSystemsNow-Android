@@ -33,7 +33,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -654,6 +656,13 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     @SuppressWarnings("deprecation")
     private void startLoadingAnimation() {
+        int currentOrientation = this.getResources().getConfiguration().orientation;
+        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        } else {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        }
+
 	    BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cordovaWebView));
 	    imageView.setBackgroundDrawable(ob);
 	    imageView.setVisibility(View.VISIBLE);
@@ -673,6 +682,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             imageView.startAnimation(animationFadeOut);
         }
         spinnerStop();
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
     /**
