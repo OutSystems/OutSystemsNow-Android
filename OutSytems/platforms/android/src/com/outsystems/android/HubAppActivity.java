@@ -32,6 +32,9 @@ import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Infrastructure;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  * Class Hub App Activity.
  * 
@@ -104,18 +107,50 @@ public class HubAppActivity extends BaseActivity {
  
 	
     }
-    
+
+    private String checkUrlString(String url){
+        String result = url.replaceAll(" ", "");
+
+        try {
+            URL javaURL = new URL(result);
+            result = javaURL.getHost();
+
+        } catch (MalformedURLException e) {
+            String http = "http://";
+            String https = "https://";
+
+            if(result.startsWith(http)){
+                result = result.substring(http.length());
+            }
+            else{
+                if(result.startsWith(https)){
+                    result = result.substring(https.length());
+                }
+            }
+        }
+
+        return result;
+    }
+
+
     /** The on click listener. */
     private OnClickListener onClickListener = new OnClickListener() {
         @Override
         public void onClick(final View v) {
-            final String urlHubApp = ((EditText) findViewById(R.id.edit_text_hub_url)).getText().toString();
+            String urlHubApp = ((EditText) findViewById(R.id.edit_text_hub_url)).getText().toString();
             HubManagerHelper.getInstance().setJSFApplicationServer(false);
 
             hideKeyboard();
 
             if (!"".equals(urlHubApp)) {
                 ((EditText) findViewById(R.id.edit_text_hub_url)).setError(null);
+
+                String urlHub = checkUrlString(urlHubApp);
+
+                if(!urlHub.equals(urlHubApp)){
+                    ((EditText) findViewById(R.id.edit_text_hub_url)).setText(urlHub);
+                    urlHubApp = urlHub;
+                }
                 callInfrastructureService(v, urlHubApp);
             } else {
                 ((EditText) findViewById(R.id.edit_text_hub_url))
