@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 
 import com.arellomobile.android.push.PushManager;
 import com.crashlytics.android.Crashlytics;
@@ -21,6 +22,7 @@ import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
+import com.outsystems.android.helpers.OfflineSupport;
 import com.outsystems.android.model.DeepLink;
 import com.outsystems.android.model.HubApplicationModel;
 
@@ -84,20 +86,39 @@ public class SplashScreen extends Activity {
     }
 
     protected void goNextActivity() {
+        openHubActivity();
+        ApplicationOutsystems app = (ApplicationOutsystems)getApplication();
+
+        // Working Offline
+        if(!app.isNetworkAvailable()) {
+            // Check if the last credentials were valid
+            if(OfflineSupport.getInstance(getApplicationContext()).hasValidCredentials()){
+               OfflineSupport.getInstance(getApplicationContext()).redirectToApplicationList(this);
+
+               // Finish activity
+               finish();
+               return;
+            }
+        }
+
         DatabaseHandler database = new DatabaseHandler(getApplicationContext());
         List<HubApplicationModel> hubApplications = database.getAllHubApllications();
-        openHubActivity();
-        
+
+        HubApplicationModel last = database.getLastLoginHubApplicationModel();
+        EventLogger.logInfoMessage(this.getClass(),"Last:"+ last != null ?
+                last.getUserName()+" - "+last.getDateLastLogin() : "null");
+
+
         if(DeepLinkController.getInstance().hasValidSettings()){
         	DeepLink deepLinkSettings = DeepLinkController.getInstance().getDeepLinkSettings();
         	HubManagerHelper.getInstance().setApplicationHosted(deepLinkSettings.getEnvironment());
-        	
+
             Intent intent = new Intent(getApplicationContext(), HubAppActivity.class);
             startActivity(intent);
-        	
+
         }
         else{
-	        	
+
 	        if (hubApplications != null && hubApplications.size() > 0) {
 	            HubApplicationModel hubApplication = hubApplications.get(0);
 	            if (hubApplication != null) {

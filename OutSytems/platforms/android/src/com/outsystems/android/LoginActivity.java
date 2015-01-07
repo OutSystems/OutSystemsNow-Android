@@ -175,6 +175,9 @@ public class LoginActivity extends BaseActivity {
                                 DatabaseHandler database = new DatabaseHandler(getApplicationContext());
                                 database.updateHubApplicationCredentials(HubManagerHelper.getInstance()
                                         .getApplicationHosted(), userName, password);
+                                database.addLoginApplications(HubManagerHelper.getInstance()
+                                        .getApplicationHosted(), userName,login.getApplications());
+
                                 if (login.getApplications() != null && login.getApplications().size() == 1) {
                                     openWebApplicationActivity(login);
                                 } else {

@@ -43,7 +43,6 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
@@ -59,10 +58,13 @@ import android.webkit.CookieSyncManager;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
+import android.webkit.WebBackForwardList;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.outsystems.android.core.CordovaLoaderWebClient;
 import com.outsystems.android.core.DatabaseHandler;
@@ -108,6 +110,14 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     private MobileECTController mobileECTController;
 
+    // Offline support
+    private View networkErrorView;
+    private View webViewGroup;
+
+    private boolean webViewLoadingFailed = false;
+    private boolean spinnerEnabled = false;
+
+
     public OnClickListener onClickListenerBack = new OnClickListener() {
 
         @Override
@@ -115,7 +125,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             if (cordovaWebView.canGoBack()) {
                 LinearLayout viewLoading = (LinearLayout) findViewById(R.id.view_loading);
                 if (viewLoading.getVisibility() != View.VISIBLE) {
-                	startLoadingAnimation();
+                    startLoadingAnimation();
                 }
                 cordovaWebView.goBack();
                 enableDisableButtonForth();
@@ -130,7 +140,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         @Override
         public void onClick(View v) {
             if (cordovaWebView.canGoForward()) {
-            	startLoadingAnimation();
+                startLoadingAnimation();
                 cordovaWebView.goForward();
                 enableDisableButtonForth();
             }
@@ -248,6 +258,20 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         String newUA = ua.concat(" OutSystemsApp v." + appVersion);
         cordovaWebView.getSettings().setUserAgentString(newUA);
 
+        // Offline Support
+        cordovaWebView.getSettings().setAppCacheMaxSize( 5 * 1024 * 1024 ); // 5MB
+        cordovaWebView.getSettings().setAppCachePath( getApplicationContext().getCacheDir().getAbsolutePath() );
+        cordovaWebView.getSettings().setAllowFileAccess( true );
+        cordovaWebView.getSettings().setAppCacheEnabled( true );
+        cordovaWebView.getSettings().setJavaScriptEnabled( true );
+        cordovaWebView.getSettings().setCacheMode( WebSettings.LOAD_DEFAULT ); // load online by default
+
+        ApplicationOutsystems app = (ApplicationOutsystems)getApplication();
+
+        if ( !app.isNetworkAvailable() ) { // loading offline
+            cordovaWebView.getSettings().setCacheMode( WebSettings.LOAD_CACHE_ONLY );
+        }
+
 
         // Mobile ECT Feature
 
@@ -321,6 +345,27 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             buttonApplications.setOnClickListener(null);
         }
 
+
+        // Offline support
+        this.networkErrorView = findViewById(R.id.networkErrorInclude);
+        this.webViewGroup = findViewById(R.id.webViewGroup);
+
+        if(networkErrorView != null){
+            networkErrorView.setVisibility(View.INVISIBLE);
+
+            View retryButton = networkErrorView.findViewById(R.id.networkErrorButtonRetry);
+            View appsListLink = networkErrorView.findViewById(R.id.networkErrorAppsListLink);
+
+            retryButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    retryWebViewAction();
+                }
+            });
+
+            appsListLink.setOnClickListener(onClickListenerApplication);
+        }
+
     }
 
     /*
@@ -361,8 +406,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 if (cordovaWebView.canGoBack()) {
-                	startLoadingAnimation();
-
                     cordovaWebView.goBack();
                     enableDisableButtonForth();
                 } else {
@@ -589,6 +632,14 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             super(cordova, view);
         }
 
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            startLoadingAnimation();
+            webViewLoadingFailed = false;
+            EventLogger.logMessage(getClass(), "onPageStarted - webViewLoadingFailed: "+webViewLoadingFailed);
+        }
+
         @SuppressLint("DefaultLocale")
         @SuppressWarnings("deprecation")
         @Override
@@ -604,8 +655,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                 return true;
             }
 
-			startLoadingAnimation();
-
             return super.shouldOverrideUrlLoading(view, url);
         }
 
@@ -614,10 +663,15 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             super.onPageFinished(view, url);
             EventLogger.logMessage(getClass(), "________________ ONPAGEFINISHED _________________");
             enableDisableButtonForth();
-            stopLoadingAnimation();
 
             // Get Mobile ECT Api Info
             mobileECTController.getECTAPIInfo();
+
+            if(!webViewLoadingFailed)
+                cordovaWebView.setVisibility(View.VISIBLE);
+
+            stopLoadingAnimation();
+            showNetworkErrorView(webViewLoadingFailed);
         }
 
 
@@ -625,6 +679,11 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             List<String> trustedHosts = WebServicesClient.getInstance().getTrustedHosts();
             String host = HubManagerHelper.getInstance().getApplicationHosted();
+
+
+            webViewLoadingFailed = true;
+
+            EventLogger.logMessage(getClass(), "onReceivedSslError - webViewLoadingFailed: "+webViewLoadingFailed);
 
           //TODO remove comments to force the check the validity of SSL certificates, except for list of trusted servers
             //if (trustedHosts != null && host != null) {
@@ -642,15 +701,14 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
             EventLogger.logMessage(getClass(), "________________ ONRECEIVEDERROR _________________");
-            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            if (cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnectedOrConnecting()) {
-                spinnerStop();
-            } else {
-                cordovaWebView.setVisibility(View.INVISIBLE);
-                imageView.setVisibility(View.VISIBLE);
-                imageView.setBackgroundColor(getResources().getColor(R.color.white_color));
-            }
+
+            cordovaWebView.setVisibility(View.INVISIBLE);
+            webViewLoadingFailed = true;
+            stopLoadingAnimation();
+
+            EventLogger.logMessage(getClass(), "onReceivedError - webViewLoadingFailed: "+webViewLoadingFailed);
         }
+
     }
 
 
@@ -663,8 +721,19 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
         }
 
-	    BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cordovaWebView));
+	    BitmapDrawable ob = null;
+
+        EventLogger.logMessage(getClass(), "startLoadingAnimation - webViewLoadingFailed: "+webViewLoadingFailed);
+
+        if(webViewLoadingFailed){
+            ob = new BitmapDrawable(getBitmapForVisibleRegion(networkErrorView));
+        }
+        else{
+            ob = new BitmapDrawable(getBitmapForVisibleRegion(cordovaWebView));
+        }
+
 	    imageView.setBackgroundDrawable(ob);
+
 	    imageView.setVisibility(View.VISIBLE);
 
 	    LoadingTask loadingTask = new LoadingTask();
@@ -676,6 +745,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
      * Stop loading animation.
      */
     private void stopLoadingAnimation() {
+        EventLogger.logMessage(getClass(), "stopLoadingAnimation: imageView: "+imageView.getVisibility());
         if (imageView.getVisibility() == View.VISIBLE) {
             final Animation animationFadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadeout);
             imageView.setVisibility(View.GONE);
@@ -689,6 +759,11 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
      * Show the spinner. Must be called from the UI thread.
      */
     public void spinnerStart() {
+        if(spinnerEnabled)
+            return;
+
+        spinnerEnabled = true;
+
         flagNumberLoadings++;
         LinearLayout viewLoading = (LinearLayout) findViewById(R.id.view_loading);
         if (viewLoading.getVisibility() != View.VISIBLE) {
@@ -700,6 +775,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
      * Stop spinner - Must be called from UI thread
      */
     public void spinnerStop() {
+
+        spinnerEnabled = false;
+
         if (flagNumberLoadings > 1) {
             flagNumberLoadings = 0;
             return;
@@ -717,7 +795,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
      * @param webview the webview
      * @return the bitmap for visible region
      */
-    public Bitmap getBitmapForVisibleRegion(WebView webview) {
+    public Bitmap getBitmapForVisibleRegion(View webview) {
         try {
             Bitmap returnedBitmap = null;
             webview.setDrawingCacheEnabled(true);
@@ -893,5 +971,82 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 		  }
 
 	}
+
+
+    /**
+     * Offline Support
+     */
+
+    private void showNetworkErrorView(boolean show){
+        if(this.networkErrorView != null && this.webViewGroup != null) {
+            showNetworkErrorRetryLoading(false);
+            if(!show){
+                if(this.networkErrorView.getVisibility() == View.VISIBLE) {
+                    final Animation animationFadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadeout);
+                    animationFadeOut.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            webViewGroup.setVisibility(View.VISIBLE);
+                            networkErrorView.setVisibility(View.INVISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    networkErrorView.startAnimation(animationFadeOut);
+                }
+            }
+            else{
+                if(this.networkErrorView.getVisibility() == View.INVISIBLE) {
+                    final Animation animationFadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+                    animationFadeIn.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            webViewGroup.setVisibility(View.INVISIBLE);
+                            networkErrorView.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    networkErrorView.startAnimation(animationFadeIn);
+                }
+            }
+
+        }
+    }
+
+
+    private void retryWebViewAction(){
+        this.cordovaWebView.reload();
+        showNetworkErrorRetryLoading(true);
+    }
+
+
+    protected void showNetworkErrorRetryLoading(boolean show) {
+
+        if(this.networkErrorView != null) {
+            ProgressBar progressbar = (ProgressBar) networkErrorView.findViewById(R.id.progress_bar);
+            progressbar.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+
+            View retryButton = networkErrorView.findViewById(R.id.networkErrorButtonRetry);
+            retryButton.setVisibility(show ? View.INVISIBLE : View.VISIBLE);
+        }
+    }
+
 
 }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/networkErrorLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    android:background="@drawable/bg_red"
+    android:fillViewport="true"
+    android:gravity="center"
+    android:paddingBottom="10dp">
+
+    <com.outsystems.android.widgets.CustomFontTextView
+        android:id="@+id/networkErrorHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Oops!"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        custom:fontStyle="Bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:layout_alignParentTop="false"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:id="@+id/imgNetworkError"
+        android:src="@drawable/network_error"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/networkErrorHeader"
+        android:layout_marginBottom="25dp" />
+
+
+    <com.outsystems.android.widgets.CustomFontTextView
+        android:id="@+id/networkErrorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="The connection to the server was lost..."
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        custom:fontStyle="Regular"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/imgNetworkError"
+        android:layout_marginBottom="25dp" />
+
+
+    <FrameLayout
+        android:id="@+id/retryFrame"
+        android:layout_below="@+id/networkErrorMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone" />
+
+        <com.outsystems.android.widgets.CustomFontButton
+            android:id="@+id/networkErrorButtonRetry"
+            style="@style/Widget.Button"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:text="@string/button_text_retry"
+            android:textSize="15sp"
+            custom:fontStyle="Bold"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal">
+
+        </com.outsystems.android.widgets.CustomFontButton>
+    </FrameLayout>
+
+    <com.outsystems.android.widgets.CustomFontTextView
+        android:id="@+id/networkErrorAppsListLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/link_applications_list"
+        android:textColor="@drawable/button_text_selector"
+        android:textSize="14sp"
+        custom:fontStyle="Regular"
+        android:layout_below="@+id/retryFrame"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="35dp" />
+
+
+</RelativeLayout>

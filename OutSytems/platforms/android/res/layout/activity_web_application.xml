@@ -10,50 +10,62 @@
         android:layout_height="fill_parent"
         android:id="@+id/mainViewGroup">
 
-
-        <com.outsystems.android.core.CustomWebView
-            android:id="@+id/mainView"
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_above="@+id/divider_toolbar" />
+            android:id="@+id/webViewGroup">
 
-        <ImageView
-            android:id="@+id/image_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/divider_toolbar"
-            android:contentDescription="@string/image_logo"
-            android:visibility="gone" />
+            <com.outsystems.android.core.CustomWebView
+                android:id="@+id/mainView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_above="@+id/divider_toolbar" />
 
-        <LinearLayout
-            android:id="@+id/view_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@drawable/background_loading_web_application"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingBottom="15dp"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:paddingTop="15dp" >
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/divider_toolbar"
+                android:contentDescription="@string/image_logo"
+                android:visibility="gone" />
 
-            <ProgressBar
-                android:id="@+id/loading_spinner"
+            <LinearLayout
+                android:id="@+id/view_loading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:layout_centerInParent="true"
+                android:background="@drawable/background_loading_web_application"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingBottom="15dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:paddingTop="15dp" >
 
-            <com.outsystems.android.widgets.CustomFontTextView
-                android:id="@+id/text_view_title_hub"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/label_loading"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                custom:fontStyle="Regular" />
-        </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/loading_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <com.outsystems.android.widgets.CustomFontTextView
+                    android:id="@+id/text_view_title_hub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/label_loading"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    custom:fontStyle="Regular" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            layout="@layout/network_error"
+            android:id="@+id/networkErrorInclude" />
 
         <View
             android:id="@+id/divider_toolbar"
