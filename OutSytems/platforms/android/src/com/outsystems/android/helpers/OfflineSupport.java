@@ -4,13 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.util.DisplayMetrics;
+import android.webkit.CookieSyncManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.EditText;
 
 import com.outsystems.android.ApplicationOutsystems;
 import com.outsystems.android.ApplicationsActivity;
-import com.outsystems.android.LoginActivity;
 import com.outsystems.android.R;
 import com.outsystems.android.WebApplicationActivity;
 import com.outsystems.android.core.DatabaseHandler;
+import com.outsystems.android.core.EventLogger;
+import com.outsystems.android.core.WSRequestHandler;
+import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.model.Application;
 import com.outsystems.android.model.HubApplicationModel;
 import com.outsystems.android.model.Login;
@@ -23,16 +30,24 @@ import java.util.List;
  */
 public class OfflineSupport {
 
-    private static final String COOKIE_USERS = "Users";
 
     private static OfflineSupport _instance;
 
     private boolean validCredentials;
     private Context applicationContext;
 
+    private HubApplicationModel previousSession;
+
+    private boolean newSession;
+
+    private boolean offlineSession;
+
+
     public OfflineSupport(Context context) {
         this.validCredentials = false;
+        this.newSession = false;
         this.applicationContext = context;
+        this.offlineSession = true;
     }
 
     public static OfflineSupport getInstance(Context context) {
@@ -44,7 +59,6 @@ public class OfflineSupport {
 
 
     public boolean hasValidCredentials() {
-
 
         DatabaseHandler database = new DatabaseHandler(applicationContext);
         HubApplicationModel lastHub = database.getLastLoginHubApplicationModel();
@@ -69,36 +83,6 @@ public class OfflineSupport {
         } else {
             openApplicationsActivity(currentActivity,applications);
         }
-    }
-
-    public boolean isUserLoggedIn(String cookies){
-        return cookies != null && cookies.contains(COOKIE_USERS);
-    }
-
-    public void redirectToLoginScreen(Activity currentActivity){
-
-        DatabaseHandler database = new DatabaseHandler(this.applicationContext);
-
-        HubApplicationModel lastHub = database.getLastLoginHubApplicationModel();
-
-        if (database.getHubApplication(lastHub.getHost()) == null) {
-            database.addHostHubApplication(lastHub.getHost(), lastHub.getName(), lastHub.isJSF());
-        }
-
-        HubManagerHelper.getInstance().setApplicationHosted(lastHub.getHost());
-        HubManagerHelper.getInstance().setJSFApplicationServer(lastHub.isJSF());
-
-        ApplicationOutsystems app = (ApplicationOutsystems) currentActivity.getApplication();
-        app.setDemoApplications(false);
-
-        // Start Login Activity
-        Intent intent = new Intent(this.applicationContext, LoginActivity.class);
-        intent.putExtra(LoginActivity.KEY_AUTOMATICLY_LOGIN, false);
-        if (HubManagerHelper.getInstance() != null) {
-            intent.putExtra(LoginActivity.KEY_INFRASTRUCTURE_NAME, lastHub.getName());
-        }
-        currentActivity.startActivity(intent);
-
     }
 
 
@@ -129,4 +113,125 @@ public class OfflineSupport {
         }
         currentActivity.startActivity(intent);
     }
+
+    /**
+     * Clear browser cache if needed
+     */
+    public void clearCacheIfNeeded(WebView webView){
+        EventLogger.logMessage(getClass(), "clearCacheIfNeeded: "+this.newSession);
+        if(this.newSession){
+            webView.clearCache(true);
+            this.previousSession = null;
+        }
+
+        this.newSession = false;
+    }
+
+
+    /**
+     *  Prepare data
+     */
+    public void prepareForLogin() {
+        this.newSession = false;
+
+        DatabaseHandler database = new DatabaseHandler(applicationContext);
+        this.previousSession = database.getLastLoginHubApplicationModel();
+
+    }
+
+    /**
+     * Check if the current session has a new user to clear the browser cache
+     */
+    public void checkCurrentSession(String hub, String username){
+        this.newSession = true;
+        this.offlineSession = false;
+
+        if(previousSession != null){
+            boolean sameEnvironment = hub.equalsIgnoreCase(previousSession.getHost());
+            boolean sameUser = username.equalsIgnoreCase(previousSession.getUserName());
+
+            this.newSession = !(sameEnvironment && sameUser);
+            EventLogger.logMessage(getClass(), "checkCurrentSession: "+this.newSession);
+
+        }
+
+    }
+
+    public void retryWebViewAction(Activity currentActivity, ApplicationOutsystems app, WebView webView){
+
+        if (app.isNetworkAvailable()) {
+            webView.setNetworkAvailable(true);
+            webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        } else {
+            webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ONLY);
+        }
+
+
+        EventLogger.logMessage(getClass(), "retryWebViewAction: offlineSession:"+this.offlineSession);
+        if(this.offlineSession){
+            this.retryLoginAction(currentActivity,webView);
+        }
+        else {
+            webView.reload();
+        }
+    }
+
+    private void retryLoginAction(Activity currentActivity, final WebView webView) {
+
+
+        final DisplayMetrics displaymetrics = new DisplayMetrics();
+        currentActivity.getWindowManager().getDefaultDisplay().getRealMetrics(displaymetrics);
+
+
+        DatabaseHandler database = new DatabaseHandler(applicationContext);
+        HubApplicationModel lastHub = database.getLastLoginHubApplicationModel();
+
+        final String userName = lastHub.getUserName();
+        final String password = lastHub.getPassword();
+
+
+        WebServicesClient.getInstance().loginPlattform(applicationContext, userName, password,
+                HubManagerHelper.getInstance().getDeviceId(), (int) (displaymetrics.widthPixels / displaymetrics.density), (int) (displaymetrics.heightPixels / displaymetrics.density), new WSRequestHandler() {
+                    @Override
+                    public void requestFinish(Object result, boolean error, int statusCode) {
+                        boolean loginSucceeded = false;
+                        if (!error) {
+                            Login login = (Login) result;
+
+                            if (login != null && login.isSuccess()) {
+
+                                DatabaseHandler database = new DatabaseHandler(applicationContext);
+                                database.updateHubApplicationCredentials(HubManagerHelper.getInstance()
+                                        .getApplicationHosted(), userName, password);
+                                database.addLoginApplications(HubManagerHelper.getInstance()
+                                        .getApplicationHosted(), userName, login.getApplications());
+
+                                offlineSession = false;
+                                loginSucceeded = true;
+
+
+
+                                // Synchronize WebView cookies with Login Request cookies
+                                CookieSyncManager.createInstance(applicationContext);
+                                android.webkit.CookieManager.getInstance().removeAllCookie();
+
+                                List<String> cookies = WebServicesClient.getInstance().getLoginCookies();
+                                if (cookies != null && !cookies.isEmpty()){
+                                    for(String cookieString : cookies){
+                                        android.webkit.CookieManager.getInstance().setCookie(HubManagerHelper.getInstance().getApplicationHosted(), cookieString);
+                                        CookieSyncManager.getInstance().sync();
+                                    }
+                                }
+
+                            }
+                        }
+
+                        EventLogger.logMessage(getClass(), "retryLoginAction: loginSucceeded:"+loginSucceeded);
+                        webView.reload();
+                    }
+                });
+
+    }
+
+
 }

@@ -72,6 +72,7 @@ import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.CustomWebView;
 import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
+import com.outsystems.android.helpers.OfflineSupport;
 import com.outsystems.android.mobileect.MobileECTController;
 import com.outsystems.android.mobileect.interfaces.OSECTContainerListener;
 import com.outsystems.android.model.Application;
@@ -229,27 +230,10 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         List<String> cookies = WebServicesClient.getInstance().getLoginCookies();
         if (cookies != null && !cookies.isEmpty()){
             for(String cookieString : cookies){
-                //String cookieString = cookie.getName() + "=" + cookie.getValue(); // + ";"; //" domain=" + HubManagerHelper.getInstance().getApplicationHosted();
                 android.webkit.CookieManager.getInstance().setCookie(HubManagerHelper.getInstance().getApplicationHosted(), cookieString);
-                EventLogger.logMessage(getClass(), "Cookie: "+cookieString);
                 CookieSyncManager.getInstance().sync();
             }
         }
-
-
-        // Remove this code: just for debug
-
-        List<Cookie> httpCookies= WebServicesClient.getInstance().getHttpCookies();
-        Cookie sessionInfo;
-        if (httpCookies != null && !httpCookies.isEmpty()){
-            for(Cookie cookie : httpCookies){
-                sessionInfo = cookie;
-                String cookieString = sessionInfo.getName() + "=" + sessionInfo.getValue() + "; domain=" + sessionInfo.getDomain();
-                android.webkit.CookieManager.getInstance().setCookie(HubManagerHelper.getInstance().getApplicationHosted(), cookieString);
-                EventLogger.logMessage(getClass(), "HttpCookie: "+cookieString);
-            }
-        }
-        // ---------
 
 
         // Set in the user agent OutSystemsApp
@@ -259,17 +243,38 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         cordovaWebView.getSettings().setUserAgentString(newUA);
 
         // Offline Support
-        cordovaWebView.getSettings().setAppCacheMaxSize( 5 * 1024 * 1024 ); // 5MB
+        cordovaWebView.getSettings().setAppCacheMaxSize( 50 * 1024 * 1024 ); // 50MB
         cordovaWebView.getSettings().setAppCachePath( getApplicationContext().getCacheDir().getAbsolutePath() );
         cordovaWebView.getSettings().setAllowFileAccess( true );
         cordovaWebView.getSettings().setAppCacheEnabled( true );
         cordovaWebView.getSettings().setJavaScriptEnabled( true );
-        cordovaWebView.getSettings().setCacheMode( WebSettings.LOAD_DEFAULT ); // load online by default
+        cordovaWebView.getSettings().setCacheMode( WebSettings.LOAD_NO_CACHE );
 
         ApplicationOutsystems app = (ApplicationOutsystems)getApplication();
 
         if ( !app.isNetworkAvailable() ) { // loading offline
             cordovaWebView.getSettings().setCacheMode( WebSettings.LOAD_CACHE_ONLY );
+        }
+
+        OfflineSupport.getInstance(getApplicationContext()).clearCacheIfNeeded(cordovaWebView);
+
+        this.networkErrorView = findViewById(R.id.networkErrorInclude);
+        this.webViewGroup = findViewById(R.id.webViewGroup);
+
+        if(networkErrorView != null){
+            networkErrorView.setVisibility(View.INVISIBLE);
+
+            View retryButton = networkErrorView.findViewById(R.id.networkErrorButtonRetry);
+            View appsListLink = networkErrorView.findViewById(R.id.networkErrorAppsListLink);
+
+            retryButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    retryWebViewAction();
+                }
+            });
+
+            appsListLink.setOnClickListener(onClickListenerApplication);
         }
 
 
@@ -346,25 +351,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         }
 
 
-        // Offline support
-        this.networkErrorView = findViewById(R.id.networkErrorInclude);
-        this.webViewGroup = findViewById(R.id.webViewGroup);
 
-        if(networkErrorView != null){
-            networkErrorView.setVisibility(View.INVISIBLE);
-
-            View retryButton = networkErrorView.findViewById(R.id.networkErrorButtonRetry);
-            View appsListLink = networkErrorView.findViewById(R.id.networkErrorAppsListLink);
-
-            retryButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    retryWebViewAction();
-                }
-            });
-
-            appsListLink.setOnClickListener(onClickListenerApplication);
-        }
 
     }
 
@@ -745,7 +732,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
      * Stop loading animation.
      */
     private void stopLoadingAnimation() {
-        EventLogger.logMessage(getClass(), "stopLoadingAnimation: imageView: "+imageView.getVisibility());
         if (imageView.getVisibility() == View.VISIBLE) {
             final Animation animationFadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadeout);
             imageView.setVisibility(View.GONE);
@@ -1032,7 +1018,11 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
 
     private void retryWebViewAction(){
-        this.cordovaWebView.reload();
+
+        ApplicationOutsystems app = (ApplicationOutsystems)getApplication();
+
+        OfflineSupport.getInstance(getApplicationContext()).retryWebViewAction(this,app,cordovaWebView);
+
         showNetworkErrorRetryLoading(true);
     }
 
