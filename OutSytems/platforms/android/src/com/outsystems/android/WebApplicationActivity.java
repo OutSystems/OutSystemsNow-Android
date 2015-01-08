@@ -350,9 +350,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             buttonApplications.setOnClickListener(null);
         }
 
-
-
-
     }
 
     /*
@@ -979,6 +976,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                         public void onAnimationEnd(Animation animation) {
                             webViewGroup.setVisibility(View.VISIBLE);
                             networkErrorView.setVisibility(View.INVISIBLE);
+
+                            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                         }
 
                         @Override
@@ -1002,6 +1001,16 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                         public void onAnimationEnd(Animation animation) {
                             webViewGroup.setVisibility(View.INVISIBLE);
                             networkErrorView.setVisibility(View.VISIBLE);
+
+                            int currentOrientation = getResources().getConfiguration().orientation;
+                            if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+                                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                            } else {
+                                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+                            }
+
+                            Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                            networkErrorView.startAnimation(shake);
                         }
 
                         @Override
@@ -1035,8 +1044,16 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
             View retryButton = networkErrorView.findViewById(R.id.networkErrorButtonRetry);
             retryButton.setVisibility(show ? View.INVISIBLE : View.VISIBLE);
+
+
+            if(networkErrorView.getVisibility() == View.VISIBLE){
+                Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+                networkErrorView.startAnimation(shake);
+            }
+
         }
     }
+
 
 
 }

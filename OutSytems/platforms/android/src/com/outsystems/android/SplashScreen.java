@@ -104,10 +104,19 @@ public class SplashScreen extends Activity {
         DatabaseHandler database = new DatabaseHandler(getApplicationContext());
         List<HubApplicationModel> hubApplications = database.getAllHubApllications();
 
-        HubApplicationModel last = database.getLastLoginHubApplicationModel();
-        EventLogger.logInfoMessage(this.getClass(),"Last:"+ last != null ?
-                last.getUserName()+" - "+last.getDateLastLogin() : "null");
+        if(database != null) {
 
+            HubApplicationModel last = database.getLastLoginHubApplicationModel();
+
+            String lastUser = "null";
+
+            if(last != null) {
+                lastUser = last.getUserName() + " - " + last.getDateLastLogin();
+            }
+
+            EventLogger.logInfoMessage(this.getClass(), "Last:" + lastUser);
+
+        }
 
         if(DeepLinkController.getInstance().hasValidSettings()){
         	DeepLink deepLinkSettings = DeepLinkController.getInstance().getDeepLinkSettings();
