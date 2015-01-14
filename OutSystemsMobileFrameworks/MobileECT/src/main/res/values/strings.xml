@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">OutSystemsMobileECT</string>
-    <string name="ect_feature_name">OutSystems App Feedback</string>
+    <string name="ect_feature_name">OutSystems - App Feedback</string>
 
     <color name="outSystems_red">#c20</color>
 
