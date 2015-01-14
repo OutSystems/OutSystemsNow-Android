@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:id="@+id/imgNetworkError"
-        android:src="@drawable/network_error"
+        android:src="@drawable/offline"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/networkErrorHeader"
         android:layout_marginBottom="25dp" />
