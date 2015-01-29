@@ -1,71 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent">
 
     <RelativeLayout
+        android:id="@+id/mainViewGroup"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/mainViewGroup">
+        android:layout_height="fill_parent">
 
-        <RelativeLayout
+
+        <com.outsystems.android.core.CustomWebView
+            android:id="@+id/mainView"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/webViewGroup">
+            android:layout_above="@+id/divider_toolbar" />
 
-            <com.outsystems.android.core.CustomWebView
-                android:id="@+id/mainView"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_above="@+id/divider_toolbar" />
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/divider_toolbar"
+            android:contentDescription="@string/image_logo"
+            android:visibility="gone" />
 
-            <ImageView
-                android:id="@+id/image_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@+id/divider_toolbar"
-                android:contentDescription="@string/image_logo"
-                android:visibility="gone" />
+        <LinearLayout
+            android:id="@+id/view_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/background_loading_web_application"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="15dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingTop="15dp">
 
-            <LinearLayout
-                android:id="@+id/view_loading"
+            <ProgressBar
+                android:id="@+id/loading_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@drawable/background_loading_web_application"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingBottom="15dp"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:paddingTop="15dp" >
+                android:layout_gravity="center" />
 
-                <ProgressBar
-                    android:id="@+id/loading_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
-
-                <com.outsystems.android.widgets.CustomFontTextView
-                    android:id="@+id/text_view_title_hub"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/label_loading"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    custom:fontStyle="Regular" />
-            </LinearLayout>
-
-        </RelativeLayout>
+            <com.outsystems.android.widgets.CustomFontTextView
+                android:id="@+id/text_view_title_hub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/label_loading"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                custom:fontStyle="Regular" />
+        </LinearLayout>
 
         <include
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:id="@+id/networkErrorInclude"
             layout="@layout/network_error"
-            android:id="@+id/networkErrorInclude" />
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
 
         <View
             android:id="@+id/divider_toolbar"
@@ -76,18 +69,18 @@
 
         <include
             android:id="@+id/toolbar"
+            layout="@layout/toolbar_web_application"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            layout="@layout/toolbar_web_application" >
-        </include>
+            android:layout_centerHorizontal="true"/>
+
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/ectViewGroup"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/ectViewGroup"
         android:background="@android:color/transparent">
 
     </RelativeLayout>

@@ -113,7 +113,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     // Offline support
     private View networkErrorView;
-    private View webViewGroup;
 
     private boolean webViewLoadingFailed = false;
     private boolean spinnerEnabled = false;
@@ -259,7 +258,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         OfflineSupport.getInstance(getApplicationContext()).clearCacheIfNeeded(cordovaWebView);
 
         this.networkErrorView = findViewById(R.id.networkErrorInclude);
-        this.webViewGroup = findViewById(R.id.webViewGroup);
 
         if(networkErrorView != null){
             networkErrorView.setVisibility(View.INVISIBLE);
@@ -960,8 +958,19 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
      * Offline Support
      */
 
+    private void showWebViewGroup(boolean show){
+        View imageView = findViewById(R.id.image_view);
+        View loading = findViewById(R.id.view_loading);
+        View mainView = findViewById(R.id.mainView);
+
+        imageView.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+        loading.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+        mainView.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+    }
+
+
     private void showNetworkErrorView(boolean show){
-        if(this.networkErrorView != null && this.webViewGroup != null) {
+        if(this.networkErrorView != null) {
             showNetworkErrorRetryLoading(false);
             if(!show){
                 if(this.networkErrorView.getVisibility() == View.VISIBLE) {
@@ -974,7 +983,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            webViewGroup.setVisibility(View.VISIBLE);
+                            showWebViewGroup(true);
                             networkErrorView.setVisibility(View.INVISIBLE);
 
                             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
@@ -999,7 +1008,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
                         @Override
                         public void onAnimationEnd(Animation animation) {
-                            webViewGroup.setVisibility(View.INVISIBLE);
+                            showWebViewGroup(false);
                             networkErrorView.setVisibility(View.VISIBLE);
 
                             int currentOrientation = getResources().getConfiguration().orientation;
