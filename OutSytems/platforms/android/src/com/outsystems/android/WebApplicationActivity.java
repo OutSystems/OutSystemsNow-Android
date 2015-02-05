@@ -547,12 +547,18 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     /**
      *  Mobile ECT Container
      */
-    public void showMobileECTButton(boolean show){
-        ImageButton buttonECT = (ImageButton) findViewById(R.id.button_ect);
-        if(buttonECT != null) {
-            buttonECT.setVisibility(show ? View.VISIBLE : View.GONE);
-            findViewById(R.id.toolbar).invalidate();
-        }
+    public void showMobileECTButton(final boolean show){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ImageButton buttonECT = (ImageButton) findViewById(R.id.button_ect);
+                if(buttonECT != null) {
+                    buttonECT.setVisibility(show ? View.VISIBLE : View.GONE);
+                    findViewById(R.id.toolbar).invalidate();
+                }
+
+            }
+        });
 
     }
 
