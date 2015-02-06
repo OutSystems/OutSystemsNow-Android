@@ -573,9 +573,12 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
      *  Mobile ECT Container
      */
     public void showMobileECTButton(boolean show){
+
+        ApplicationOutsystems app = (ApplicationOutsystems)getApplication();
         ImageButton buttonECT = (ImageButton) findViewById(R.id.button_ect);
         if(buttonECT != null) {
-            buttonECT.setVisibility(show ? View.VISIBLE : View.GONE);
+            boolean showECT = app.isNetworkAvailable() && show;
+            buttonECT.setVisibility(showECT ? View.VISIBLE : View.GONE);
             findViewById(R.id.toolbar).invalidate();
         }
 
@@ -707,7 +710,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         EventLogger.logMessage(getClass(), "startLoadingAnimation - webViewLoadingFailed: "+webViewLoadingFailed);
 
-        if(webViewLoadingFailed){
+        if(networkErrorView.getVisibility() == View.VISIBLE){
             ob = new BitmapDrawable(getBitmapForVisibleRegion(networkErrorView));
         }
         else{
@@ -959,12 +962,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
      */
 
     private void showWebViewGroup(boolean show){
-        View imageView = findViewById(R.id.image_view);
-        View loading = findViewById(R.id.view_loading);
         View mainView = findViewById(R.id.mainView);
-
-        imageView.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
-        loading.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
         mainView.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
     }
 
@@ -1036,12 +1034,12 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
 
     private void retryWebViewAction(){
+        showNetworkErrorRetryLoading(true);
 
         ApplicationOutsystems app = (ApplicationOutsystems)getApplication();
 
         OfflineSupport.getInstance(getApplicationContext()).retryWebViewAction(this,app,cordovaWebView);
 
-        showNetworkErrorRetryLoading(true);
     }
 
 
@@ -1055,7 +1053,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             retryButton.setVisibility(show ? View.INVISIBLE : View.VISIBLE);
 
 
-            if(networkErrorView.getVisibility() == View.VISIBLE){
+            if(networkErrorView.getVisibility() == View.VISIBLE && retryButton.getVisibility() == View.VISIBLE){
                 Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
                 networkErrorView.startAnimation(shake);
             }
