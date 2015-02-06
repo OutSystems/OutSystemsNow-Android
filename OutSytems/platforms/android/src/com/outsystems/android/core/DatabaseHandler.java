@@ -85,14 +85,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_HUB_APPLICATION + "(" + KEY_HOST + " TEXT PRIMARY KEY,"
                 + KEY_USER_NAME + " TEXT," + KEY_PASSWORD + " TEXT," + KEY_DATE_LAST_LOGIN + " DATETIME," + KEY_NAME
                 + " TEXT," + KEY_ISJSF + " NUMERIC" + ")";
-        db.execSQL(CREATE_CONTACTS_TABLE);
+        try {
+            db.execSQL(CREATE_CONTACTS_TABLE);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
         // Mobile ECT
         String createMobileECTTable = "CREATE TABLE " + TABLE_MOBILE_ECT + "(" + KEY_MOBILE_ECT_FIRST_LOAD + " NUMERIC PRIMARY KEY" + ")";
-        db.execSQL(createMobileECTTable);
+        try {
+            db.execSQL(createMobileECTTable);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
         // Offline support
         String createApplicationsTable = "CREATE TABLE " + TABLE_LOGIN_APPLICATIONS +
@@ -111,6 +120,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        /*
+        // Drop older table if existed
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HUB_APPLICATION);
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOBILE_ECT);
+        */
 
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGIN_APPLICATIONS);
 
