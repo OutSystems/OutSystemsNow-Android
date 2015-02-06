@@ -111,10 +111,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HUB_APPLICATION);
-
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOBILE_ECT);
 
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGIN_APPLICATIONS);
 
