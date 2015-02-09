@@ -32,6 +32,7 @@ import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
+import com.outsystems.android.helpers.OfflineSupport;
 import com.outsystems.android.model.Application;
 import com.outsystems.android.widgets.ActionBarAlert;
 
@@ -243,6 +244,10 @@ public class ApplicationsActivity extends BaseActivity {
             mBarAlert.show("Working Offline");
         else
             mBarAlert.hide();
+
+        if(!workingOffline){
+            OfflineSupport.getInstance(getApplicationContext()).loginIfOfflineSession(this);
+        }
     }
 
     private BroadcastReceiver mConnReceiver = new BroadcastReceiver() {

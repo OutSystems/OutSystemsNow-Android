@@ -8,7 +8,6 @@ import android.util.DisplayMetrics;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.EditText;
 
 import com.outsystems.android.ApplicationOutsystems;
 import com.outsystems.android.ApplicationsActivity;
@@ -169,14 +168,14 @@ public class OfflineSupport {
 
         EventLogger.logMessage(getClass(), "retryWebViewAction: offlineSession:"+this.offlineSession);
         if(this.offlineSession){
-            this.retryLoginAction(currentActivity,webView);
+            this.loginAndReloadWebView(currentActivity, webView);
         }
         else {
             webView.reload();
         }
     }
 
-    private void retryLoginAction(Activity currentActivity, final WebView webView) {
+    private void loginAndReloadWebView(Activity currentActivity, final WebView webView) {
 
 
         final DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -226,12 +225,68 @@ public class OfflineSupport {
                             }
                         }
 
-                        EventLogger.logMessage(getClass(), "retryLoginAction: loginSucceeded:"+loginSucceeded);
+                        EventLogger.logMessage(getClass(), "loginAndReloadWebView: loginSucceeded:"+loginSucceeded);
                         webView.reload();
                     }
                 });
 
     }
 
+
+    public void loginIfOfflineSession(Activity currentActivity) {
+
+        if(!offlineSession)
+            return;
+
+        final DisplayMetrics displaymetrics = new DisplayMetrics();
+        currentActivity.getWindowManager().getDefaultDisplay().getRealMetrics(displaymetrics);
+
+
+        DatabaseHandler database = new DatabaseHandler(applicationContext);
+        HubApplicationModel lastHub = database.getLastLoginHubApplicationModel();
+
+        final String userName = lastHub.getUserName();
+        final String password = lastHub.getPassword();
+
+
+        WebServicesClient.getInstance().loginPlattform(applicationContext, userName, password,
+                HubManagerHelper.getInstance().getDeviceId(), (int) (displaymetrics.widthPixels / displaymetrics.density), (int) (displaymetrics.heightPixels / displaymetrics.density), new WSRequestHandler() {
+                    @Override
+                    public void requestFinish(Object result, boolean error, int statusCode) {
+                        boolean loginSucceeded = false;
+                        if (!error) {
+                            Login login = (Login) result;
+
+                            if (login != null && login.isSuccess()) {
+
+                                DatabaseHandler database = new DatabaseHandler(applicationContext);
+                                database.updateHubApplicationCredentials(HubManagerHelper.getInstance()
+                                        .getApplicationHosted(), userName, password);
+                                database.addLoginApplications(HubManagerHelper.getInstance()
+                                        .getApplicationHosted(), userName, login.getApplications());
+
+                                offlineSession = false;
+                                loginSucceeded = true;
+
+                                // Synchronize WebView cookies with Login Request cookies
+                                CookieSyncManager.createInstance(applicationContext);
+                                android.webkit.CookieManager.getInstance().removeAllCookie();
+
+                                List<String> cookies = WebServicesClient.getInstance().getLoginCookies();
+                                if (cookies != null && !cookies.isEmpty()){
+                                    for(String cookieString : cookies){
+                                        android.webkit.CookieManager.getInstance().setCookie(HubManagerHelper.getInstance().getApplicationHosted(), cookieString);
+                                        CookieSyncManager.getInstance().sync();
+                                    }
+                                }
+
+                            }
+                        }
+
+                        EventLogger.logMessage(getClass(), "retryLogin: loginSucceeded:"+loginSucceeded);
+                    }
+                });
+
+    }
 
 }
