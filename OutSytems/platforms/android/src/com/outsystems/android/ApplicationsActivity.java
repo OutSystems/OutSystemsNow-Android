@@ -11,10 +11,15 @@ import java.util.ArrayList;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -28,6 +33,7 @@ import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Application;
+import com.outsystems.android.widgets.ActionBarAlert;
 
 /**
  * Class description.
@@ -48,6 +54,13 @@ public class ApplicationsActivity extends BaseActivity {
     private boolean mContentLoaded;
 
     private int mShortAnimationDuration;
+
+    // Offline Support
+    private boolean workingOffline;
+    private ActionBarAlert mBarAlert;
+
+
+
 
     /** The on item click listener. */
     private OnItemClickListener onItemClickListener = new OnItemClickListener() {
@@ -103,14 +116,21 @@ public class ApplicationsActivity extends BaseActivity {
         } else {
             loadApplications();
         }
-        
+
         // Check if deep link has valid settings                
         if(DeepLinkController.getInstance().hasValidSettings()){
         	
         	DeepLinkController.getInstance().resolveOperation(this, null);
 
         }
-        
+
+        // Offline Support
+
+        workingOffline = false;
+        mBarAlert = new ActionBarAlert(this);
+
+        this.registerReceiver(this.mConnReceiver,
+                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     /*
@@ -158,6 +178,7 @@ public class ApplicationsActivity extends BaseActivity {
                             if (applications != null && applications.size() > 0) {
                                 loadContentInGridview(applications);
                             }
+
                         }
                     }
                 });
@@ -213,4 +234,41 @@ public class ApplicationsActivity extends BaseActivity {
             }
         });
     }
+
+    public void showOfflineMessage(boolean show){
+
+        workingOffline = show;
+
+        if(show)
+            mBarAlert.show("Working Offline");
+        else
+            mBarAlert.hide();
+    }
+
+    private BroadcastReceiver mConnReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+
+            ConnectivityManager cm =
+                    (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean isConnected = activeNetwork != null &&
+                    activeNetwork.isConnected();
+
+            showOfflineMessage(!isConnected);
+
+        }
+    };
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_BACK:
+                    return !workingOffline && super.onKeyDown(keyCode, event);
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }
