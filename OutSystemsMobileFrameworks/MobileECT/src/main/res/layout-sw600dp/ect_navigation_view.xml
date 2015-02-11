@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:layout_weight="0.10"
+        android:layout_weight="0.15"
         android:gravity="center_vertical|left"
         android:orientation="horizontal">
 
@@ -31,12 +31,13 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:layout_weight="0.80"
+        android:layout_weight="0.70"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal">
 
         <TextView
             android:minHeight="54dp"
+            android:textAlignment="center"
             android:textSize="32sp"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"
@@ -52,7 +53,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:layout_weight="0.10"
+        android:layout_weight="0.15"
         android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal">
         <ImageButton

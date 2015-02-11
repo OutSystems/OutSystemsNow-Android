@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class OSECTWebServicesClient {
 
-    public static final String BASE_URL = "http://%1$s/%2$s";
+    public static final String BASE_URL = "https://%1$s%2$s";
 
     private static volatile OSECTWebServicesClient instance = null;
 

@@ -215,8 +215,14 @@ public class HubAppActivity extends BaseActivity {
         // Events to Open external Browser
         aboutEvents();
 
-        // Hide action bar
-        getSupportActionBar().hide();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // Hide action bar
+                getSupportActionBar().hide();
+            }
+        });
+
         
         // Check if deep link has valid settings                
         if(DeepLinkController.getInstance().hasValidSettings()){        	
