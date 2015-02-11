@@ -56,6 +56,7 @@ public class ActionBarAlert{
         //Create TextView that will display the alert message
         mTextView = new TextView(act);
         mTextView.setTextColor(Color.parseColor("#FFFFFF"));
+        mTextView.setTextSize(16);
         mTextView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER));
         mLayout.addView(mTextView);
 

@@ -577,16 +577,14 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             @Override
             public void run() {
                 ImageButton buttonECT = (ImageButton) findViewById(R.id.button_ect);
-                if(buttonECT != null) {
-
-        ApplicationOutsystems app = (ApplicationOutsystems)getApplication();
-        ImageButton buttonECT = (ImageButton) findViewById(R.id.button_ect);
-        if(buttonECT != null) {
-            boolean showECT = app.isNetworkAvailable() && show;
-            buttonECT.setVisibility(showECT ? View.VISIBLE : View.GONE);
-            findViewById(R.id.toolbar).invalidate();
+                if (buttonECT != null) {
+                    ApplicationOutsystems app = (ApplicationOutsystems) getApplication();
+                    if (buttonECT != null) {
+                        boolean showECT = app.isNetworkAvailable() && show;
+                        buttonECT.setVisibility(showECT ? View.VISIBLE : View.GONE);
+                        findViewById(R.id.toolbar).invalidate();
+                    }
                 }
-
             }
         });
 
