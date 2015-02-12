@@ -233,7 +233,20 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                 CookieSyncManager.getInstance().sync();
             }
         }
+        else{
+            // For Demo Applications only
+            List<Cookie> httpCookies= WebServicesClient.getInstance().getHttpCookies();
+            Cookie sessionInfo;
+            if (httpCookies != null && !httpCookies.isEmpty()){
+                for(Cookie cookie : httpCookies){
+                    sessionInfo = cookie;
+                    String cookieString = sessionInfo.getName() + "=" + sessionInfo.getValue() + "; domain=" + sessionInfo.getDomain();
+                    android.webkit.CookieManager.getInstance().setCookie(HubManagerHelper.getInstance().getApplicationHosted(), cookieString);
+                    EventLogger.logMessage(getClass(), "HttpCookie: "+cookieString);
+                }
+            }
 
+        }
 
         // Set in the user agent OutSystemsApp
         String ua = cordovaWebView.getSettings().getUserAgentString();
