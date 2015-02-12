@@ -185,9 +185,11 @@ public class OfflineSupport {
         DatabaseHandler database = new DatabaseHandler(applicationContext);
         HubApplicationModel lastHub = database.getLastLoginHubApplicationModel();
 
+        if(lastHub == null)
+            return;
+
         final String userName = lastHub.getUserName();
         final String password = lastHub.getPassword();
-
 
         WebServicesClient.getInstance().loginPlattform(applicationContext, userName, password,
                 HubManagerHelper.getInstance().getDeviceId(), (int) (displaymetrics.widthPixels / displaymetrics.density), (int) (displaymetrics.heightPixels / displaymetrics.density), new WSRequestHandler() {
@@ -244,6 +246,9 @@ public class OfflineSupport {
 
         DatabaseHandler database = new DatabaseHandler(applicationContext);
         HubApplicationModel lastHub = database.getLastLoginHubApplicationModel();
+
+        if(lastHub == null)
+            return;
 
         final String userName = lastHub.getUserName();
         final String password = lastHub.getPassword();
