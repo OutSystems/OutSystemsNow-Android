@@ -119,7 +119,11 @@ public class OfflineSupport {
     public void clearCacheIfNeeded(WebView webView){
         EventLogger.logMessage(getClass(), "clearCacheIfNeeded: "+this.newSession);
         if(this.newSession){
+            /*
+             * 23/02/2015 - LRS - Feature disabled: iOS doesn't have support for a similar feature.
+             *                    We need to ensure the same behavior in all platforms.
             webView.clearCache(true);
+            */
             this.previousSession = null;
         }
 
