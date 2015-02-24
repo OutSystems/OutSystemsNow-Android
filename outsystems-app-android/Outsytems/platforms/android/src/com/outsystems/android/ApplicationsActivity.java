@@ -58,6 +58,18 @@ public class ApplicationsActivity extends BaseActivity {
             Application application = (Application) parent.getAdapter().getItem(position);
             if (application != null) {
                 intent.putExtra(WebApplicationActivity.KEY_APPLICATION, application);
+
+                // Check if there's only one app
+                Bundle bundle = getIntent().getExtras();
+                if (bundle != null) {
+                    @SuppressWarnings("unchecked")
+                    ArrayList<Application> applications = (ArrayList<Application>) bundle
+                            .getSerializable(KEY_CONTENT_APPLICATIONS);
+
+                    intent.putExtra(WebApplicationActivity.KEY_SINGLE_APPLICATION,applications != null && applications.size() == 1);
+                }
+
+
             }
             startActivity(intent);
         }
@@ -87,6 +99,7 @@ public class ApplicationsActivity extends BaseActivity {
             if (applications == null)
                 applications = new ArrayList<Application>();
             loadContentInGridview(applications);
+
         } else {
             loadApplications();
         }
@@ -172,7 +185,7 @@ public class ApplicationsActivity extends BaseActivity {
     }
 
     /**
-     * Cross-fades between {@link #mContentView} and {@link #mLoadingView}.
+     * Cross-fades between {@link #gridView} and {@link #mLoadingView}.
      */
     private void showContentOrLoadingIndicator(boolean contentLoaded) {
         // Decide which view to hide and which to show.

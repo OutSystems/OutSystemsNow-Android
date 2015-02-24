@@ -10,13 +10,14 @@ package com.outsystems.android;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -29,6 +30,9 @@ import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Infrastructure;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Class Hub App Activity.
@@ -102,16 +106,55 @@ public class HubAppActivity extends BaseActivity {
  
 	
     }
-    
+
+    private String checkEnvironmentURL(String url){
+        String result = url.replaceAll(" ", "");
+
+        try {
+            URL javaURL = new URL(result);
+            result = javaURL.getHost();
+
+        } catch (MalformedURLException e) {
+            String http = "http://";
+            String https = "https://";
+
+            if(result.startsWith(http)){
+                result = result.substring(http.length());
+            }
+            else{
+                if(result.startsWith(https)){
+                    result = result.substring(https.length());
+                }
+                else{
+                    int slash = result.indexOf("/");
+                    if(slash > 0)
+                        result = result.substring(0,slash);
+                }
+            }
+        }
+
+        return result;
+    }
+
+
     /** The on click listener. */
     private OnClickListener onClickListener = new OnClickListener() {
         @Override
         public void onClick(final View v) {
-            final String urlHubApp = ((EditText) findViewById(R.id.edit_text_hub_url)).getText().toString();
+            String urlHubApp = ((EditText) findViewById(R.id.edit_text_hub_url)).getText().toString();
             HubManagerHelper.getInstance().setJSFApplicationServer(false);
+
+            hideKeyboard();
 
             if (!"".equals(urlHubApp)) {
                 ((EditText) findViewById(R.id.edit_text_hub_url)).setError(null);
+
+                String urlHub = checkEnvironmentURL(urlHubApp);
+
+                if(!urlHub.equals(urlHubApp)){
+                    ((EditText) findViewById(R.id.edit_text_hub_url)).setText(urlHub);
+                    urlHubApp = urlHub;
+                }
                 callInfrastructureService(v, urlHubApp);
             } else {
                 ((EditText) findViewById(R.id.edit_text_hub_url))
@@ -126,7 +169,7 @@ public class HubAppActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             HubManagerHelper.getInstance().setApplicationHosted(WebServicesClient.DEMO_HOST_NAME);
-            HubManagerHelper.getInstance().setJSFApplicationServer(true);
+            HubManagerHelper.getInstance().setJSFApplicationServer(false);
             ApplicationOutsystems app = (ApplicationOutsystems) getApplication();
             app.setDemoApplications(true);
             Intent intent = new Intent(getApplicationContext(), ApplicationsActivity.class);
@@ -139,6 +182,8 @@ public class HubAppActivity extends BaseActivity {
         @SuppressWarnings("deprecation")
         @Override
         public void onClick(View v) {
+            hideKeyboard();
+
             ImageButton imageButton = (ImageButton) findViewById(R.id.image_button_icon);
             LinearLayout viewHelp = (LinearLayout) findViewById(R.id.view_help);
             if (viewHelp.getVisibility() == View.VISIBLE) {
@@ -170,8 +215,14 @@ public class HubAppActivity extends BaseActivity {
         // Events to Open external Browser
         aboutEvents();
 
-        // Hide action bar
-        getSupportActionBar().hide();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // Hide action bar
+                getSupportActionBar().hide();
+            }
+        });
+
         
         // Check if deep link has valid settings                
         if(DeepLinkController.getInstance().hasValidSettings()){        	
@@ -219,5 +270,12 @@ public class HubAppActivity extends BaseActivity {
 
     }
 
+    private void hideKeyboard(){
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        if (this.getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(this.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+        }
+    }
     
 }

@@ -24,6 +24,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.outsystems.android.model.HubApplicationModel;
+import com.outsystems.android.model.MobileECT;
 
 /**
  * Class description.
@@ -36,7 +37,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database Name
     private static final String DATABASE_NAME = "hubManager";
@@ -52,6 +53,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_NAME = "name";
     private static final String KEY_ISJSF = "is_jsf";
 
+
+    // Mobile ECT Database
+
+    // Mobile ECT Table name
+    private static final String TABLE_MOBILE_ECT = "mobileECT";
+
+    //  Mobile ECT Table Columns names
+    private static final String KEY_MOBILE_ECT_FIRST_LOAD = "firstLoad";
+
+
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -63,6 +74,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_USER_NAME + " TEXT," + KEY_PASSWORD + " TEXT," + KEY_DATE_LAST_LOGIN + " DATETIME," + KEY_NAME
                 + " TEXT," + KEY_ISJSF + " NUMERIC" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
+
+        // Mobile ECT
+        String createMobileECTTable = "CREATE TABLE " + TABLE_MOBILE_ECT + "(" + KEY_MOBILE_ECT_FIRST_LOAD + " NUMERIC PRIMARY KEY" + ")";
+        db.execSQL(createMobileECTTable);
     }
 
     // Upgrading database
@@ -70,6 +85,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_HUB_APPLICATION);
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOBILE_ECT);
 
         // Create tables again
         onCreate(db);
@@ -121,7 +138,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             if (cursor.getCount() > 0) {
                 // boolean value =cursor.getString(5).contains("true");
                 HubApplicationModel hubApplication = new HubApplicationModel(cursor.getString(0), cursor.getString(1),
-                        cursor.getString(2), convertStringToDate(cursor.getColumnName(3)), cursor.getString(4),
+                        cursor.getString(2), convertStringToDate(cursor.getString(3)), cursor.getString(4),
                         cursor.getInt(5) > 0);
                 // return contact
                 cursor.close();
@@ -235,5 +252,49 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return null;
     }
+
+
+    // Mobile ECT
+
+    public void addMobileECT(boolean firstLoad) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_MOBILE_ECT_FIRST_LOAD, firstLoad ? 1 : 0);
+
+        // Delete previous rows
+        db.delete(TABLE_MOBILE_ECT,null,null);
+
+        // Inserting Row
+        db.insert(TABLE_MOBILE_ECT, null, values);
+        db.close();
+    }
+
+    // Getting single contact
+    public MobileECT getMobileECT() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_MOBILE_ECT, new String[] { KEY_MOBILE_ECT_FIRST_LOAD }, null, null,
+                null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                MobileECT mobileECT = new MobileECT();
+                mobileECT.setFirstLoad(cursor.getInt(0) > 0);
+
+                cursor.close();
+                db.close();
+
+                return mobileECT;
+            }
+            cursor.close();
+        }
+        db.close();
+        return null;
+    }
+
 
 }

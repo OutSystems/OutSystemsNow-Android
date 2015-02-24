@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Pushwoosh">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Outsytems/platforms/android/libs/Pushwoosh.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

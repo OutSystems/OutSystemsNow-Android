@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,6 +56,8 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onClick(View v) {
+            hideKeyboard();
+
             String userName = ((EditText) findViewById(R.id.edit_text_user_mail)).getText().toString();
             String password = ((EditText) findViewById(R.id.edit_text_passwod)).getText().toString();
 
@@ -167,22 +171,7 @@ public class LoginActivity extends BaseActivity {
                                          R.string.label_invalid_version));
                             	showError(findViewById(R.id.root_view));
                             } else {
-                            	
-                            	// Using authentication in the web view
-                                WebView webView = new WebView(getApplicationContext());
-                                String url = String.format(WebServicesClient.BASE_URL,
-                                        HubManagerHelper.getInstance().getApplicationHosted()).concat(
-                                        "login" + WebServicesClient.getApplicationServer());
-                                url = url.replace("https", "http");
-                                
-                                String postData = "username=" + userName + "&password=" + password + "&screenWidth=" + 
-                                		(int)(displaymetrics.widthPixels / displaymetrics.density) + "&screenHeight="  + 
-                                		(int)(displaymetrics.heightPixels / displaymetrics.density) + "&devicetype=android&deviceHwId=" + 
-                                		Installation.id(getApplicationContext());
-                                
-                                
-                                webView.postUrl(url, EncodingUtils.getBytes(postData, "BASE64"));
-                                                            	
+
                                 DatabaseHandler database = new DatabaseHandler(getApplicationContext());
                                 database.updateHubApplicationCredentials(HubManagerHelper.getInstance()
                                         .getApplicationHosted(), userName, password);
@@ -209,8 +198,9 @@ public class LoginActivity extends BaseActivity {
     @SuppressWarnings("unchecked")
     private void openApplicationsActivity(Login login) {
         Intent intent = new Intent(getApplicationContext(), ApplicationsActivity.class);
+        ArrayList arrayList = (ArrayList)login.getApplications();
         intent.putParcelableArrayListExtra(ApplicationsActivity.KEY_CONTENT_APPLICATIONS,
-                (ArrayList<? extends Parcelable>) login.getApplications());
+                (ArrayList<? extends Parcelable>)arrayList);
         intent.putExtra(ApplicationsActivity.KEY_TITLE_ACTION_BAR, getResources().getString(R.string.label_logout));
         startActivity(intent);
     }
@@ -225,9 +215,16 @@ public class LoginActivity extends BaseActivity {
         Application application = login.getApplications().get(0);
         if (application != null) {
             intent.putExtra(WebApplicationActivity.KEY_APPLICATION, application);
+            intent.putExtra(WebApplicationActivity.KEY_SINGLE_APPLICATION, true);
         }
         startActivity(intent);
     }
-    
-   
+
+    private void hideKeyboard(){
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        if (this.getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) this.getSystemService(this.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+        }
+    }
 }

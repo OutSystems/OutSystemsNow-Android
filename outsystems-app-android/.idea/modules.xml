@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Android.iml" filepath="$PROJECT_DIR$/Android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AndroidUniversalImageLoaderLib/AndroidUniversalImageLoaderLib.iml" filepath="$PROJECT_DIR$/AndroidUniversalImageLoaderLib/AndroidUniversalImageLoaderLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Outsytems/platforms/android/CordovaLib/CordovaLib.iml" filepath="$PROJECT_DIR$/Outsytems/platforms/android/CordovaLib/CordovaLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MobileECT/MobileECT.iml" filepath="$PROJECT_DIR$/MobileECT/MobileECT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Outsytems/OutSytems.iml" filepath="$PROJECT_DIR$/Outsytems/OutSytems.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Outsytems/platforms/android/android.iml" filepath="$PROJECT_DIR$/Outsytems/platforms/android/android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-support-v7-appcompat/android-support-v7-appcompat.iml" filepath="$PROJECT_DIR$/android-support-v7-appcompat/android-support-v7-appcompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Outsytems/platforms/platforms.iml" filepath="$PROJECT_DIR$/Outsytems/platforms/platforms.iml" />
+    </modules>
+  </component>
+</project>
+

@@ -20,6 +20,7 @@ import org.apache.cordova.CordovaChromeClient;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
+import org.apache.http.cookie.Cookie;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,7 +33,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -52,33 +55,40 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.outsystems.android.core.CordovaLoaderWebClient;
+import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.CustomWebView;
 import com.outsystems.android.core.WebServicesClient;
-import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
+import com.outsystems.android.mobileect.MobileECTController;
+import com.outsystems.android.mobileect.interfaces.OSECTContainerListener;
 import com.outsystems.android.model.Application;
+import com.outsystems.android.model.MobileECT;
 import com.phonegap.plugins.barcodescanner.BarcodeScanner;
 
 /**
  * Class description.
- * 
+ *
  * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
  * @version $Revision: 666 $
- * 
+ *
  */
-public class WebApplicationActivity extends BaseActivity implements CordovaInterface {
+public class WebApplicationActivity extends BaseActivity implements CordovaInterface, OSECTContainerListener {
 
     public static String KEY_APPLICATION = "key_application";
+    public static String KEY_SINGLE_APPLICATION ="single_application";
+    private static String OPEN_URL_EXTERNAL_BROWSER_PREFIX = "external:";
+
     CordovaWebView cordovaWebView;
 
     private final ExecutorService threadPool = Executors.newCachedThreadPool();
@@ -89,21 +99,23 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     // Plugin to call when activity result is received
     protected CordovaPlugin activityResultCallback = null;
 
-    private Button buttonForth;
+    private ImageButton buttonForth;
     protected ProgressDialog spinnerDialog = null;
     private ImageView imageView;
 
     protected boolean activityResultKeepRunning;
     private int flagNumberLoadings = 0;
-    
-    private OnClickListener onClickListenerBack = new OnClickListener() {
+
+    private MobileECTController mobileECTController;
+
+    public OnClickListener onClickListenerBack = new OnClickListener() {
 
         @Override
         public void onClick(View v) {
             if (cordovaWebView.canGoBack()) {
                 LinearLayout viewLoading = (LinearLayout) findViewById(R.id.view_loading);
                 if (viewLoading.getVisibility() != View.VISIBLE) {
-                	startLoadingAnimation();                	
+                	startLoadingAnimation();
                 }
                 cordovaWebView.goBack();
                 enableDisableButtonForth();
@@ -133,6 +145,16 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         }
     };
 
+
+    private OnClickListener onClickListenerOpenECT = new OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            mobileECTController.openECTView();
+        }
+    };
+
+
     /*
      * The variables below are used to cache some of the activity properties.
      */
@@ -157,9 +179,12 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         Config.init(this);
 
         Application application = null;
+        boolean singleApp = false;
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             application = (Application) bundle.get("key_application");
+
+            singleApp  =  bundle.get(KEY_SINGLE_APPLICATION) != null && (Boolean) bundle.get(KEY_SINGLE_APPLICATION);
         }
 
         // Local Url to load application
@@ -171,9 +196,12 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             }
             url = String.format(WebServicesClient.URL_WEB_APPLICATION, HubManagerHelper.getInstance()
                     .getApplicationHosted(), application.getPath());
-        }        
+        }
 
         cordovaWebView.setWebViewClient(new CordovaCustomWebClient(this, cordovaWebView));
+        cordovaWebView.setWebChromeClient(new CordovaChromeClient(this, cordovaWebView));
+        cordovaWebView.getSettings().setJavaScriptEnabled(true);
+        cordovaWebView.getSettings().setLightTouchEnabled(true);
 
         // Listener to Download Web File with Native Component - Download Manager
         cordovaWebView.setDownloadListener(new DownloadListener() {
@@ -182,24 +210,84 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                 downloadAndOpenFile(WebApplicationActivity.this, url);
             }
         });
-               
-        
+
+
+        // Synchronize WebView cookies with Login Request cookies
+        CookieSyncManager.createInstance(getApplicationContext());
+        android.webkit.CookieManager.getInstance().removeAllCookie();
+
+        List<String> cookies = WebServicesClient.getInstance().getLoginCookies();
+        if (cookies != null && !cookies.isEmpty()){
+            for(String cookieString : cookies){
+                //String cookieString = cookie.getName() + "=" + cookie.getValue(); // + ";"; //" domain=" + HubManagerHelper.getInstance().getApplicationHosted();
+                android.webkit.CookieManager.getInstance().setCookie(HubManagerHelper.getInstance().getApplicationHosted(), cookieString);
+                EventLogger.logMessage(getClass(), "Cookie: "+cookieString);
+                CookieSyncManager.getInstance().sync();
+            }
+        }
+        else{
+            // For Demo Applications only
+            List<Cookie> httpCookies= WebServicesClient.getInstance().getHttpCookies();
+            Cookie sessionInfo;
+            if (httpCookies != null && !httpCookies.isEmpty()){
+                for(Cookie cookie : httpCookies){
+                    sessionInfo = cookie;
+                    String cookieString = sessionInfo.getName() + "=" + sessionInfo.getValue() + "; domain=" + sessionInfo.getDomain();
+                    android.webkit.CookieManager.getInstance().setCookie(HubManagerHelper.getInstance().getApplicationHosted(), cookieString);
+                    EventLogger.logMessage(getClass(), "HttpCookie: "+cookieString);
+                }
+            }
+
+        }
+
         // Set in the user agent OutSystemsApp
         String ua = cordovaWebView.getSettings().getUserAgentString();
         String appVersion = getAppVersion();
         String newUA = ua.concat(" OutSystemsApp v." + appVersion);
         cordovaWebView.getSettings().setUserAgentString(newUA);
+
+
+        // Mobile ECT Feature
+
+        View containerView = findViewById(R.id.ectViewGroup);
+        View mainView = findViewById(R.id.mainViewGroup);
+        DatabaseHandler database = new DatabaseHandler(getApplicationContext());
+        MobileECT mobileECT = database.getMobileECT();
+
+        boolean skipHelper = mobileECT != null && !mobileECT.isFirstLoad();
+
+        mobileECTController = new MobileECTController(this,
+                mainView,
+                containerView,
+                this.cordovaWebView,
+                HubManagerHelper.getInstance().getApplicationHosted(),
+                skipHelper);
+
+        containerView.setVisibility(View.GONE);
+
+        // Hide ECT Button
+        ImageButton buttonECT = (ImageButton) findViewById(R.id.button_ect);
+        if(buttonECT != null) {
+            buttonECT.setOnClickListener(this.onClickListenerOpenECT);
+            buttonECT.setVisibility(View.GONE);
+        }
+
+
+
+
+        // Load Application
+
         if (savedInstanceState == null) {
             cordovaWebView.loadUrl(url);
         } else {
             ((LinearLayout) findViewById(R.id.view_loading)).setVisibility(View.GONE);
         }
-        
+
         // Customization Toolbar
         // Get Views from Xml Layout
-        Button buttonApplications = (Button) findViewById(R.id.button_applications);
-        Button buttonBack = (Button) findViewById(R.id.button_back);
-        buttonForth = (Button) findViewById(R.id.button_forth);
+        ImageButton buttonApplications = (ImageButton) findViewById(R.id.button_applications);
+        ImageButton buttonBack = (ImageButton) findViewById(R.id.button_back);
+        buttonForth = (ImageButton) findViewById(R.id.button_forth);
 
         // Actions onClick
         buttonApplications.setOnClickListener(onClickListenerApplication);
@@ -209,21 +297,28 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         // Background with differents states
         int sdk = android.os.Build.VERSION.SDK_INT;
         if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            buttonApplications.setBackgroundDrawable(createSelectorIconApplications(getResources().getDrawable(
-                    R.drawable.icon_apps)));
-            buttonBack.setBackgroundDrawable(createSelectorIconApplications(getResources().getDrawable(
-                    R.drawable.icon_chevron_back)));
-            buttonForth.setBackgroundDrawable(createSelectorIconApplications(getResources().getDrawable(
-                    R.drawable.icon_chevron_forth)));
+            buttonApplications.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                    R.drawable.icon_app_list)));
+            buttonBack.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                    R.drawable.icon_chevron_left)));
+            buttonForth.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                    R.drawable.icon_chevron_right)));
         } else {
-            buttonApplications.setBackground(createSelectorIconApplications(getResources().getDrawable(
-                    R.drawable.icon_apps)));
-            buttonBack.setBackground(createSelectorIconApplications(getResources().getDrawable(
-                    R.drawable.icon_chevron_back)));
-            buttonForth.setBackground(createSelectorIconApplications(getResources().getDrawable(
-                    R.drawable.icon_chevron_forth)));
+            buttonApplications.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                    R.drawable.icon_app_list)));
+            buttonBack.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                    R.drawable.icon_chevron_left)));
+            buttonForth.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                    R.drawable.icon_chevron_right)));
 
         }
+
+        // Check if it's a single application
+        if(singleApp){
+            buttonApplications.setVisibility(View.INVISIBLE);
+            buttonApplications.setOnClickListener(null);
+        }
+
     }
 
     /*
@@ -265,7 +360,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             case KeyEvent.KEYCODE_BACK:
                 if (cordovaWebView.canGoBack()) {
                 	startLoadingAnimation();
-                	
+
                     cordovaWebView.goBack();
                     enableDisableButtonForth();
                 } else {
@@ -294,7 +389,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     /**
      * Launch an activity for which you would like a result when it finished. When this activity exits, your
      * onActivityResult() method is called.
-     * 
+     *
      * @param command The command object
      * @param intent The intent to start
      * @param requestCode The request code that is passed to callback to identify the activity
@@ -358,7 +453,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Get the Android activity.
-     * 
+     *
      * @return
      */
     public Activity getActivity() {
@@ -367,7 +462,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Called when a message is sent to plugin.
-     * 
+     *
      * @param id The message id
      * @param data The message data
      * @return Object or null
@@ -387,28 +482,28 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         if (cordovaWebView.canGoForward()) {
             int sdk = android.os.Build.VERSION.SDK_INT;
             if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                buttonForth.setBackgroundDrawable(createSelectorIconApplications(getResources().getDrawable(
-                        R.drawable.icon_chevron_forth)));
+                buttonForth.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                        R.drawable.icon_chevron_right)));
             } else {
-                buttonForth.setBackground(createSelectorIconApplications(getResources().getDrawable(
-                        R.drawable.icon_chevron_forth)));
+                buttonForth.setImageDrawable(createSelectorIconApplications(getResources().getDrawable(
+                        R.drawable.icon_chevron_right)));
             }
         } else {
-            Drawable iconForth = getResources().getDrawable(R.drawable.icon_chevron_forth);
+            Drawable iconForth = getResources().getDrawable(R.drawable.icon_chevron_right_inactive);
 
             BitmapDrawable disabled = getDisableButton(iconForth);
             int sdk = android.os.Build.VERSION.SDK_INT;
             if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                buttonForth.setBackgroundDrawable(disabled);
+                buttonForth.setImageDrawable(disabled);
             } else {
-                buttonForth.setBackground(disabled);
+                buttonForth.setImageDrawable(disabled);
             }
         }
     }
 
     /**
      * Creates the selector icon applications.
-     * 
+     *
      * @param icon the icon
      * @return the drawable
      */
@@ -426,7 +521,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Gets the disable button.
-     * 
+     *
      * @param icon the icon
      * @return the disable button
      */
@@ -448,6 +543,48 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     }
 
     /**
+     *  Mobile ECT Container
+     */
+    public void showMobileECTButton(final boolean show){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ImageButton buttonECT = (ImageButton) findViewById(R.id.button_ect);
+                if(buttonECT != null) {
+                    buttonECT.setVisibility(show ? View.VISIBLE : View.GONE);
+                    findViewById(R.id.toolbar).invalidate();
+                }
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onSendFeedbackClickListener() {
+        mobileECTController.sendFeedback();
+    }
+
+    @Override
+    public void onCloseECTClickListener() {
+        mobileECTController.closeECTView();
+    }
+
+    @Override
+    public void onCloseECTHelperClickListener() {
+
+        DatabaseHandler database = new DatabaseHandler(getApplicationContext());
+        database.addMobileECT(false);
+        mobileECTController.setSkipECTHelper(true);
+    }
+
+    @Override
+    public void onShowECTFeatureListener(boolean show) {
+        this.showMobileECTButton(show);
+    }
+
+
+    /**
      * The Class CordovaCustomWebClient.
      */
     public class CordovaCustomWebClient extends CordovaLoaderWebClient {
@@ -461,11 +598,18 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             EventLogger.logMessage(getClass(), "--------------- shouldOverrideUrlLoading ---------------");
-			if(url.equals("about:blank")) 
+			if(url.equals("about:blank"))
             	return super.shouldOverrideUrlLoading(view, url);
-           
+
+            if(url.startsWith(OPEN_URL_EXTERNAL_BROWSER_PREFIX)){
+                String urlString = url.substring(OPEN_URL_EXTERNAL_BROWSER_PREFIX.length());
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
+                startActivity(browserIntent);
+                return true;
+            }
+
 			startLoadingAnimation();
-			
+
             return super.shouldOverrideUrlLoading(view, url);
         }
 
@@ -475,13 +619,17 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             EventLogger.logMessage(getClass(), "________________ ONPAGEFINISHED _________________");
             enableDisableButtonForth();
             stopLoadingAnimation();
+
+            // Get Mobile ECT Api Info
+            mobileECTController.getECTAPIInfo();
         }
+
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             List<String> trustedHosts = WebServicesClient.getInstance().getTrustedHosts();
             String host = HubManagerHelper.getInstance().getApplicationHosted();
-            
+
           //TODO remove comments to force the check the validity of SSL certificates, except for list of trusted servers
             //if (trustedHosts != null && host != null) {
             //    for (String trustedHost : trustedHosts) {
@@ -508,17 +656,24 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             }
         }
     }
-       
+
 
     @SuppressWarnings("deprecation")
-    private void startLoadingAnimation() {    	
+    private void startLoadingAnimation() {
+        int currentOrientation = this.getResources().getConfiguration().orientation;
+        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        } else {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        }
+
 	    BitmapDrawable ob = new BitmapDrawable(getBitmapForVisibleRegion(cordovaWebView));
 	    imageView.setBackgroundDrawable(ob);
 	    imageView.setVisibility(View.VISIBLE);
-       	        
+
 	    LoadingTask loadingTask = new LoadingTask();
 		Timer timer = new Timer();
-		timer.schedule(loadingTask, 500);    	
+		timer.schedule(loadingTask, 500);
     }
 
     /**
@@ -529,16 +684,13 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             final Animation animationFadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadeout);
             imageView.setVisibility(View.GONE);
             imageView.startAnimation(animationFadeOut);
-
         }
         spinnerStop();
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
     /**
      * Show the spinner. Must be called from the UI thread.
-     * 
-     * @param title Title of the dialog
-     * @param message The message of the dialog
      */
     public void spinnerStart() {
         flagNumberLoadings++;
@@ -565,7 +717,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Gets the bitmap for visible region.
-     * 
+     *
      * @param webview the webview
      * @return the bitmap for visible region
      */
@@ -584,7 +736,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Gets the app version.
-     * 
+     *
      * @return the app version
      */
     private String getAppVersion() {
@@ -702,7 +854,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     /**
      * Gets the directorty.
-     * 
+     *
      * @return the directorty
      */
     private File getDirectorty() {
@@ -727,22 +879,23 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         }
         return directory;
     }
-    
-    
-    
+
+
+
 	private class LoadingTask extends TimerTask {
 
 		  @Override
 		  public void run() {
-		   
+
 		   runOnUiThread(new Runnable(){
-		
+
 		    @Override
 		    public void run() {
 		    	if (imageView.getVisibility() == View.VISIBLE)
 		    		spinnerStart();
 		    }});
 		  }
-			  
+
 	}
+
 }
