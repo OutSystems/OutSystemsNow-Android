@@ -12,6 +12,10 @@ android {
     compileSdkVersion 20
     buildToolsVersion "20.0.0"
 
+    defaultConfig{
+        applicationId "com.outsystems.android"
+    }
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
