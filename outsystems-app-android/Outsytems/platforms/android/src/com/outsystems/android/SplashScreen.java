@@ -41,23 +41,24 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
-        
-        // Push Messages    	
-    
-        // Create and start push manager
-        pushManager = PushManager.getInstance(this);
 
         try {
+
+            // Push Messages
+
+            // Create and start push manager
+            pushManager = PushManager.getInstance(this);
+
             pushManager.onStartup(this);
+
+            // Register for push!
+            pushManager.registerForPushNotifications();
+
         } catch (Exception e) {
             // push notifications are not available or AndroidManifest.xml is not configured properly
             EventLogger.logError(getClass(), e);
         }
 
-        // Register for push!
-        pushManager.registerForPushNotifications();
-
-  
         // Get data from Deep Link
         Uri data = this.getIntent().getData();
 
