@@ -344,7 +344,11 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         flagNumberLoadings++;
         imageView.setVisibility(View.VISIBLE);
         spinnerStart();
-        cordovaWebView.restoreState(savedInstanceState);
+        try {
+            cordovaWebView.restoreState(savedInstanceState);
+        }catch(Exception e){
+            EventLogger.logError(this.getClass().toString(),e);
+        }
     }
 
     @Override
@@ -608,7 +612,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                 return true;
             }
 
-			startLoadingAnimation();
+            if (imageView.getVisibility() != View.VISIBLE){
+                startLoadingAnimation();
+            }
 
             return super.shouldOverrideUrlLoading(view, url);
         }
@@ -624,6 +630,14 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             mobileECTController.getECTAPIInfo();
         }
 
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            EventLogger.logMessage(getClass(), "________________ ONPAGESTARTED _________________");
+            if (imageView.getVisibility() != View.VISIBLE){
+                startLoadingAnimation();
+            }
+        }
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
