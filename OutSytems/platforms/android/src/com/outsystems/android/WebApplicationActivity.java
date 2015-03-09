@@ -345,7 +345,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         imageView.setVisibility(View.VISIBLE);
         spinnerStart();
         try {
-            cordovaWebView.restoreState(savedInstanceState);
+            if(savedInstanceState != null)
+                cordovaWebView.restoreState(savedInstanceState);
         }catch(Exception e){
             EventLogger.logError(this.getClass().toString(),e);
         }
