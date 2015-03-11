@@ -315,11 +315,14 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         }
 
 
-
-
         // Load Application
 
         if (savedInstanceState == null) {
+            // Offline Support: app's url must have / at the end of url
+            if(!url.endsWith("/")){
+                url = url + "/";
+            }
+
             cordovaWebView.loadUrl(url);
         } else {
             ((LinearLayout) findViewById(R.id.view_loading)).setVisibility(View.GONE);
@@ -685,9 +688,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             String host = HubManagerHelper.getInstance().getApplicationHosted();
 
 
-            webViewLoadingFailed = true;
+            // webViewLoadingFailed = true;
 
-            EventLogger.logMessage(getClass(), "onReceivedSslError - webViewLoadingFailed: "+webViewLoadingFailed);
+            EventLogger.logMessage(getClass(), "onReceivedSslError: "+error.toString());
 
           //TODO remove comments to force the check the validity of SSL certificates, except for list of trusted servers
             //if (trustedHosts != null && host != null) {
