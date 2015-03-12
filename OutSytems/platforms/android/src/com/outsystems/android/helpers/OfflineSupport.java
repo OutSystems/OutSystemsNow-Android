@@ -218,7 +218,7 @@ public class OfflineSupport {
 
                                 // Synchronize WebView cookies with Login Request cookies
                                 CookieSyncManager.createInstance(applicationContext);
-                                android.webkit.CookieManager.getInstance().removeAllCookie();
+                                // android.webkit.CookieManager.getInstance().removeAllCookie();
 
                                 List<String> cookies = WebServicesClient.getInstance().getLoginCookies();
                                 if (cookies != null && !cookies.isEmpty()){
@@ -279,7 +279,7 @@ public class OfflineSupport {
 
                                 // Synchronize WebView cookies with Login Request cookies
                                 CookieSyncManager.createInstance(applicationContext);
-                                android.webkit.CookieManager.getInstance().removeAllCookie();
+                                // android.webkit.CookieManager.getInstance().removeAllCookie();
 
                                 List<String> cookies = WebServicesClient.getInstance().getLoginCookies();
                                 if (cookies != null && !cookies.isEmpty()){

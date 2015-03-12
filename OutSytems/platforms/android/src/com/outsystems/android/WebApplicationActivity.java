@@ -224,7 +224,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         // Synchronize WebView cookies with Login Request cookies
         CookieSyncManager.createInstance(getApplicationContext());
-        android.webkit.CookieManager.getInstance().removeAllCookie();
+        // android.webkit.CookieManager.getInstance().removeAllCookie();
 
         List<String> cookies = WebServicesClient.getInstance().getLoginCookies();
         if (cookies != null && !cookies.isEmpty()){
