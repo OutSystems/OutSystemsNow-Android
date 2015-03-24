@@ -914,6 +914,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                     if (status == DownloadManager.STATUS_SUCCESSFUL) {
                         try {
                             EventLogger.logMessage(getClass(), "Download with success");
+                            String fileName = c.getString(c.getColumnIndex(DownloadManager.COLUMN_TITLE));
+                            File tempFile = new File(getDirectorty(), fileName);
                             openFile(Uri.fromFile(tempFile), extension, context);
                         } catch (JSONException e) {
                             EventLogger.logError(getClass(), e);
