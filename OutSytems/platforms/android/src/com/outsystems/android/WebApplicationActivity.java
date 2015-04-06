@@ -389,7 +389,12 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         flagNumberLoadings++;
         imageView.setVisibility(View.VISIBLE);
         spinnerStart();
-        cordovaWebView.restoreState(savedInstanceState);
+        try {
+            if(savedInstanceState != null)
+                cordovaWebView.restoreState(savedInstanceState);
+        }catch(Exception e){
+            EventLogger.logError(this.getClass().toString(),e);
+        }
     }
 
     @Override
@@ -639,14 +644,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             super(cordova, view);
         }
 
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
-            startLoadingAnimation();
-            webViewLoadingFailed = false;
-            EventLogger.logMessage(getClass(), "onPageStarted - webViewLoadingFailed: "+webViewLoadingFailed);
-        }
-
         @SuppressLint("DefaultLocale")
         @SuppressWarnings("deprecation")
         @Override
@@ -660,6 +657,10 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
                 startActivity(browserIntent);
                 return true;
+            }
+
+            if (imageView.getVisibility() != View.VISIBLE){
+                startLoadingAnimation();
             }
 
             return super.shouldOverrideUrlLoading(view, url);
@@ -681,6 +682,14 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             showNetworkErrorView(webViewLoadingFailed);
         }
 
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            EventLogger.logMessage(getClass(), "________________ ONPAGESTARTED _________________");
+            if (imageView.getVisibility() != View.VISIBLE){
+                startLoadingAnimation();
+            }
+        }
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
