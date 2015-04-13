@@ -14,12 +14,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 
 import com.arellomobile.android.push.PushManager;
 import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
+import com.outsystems.android.helpers.OfflineSupport;
 import com.outsystems.android.model.DeepLink;
 import com.outsystems.android.model.HubApplicationModel;
 
@@ -41,11 +43,9 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
-
+        
+        // Push Messages    	
         try {
-
-            // Push Messages
-
             // Create and start push manager
             pushManager = PushManager.getInstance(this);
 
@@ -53,12 +53,11 @@ public class SplashScreen extends Activity {
 
             // Register for push!
             pushManager.registerForPushNotifications();
-
         } catch (Exception e) {
             // push notifications are not available or AndroidManifest.xml is not configured properly
             EventLogger.logError(getClass(), e);
         }
-
+  
         // Get data from Deep Link
         Uri data = this.getIntent().getData();
 
@@ -82,20 +81,48 @@ public class SplashScreen extends Activity {
     }
 
     protected void goNextActivity() {
+        openHubActivity();
+        ApplicationOutsystems app = (ApplicationOutsystems)getApplication();
+
+        // Working Offline
+        if(!app.isNetworkAvailable()) {
+            // Check if the last credentials were valid
+            if(OfflineSupport.getInstance(getApplicationContext()).hasValidCredentials()){
+               OfflineSupport.getInstance(getApplicationContext()).redirectToApplicationList(this);
+
+               // Finish activity
+               finish();
+               return;
+            }
+        }
+
         DatabaseHandler database = new DatabaseHandler(getApplicationContext());
         List<HubApplicationModel> hubApplications = database.getAllHubApllications();
-        openHubActivity();
-        
+
+        if(database != null) {
+
+            HubApplicationModel last = database.getLastLoginHubApplicationModel();
+
+            String lastUser = "null";
+
+            if(last != null) {
+                lastUser = last.getUserName() + " - " + last.getDateLastLogin();
+            }
+
+            EventLogger.logInfoMessage(this.getClass(), "Last:" + lastUser);
+
+        }
+
         if(DeepLinkController.getInstance().hasValidSettings()){
         	DeepLink deepLinkSettings = DeepLinkController.getInstance().getDeepLinkSettings();
         	HubManagerHelper.getInstance().setApplicationHosted(deepLinkSettings.getEnvironment());
-        	
+
             Intent intent = new Intent(getApplicationContext(), HubAppActivity.class);
             startActivity(intent);
-        	
+
         }
         else{
-	        	
+
 	        if (hubApplications != null && hubApplications.size() > 0) {
 	            HubApplicationModel hubApplication = hubApplications.get(0);
 	            if (hubApplication != null) {

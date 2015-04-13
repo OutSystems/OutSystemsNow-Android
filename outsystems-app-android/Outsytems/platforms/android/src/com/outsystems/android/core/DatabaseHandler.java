@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.outsystems.android.model.Application;
 import com.outsystems.android.model.HubApplicationModel;
 import com.outsystems.android.model.MobileECT;
 
@@ -37,7 +38,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Database Name
     private static final String DATABASE_NAME = "hubManager";
@@ -63,6 +64,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_MOBILE_ECT_FIRST_LOAD = "firstLoad";
 
 
+    // Offline Support Database
+
+    // Applications Table name
+    private static final String TABLE_LOGIN_APPLICATIONS = "login_applications";
+
+    // Applications Table Columns names
+    private static final String KEY_APPLICATION_HOST = "hostname";
+    private static final String KEY_APPLICATION_USER_NAME = "user_name";
+    private static final String KEY_APPLICATION_NAME = "name";
+    private static final String KEY_APPLICATION_DESCRIPTION = "description";
+    private static final String KEY_APPLICATION_IMAGE = "image";
+    private static final String KEY_APPLICATION_PATH = "path";
+
+
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -70,23 +85,50 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_HUB_APPLICATION + "(" + KEY_HOST + " TEXT PRIMARY KEY,"
                 + KEY_USER_NAME + " TEXT," + KEY_PASSWORD + " TEXT," + KEY_DATE_LAST_LOGIN + " DATETIME," + KEY_NAME
                 + " TEXT," + KEY_ISJSF + " NUMERIC" + ")";
-        db.execSQL(CREATE_CONTACTS_TABLE);
+        try {
+            db.execSQL(CREATE_CONTACTS_TABLE);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
         // Mobile ECT
         String createMobileECTTable = "CREATE TABLE " + TABLE_MOBILE_ECT + "(" + KEY_MOBILE_ECT_FIRST_LOAD + " NUMERIC PRIMARY KEY" + ")";
-        db.execSQL(createMobileECTTable);
+        try {
+            db.execSQL(createMobileECTTable);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        // Offline support
+        String createApplicationsTable = "CREATE TABLE " + TABLE_LOGIN_APPLICATIONS +
+                "(" + KEY_APPLICATION_HOST          + " TEXT,"
+                    + KEY_APPLICATION_USER_NAME     + " TEXT,"
+                    + KEY_APPLICATION_NAME          + " TEXT,"
+                    + KEY_APPLICATION_DESCRIPTION   + " TEXT,"
+                    + KEY_APPLICATION_IMAGE         + " NUMERIC,"
+                    + KEY_APPLICATION_PATH          + " TEXT,"
+                    + " PRIMARY KEY ("+KEY_APPLICATION_HOST+", "+KEY_APPLICATION_USER_NAME+", "+KEY_APPLICATION_NAME+")"
+                +")";
+
+        db.execSQL(createApplicationsTable);
     }
 
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        /*
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_HUB_APPLICATION);
 
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOBILE_ECT);
+        */
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGIN_APPLICATIONS);
 
         // Create tables again
         onCreate(db);
@@ -232,6 +274,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return result;
     }
 
+    public HubApplicationModel getLastLoginHubApplicationModel(){
+        HubApplicationModel result = null;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT  * FROM " + TABLE_HUB_APPLICATION +
+                             " ORDER BY datetime("+KEY_DATE_LAST_LOGIN + ") DESC";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            result = new HubApplicationModel();
+            result.setHost(cursor.getString(0));
+            result.setUserName(cursor.getString(1));
+            result.setPassword(cursor.getString(2));
+            String date = cursor.getString(3);
+            result.setDateLastLogin(convertStringToDate(date));
+            result.setName(cursor.getString(4));
+            boolean value = cursor.getInt(5) > 0;
+            result.setJSF(value);
+        }
+
+        return result;
+    }
+
+
     // Convert DateTime to String
     private String getDateTime(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
@@ -297,4 +365,60 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
+    public void addLoginApplications(String hostname, String username, List<Application> applications){
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Delete previous rows
+        db.delete(TABLE_LOGIN_APPLICATIONS,null,null);
+
+        if(applications != null) {
+            for(Application app : applications) {
+                ContentValues values = new ContentValues();
+                values.put(KEY_APPLICATION_HOST, hostname);
+                values.put(KEY_APPLICATION_USER_NAME, username);
+
+                values.put(KEY_APPLICATION_NAME, app.getName());
+                values.put(KEY_APPLICATION_DESCRIPTION, app.getDescription());
+                values.put(KEY_APPLICATION_IMAGE, app.getImageId());
+                values.put(KEY_APPLICATION_PATH, app.getPath());
+
+                // Inserting Row
+                db.insert(TABLE_LOGIN_APPLICATIONS, null, values);
+            }
+        }
+        db.close();
+    }
+
+    public List<Application> getLoginApplications(String hostname, String username){
+        List<Application> result = new ArrayList<Application>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Select All Query
+        String selectQuery = "SELECT * FROM " + TABLE_LOGIN_APPLICATIONS +
+                             " WHERE "+KEY_APPLICATION_HOST+"= ?" +
+                             " AND "+KEY_APPLICATION_USER_NAME +"= ?";
+
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{hostname,username});
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+
+                String host = cursor.getString(0);
+                String user = cursor.getString(1);
+                String name = cursor.getString(2);
+                String desc = cursor.getString(3);
+                int image = cursor.getInt(4);
+                String path = cursor.getString(5);
+
+                Application app = new Application(name, image, desc, path);
+
+                result.add(app);
+
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+
+        return result;
+    }
 }

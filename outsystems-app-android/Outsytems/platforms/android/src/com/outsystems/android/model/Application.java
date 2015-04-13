@@ -34,6 +34,14 @@ public class Application implements Serializable {
         this.description = description;
     }
 
+    public Application(String name, int imageId, String description, String path) {
+        super();
+        this.name = name;
+        this.imageId = imageId;
+        this.description = description;
+        this.path = path;
+    }
+
     public String getName() {
         return name;
     }

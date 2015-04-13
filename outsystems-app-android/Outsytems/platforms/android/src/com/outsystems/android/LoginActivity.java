@@ -34,6 +34,7 @@ import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
+import com.outsystems.android.helpers.OfflineSupport;
 import com.outsystems.android.model.Application;
 import com.outsystems.android.model.HubApplicationModel;
 import com.outsystems.android.model.Login;
@@ -153,6 +154,9 @@ public class LoginActivity extends BaseActivity {
                         ((EditText) findViewById(R.id.edit_text_passwod)).setError(null);
                         EventLogger.logMessage(getClass(), "Status Code: " + statusCode);
 
+                        // Offline Support
+                        OfflineSupport.getInstance(getApplicationContext()).prepareForLogin();
+
                         if (!error) {
                             Login login = (Login) result;
 
@@ -175,6 +179,14 @@ public class LoginActivity extends BaseActivity {
                                 DatabaseHandler database = new DatabaseHandler(getApplicationContext());
                                 database.updateHubApplicationCredentials(HubManagerHelper.getInstance()
                                         .getApplicationHosted(), userName, password);
+                                database.addLoginApplications(HubManagerHelper.getInstance()
+                                        .getApplicationHosted(), userName,login.getApplications());
+
+                                // Offline Support
+                                OfflineSupport.getInstance(getApplicationContext()).checkCurrentSession(HubManagerHelper.getInstance()
+                                        .getApplicationHosted(),userName);
+
+
                                 if (login.getApplications() != null && login.getApplications().size() == 1) {
                                     openWebApplicationActivity(login);
                                 } else {

@@ -15,6 +15,9 @@ import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.HubApplicationModel;
 
 import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 /**
  * Class description.
@@ -79,5 +82,15 @@ public class ApplicationOutsystems extends Application {
                 }
             }
         }
+    }
+
+    /**
+     * Check if there is a available network connection
+     */
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

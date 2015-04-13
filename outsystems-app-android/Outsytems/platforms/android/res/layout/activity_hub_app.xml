@@ -63,7 +63,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/button_select_text_color"
                 android:orientation="vertical"
-                android:visibility="gone" >
+                android:visibility="gone">
 
                 <com.outsystems.android.widgets.CustomFontTextView
                     android:id="@+id/text_view_help"
@@ -72,7 +72,7 @@
                     android:padding="15dp"
                     android:text="@string/label_help"
                     android:textColor="@android:color/white"
-                    custom:fontStyle="Regular" />
+                    custom:fontStyle="Regular"/>
             </LinearLayout>
 
             <com.outsystems.android.widgets.CustomFontEditText
