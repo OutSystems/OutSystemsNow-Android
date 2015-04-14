@@ -41,6 +41,7 @@ import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract.Instances;
 import org.apache.cordova.CordovaInterface;
 
+import java.lang.Integer;
 import java.util.EnumMap;
 
 public class CalendarProviderAccessor extends AbstractCalendarAccessor {
@@ -120,11 +121,11 @@ public class CalendarProviderAccessor extends AbstractCalendarAccessor {
   }
 
   @Override
-  public boolean createEvent(Uri eventsUri, String title, long startTime, long endTime,
+  public void createEvent(Uri eventsUri, String title, long startTime, long endTime,
                              String description, String location, Long firstReminderMinutes, Long secondReminderMinutes,
-                             String recurrence, Long recurrenceEndTime) {
+                             String recurrence, Long recurrenceEndTime, Integer calendarId) {
     eventsUri = eventsUri == null ? Uri.parse(CONTENT_PROVIDER + CONTENT_PROVIDER_PATH_EVENTS) : eventsUri;
-    return super.createEvent(eventsUri, title, startTime, endTime, description, location,
-        firstReminderMinutes, secondReminderMinutes, recurrence, recurrenceEndTime);
+    super.createEvent(eventsUri, title, startTime, endTime, description, location,
+        firstReminderMinutes, secondReminderMinutes, recurrence, recurrenceEndTime, calendarId);
   }
 }

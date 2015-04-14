@@ -13,17 +13,14 @@
         Apache Cordova Team
     </author>
     <content src="index.html" />
-	<access origin="tel:*" launch-external="yes"/>
-<access origin="geo:*" launch-external="yes"/>
-<access origin="mailto:*" launch-external="yes"/>
-<access origin="sms:*" launch-external="yes"/>
-<access origin="market:*" launch-external="yes"/>
+    <access launch-external="yes" origin="tel:*" />
+    <access launch-external="yes" origin="geo:*" />
+    <access launch-external="yes" origin="mailto:*" />
+    <access launch-external="yes" origin="sms:*" />
+    <access launch-external="yes" origin="market:*" />
     <access origin="*" />
     <feature name="Loader">
         <param name="android-package" value="com.outsystems.android.Loader" />
-    </feature>
-    <feature name="Calendar">
-        <param name="android-package" value="nl.xservices.plugins.Calendar" />
     </feature>
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
@@ -49,5 +46,8 @@
     </feature>
     <feature name="Camera">
         <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
+    <feature name="Calendar">
+        <param name="android-package" value="nl.xservices.plugins.Calendar" />
     </feature>
 </widget>

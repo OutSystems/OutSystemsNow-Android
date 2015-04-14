@@ -3,9 +3,10 @@
 #import <EventKitUI/EventKitUI.h>
 #import <EventKit/EventKit.h>
 
-@interface Calendar : CDVPlugin
+@interface Calendar : CDVPlugin <EKEventEditViewDelegate>
 
 @property (nonatomic, retain) EKEventStore* eventStore;
+@property (nonatomic, copy) NSString *interactiveCallbackId;
 
 - (void)initEventStoreWithCalendarCapabilities;
 
@@ -15,6 +16,8 @@
                        startDate: (NSDate *)startDate
                          endDate: (NSDate *)endDate
                         calendar: (EKCalendar *) calendar;
+
+- (void)openCalendar:(CDVInvokedUrlCommand*)command;
 
 - (void)createCalendar:(CDVInvokedUrlCommand*)command;
 - (void)deleteCalendar:(CDVInvokedUrlCommand*)command;
