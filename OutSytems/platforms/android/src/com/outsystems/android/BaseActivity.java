@@ -262,7 +262,7 @@ public class BaseActivity extends ActionBarActivity {
 
                 builder.show();
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             EventLogger.logError(getClass(), e);
         }
     }
