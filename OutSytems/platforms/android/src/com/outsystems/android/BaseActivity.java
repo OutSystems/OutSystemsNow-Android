@@ -100,14 +100,15 @@ public class BaseActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
         case android.R.id.home:
-            Intent upIntent = NavUtils.getParentActivityIntent(this);
             try {
+                Intent upIntent = NavUtils.getParentActivityIntent(this);
                 if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
                     TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
                 } else {
                     finish();
                 }
             }catch(Exception e){
+                EventLogger.logError(getClass(), e);
                 finish();
             }
             return true;
