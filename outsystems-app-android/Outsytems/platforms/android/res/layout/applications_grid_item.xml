@@ -19,7 +19,7 @@
         android:gravity="center"
         android:background="@drawable/background_images_aplications" >
 
-        <com.outsystems.android.widgets.roundedimage.RoundedImageView
+        <com.yesco.android.widgets.roundedimage.RoundedImageView
             android:id="@+id/image_view_application"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -29,7 +29,7 @@
             app:oval="false" />
     </RelativeLayout>
 
-    <com.outsystems.android.widgets.CustomFontTextView
+    <com.yesco.android.widgets.CustomFontTextView
         android:id="@+id/text_view_application"
         android:layout_width="wrap_content"
         android:layout_height="40dp"

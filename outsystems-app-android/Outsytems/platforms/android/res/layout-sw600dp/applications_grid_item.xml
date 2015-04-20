@@ -21,7 +21,7 @@
         android:background="@drawable/background_images_aplications"
         android:gravity="center" >
 
-        <com.outsystems.android.widgets.roundedimage.RoundedImageView
+        <com.yesco.android.widgets.roundedimage.RoundedImageView
             android:id="@+id/image_view_application"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -39,7 +39,7 @@
         android:layout_marginTop="18dp"
         android:orientation="vertical" >
 
-        <com.outsystems.android.widgets.CustomFontTextView
+        <com.yesco.android.widgets.CustomFontTextView
             android:id="@+id/text_view_application"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             android:textSize="20sp"
             custom:fontStyle="Light" />
 
-        <com.outsystems.android.widgets.CustomFontTextView
+        <com.yesco.android.widgets.CustomFontTextView
             android:id="@+id/text_view_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"          

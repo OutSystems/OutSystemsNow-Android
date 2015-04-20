@@ -36,7 +36,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
-                <com.outsystems.android.widgets.CustomFontTextView
+                <com.yesco.android.widgets.CustomFontTextView
                     android:id="@+id/text_view_title_hub"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <com.outsystems.android.widgets.CustomFontTextView
+                <com.yesco.android.widgets.CustomFontTextView
                     android:id="@+id/text_view_help"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                     custom:fontStyle="Regular"/>
             </LinearLayout>
 
-            <com.outsystems.android.widgets.CustomFontEditText
+            <com.yesco.android.widgets.CustomFontEditText
                 android:id="@+id/edit_text_hub_url"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                 custom:fontStyle="Regular" >
 
                 <requestFocus />
-            </com.outsystems.android.widgets.CustomFontEditText>
+            </com.yesco.android.widgets.CustomFontEditText>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -105,7 +105,7 @@
                     android:layout_marginTop="10dp"
                     android:visibility="gone" />
 
-                <com.outsystems.android.widgets.CustomFontButton
+                <com.yesco.android.widgets.CustomFontButton
                     android:id="@+id/button_go"
                     style="@style/Widget.Button"
                     android:layout_width="match_parent"
@@ -127,7 +127,7 @@
             android:gravity="center_horizontal|bottom"
             android:orientation="vertical" >
 
-            <com.outsystems.android.widgets.CustomFontTextView
+            <com.yesco.android.widgets.CustomFontTextView
                 android:id="@+id/text_view_demo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
                 android:textSize="15sp"
                 custom:fontStyle="Regular" />
 
-            <com.outsystems.android.widgets.CustomFontButton
+            <com.yesco.android.widgets.CustomFontButton
                 android:id="@+id/button_demo"
                 style="@style/Widget.Button"
                 android:layout_width="wrap_content"
@@ -154,7 +154,7 @@
                 android:gravity="center_horizontal|bottom"
                 android:orientation="horizontal" >
 
-                <com.outsystems.android.widgets.CustomFontTextView
+                <com.yesco.android.widgets.CustomFontTextView
                     android:id="@+id/text_view_about"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -163,7 +163,7 @@
                     android:textSize="15sp"
                     custom:fontStyle="Regular" />
 
-                <com.outsystems.android.widgets.CustomFontTextView
+                <com.yesco.android.widgets.CustomFontTextView
                     android:id="@+id/text_view_about_link"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
