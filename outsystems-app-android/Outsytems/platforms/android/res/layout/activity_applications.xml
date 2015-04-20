@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
     
-    <com.outsystems.android.widgets.CustomFontTextView
+    <com.yesco.android.widgets.CustomFontTextView
         android:id="@+id/text_view_label_no_applications"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

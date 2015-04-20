@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">OutSystems</string>
+    <string name="app_name">YESCO Apps</string>
     <string name="required_module_version">1.1</string>
     <string name="image_splash">SplashScreen</string>
     <string name="image_logo">LogoOutsystems</string>

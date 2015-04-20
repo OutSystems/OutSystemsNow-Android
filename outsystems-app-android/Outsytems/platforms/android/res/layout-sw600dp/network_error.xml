@@ -10,7 +10,7 @@
     android:gravity="center"
     android:paddingBottom="10dp">
 
-    <com.outsystems.android.widgets.CustomFontTextView
+    <com.yesco.android.widgets.CustomFontTextView
         android:id="@+id/networkErrorHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
         android:layout_marginBottom="25dp" />
 
 
-    <com.outsystems.android.widgets.CustomFontTextView
+    <com.yesco.android.widgets.CustomFontTextView
         android:id="@+id/networkErrorMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
             android:layout_gravity="center_horizontal"
             android:visibility="gone" />
 
-        <com.outsystems.android.widgets.CustomFontButton
+        <com.yesco.android.widgets.CustomFontButton
             android:id="@+id/networkErrorButtonRetry"
             style="@style/Widget.Button"
             android:layout_width="300dp"
@@ -73,10 +73,10 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal">
 
-        </com.outsystems.android.widgets.CustomFontButton>
+        </com.yesco.android.widgets.CustomFontButton>
     </FrameLayout>
 
-    <com.outsystems.android.widgets.CustomFontTextView
+    <com.yesco.android.widgets.CustomFontTextView
         android:id="@+id/networkErrorAppsListLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
