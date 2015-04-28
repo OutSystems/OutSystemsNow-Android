@@ -114,7 +114,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + " PRIMARY KEY ("+KEY_APPLICATION_HOST+", "+KEY_APPLICATION_USER_NAME+", "+KEY_APPLICATION_NAME+")"
                 +")";
 
-        db.execSQL(createApplicationsTable);
+        try {
+            db.execSQL(createApplicationsTable);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     // Upgrading database
@@ -126,9 +130,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_HUB_APPLICATION);
 
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOBILE_ECT);
-        */
 
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGIN_APPLICATIONS);
+        */
 
         // Create tables again
         onCreate(db);

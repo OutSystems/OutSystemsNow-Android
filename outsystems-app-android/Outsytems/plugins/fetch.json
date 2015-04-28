@@ -1,0 +1,8 @@
+{
+    "nl.x-services.plugins.calendar": {
+        "source": {
+            "type": "registry",
+            "id": "nl.x-services.plugins.calendar"
+        }
+    }
+}

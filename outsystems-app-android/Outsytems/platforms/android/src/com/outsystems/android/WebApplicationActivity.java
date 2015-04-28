@@ -739,7 +739,21 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
 	    BitmapDrawable ob = null;
 
-        EventLogger.logMessage(getClass(), "startLoadingAnimation - webViewLoadingFailed: "+webViewLoadingFailed);
+        EventLogger.logMessage(getClass(), "startLoadingAnimation - webViewLoadingFailed: " + webViewLoadingFailed);
+
+        // releasing old image
+        try {
+            Bitmap bitmap = ((BitmapDrawable) imageView.getBackground()).getBitmap();
+
+            if(bitmap != null){
+                imageView.setBackground(null);
+                bitmap.recycle();
+                bitmap = null;
+            }
+
+        }catch( Exception e){
+            // Avoid crash
+        }
 
         if(networkErrorView.getVisibility() == View.VISIBLE){
             ob = new BitmapDrawable(getBitmapForVisibleRegion(networkErrorView));

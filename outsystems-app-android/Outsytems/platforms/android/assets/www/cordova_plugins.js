@@ -1,13 +1,6 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "file": "plugins/nl.x-services.plugins.calendar/www/Calendar.js",
-        "id": "nl.x-services.plugins.calendar.Calendar",
-        "clobbers": [
-            "Calendar"
-        ]
-    },
-    {
         "file": "plugins/org.apache.cordova.device/www/device.js",
         "id": "org.apache.cordova.device.device",
         "clobbers": [
@@ -78,6 +71,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/org.apache.cordova.contacts/www/ContactFieldType.js",
+        "id": "org.apache.cordova.contacts.ContactFieldType",
+        "merges": [
+            ""
+        ]
+    },
+    {
         "file": "plugins/org.apache.cordova.dialogs/www/notification.js",
         "id": "org.apache.cordova.dialogs.notification",
         "merges": [
@@ -89,34 +89,6 @@ module.exports = [
         "id": "org.apache.cordova.dialogs.notification_android",
         "merges": [
             "navigator.notification"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.geolocation/www/Coordinates.js",
-        "id": "org.apache.cordova.geolocation.Coordinates",
-        "clobbers": [
-            "Coordinates"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.geolocation/www/PositionError.js",
-        "id": "org.apache.cordova.geolocation.PositionError",
-        "clobbers": [
-            "PositionError"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.geolocation/www/Position.js",
-        "id": "org.apache.cordova.geolocation.Position",
-        "clobbers": [
-            "Position"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.geolocation/www/geolocation.js",
-        "id": "org.apache.cordova.geolocation.geolocation",
-        "clobbers": [
-            "navigator.geolocation"
         ]
     },
     {
@@ -282,21 +254,32 @@ module.exports = [
         "clobbers": [
             "CameraPopoverHandle"
         ]
+    },
+    {
+        "file": "plugins/nl.x-services.plugins.calendar/www/Calendar.js",
+        "id": "nl.x-services.plugins.calendar.Calendar",
+        "clobbers": [
+            "Calendar"
+        ]
+    },
+    {
+        "file": "plugins/nl.x-services.plugins.calendar/test/tests.js",
+        "id": "nl.x-services.plugins.calendar.tests"
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "nl.x-services.plugins.calendar": "4.2.4",
     "org.apache.cordova.device": "0.2.11-dev",
-    "com.phonegap.plugins.barcodescanner": "1.0.1",
+    "com.phonegap.plugins.barcodescanner": "2.0.0",
     "org.apache.cordova.console": "0.2.7",
-    "org.apache.cordova.contacts": "0.2.9",
+    "org.apache.cordova.contacts": "0.2.13",
     "org.apache.cordova.dialogs": "0.2.6",
-    "org.apache.cordova.geolocation": "0.3.6",
+    "org.apache.cordova.geolocation": "0.3.10",
     "org.apache.cordova.battery-status": "0.2.7",
     "org.apache.cordova.file": "1.1.0",
-    "org.apache.cordova.camera": "0.2.8"
+    "org.apache.cordova.camera": "0.3.2",
+    "nl.x-services.plugins.calendar": "4.3.1"
 }
 // BOTTOM OF METADATA
 });

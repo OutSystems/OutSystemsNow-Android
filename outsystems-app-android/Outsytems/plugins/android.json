@@ -9,10 +9,6 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"Calendar\"><param name=\"android-package\" value=\"nl.xservices.plugins.Calendar\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
                             "count": 1
                         },
@@ -42,6 +38,10 @@
                         },
                         {
                             "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Calendar\"><param name=\"android-package\" value=\"nl.xservices.plugins.Calendar\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -77,14 +77,6 @@
                     ],
                     "/manifest": [
                         {
-                            "xml": "<uses-permission android:name=\"android.permission.READ_CALENDAR\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_CALENDAR\" />",
-                            "count": 1
-                        },
-                        {
                             "xml": "<uses-permission android:name=\"android.permission.CAMERA\" />",
                             "count": 1
                         },
@@ -94,6 +86,14 @@
                         },
                         {
                             "xml": "<uses-feature android:name=\"android.hardware.camera\" android:required=\"false\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.READ_CALENDAR\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_CALENDAR\" />",
                             "count": 1
                         }
                     ],
@@ -598,9 +598,6 @@
         }
     },
     "installed_plugins": {
-        "nl.x-services.plugins.calendar": {
-            "PACKAGE_NAME": "com.outsystems.android"
-        },
         "org.apache.cordova.device": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
@@ -626,6 +623,9 @@
             "PACKAGE_NAME": "com.outsystems.android"
         },
         "org.apache.cordova.camera": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "nl.x-services.plugins.calendar": {
             "PACKAGE_NAME": "com.outsystems.android"
         }
     },

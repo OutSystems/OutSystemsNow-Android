@@ -33,6 +33,7 @@
 package nl.xservices.plugins.accessor;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -196,10 +197,11 @@ public abstract class AbstractCalendarAccessor {
     List<String> selectionList = new ArrayList<String>();
 
     if (title != null) {
-      selection += Events.TITLE + "=?";
-      selectionList.add(title);
+      //selection += Events.TITLE + "=?";
+      selection += Events.TITLE + " LIKE ?";
+      selectionList.add(title+"%");
     }
-    if (location != null) {
+    if (location != null && !location.equals("")) {
       if (!"".equals(selection)) {
         selection += " AND ";
       }
@@ -409,47 +411,21 @@ public abstract class AbstractCalendarAccessor {
   }
 
   public boolean deleteEvent(Uri eventsUri, long startFrom, long startTo, String title, String location) {
-
-    // filter
-    String where = "";
-    List<String> selectionList = new ArrayList<String>();
-
-    if (title != null) {
-      where += Events.TITLE + "=?";
-      selectionList.add(title);
-    }
-    if (location != null) {
-      if (!"".equals(where)) {
-        where += " AND ";
-      }
-      where += Events.EVENT_LOCATION + "=?";
-      selectionList.add(location);
-    }
-    if (startFrom > 0) {
-      if (!"".equals(where)) {
-        where += " AND ";
-      }
-      where += Events.DTSTART + "=?";
-      selectionList.add(""+startFrom);
-    }
-    if (startTo > 0) {
-      if (!"".equals(where)) {
-        where += " AND ";
-      }
-      where += Events.DTEND + "=?";
-      selectionList.add(""+startTo);
-    }
-
-    String[] selectionArgs = new String[selectionList.size()];
     ContentResolver resolver = this.cordova.getActivity().getApplicationContext().getContentResolver();
-    int nrDeletedRecords = resolver.delete(eventsUri, where, selectionList.toArray(selectionArgs));
+    Event[] events = fetchEventInstances(title, location,startFrom, startTo);
+    int nrDeletedRecords = 0;
+    if (events != null) {
+      for (Event event : events) {
+        Uri eventUri = ContentUris.withAppendedId(eventsUri, Integer.parseInt(event.eventId));
+        nrDeletedRecords = resolver.delete(eventUri, null, null);
+      }
+    }
     return nrDeletedRecords > 0;
   }
 
-  public boolean createEvent(Uri eventsUri, String title, long startTime, long endTime, String description,
-                             String location, Long firstReminderMinutes, Long secondReminderMinutes,
-                             String recurrence, Long recurrenceEndTime) {
-    try {
+  public void createEvent(Uri eventsUri, String title, long startTime, long endTime, String description,
+                          String location, Long firstReminderMinutes, Long secondReminderMinutes,
+                          String recurrence, Long recurrenceEndTime, Integer calendarId) {
       ContentResolver cr = this.cordova.getActivity().getContentResolver();
       ContentValues values = new ContentValues();
       final boolean allDayEvent = isAllDayEvent(new Date(startTime), new Date(endTime));
@@ -460,7 +436,7 @@ public abstract class AbstractCalendarAccessor {
       values.put(Events.TITLE, title);
       values.put(Events.DESCRIPTION, description);
       values.put(Events.HAS_ALARM, 1);
-      values.put(Events.CALENDAR_ID, 1);
+      values.put(Events.CALENDAR_ID, calendarId);
       values.put(Events.EVENT_LOCATION, location);
 
       if (recurrence != null) {
@@ -468,7 +444,7 @@ public abstract class AbstractCalendarAccessor {
           values.put(Events.RRULE, "FREQ=" + recurrence.toUpperCase());
         } else {
           final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-          values.put(Events.RRULE, "FREQ=" + recurrence.toUpperCase() + ";UNTIL=" + sdf.format(new Date(recurrenceEndTime)));
+          values.put(Events.RRULE, "FREQ=" + recurrence.toUpperCase() + ";UNTIL=" + sdf.format(new Date(recurrenceEndTime))+"T000000Z");
         }
       }
 
@@ -494,12 +470,6 @@ public abstract class AbstractCalendarAccessor {
         reminderValues.put("method", 1);
         cr.insert(Uri.parse(CONTENT_PROVIDER + CONTENT_PROVIDER_PATH_REMINDERS), reminderValues);
       }
-    } catch (Exception e) {
-      Log.e("Calendar", e.getMessage(), e);
-      return false;
-    }
-
-    return true;
   }
 
   public void createCalendar(String calendarName) {
@@ -527,7 +497,7 @@ public abstract class AbstractCalendarAccessor {
 
   public static boolean isAllDayEvent(final Date startDate, final Date endDate) {
     return
-        endDate.getTime() - startDate.getTime() == (24*60*60*1000) &&
+        ((endDate.getTime() - startDate.getTime()) % (24*60*60*1000) == 0) &&
             startDate.getHours() == 0 &&
             startDate.getMinutes() == 0 &&
             startDate.getSeconds() == 0 &&

@@ -1,0 +1,1324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="265409c0-6a44-40c6-9566-884832893ec6" name="Default" comment="#153 #157 calendarId null" />
+    <ignored path="Calendar-PhoneGap-Plugin.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="$USER_HOME$/Desktop" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="DebuggerManager">
+    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true" converted="true">
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </breakpoint_any>
+    <ui_properties converted="true" />
+    <breakpoint_rules converted="true" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="Calendar-PhoneGap-Plugin" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf />
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="Calendar-PhoneGap-Plugincac13478/scratch" />
+        <option value="$PROJECT_DIR$/src/android/nl/xservices/plugins/accessor/AbstractCalendarAccessor.java" />
+        <option value="$PROJECT_DIR$/plugin.xml" />
+        <option value="$PROJECT_DIR$/src/android/nl/xservices/plugins/Calendar.java" />
+      </list>
+    </option>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="435" />
+    <option name="y" value="23" />
+    <option name="width" value="1005" />
+    <option name="height" value="873" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="false" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <OptionsSetting value="true" id="Undo Check Out" />
+    <OptionsSetting value="true" id="Get Latest Version" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="59" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="67" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="152" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Calendar-PhoneGap-Plugin.ipr" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="70" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="474" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="737" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="155" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="152" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="LayoutCode.rearrangeEntriesJava" value="false" />
+    <property name="LayoutCode.rearrangeEntriesHTML" value="false" />
+    <property name="options.lastSelected" value="preferences.sourceCode.General" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="LayoutCode.rearrangeEntriesPlain text" value="false" />
+    <property name="com.intellij.ide.scratch.ScratchpadManager" value="TEXT" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RestoreUpdateTree">
+    <UpdateInfo date="Moments ago" ActionInfo="_Update">
+      <UpdatedFiles>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated from server" />
+          <option name="myStatusName" value="Changed on server" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CHANGED_ON_SERVER" />
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Updated" />
+            <option name="myStatusName" value="Changed" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="UPDATED" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/README.md</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/plugin.xml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/android/nl/xservices/plugins/Calendar.java</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/android/nl/xservices/plugins/accessor/AbstractCalendarAccessor.java</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/android/nl/xservices/plugins/accessor/CalendarProviderAccessor.java</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/android/nl/xservices/plugins/accessor/LegacyCalendarAccessor.java</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/ios/Calendar.m</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/www/Calendar.js</PATH>
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Created" />
+            <option name="myStatusName" value="Created" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="CREATED" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Deleted" />
+            <option name="myStatusName" value="Deleted" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="true" />
+            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Restored" />
+            <option name="myStatusName" value="Will be restored" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="RESTORED" />
+          </FILE-GROUP>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Modified" />
+          <option name="myStatusName" value="Modified" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MODIFIED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Skipped" />
+          <option name="myStatusName" value="Skipped" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SKIPPED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with conflicts" />
+          <option name="myStatusName" value="Will be merged with conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_CONFLICTS" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with tree conflicts" />
+          <option name="myStatusName" value="Merged with tree conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with property conflicts" />
+          <option name="myStatusName" value="Will be merged with property conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged" />
+          <option name="myStatusName" value="Will be merged" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Not in repository" />
+          <option name="myStatusName" value="Not in repository" />
+          <option name="mySupportsDeletion" value="true" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UNKNOWN" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally added" />
+          <option name="myStatusName" value="Locally added" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_ADDED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally removed" />
+          <option name="myStatusName" value="Locally removed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_REMOVED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Switched" />
+          <option name="myStatusName" value="Switched" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SWITCHED" />
+        </FILE-GROUP>
+      </UpdatedFiles>
+    </UpdateInfo>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
+      <module name="" />
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="depsClasspath" value="false" />
+      <setting name="passParentEnv" value="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <setting name="launchBrowser" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <pass-parent-envs>true</pass-parent-envs>
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
+      <option name="BCName" value="" />
+      <option name="IOSSimulatorSdkPath" value="" />
+      <option name="adlOptions" value="" />
+      <option name="airProgramParameters" value="" />
+      <option name="appDescriptorForEmulator" value="Android" />
+      <option name="debugTransport" value="USB" />
+      <option name="debuggerSdkRaw" value="BC SDK" />
+      <option name="emulator" value="NexusOne" />
+      <option name="emulatorAdlOptions" value="" />
+      <option name="fastPackaging" value="true" />
+      <option name="fullScreenHeight" value="0" />
+      <option name="fullScreenWidth" value="0" />
+      <option name="launchUrl" value="false" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="/Applications/Flash Player Debugger.app" />
+        </LauncherParameters>
+      </option>
+      <option name="mobileRunTarget" value="Emulator" />
+      <option name="moduleName" value="" />
+      <option name="overriddenMainClass" value="" />
+      <option name="overriddenOutputFileName" value="" />
+      <option name="overrideMainClass" value="false" />
+      <option name="runTrusted" value="true" />
+      <option name="screenDpi" value="0" />
+      <option name="screenHeight" value="0" />
+      <option name="screenWidth" value="0" />
+      <option name="url" value="http://" />
+      <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="/Applications/Flash Player Debugger.app" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="myFilePath" />
+      <option name="GLUE" />
+      <option name="myNameFilter" />
+      <option name="myGeneratedName" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <list size="0" />
+    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
+      <Host>localhost</Host>
+      <Port>5050</Port>
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" myUseAcceleration="nothing">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="265409c0-6a44-40c6-9566-884832893ec6" name="Default" comment="" />
+      <created>1379157499235</created>
+      <option name="number" value="Default" />
+      <updated>1379157499235</updated>
+      <workItem from="1391458010606" duration="715000" />
+      <workItem from="1391858821043" duration="729000" />
+      <workItem from="1391869767410" duration="1178000" />
+      <workItem from="1391871621752" duration="157000" />
+      <workItem from="1392390474355" duration="7937000" />
+      <workItem from="1392818147576" duration="398000" />
+      <workItem from="1392838719958" duration="65000" />
+      <workItem from="1392839172793" duration="996000" />
+      <workItem from="1393793170415" duration="224000" />
+      <workItem from="1393857974359" duration="30000" />
+      <workItem from="1394137290243" duration="876000" />
+      <workItem from="1394138678322" duration="6000" />
+      <workItem from="1394138731792" duration="164000" />
+      <workItem from="1394952404666" duration="1141000" />
+      <workItem from="1394955872271" duration="41000" />
+      <workItem from="1394980039963" duration="644000" />
+      <workItem from="1394982245504" duration="325000" />
+      <workItem from="1394982963695" duration="34000" />
+      <workItem from="1394984558801" duration="485000" />
+      <workItem from="1395049393447" duration="3665000" />
+      <workItem from="1395178125222" duration="10000" />
+      <workItem from="1395180950005" duration="1940000" />
+      <workItem from="1395698885415" duration="563000" />
+      <workItem from="1395917576446" duration="429000" />
+      <workItem from="1397499930057" duration="99000" />
+      <workItem from="1397500129441" duration="4000" />
+      <workItem from="1398855777085" duration="102000" />
+      <workItem from="1398870894486" duration="885000" />
+      <workItem from="1398872512170" duration="30000" />
+      <workItem from="1398872691408" duration="3000" />
+      <workItem from="1398880733014" duration="6652000" />
+      <workItem from="1398957276641" duration="17000" />
+      <workItem from="1399054880670" duration="16000" />
+      <workItem from="1399060796014" duration="1761000" />
+      <workItem from="1399230624980" duration="763000" />
+      <workItem from="1399231765234" duration="47000" />
+      <workItem from="1400950078979" duration="91000" />
+      <workItem from="1402776352809" duration="697000" />
+      <workItem from="1402778748314" duration="58000" />
+      <workItem from="1402822464994" duration="26000" />
+      <workItem from="1402826700709" duration="1108000" />
+      <workItem from="1402862710949" duration="343000" />
+      <workItem from="1404797555428" duration="675000" />
+      <workItem from="1405365101907" duration="239000" />
+      <workItem from="1409490428499" duration="209000" />
+      <workItem from="1410081364233" duration="86000" />
+      <workItem from="1414076347210" duration="5407000" />
+      <workItem from="1414694663753" duration="1649000" />
+      <workItem from="1415611466624" duration="289000" />
+      <workItem from="1415691866931" duration="42000" />
+      <workItem from="1421250033777" duration="464000" />
+      <workItem from="1421262864243" duration="926000" />
+      <workItem from="1426257993071" duration="288000" />
+      <workItem from="1428569586680" duration="389000" />
+    </task>
+    <task id="LOCAL-00001" summary="initial import">
+      <created>1379157567727</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1379157567727</updated>
+    </task>
+    <task id="LOCAL-00002" summary="implemented all iOS functions">
+      <created>1379169187145</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1379169187145</updated>
+    </task>
+    <task id="LOCAL-00003" summary="implemented Android">
+      <created>1379172346018</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1379172346018</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Final tweaks to native code">
+      <created>1379181691798</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1379181691798</updated>
+    </task>
+    <task id="LOCAL-00005" summary="documentation">
+      <created>1379183813778</created>
+      <option name="number" value="00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1379183813778</updated>
+    </task>
+    <task id="LOCAL-00006" summary="documentation">
+      <created>1379184483613</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1379184483613</updated>
+    </task>
+    <task id="LOCAL-00007" summary="documentation">
+      <created>1379185080239</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1379185080239</updated>
+    </task>
+    <task id="LOCAL-00008" summary="documentation">
+      <created>1379185169878</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1379185169878</updated>
+    </task>
+    <task id="LOCAL-00009" summary="documentation">
+      <created>1379185254887</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1379185254887</updated>
+    </task>
+    <task id="LOCAL-00010" summary="pkg fix">
+      <created>1379185351005</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1379185351005</updated>
+    </task>
+    <task id="LOCAL-00011" summary="pkg fix">
+      <created>1379185433809</created>
+      <option name="number" value="00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1379185433809</updated>
+    </task>
+    <task id="LOCAL-00012" summary="cleanup android config">
+      <created>1379185826327</created>
+      <option name="number" value="00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1379185826327</updated>
+    </task>
+    <task id="LOCAL-00013" summary="typo">
+      <created>1379653278467</created>
+      <option name="number" value="00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1379653278467</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fixed Android src folder">
+      <created>1380314463052</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1380314463052</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Cordova 3.0 compatibility">
+      <created>1381137051820</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1381137051820</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Cordova 3.0 compatibility">
+      <created>1381142281436</created>
+      <option name="number" value="00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1381142281436</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Calendar 2.0 for NYC">
+      <created>1381303285138</created>
+      <option name="number" value="00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1381303285138</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Added createCalendar and deleteCalandar">
+      <created>1381303781851</created>
+      <option name="number" value="00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1381303781851</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Added methods related to specific calendars">
+      <created>1381406718571</created>
+      <option name="number" value="00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1381406718571</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Docs">
+      <created>1381406988669</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1381406988669</updated>
+    </task>
+    <task id="LOCAL-00021" summary="wrong parent">
+      <created>1381410108327</created>
+      <option name="number" value="00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1381410108327</updated>
+    </task>
+    <task id="LOCAL-00022" summary="version++">
+      <created>1381410455281</created>
+      <option name="number" value="00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1381410455281</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Android: make a distinction between success and cancel when adding an event">
+      <created>1384341047403</created>
+      <option name="number" value="00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1384341047403</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Android: make a distinction between success and cancel when adding an event --&gt; doesn't seem to work&#10;">
+      <created>1391459318424</created>
+      <option name="number" value="00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1391459318424</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Added more functions for Android">
+      <created>1392480926342</created>
+      <option name="number" value="00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1392480926342</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Cleanup">
+      <created>1394137580750</created>
+      <option name="number" value="00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1394137580750</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Increased the Android reminder from 5 to 60 minutes">
+      <created>1394137757572</created>
+      <option name="number" value="00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1394137757572</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Fixed param (issue #39)">
+      <created>1394952456191</created>
+      <option name="number" value="00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1394952456191</updated>
+    </task>
+    <task id="LOCAL-00029" summary="A few fixes for the alarms addon (issue #13)">
+      <created>1394980643165</created>
+      <option name="number" value="00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1394980643165</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Well, now it compiles at least :)">
+      <created>1394982558240</created>
+      <option name="number" value="00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1394982558240</updated>
+    </task>
+    <task id="LOCAL-00031" summary="And now the iOS code compiles as well.&#10;">
+      <created>1394982988761</created>
+      <option name="number" value="00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1394982988761</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Making the reminder work on Kitkat">
+      <created>1394985034400</created>
+      <option name="number" value="00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1394985034400</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Prepared the plugin for passing more options to the native code (instead of only the alarmTime)">
+      <created>1395052359375</created>
+      <option name="number" value="00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1395052359375</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Added the function listCalendars() to solve #40">
+      <created>1395084143022</created>
+      <option name="number" value="00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1395084143022</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Refactored the options which can be passed to the createEventWithOptions functions. Now allows a null firstReminderMinutes value, which doesn't create a reminder (for both iOS and Android).">
+      <created>1395182794832</created>
+      <option name="number" value="00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1395182794832</updated>
+    </task>
+    <task id="LOCAL-00036" summary="style fix">
+      <created>1395182984633</created>
+      <option name="number" value="00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1395182984633</updated>
+    </task>
+    <task id="LOCAL-00037" summary="clarified firstReminderMinutes in README">
+      <created>1395183039237</created>
+      <option name="number" value="00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1395183039237</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Fix for #41 (forgot to update part of the JS file.. doh!)">
+      <created>1395699330956</created>
+      <option name="number" value="00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1395699330956</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Added a TODO for issue https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin/issues/52">
+      <created>1397500019118</created>
+      <option name="number" value="00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1397500019118</updated>
+    </task>
+    <task id="LOCAL-00040" summary="[#46] all relevant plugin methods now check for a blocked calendar before trying to use it">
+      <created>1398871808107</created>
+      <option name="number" value="00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1398871808107</updated>
+    </task>
+    <task id="LOCAL-00041" summary="[#56] when the app doesn't pass proper JS date objects the native code receives null-dates which results in unexpected behaviour.">
+      <created>1398881099862</created>
+      <option name="number" value="00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1398881099862</updated>
+    </task>
+    <task id="LOCAL-00042" summary="[#51] added a note in the code about the cancel button on Android">
+      <created>1398883304537</created>
+      <option name="number" value="00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1398883304537</updated>
+    </task>
+    <task id="LOCAL-00043" summary="cleanup">
+      <created>1398883846166</created>
+      <option name="number" value="00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1398883846166</updated>
+    </task>
+    <task id="LOCAL-00044" summary="[#49] iOS: when using the find functions, objects without notes or location will not be completely returned. Android: don't save and search &quot;null&quot; strings.">
+      <created>1398887895509</created>
+      <option name="number" value="00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1398887895509</updated>
+    </task>
+    <task id="LOCAL-00045" summary="[#46] when creating a calendar on iOS we want the errorCallback to be invoked when it fails (likely because of blocked access to the calendar by the user)">
+      <created>1398891456870</created>
+      <option name="number" value="00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1398891456870</updated>
+    </task>
+    <task id="LOCAL-00046" summary="[#57] createCalendar (iOS only) now support passing in a color">
+      <created>1399061643622</created>
+      <option name="number" value="00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1399061643622</updated>
+    </task>
+    <task id="LOCAL-00047" summary="[#57] createCalendar (iOS only) now support passing in a color">
+      <created>1399062156552</created>
+      <option name="number" value="00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1399062156552</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Added options.secondReminderMinutes to the createEvent method">
+      <created>1399231504396</created>
+      <option name="number" value="00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1399231504397</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Added options.secondReminderMinutes to the createEvent method">
+      <created>1399231805156</created>
+      <option name="number" value="00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1399231805156</updated>
+    </task>
+    <task id="LOCAL-00050" summary="[#29] added iOS options for calendarName and recurrence (daily, weekly, monthly, yearly) when creating an event. Android will follow in a while.">
+      <created>1402827570570</created>
+      <option name="number" value="00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1402827570571</updated>
+    </task>
+    <task id="LOCAL-00051" summary="[#29] added iOS options for calendarName and recurrence (daily, weekly, monthly, yearly) when creating an event. Android impl done as well.">
+      <created>1402863046042</created>
+      <option name="number" value="00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1402863046042</updated>
+    </task>
+    <task id="LOCAL-00052" summary="[#53] and [#76] don't retrieve deleted events in listEventsInRange">
+      <created>1404797627942</created>
+      <option name="number" value="00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1404797627942</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Added a few tests - you gotta start somewhere ey?">
+      <created>1405365324406</created>
+      <option name="number" value="00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1405365324406</updated>
+    </task>
+    <task id="LOCAL-00054" summary="#92 deal with null params">
+      <created>1409490563917</created>
+      <option name="number" value="00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1409490563917</updated>
+    </task>
+    <task id="LOCAL-00055" summary="#96 When recurrenceEndDate is set to null on IOS it does not create events">
+      <created>1410081405665</created>
+      <option name="number" value="00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1410081405665</updated>
+    </task>
+    <task id="LOCAL-00056" summary="#108 fixed compile error">
+      <created>1414077966442</created>
+      <option name="number" value="00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1414077966442</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Fixed a lot of (all) Cordova 3.6 deprecation warnings">
+      <created>1414088535190</created>
+      <option name="number" value="00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1414088535197</updated>
+    </task>
+    <task id="LOCAL-00058" summary="#104 Added attendees to events returned from finding events and calendar types">
+      <created>1414090663478</created>
+      <option name="number" value="00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1414090663478</updated>
+    </task>
+    <task id="LOCAL-00059" summary="#104 Added attendees to events returned from finding events and calendar types">
+      <created>1414091486496</created>
+      <option name="number" value="00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1414091486496</updated>
+    </task>
+    <task id="LOCAL-00060" summary="#105 Open calendar app feature">
+      <created>1414695279857</created>
+      <option name="number" value="00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1414695279858</updated>
+    </task>
+    <task id="LOCAL-00061" summary="#102 deleteEvent if startDate or endDate is not Date exception will be thrown in IOS">
+      <created>1414696531194</created>
+      <option name="number" value="00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1414696531194</updated>
+    </task>
+    <task id="LOCAL-00062" summary="#124 createEventWithOptions - the success response from android and ios is different!">
+      <created>1421252330168</created>
+      <option name="number" value="00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1421252330168</updated>
+    </task>
+    <task id="LOCAL-00063" summary="#89 Bug in Recurrence Event">
+      <created>1426258092081</created>
+      <option name="number" value="00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1426258092081</updated>
+    </task>
+    <task id="LOCAL-00064" summary="#153 calendarId null">
+      <created>1428569912043</created>
+      <option name="number" value="00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1428569912043</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="46117000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="435" y="23" width="1005" height="873" extended-state="0" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25233644" sideWeight="0.6713092" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3271523" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3231788" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22741432" sideWeight="0.6713092" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="11" side_tool="false" content_ui="combo" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25233644" sideWeight="0.6713092" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3231788" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22741432" sideWeight="0.6713092" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="11" side_tool="false" content_ui="combo" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3271523" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.m" />
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
+    <MESSAGE value="clarified firstReminderMinutes in README" />
+    <MESSAGE value="Fix for #41 (forgot to update part of the JS file.. doh!)" />
+    <MESSAGE value="Added a TODO for issue https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin/issues/52" />
+    <MESSAGE value="[#46] all relevant plugin methods now check for a blocked calendar before trying to use it" />
+    <MESSAGE value="[#56] when the app doesn't pass proper JS date objects the native code receives null-dates which results in unexpected behaviour." />
+    <MESSAGE value="[#51] added a note in the code about the cancel button on Android" />
+    <MESSAGE value="cleanup" />
+    <MESSAGE value="[#49] iOS: when using the find functions, objects without notes or location will not be completely returned. Android: don't save and search &quot;null&quot; strings." />
+    <MESSAGE value="[#46] when creating a calendar on iOS we want the errorCallback to be invoked when it fails (likely because of blocked access to the calendar by the user)" />
+    <MESSAGE value="[#57] createCalendar (iOS only) now support passing in a color" />
+    <MESSAGE value="Added options.secondReminderMinutes to the createEvent method" />
+    <MESSAGE value="[#29] added iOS options for calendarName and recurrence (daily, weekly, monthly, yearly) when creating an event. Android will follow in a while." />
+    <MESSAGE value="[#29] added iOS options for calendarName and recurrence (daily, weekly, monthly, yearly) when creating an event. Android impl done as well." />
+    <MESSAGE value="[#53] and [#76] don't retrieve deleted events in listEventsInRange" />
+    <MESSAGE value="Added a few tests - you gotta start somewhere ey?" />
+    <MESSAGE value="#92 deal with null params" />
+    <MESSAGE value="#96 When recurrenceEndDate is set to null on IOS it does not create events" />
+    <MESSAGE value="#108 fixed compile error" />
+    <MESSAGE value="Fixed a lot of (all) Cordova 3.6 deprecation warnings" />
+    <MESSAGE value="#104 Added attendees to events returned from finding events and calendar types" />
+    <MESSAGE value="#105 Open calendar app feature" />
+    <MESSAGE value="#102 deleteEvent if startDate or endDate is not Date exception will be thrown in IOS" />
+    <MESSAGE value="#124 createEventWithOptions - the success response from android and ios is different!" />
+    <MESSAGE value="#89 Bug in Recurrence Event" />
+    <MESSAGE value="#153 calendarId null" />
+    <option name="LAST_COMMIT_MESSAGE" value="#153 calendarId null" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/android/nl/xservices/plugins/accessor/LegacyCalendarAccessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1515">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ios/Calendar.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="243" column="24" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="4" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="9" column="17" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/android/nl/xservices/plugins/Calendar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="28" column="36" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/android/nl/xservices/plugins/Calendar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="28" column="36" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/android/nl/xservices/plugins/Calendar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="17" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/android/nl/xservices/plugins/Calendar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.014272122" vertical-offset="0" max-vertical-offset="0">
+          <caret line="1" column="5" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/tests.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
+          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ios/Calendar.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="675">
+          <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ios/Calendar.m">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4754" max-vertical-offset="9405">
+          <caret line="326" column="0" selection-start-line="326" selection-start-column="0" selection-end-line="326" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2522" max-vertical-offset="3675">
+          <caret line="184" column="0" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/demo/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="773" max-vertical-offset="1740">
+          <caret line="62" column="70" selection-start-line="62" selection-start-column="70" selection-end-line="62" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/Calendar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="152" max-vertical-offset="3360">
+          <caret line="23" column="38" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/android/nl/xservices/plugins/accessor/CalendarProviderAccessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="945" max-vertical-offset="1425">
+          <caret line="127" column="10" selection-start-line="127" selection-start-column="10" selection-end-line="127" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/android/nl/xservices/plugins/accessor/LegacyCalendarAccessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1035" max-vertical-offset="1515">
+          <caret line="123" column="14" selection-start-line="123" selection-start-column="14" selection-end-line="123" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/android/nl/xservices/plugins/accessor/AbstractCalendarAccessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5735" max-vertical-offset="7230">
+          <caret line="436" column="30" selection-start-line="436" selection-start-column="30" selection-end-line="436" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14442916" vertical-offset="0" max-vertical-offset="1095">
+          <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/android/nl/xservices/plugins/Calendar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44704264" vertical-offset="2750" max-vertical-offset="4395">
+          <caret line="225" column="76" selection-start-line="225" selection-start-column="76" selection-end-line="225" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
