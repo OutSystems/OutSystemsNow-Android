@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="android-support-v7-appcompat">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Outsytems/platforms/android/libs/android-support-v7-appcompat.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
