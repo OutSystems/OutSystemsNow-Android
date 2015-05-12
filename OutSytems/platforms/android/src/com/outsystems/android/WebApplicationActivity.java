@@ -117,6 +117,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     private boolean webViewLoadingFailed = false;
     private boolean spinnerEnabled = false;
 
+    // Mobile Improvements
+    private boolean applicationHasPreloader = false;
+
 
     public OnClickListener onClickListenerBack = new OnClickListener() {
 
@@ -313,6 +316,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             buttonECT.setOnClickListener(this.onClickListenerOpenECT);
             buttonECT.setVisibility(View.GONE);
         }
+
+        // Mobile Improvements
+        this.applicationHasPreloader = application != null && application.hasPreloader();
 
 
         // Load Application
@@ -658,9 +664,11 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                 startActivity(browserIntent);
                 return true;
             }
-
-            if (imageView.getVisibility() != View.VISIBLE){
-                startLoadingAnimation();
+            EventLogger.logInfoMessage(this.getClass(),"PRELOADER: shouldOverrideUrlLoading - hasPreloader:"+applicationHasPreloader);
+            if (!applicationHasPreloader) {
+                if (imageView.getVisibility() != View.VISIBLE) {
+                    startLoadingAnimation();
+                }
             }
 
             return super.shouldOverrideUrlLoading(view, url);
@@ -678,7 +686,15 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             if(!webViewLoadingFailed)
                 cordovaWebView.setVisibility(View.VISIBLE);
 
-            stopLoadingAnimation();
+            EventLogger.logInfoMessage(this.getClass(),"PRELOADER: onPageFinished - hasPreloader:"+applicationHasPreloader);
+            if (applicationHasPreloader){
+                EventLogger.logInfoMessage(this.getClass(),"PRELOADER: CurrentURL: "+url);
+                applicationHasPreloader = url.contains("preloader.html");
+            }
+            else{
+                stopLoadingAnimation();
+            }
+
             showNetworkErrorView(webViewLoadingFailed);
         }
 
@@ -686,8 +702,13 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
             EventLogger.logMessage(getClass(), "________________ ONPAGESTARTED _________________");
-            if (imageView.getVisibility() != View.VISIBLE){
-                startLoadingAnimation();
+
+
+            EventLogger.logInfoMessage(this.getClass(),"PRELOADER: onPageStarted - hasPreloader:"+applicationHasPreloader);
+            if (!applicationHasPreloader) {
+                if (imageView.getVisibility() != View.VISIBLE) {
+                    startLoadingAnimation();
+                }
             }
         }
 

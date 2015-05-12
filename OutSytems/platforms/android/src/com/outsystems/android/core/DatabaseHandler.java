@@ -38,7 +38,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     // Database Name
     private static final String DATABASE_NAME = "hubManager";
@@ -76,6 +76,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_APPLICATION_DESCRIPTION = "description";
     private static final String KEY_APPLICATION_IMAGE = "image";
     private static final String KEY_APPLICATION_PATH = "path";
+    private static final String KEY_APPLICATION_PRELOADER = "preloader";
 
 
     public DatabaseHandler(Context context) {
@@ -111,6 +112,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     + KEY_APPLICATION_DESCRIPTION   + " TEXT,"
                     + KEY_APPLICATION_IMAGE         + " NUMERIC,"
                     + KEY_APPLICATION_PATH          + " TEXT,"
+                    + KEY_APPLICATION_PRELOADER     + " NUMERIC,"
                     + " PRIMARY KEY ("+KEY_APPLICATION_HOST+", "+KEY_APPLICATION_USER_NAME+", "+KEY_APPLICATION_NAME+")"
                 +")";
 
@@ -134,8 +136,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGIN_APPLICATIONS);
         */
 
-        // Create tables again
-        onCreate(db);
+        try {
+
+            // Update Applications table
+            db.execSQL("ALTER TABLE "+TABLE_LOGIN_APPLICATIONS+" ADD "+ KEY_APPLICATION_PRELOADER  + " NUMERIC");
+
+            // Create tables again
+            onCreate(db);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     // Adding new contact
@@ -384,6 +395,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 values.put(KEY_APPLICATION_DESCRIPTION, app.getDescription());
                 values.put(KEY_APPLICATION_IMAGE, app.getImageId());
                 values.put(KEY_APPLICATION_PATH, app.getPath());
+                values.put(KEY_APPLICATION_PRELOADER, app.hasPreloader() ? 1 : 0);
 
                 // Inserting Row
                 db.insert(TABLE_LOGIN_APPLICATIONS, null, values);
@@ -413,8 +425,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 String desc = cursor.getString(3);
                 int image = cursor.getInt(4);
                 String path = cursor.getString(5);
+                Boolean preloader = cursor.getInt(6) > 0;
 
-                Application app = new Application(name, image, desc, path);
+                Application app = new Application(name, image, desc, path, preloader);
 
                 result.add(app);
 
