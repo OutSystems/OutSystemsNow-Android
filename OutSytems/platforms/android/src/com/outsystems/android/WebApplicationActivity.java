@@ -684,7 +684,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             }
 
             if(progressBar != null)
-                progressBar.setProgress(0);
+                progressBar.setProgress(10);
 
             return super.shouldOverrideUrlLoading(view, url);
         }
@@ -1162,7 +1162,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                   viewLoading.setVisibility(View.VISIBLE);
             }
 
-            if(progressBar !=null)
+            if(progressBar !=null && newProgress > progressBar.getProgress())
                 progressBar.setProgress(newProgress);
 
             if(newProgress == 100){
