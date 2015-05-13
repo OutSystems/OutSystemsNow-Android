@@ -1,5 +1,6 @@
 package com.outsystems.android.core;
 
+import org.apache.cordova.CordovaChromeClient;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaWebViewClient;
@@ -7,10 +8,12 @@ import org.apache.cordova.CordovaWebViewClient;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.webkit.WebChromeClient;
 import android.webkit.WebViewClient;
 
 public class CustomWebView extends CordovaWebView {
 	private CordovaWebViewClient webViewClient;
+    private CordovaChromeClient chromeClient;
 	
 	public CustomWebView(Context context) {
 		super(context);
@@ -47,5 +50,19 @@ public class CustomWebView extends CordovaWebView {
     		webViewClient = super.makeWebViewClient(cordova);
     	}
     	return this.webViewClient;
+    }
+
+    @Override
+    public void setWebChromeClient(WebChromeClient client) {
+        this.chromeClient = (CordovaChromeClient)client;
+        super.setWebChromeClient(client);
+    }
+
+    @Override
+    public CordovaChromeClient makeWebChromeClient(CordovaInterface cordova) {
+        if(this.chromeClient == null){
+            this.chromeClient = super.makeWebChromeClient(cordova);
+        }
+        return this.chromeClient;
     }
 }

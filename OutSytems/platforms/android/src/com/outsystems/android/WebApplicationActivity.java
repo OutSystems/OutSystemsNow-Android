@@ -10,8 +10,6 @@ package com.outsystems.android;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -45,8 +43,11 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
+import android.util.Log;
 import android.util.StateSet;
 import android.view.KeyEvent;
 import android.view.View;
@@ -56,9 +57,11 @@ import android.view.animation.AnimationUtils;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.DownloadListener;
+import android.webkit.JsResult;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageButton;
@@ -119,7 +122,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     // Mobile Improvements
     private boolean applicationHasPreloader = false;
-
+    private ProgressBar progressBar;
 
     public OnClickListener onClickListenerBack = new OnClickListener() {
 
@@ -212,7 +215,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         }
 
         cordovaWebView.setWebViewClient(new CordovaCustomWebClient(this, cordovaWebView));
-        cordovaWebView.setWebChromeClient(new CordovaChromeClient(this, cordovaWebView));
+        CordovaCustomChromeClient chromeClient = new CordovaCustomChromeClient(this,cordovaWebView);
+        cordovaWebView.setWebChromeClient(chromeClient);
+
         cordovaWebView.getSettings().setJavaScriptEnabled(true);
         cordovaWebView.getSettings().setLightTouchEnabled(true);
 
@@ -319,7 +324,14 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         // Mobile Improvements
         this.applicationHasPreloader = application != null && application.hasPreloader();
+        this.progressBar = (ProgressBar)this.findViewById(R.id.progressBar);
+        this.progressBar.setProgress(0);
+        this.progressBar.setSecondaryProgress(0);
+        chromeClient.setProgressBar(this.progressBar);
 
+        if(applicationHasPreloader){
+            ((LinearLayout) findViewById(R.id.view_loading)).setVisibility(View.GONE);
+        }
 
         // Load Application
 
@@ -482,7 +494,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         // Code to send info about File Chooser
         if (cordovaWebView != null && requestCode == CordovaChromeClient.FILECHOOSER_RESULTCODE) {
-            ValueCallback<Uri> mUploadMessage = this.cordovaWebView.getWebChromeClient().getValueCallback();
+            ValueCallback<Uri> mUploadMessage = ((CordovaChromeClient)this.cordovaWebView.getWebChromeClient()).getValueCallback();
             EventLogger.logMessage(getClass(), "did we get here?");
             if (null == mUploadMessage)
                 return;
@@ -671,6 +683,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                 }
             }
 
+            if(progressBar != null)
+                progressBar.setProgress(0);
+
             return super.shouldOverrideUrlLoading(view, url);
         }
 
@@ -787,9 +802,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
 	    imageView.setVisibility(View.VISIBLE);
 
-	    LoadingTask loadingTask = new LoadingTask();
-		Timer timer = new Timer();
-		timer.schedule(loadingTask, 500);
     }
 
     /**
@@ -801,7 +813,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             imageView.setVisibility(View.GONE);
             imageView.startAnimation(animationFadeOut);
         }
-        spinnerStop();
+        //spinnerStop();
+
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
@@ -1006,25 +1019,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         return directory;
     }
 
-
-
-	private class LoadingTask extends TimerTask {
-
-		  @Override
-		  public void run() {
-
-		   runOnUiThread(new Runnable(){
-
-		    @Override
-		    public void run() {
-		    	if (imageView.getVisibility() == View.VISIBLE)
-		    		spinnerStart();
-		    }});
-		  }
-
-	}
-
-
     /**
      * Offline Support
      */
@@ -1130,5 +1124,70 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     }
 
 
+    /**
+     * The Class CordovaCustomWebClient.
+     */
+    public class CordovaCustomChromeClient extends CordovaChromeClient{
+
+        private ProgressBar progressBar;
+
+        public CordovaCustomChromeClient(CordovaInterface ctx, CordovaWebView app) {
+            super(ctx, app);
+        }
+
+
+        @Override
+        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+            return super.onJsAlert(view, url, message, result);
+        }
+
+        public ProgressBar getProgressBar() {
+            return progressBar;
+        }
+
+        public void setProgressBar(ProgressBar progressBar) {
+            this.progressBar = progressBar;
+        }
+
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+
+            if(applicationHasPreloader)
+                return;
+
+            final LinearLayout viewLoading = (LinearLayout) findViewById(R.id.view_loading);
+
+            if(newProgress < 100 && viewLoading != null && viewLoading.getVisibility() == View.GONE){
+                  viewLoading.setVisibility(View.VISIBLE);
+            }
+
+            if(progressBar !=null)
+                progressBar.setProgress(newProgress);
+
+            if(newProgress == 100){
+                final Animation animationFadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
+                animationFadeOut.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        viewLoading.setVisibility(View.GONE);
+                        progressBar.setProgress(0);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+                viewLoading.startAnimation(animationFadeOut);
+            }
+
+        }
+    }
 
 }
