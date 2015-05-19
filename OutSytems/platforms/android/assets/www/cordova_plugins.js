@@ -1,13 +1,6 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "file": "plugins/org.apache.cordova.device/www/device.js",
-        "id": "org.apache.cordova.device.device",
-        "clobbers": [
-            "device"
-        ]
-    },
-    {
         "file": "plugins/com.phonegap.plugins.barcodescanner/www/barcodescanner.js",
         "id": "com.phonegap.plugins.barcodescanner.BarcodeScanner",
         "clobbers": [
@@ -265,12 +258,40 @@ module.exports = [
     {
         "file": "plugins/nl.x-services.plugins.calendar/test/tests.js",
         "id": "nl.x-services.plugins.calendar.tests"
+    },
+    {
+        "file": "plugins/org.apache.cordova.device/www/device.js",
+        "id": "org.apache.cordova.device.device",
+        "clobbers": [
+            "device"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.network-information/www/network.js",
+        "id": "org.apache.cordova.network-information.network",
+        "clobbers": [
+            "navigator.connection",
+            "navigator.network.connection"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.network-information/www/Connection.js",
+        "id": "org.apache.cordova.network-information.Connection",
+        "clobbers": [
+            "Connection"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-sim/www/sim.js",
+        "id": "cordova-plugin-sim.Sim",
+        "clobbers": [
+            "window.plugins.sim"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "org.apache.cordova.device": "0.2.11-dev",
     "com.phonegap.plugins.barcodescanner": "2.0.0",
     "org.apache.cordova.console": "0.2.7",
     "org.apache.cordova.contacts": "0.2.13",
@@ -279,7 +300,10 @@ module.exports.metadata =
     "org.apache.cordova.battery-status": "0.2.7",
     "org.apache.cordova.file": "1.1.0",
     "org.apache.cordova.camera": "0.3.2",
-    "nl.x-services.plugins.calendar": "4.3.1"
+    "nl.x-services.plugins.calendar": "4.3.1",
+    "org.apache.cordova.device": "0.3.0",
+    "org.apache.cordova.network-information": "0.2.15",
+    "cordova-plugin-sim": "1.0.2"
 }
 // BOTTOM OF METADATA
 });
