@@ -246,26 +246,37 @@ public class BaseActivity extends ActionBarActivity {
         });
     }
 
-    public void doOnMessageReceive(String message) {
-        try {
-            JSONObject messageJson = new JSONObject(message);
-            if (messageJson.has("title")) {
-                String title = messageJson.getString("title");
-                AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
-                builder.setMessage(title).setTitle(getString(R.string.app_name));
-                builder.setNeutralButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+    public void doOnMessageReceive(final String message) {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    JSONObject messageJson = new JSONObject(message);
+                    if (messageJson.has("title")) {
+                        // Showing a dialog when the app is going to background can cause some crashs
+                        // http://blackriver.to/2012/08/android-annoying-exception-unable-to-add-window-is-your-activity-running/
+                        if (!isFinishing()) {
+                            String title = messageJson.getString("title");
+                            AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
+                            builder.setMessage(title).setTitle(getString(R.string.app_name));
+                            builder.setNeutralButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            builder.show();
+                        }
                     }
-                });
-
-                builder.show();
+                } catch (Exception e) {
+                    EventLogger.logError(getClass(), e);
+                }
             }
-        } catch (Exception e) {
-            EventLogger.logError(getClass(), e);
-        }
+        });
     }
     
     /**
