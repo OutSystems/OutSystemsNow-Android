@@ -406,6 +406,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public List<Application> getLoginApplications(String hostname, String username){
         List<Application> result = new ArrayList<Application>();
+
+        // Hostname and Username are required
+        if(hostname == null || username == null)
+            return result;
+
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Select All Query

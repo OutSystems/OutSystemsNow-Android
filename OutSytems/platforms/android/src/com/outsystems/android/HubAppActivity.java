@@ -110,26 +110,15 @@ public class HubAppActivity extends BaseActivity {
     private String checkEnvironmentURL(String url){
         String result = url.replaceAll(" ", "");
 
-        try {
-            URL javaURL = new URL(result);
-            result = javaURL.getHost();
+        String http = "http://";
+        String https = "https://";
 
-        } catch (MalformedURLException e) {
-            String http = "http://";
-            String https = "https://";
-
-            if(result.startsWith(http)){
-                result = result.substring(http.length());
-            }
-            else{
-                if(result.startsWith(https)){
-                    result = result.substring(https.length());
-                }
-                else{
-                    int slash = result.indexOf("/");
-                    if(slash > 0)
-                        result = result.substring(0,slash);
-                }
+        if(result.startsWith(http)){
+            result = result.substring(http.length());
+        }
+        else{
+            if(result.startsWith(https)){
+                result = result.substring(https.length());
             }
         }
 

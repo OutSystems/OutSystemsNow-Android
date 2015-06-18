@@ -508,10 +508,14 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         CordovaPlugin callback = this.activityResultCallback;
         if (callback != null) {
-            if (intent != null && intent.getAction() != null && intent.getAction().contains("SCAN")) {
-                callback.onActivityResult(BarcodeScanner.REQUEST_CODE, resultCode, intent);
-            } else {
-                callback.onActivityResult(requestCode, resultCode, intent);
+            try {
+                if (intent != null && intent.getAction() != null && intent.getAction().contains("SCAN")) {
+                    callback.onActivityResult(BarcodeScanner.REQUEST_CODE, resultCode, intent);
+                } else {
+                    callback.onActivityResult(requestCode, resultCode, intent);
+                }
+            }catch (Exception e){
+                EventLogger.logError(getClass(), e);
             }
         }
         super.onActivityResult(requestCode, resultCode, intent);
