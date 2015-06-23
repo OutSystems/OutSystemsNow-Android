@@ -43,11 +43,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.net.http.SslError;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.SystemClock;
-import android.util.Log;
 import android.util.StateSet;
 import android.view.KeyEvent;
 import android.view.View;
@@ -60,8 +57,6 @@ import android.webkit.DownloadListener;
 import android.webkit.JsResult;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
-import android.webkit.WebBackForwardList;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageButton;
@@ -74,6 +69,7 @@ import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.CustomWebView;
 import com.outsystems.android.core.WebServicesClient;
+import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.helpers.OfflineSupport;
 import com.outsystems.android.mobileect.MobileECTController;
@@ -189,6 +185,12 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         // Hide action bar
         getSupportActionBar().hide();
+
+        // Check if deep link has valid settings
+        if(DeepLinkController.getInstance().hasValidSettings()){
+            //Reached the last activity... Time to invalidate it!
+            DeepLinkController.getInstance().invalidate();
+        }
 
         cordovaWebView = (CustomWebView) this.findViewById(R.id.mainView);
         imageView = (ImageView) this.findViewById(R.id.image_view);
@@ -682,6 +684,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             }
             EventLogger.logInfoMessage(this.getClass(),"PRELOADER: shouldOverrideUrlLoading - hasPreloader:"+applicationHasPreloader);
             if (!applicationHasPreloader) {
+                if(imageView == null)
+                    imageView = (ImageView) findViewById(R.id.image_view);
+
                 if (imageView.getVisibility() != View.VISIBLE) {
                     startLoadingAnimation();
                 }
@@ -725,6 +730,9 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
             EventLogger.logInfoMessage(this.getClass(),"PRELOADER: onPageStarted - hasPreloader:"+applicationHasPreloader);
             if (!applicationHasPreloader) {
+                if(imageView == null)
+                    imageView = (ImageView) findViewById(R.id.image_view);
+
                 if (imageView.getVisibility() != View.VISIBLE) {
                     startLoadingAnimation();
                 }
