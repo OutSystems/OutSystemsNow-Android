@@ -54,4 +54,11 @@
         <item name="android:activityCloseExitAnimation">@anim/activity_close_exit</item>
     </style>
 
+    <style name="OSProgressBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/os_progress_bar</item>
+        <item name="android:minHeight">5dip</item>
+        <item name="android:maxHeight">10dip</item>
+    </style>
+
 </resources>

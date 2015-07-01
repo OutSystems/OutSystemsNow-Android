@@ -22,9 +22,6 @@
     <feature name="Loader">
         <param name="android-package" value="com.outsystems.android.Loader" />
     </feature>
-    <feature name="Device">
-        <param name="android-package" value="org.apache.cordova.device.Device" />
-    </feature>
     <feature name="BarcodeScanner">
         <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
     </feature>
@@ -49,5 +46,14 @@
     </feature>
     <feature name="Calendar">
         <param name="android-package" value="nl.xservices.plugins.Calendar" />
+    </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="NetworkStatus">
+        <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
+    </feature>
+    <feature name="Sim">
+        <param name="android-package" value="com.pbakondy.Sim" />
     </feature>
 </widget>

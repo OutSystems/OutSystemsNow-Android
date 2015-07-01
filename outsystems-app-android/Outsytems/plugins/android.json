@@ -9,10 +9,6 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"BarcodeScanner\"><param name=\"android-package\" value=\"com.phonegap.plugins.barcodescanner.BarcodeScanner\" /></feature>",
                             "count": 1
                         },
@@ -42,6 +38,18 @@
                         },
                         {
                             "xml": "<feature name=\"Calendar\"><param name=\"android-package\" value=\"nl.xservices.plugins.Calendar\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Sim\"><param name=\"android-package\" value=\"com.pbakondy.Sim\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -73,6 +81,14 @@
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
                             "count": 2
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />",
+                            "count": 1
                         }
                     ],
                     "/manifest": [
@@ -598,9 +614,6 @@
         }
     },
     "installed_plugins": {
-        "org.apache.cordova.device": {
-            "PACKAGE_NAME": "com.outsystems.android"
-        },
         "com.phonegap.plugins.barcodescanner": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
@@ -626,6 +639,15 @@
             "PACKAGE_NAME": "com.outsystems.android"
         },
         "nl.x-services.plugins.calendar": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "org.apache.cordova.device": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "org.apache.cordova.network-information": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "cordova-plugin-sim": {
             "PACKAGE_NAME": "com.outsystems.android"
         }
     },

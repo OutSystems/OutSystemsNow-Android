@@ -27,6 +27,8 @@ public class Application implements Serializable {
 
     private String path;
 
+    private boolean preloader;
+
     public Application(String name, int imageId, String description) {
         super();
         this.name = name;
@@ -34,12 +36,13 @@ public class Application implements Serializable {
         this.description = description;
     }
 
-    public Application(String name, int imageId, String description, String path) {
+    public Application(String name, int imageId, String description, String path, boolean preloader) {
         super();
         this.name = name;
         this.imageId = imageId;
         this.description = description;
         this.path = path;
+        this.preloader = preloader;
     }
 
     public String getName() {
@@ -72,6 +75,14 @@ public class Application implements Serializable {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public boolean hasPreloader() {
+        return preloader;
+    }
+
+    public void setPreloader(boolean preloader) {
+        this.preloader = preloader;
     }
 
 }
