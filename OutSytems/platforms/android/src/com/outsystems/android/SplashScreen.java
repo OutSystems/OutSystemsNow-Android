@@ -7,6 +7,7 @@
  */
 package com.outsystems.android;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.List;
 
 import android.app.Activity;
@@ -14,7 +15,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.ContactsContract;
 
 import com.arellomobile.android.push.PushManager;
 import com.crashlytics.android.Crashlytics;
@@ -43,7 +43,7 @@ public class SplashScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Crashlytics.start(this);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_splashscreen);
         
         // Push Messages    	

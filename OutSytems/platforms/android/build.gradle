@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'android'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
@@ -6,6 +21,9 @@ dependencies {
     compile project(':AndroidUniversalImageLoaderLib')
     compile project(':android-support-v7-appcompat')
     compile project(':MobileECT')
+    compile('com.crashlytics.sdk.android:crashlytics:2.4.0@aar') {
+        transitive = true;
+    }
 }
 
 android {
