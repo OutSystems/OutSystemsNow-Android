@@ -19,6 +19,7 @@
     <access launch-external="yes" origin="sms:*" />
     <access launch-external="yes" origin="market:*" />
     <access origin="*" />
+    <preference name="LoadUrlTimeoutValue" value="30000"/>
     <feature name="Loader">
         <param name="android-package" value="com.outsystems.android.Loader" />
     </feature>

@@ -342,7 +342,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             if(!url.endsWith("/")){
                 url = url + "/";
             }
-
             cordovaWebView.loadUrl(url);
         } else {
             ((LinearLayout) findViewById(R.id.view_loading)).setVisibility(View.GONE);
@@ -689,11 +688,14 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
                 if (imageView.getVisibility() != View.VISIBLE) {
                     startLoadingAnimation();
-                }
-            }
 
-            if(progressBar != null)
-                progressBar.setProgress(10);
+                    if(progressBar != null) {
+                        progressBar.setProgress(5);
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
+                }
+
+            }
 
             return super.shouldOverrideUrlLoading(view, url);
         }
@@ -735,6 +737,11 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
                 if (imageView.getVisibility() != View.VISIBLE) {
                     startLoadingAnimation();
+
+                    if(progressBar != null) {
+                        progressBar.setProgress(5);
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }

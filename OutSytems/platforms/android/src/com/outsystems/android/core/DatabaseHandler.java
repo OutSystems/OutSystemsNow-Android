@@ -141,10 +141,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             // Update Applications table
             db.execSQL("ALTER TABLE "+TABLE_LOGIN_APPLICATIONS+" ADD "+ KEY_APPLICATION_PRELOADER  + " NUMERIC");
 
+        }catch(Exception e){
+
             // Create tables again
             onCreate(db);
 
-        }catch(Exception e){
             e.printStackTrace();
         }
     }
@@ -382,8 +383,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void addLoginApplications(String hostname, String username, List<Application> applications){
         SQLiteDatabase db = this.getWritableDatabase();
-        // Delete previous rows
-        db.delete(TABLE_LOGIN_APPLICATIONS,null,null);
+        try {
+            // Delete previous rows
+            db.delete(TABLE_LOGIN_APPLICATIONS, null, null);
+
+        }catch(android.database.sqlite.SQLiteException e){
+            onCreate(db);
+        }
 
         if(applications != null) {
             for(Application app : applications) {
