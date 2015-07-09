@@ -339,7 +339,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         if (savedInstanceState == null) {
             // Offline Support: app's url must have / at the end of url
-            if(!url.endsWith("/")){
+            if(!url.endsWith("/") && url.indexOf("?") < 0 && !(url.endsWith(".aspx") || url.endsWith(".jsf"))){
                 url = url + "/";
             }
             cordovaWebView.loadUrl(url);
