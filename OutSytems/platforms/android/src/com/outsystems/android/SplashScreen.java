@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.webkit.CookieManager;
 
 import com.arellomobile.android.push.PushManager;
 import com.crashlytics.android.Crashlytics;
@@ -45,7 +46,11 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_splashscreen);
-        
+
+        // Removing session cookies
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.removeSessionCookie();
+
         // Push Messages    	
         try {
             // Create and start push manager
