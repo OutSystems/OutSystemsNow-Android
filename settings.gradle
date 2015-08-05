@@ -1,4 +1,4 @@
-include ':android-support-v7-appcompat', ':MobileECT'
+include ':MobileECT'
 include ':AndroidUniversalImageLoaderLib'
 include ':OutSystems:platforms:android'
 include ':OutSystems:platforms:android:CordovaLib'
