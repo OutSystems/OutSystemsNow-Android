@@ -1,7 +1,385 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="41c41069-a845-439e-8d38-4a525d9eb166" name="Default" comment="" />
+    <list default="true" id="0994efb3-0f2a-4bb0-89ed-72ec74dd217d" name="Default" comment="">
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\Outsytems\platforms\android\libs\android-support-v4.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\Outsytems\platforms\android\libs\android-support-v7-appcompat.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\.classpath" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\.project" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\.settings\org.eclipse.jdt.core.prefs" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\AndroidManifest.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\README.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\android-support-v7-appcompat.iml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\build.gradle" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\libs\android-support-v4.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\libs\android-support-v7-appcompat.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\project.properties" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\anim\abc_fade_in.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\anim\abc_fade_out.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\anim\abc_slide_in_bottom.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\anim\abc_slide_in_top.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\anim\abc_slide_out_bottom.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\anim\abc_slide_out_top.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\color\abc_search_url_text_holo.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ab_bottom_solid_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ab_bottom_solid_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ab_bottom_transparent_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ab_bottom_transparent_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ab_share_pack_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ab_share_pack_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ab_solid_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ab_solid_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ab_stacked_solid_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ab_stacked_solid_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ab_stacked_transparent_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ab_stacked_transparent_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ab_transparent_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ab_transparent_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_cab_background_bottom_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_cab_background_bottom_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_cab_background_top_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_cab_background_top_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_ab_back_holo_dark.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_ab_back_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_cab_done_holo_dark.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_cab_done_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_clear_disabled.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_clear_normal.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_clear_search_api_disabled_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_clear_search_api_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_commit_search_api_holo_dark.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_commit_search_api_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_go.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_go_search_api_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_menu_moreoverflow_normal_holo_dark.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_menu_moreoverflow_normal_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_menu_share_holo_dark.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_menu_share_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_search.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_search_api_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_voice_search.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_ic_voice_search_api_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_list_divider_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_list_divider_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_list_focused_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_list_longpressed_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_list_pressed_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_list_pressed_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_list_selector_disabled_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_list_selector_disabled_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_menu_dropdown_panel_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_menu_dropdown_panel_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_menu_hardkey_panel_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_menu_hardkey_panel_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_spinner_ab_default_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_spinner_ab_default_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_spinner_ab_disabled_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_spinner_ab_disabled_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_spinner_ab_focused_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_spinner_ab_focused_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_spinner_ab_pressed_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_spinner_ab_pressed_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_tab_selected_focused_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_tab_selected_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_tab_selected_pressed_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_tab_unselected_pressed_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_textfield_search_default_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_textfield_search_default_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_textfield_search_right_default_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_textfield_search_right_default_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_textfield_search_right_selected_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_textfield_search_right_selected_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_textfield_search_selected_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-hdpi\abc_textfield_search_selected_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ab_bottom_solid_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ab_bottom_solid_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ab_bottom_transparent_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ab_bottom_transparent_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ab_share_pack_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ab_share_pack_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ab_solid_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ab_solid_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ab_stacked_solid_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ab_stacked_solid_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ab_stacked_transparent_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ab_stacked_transparent_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ab_transparent_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ab_transparent_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_cab_background_bottom_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_cab_background_bottom_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_cab_background_top_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_cab_background_top_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_ab_back_holo_dark.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_ab_back_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_cab_done_holo_dark.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_cab_done_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_clear_disabled.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_clear_normal.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_clear_search_api_disabled_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_clear_search_api_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_commit_search_api_holo_dark.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_commit_search_api_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_go.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_go_search_api_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_menu_moreoverflow_normal_holo_dark.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_menu_moreoverflow_normal_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_menu_share_holo_dark.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_menu_share_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_search.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_search_api_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_voice_search.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_ic_voice_search_api_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_list_divider_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_list_divider_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_list_focused_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_list_longpressed_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_list_pressed_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_list_pressed_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_list_selector_disabled_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_list_selector_disabled_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_menu_dropdown_panel_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_menu_dropdown_panel_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_menu_hardkey_panel_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_menu_hardkey_panel_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_spinner_ab_default_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_spinner_ab_default_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_spinner_ab_disabled_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_spinner_ab_disabled_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_spinner_ab_focused_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_spinner_ab_focused_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_spinner_ab_pressed_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_spinner_ab_pressed_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_tab_selected_focused_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_tab_selected_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_tab_selected_pressed_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_tab_unselected_pressed_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_textfield_search_default_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_textfield_search_default_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_textfield_search_right_default_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_textfield_search_right_default_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_textfield_search_right_selected_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_textfield_search_right_selected_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_textfield_search_selected_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-mdpi\abc_textfield_search_selected_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ab_bottom_solid_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ab_bottom_solid_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ab_bottom_transparent_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ab_bottom_transparent_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ab_share_pack_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ab_share_pack_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ab_solid_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ab_solid_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ab_stacked_solid_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ab_stacked_solid_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ab_stacked_transparent_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ab_stacked_transparent_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ab_transparent_dark_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ab_transparent_light_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_cab_background_bottom_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_cab_background_bottom_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_cab_background_top_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_cab_background_top_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_ab_back_holo_dark.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_ab_back_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_cab_done_holo_dark.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_cab_done_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_clear_disabled.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_clear_search_api_disabled_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_clear_search_api_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_commit_search_api_holo_dark.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_commit_search_api_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_go.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_go_search_api_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_menu_moreoverflow_normal_holo_dark.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_menu_moreoverflow_normal_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_menu_share_holo_dark.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_menu_share_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_search.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_search_api_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_voice_search.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_ic_voice_search_api_holo_light.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_list_divider_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_list_divider_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_list_focused_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_list_longpressed_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_list_pressed_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_list_pressed_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_list_selector_disabled_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_list_selector_disabled_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_menu_dropdown_panel_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_menu_dropdown_panel_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_menu_hardkey_panel_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_menu_hardkey_panel_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_spinner_ab_default_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_spinner_ab_default_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_spinner_ab_disabled_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_spinner_ab_disabled_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_spinner_ab_focused_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_spinner_ab_focused_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_spinner_ab_pressed_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_spinner_ab_pressed_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_tab_selected_focused_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_tab_selected_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_tab_selected_pressed_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_tab_unselected_pressed_holo.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_textfield_search_default_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_textfield_search_default_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_textfield_search_right_default_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_textfield_search_right_default_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_textfield_search_right_selected_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_textfield_search_right_selected_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_textfield_search_selected_holo_dark.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable-xhdpi\abc_textfield_search_selected_holo_light.9.png" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_ic_clear.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_ic_clear_holo_light.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_item_background_holo_dark.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_item_background_holo_light.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_list_selector_background_transition_holo_dark.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_list_selector_background_transition_holo_light.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_list_selector_holo_dark.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_list_selector_holo_light.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_search_dropdown_dark.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_search_dropdown_light.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_spinner_ab_holo_dark.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_spinner_ab_holo_light.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_tab_indicator_ab_holo.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_textfield_searchview_holo_dark.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_textfield_searchview_holo_light.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_textfield_searchview_right_holo_dark.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\drawable\abc_textfield_searchview_right_holo_light.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout-v11\abc_action_bar_decor.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout-v14\abc_activity_chooser_view.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_action_bar_decor.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_action_bar_decor_include.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_action_bar_decor_overlay.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_action_bar_home.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_action_bar_tab.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_action_bar_tabbar.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_action_bar_title_item.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_action_bar_view_list_nav_layout.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_action_menu_item_layout.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_action_menu_layout.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_action_mode_bar.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_action_mode_close_item.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_activity_chooser_view.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_activity_chooser_view_include.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_activity_chooser_view_list_item.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_expanded_menu_layout.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_list_menu_item_checkbox.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_list_menu_item_icon.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_list_menu_item_layout.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_list_menu_item_radio.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_popup_menu_item_layout.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_search_dropdown_item_icons_2line.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\abc_search_view.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\layout\support_simple_spinner_dropdown_item.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-af\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-am\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-ar\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-bg\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-ca\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-cs\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-da\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-de\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-el\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-en-rGB\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-en-rIN\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-es-rUS\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-es\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-et-rEE\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-fa\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-fi\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-fr-rCA\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-fr\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-hi\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-hr\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-hu\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-hy-rAM\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-in\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-it\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-iw\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-ja\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-ka-rGE\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-km-rKH\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-ko\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-land\bools.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-land\config.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-land\dimens.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-large\bools.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-large\config.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-large\dimens.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-lo-rLA\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-lt\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-lv\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-mn-rMN\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-ms-rMY\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-nb\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-nl\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-pl\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-pt-rPT\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-pt\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-ro\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-ru\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-sk\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-sl\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-sr\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-sv\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-sw600dp\config.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-sw600dp\dimens.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-sw\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-th\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-tl\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-tr\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-uk\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-v11\styles_base.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-v11\themes_base.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-v14\styles_base.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-v14\themes_base.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-vi\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-w360dp\dimens.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-w480dp\bools.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-w480dp\config.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-w500dp\dimens.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-w600dp\dimens.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-w720dp\bools.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-xlarge\bools.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-xlarge\dimens.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-zh-rCN\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-zh-rHK\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-zh-rTW\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values-zu\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values\attrs.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values\bools.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values\colors.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values\config.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values\dimens.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values\ids.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values\strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values\styles.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values\styles_base.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values\themes.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\res\values\themes_base.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android\android-support-v7-appcompat\src\.readme" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidUniversalImageLoaderLib/AndroidUniversalImageLoaderLib.iml" afterPath="$PROJECT_DIR$/AndroidUniversalImageLoaderLib/AndroidUniversalImageLoaderLib.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Outsytems/platforms/android/CordovaLib/CordovaLib.iml" afterPath="$PROJECT_DIR$/Outsytems/platforms/android/CordovaLib/CordovaLib.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MobileECT/MobileECT.iml" afterPath="$PROJECT_DIR$/MobileECT/MobileECT.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/MobileECT_unspecified.xml" afterPath="$PROJECT_DIR$/.idea/libraries/MobileECT_unspecified.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Outsytems/OutSytems.iml" afterPath="$PROJECT_DIR$/Outsytems/OutSytems.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Outsytems/platforms/android/android.iml" afterPath="$PROJECT_DIR$/Outsytems/platforms/android/android.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Outsytems/platforms/android/build.gradle" afterPath="$PROJECT_DIR$/Outsytems/platforms/android/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/outsystems-app-android.iml" afterPath="$PROJECT_DIR$/outsystems-app-android.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Outsytems/platforms/platforms.iml" afterPath="$PROJECT_DIR$/Outsytems/platforms/platforms.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.gradle" afterPath="$PROJECT_DIR$/settings.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="outsystems-app-android.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,8 +394,18 @@
     <option name="PATCH_PATH" value="" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view />
+      </state>
+    </system>
+  </component>
   <component name="FavoritesManager">
     <favorites_list name="outsystems-app-android" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GradleLocalSettings">
     <option name="availableProjects">
@@ -54,10 +442,6 @@
               <ExternalProjectPojo>
                 <option name="name" value=":MobileECT" />
                 <option name="path" value="$PROJECT_DIR$/MobileECT" />
-              </ExternalProjectPojo>
-              <ExternalProjectPojo>
-                <option name="name" value=":android-support-v7-appcompat" />
-                <option name="path" value="$PROJECT_DIR$/android-support-v7-appcompat" />
               </ExternalProjectPojo>
               <ExternalProjectPojo>
                 <option name="name" value=":OutSytems:platforms" />
@@ -514,9 +898,9 @@
                 <option name="name" value="preDexRelease" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare outsystems-app-android:android-support-v7-appcompat:unspecified" />
+                <option name="description" value="Prepare com.android.support:appcompat-v7:19.0.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="prepareOutsystemsAppAndroidAndroidSupportV7AppcompatUnspecifiedLibrary" />
+                <option name="name" value="prepareComAndroidSupportAppcompatV71900Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare outsystems-app-android:AndroidUniversalImageLoaderLib:unspecified" />
@@ -1261,17 +1645,17 @@
                 <option name="name" value="preReleaseBuild" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Prepare com.android.support:appcompat-v7:19.0.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/Outsytems" />
+                <option name="name" value="prepareComAndroidSupportAppcompatV71900Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/Outsytems" />
                 <option name="name" value="prepareDebugDependencies" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/Outsytems" />
                 <option name="name" value="prepareDebugTestDependencies" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare outsystems-app-android:android-support-v7-appcompat:unspecified" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/Outsytems" />
-                <option name="name" value="prepareOutsystemsAppAndroidAndroidSupportV7AppcompatUnspecifiedLibrary" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare outsystems-app-android:AndroidUniversalImageLoaderLib:unspecified" />
@@ -1741,17 +2125,17 @@
                 <option name="name" value="preReleaseBuild" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Prepare com.android.support:appcompat-v7:19.0.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/Outsytems/platforms" />
+                <option name="name" value="prepareComAndroidSupportAppcompatV71900Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/Outsytems/platforms" />
                 <option name="name" value="prepareDebugDependencies" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/Outsytems/platforms" />
                 <option name="name" value="prepareDebugTestDependencies" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare outsystems-app-android:android-support-v7-appcompat:unspecified" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/Outsytems/platforms" />
-                <option name="name" value="prepareOutsystemsAppAndroidAndroidSupportV7AppcompatUnspecifiedLibrary" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare outsystems-app-android:AndroidUniversalImageLoaderLib:unspecified" />
@@ -2221,17 +2605,17 @@
                 <option name="name" value="preReleaseBuild" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Prepare com.android.support:appcompat-v7:19.0.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/Outsytems/platforms/android" />
+                <option name="name" value="prepareComAndroidSupportAppcompatV71900Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/Outsytems/platforms/android" />
                 <option name="name" value="prepareDebugDependencies" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/Outsytems/platforms/android" />
                 <option name="name" value="prepareDebugTestDependencies" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare outsystems-app-android:android-support-v7-appcompat:unspecified" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/Outsytems/platforms/android" />
-                <option name="name" value="prepareOutsystemsAppAndroidAndroidSupportV7AppcompatUnspecifiedLibrary" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare outsystems-app-android:AndroidUniversalImageLoaderLib:unspecified" />
@@ -3206,7 +3590,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="11455861639202" />
+        <entry key="C:\Users\jppg\Documents\GitHub\OutSystemsNow-Android\outsystems-app-android" value="10071418027616" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -3660,6 +4044,8 @@
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/external/lombok/lombok-ast/0.2.2/lombok-ast-0.2.2.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/ow2/asm/asm-tree/4.0/asm-tree-4.0-sources.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/ow2/asm/asm-tree/4.0/asm-tree-4.0.jar" />
+                            <option value="C:/Development/android/sdk/extras/android/m2repository/com/android/support/appcompat-v7/19.0.0/appcompat-v7-19.0.0.aar" />
+                            <option value="C:/Development/android/sdk/extras/android/m2repository/com/android/support/support-v4/19.0.0/support-v4-19.0.0.jar" />
                             <option value="$MODULE_DIR$/libs/android-async-http-1.4.5.jar" />
                             <option value="$MODULE_DIR$/libs/android-support-v4.jar" />
                             <option value="$MODULE_DIR$/libs/android-support-v7-appcompat.jar" />
@@ -3742,6 +4128,8 @@
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/external/lombok/lombok-ast/0.2.2/lombok-ast-0.2.2.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/ow2/asm/asm-tree/4.0/asm-tree-4.0-sources.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/ow2/asm/asm-tree/4.0/asm-tree-4.0.jar" />
+                            <option value="C:/Development/android/sdk/extras/android/m2repository/com/android/support/appcompat-v7/19.0.0/appcompat-v7-19.0.0.aar" />
+                            <option value="C:/Development/android/sdk/extras/android/m2repository/com/android/support/support-v4/19.0.0/support-v4-19.0.0.jar" />
                             <option value="$MODULE_DIR$/libs/android-async-http-1.4.5.jar" />
                             <option value="$MODULE_DIR$/libs/android-support-v4.jar" />
                             <option value="$MODULE_DIR$/libs/android-support-v7-appcompat.jar" />
@@ -3956,12 +4344,12 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1456" />
-    <option name="height" value="876" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1698" />
+    <option name="height" value="1020" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -3984,10 +4372,22 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="outsystems-app-android" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Gradle Scripts" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
+            </PATH_ELEMENT>
+          </PATH>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="outsystems-app-android" />
@@ -3996,15 +4396,16 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="04dbcdec54ce41e7" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="MonoForAndroid_API_10" />
-    <property name="FullScreen" value="false" />
+    <property name="android.project.structure.last.selected" value="android" />
+    <property name="android.project.structure.proportion" value="0.15" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="0123456789ABCDEF" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_22_x86" />
   </component>
   <component name="RunManager" selected="Android Application.android">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -4025,10 +4426,15 @@
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
-      <option name="SELECTED_MATRIX_CONFIGURATION_ID" value="0" />
-      <option name="SELECTED_CLOUD_PROJECT_ID" value="" />
-      <option name="IS_VALID_CLOUD_SELECTION" value="false" />
-      <option name="INVALID_CLOUD_SELECTION_ERROR" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="SELECTED_CLOUD_DEVICE_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_DEVICE_PROJECT_ID" value="" />
+      <option name="IS_VALID_CLOUD_MATRIX_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_MATRIX_SELECTION_ERROR" value="" />
+      <option name="IS_VALID_CLOUD_DEVICE_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_DEVICE_SELECTION_ERROR" value="" />
+      <option name="CLOUD_DEVICE_SERIAL_NUMBER" value="" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -4121,10 +4527,15 @@
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
-      <option name="SELECTED_MATRIX_CONFIGURATION_ID" value="0" />
-      <option name="SELECTED_CLOUD_PROJECT_ID" value="" />
-      <option name="IS_VALID_CLOUD_SELECTION" value="false" />
-      <option name="INVALID_CLOUD_SELECTION_ERROR" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="SELECTED_CLOUD_DEVICE_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_DEVICE_PROJECT_ID" value="" />
+      <option name="IS_VALID_CLOUD_MATRIX_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_MATRIX_SELECTION_ERROR" value="" />
+      <option name="IS_VALID_CLOUD_DEVICE_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_DEVICE_SELECTION_ERROR" value="" />
+      <option name="CLOUD_DEVICE_SERIAL_NUMBER" value="" />
       <method />
     </configuration>
     <list size="1">
@@ -4144,37 +4555,34 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component name="SvnConfiguration">
-    <configuration />
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="41c41069-a845-439e-8d38-4a525d9eb166" name="Default" comment="" />
-      <created>1436968357454</created>
+      <changelist id="0994efb3-0f2a-4bb0-89ed-72ec74dd217d" name="Default" comment="" />
+      <created>1438774014129</created>
       <option name="number" value="Default" />
-      <updated>1436968357454</updated>
+      <updated>1438774014129</updated>
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
+    <frame x="-9" y="-9" width="1698" height="1020" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977462" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962447" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977462" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32962447" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32977462" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24969324" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
@@ -4187,14 +4595,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
-  </component>
-  <component name="Vcs.Log.UiProperties">
-    <option name="RECENTLY_FILTERED_USER_GROUPS">
-      <collection />
-    </option>
-    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-      <collection />
-    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />

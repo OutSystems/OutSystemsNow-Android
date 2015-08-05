@@ -1,11 +1,11 @@
 apply plugin: 'android'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+    compile fileTree(include: '*.jar', dir: 'libs')
     compile project(':OutSytems:platforms:android:CordovaLib')
     compile project(':AndroidUniversalImageLoaderLib')
-    compile project(':android-support-v7-appcompat')
     compile project(':MobileECT')
+    compile 'com.android.support:appcompat-v7:19.0.0'
 }
 
 android {

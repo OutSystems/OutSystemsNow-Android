@@ -15,7 +15,6 @@
             <option value="$PROJECT_DIR$/Outsytems/platforms" />
             <option value="$PROJECT_DIR$/Outsytems/platforms/android" />
             <option value="$PROJECT_DIR$/Outsytems/platforms/android/CordovaLib" />
-            <option value="$PROJECT_DIR$/android-support-v7-appcompat" />
           </set>
         </option>
       </GradleProjectSettings>

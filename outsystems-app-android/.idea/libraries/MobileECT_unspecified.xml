@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="MobileECT-unspecified">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Outsytems/platforms/android/build/intermediates/exploded-aar/outsystems-app-android/MobileECT/unspecified/classes.jar!/" />
       <root url="jar://$PROJECT_DIR$/Outsytems/platforms/android/build/intermediates/exploded-aar/outsystems-app-android/MobileECT/unspecified/libs/android-async-http-1.4.5.jar!/" />
-      <root url="jar://$PROJECT_DIR$/Outsytems/platforms/android/build/intermediates/exploded-aar/outsystems-app-android/MobileECT/unspecified/libs/commons-io-1.3.2.jar!/" />
-      <root url="file://$PROJECT_DIR$/Outsytems/platforms/android/build/intermediates/exploded-aar/outsystems-app-android/MobileECT/unspecified/res" />
       <root url="jar://$PROJECT_DIR$/Outsytems/platforms/android/build/intermediates/exploded-aar/outsystems-app-android/MobileECT/unspecified/libs/gson-2.2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Outsytems/platforms/android/build/intermediates/exploded-aar/outsystems-app-android/MobileECT/unspecified/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/Outsytems/platforms/android/build/intermediates/exploded-aar/outsystems-app-android/MobileECT/unspecified/res" />
+      <root url="jar://$PROJECT_DIR$/Outsytems/platforms/android/build/intermediates/exploded-aar/outsystems-app-android/MobileECT/unspecified/libs/commons-io-1.3.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
