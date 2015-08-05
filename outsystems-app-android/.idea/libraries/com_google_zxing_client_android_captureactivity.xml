@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="com.google.zxing.client.android.captureactivity">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Outsytems/platforms/android/libs/com.google.zxing.client.android.captureactivity.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Outsystems/platforms/android/libs/com.google.zxing.client.android.captureactivity.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
