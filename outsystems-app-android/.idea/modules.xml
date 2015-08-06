@@ -4,15 +4,11 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AndroidUniversalImageLoaderLib/AndroidUniversalImageLoaderLib.iml" filepath="$PROJECT_DIR$/AndroidUniversalImageLoaderLib/AndroidUniversalImageLoaderLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/Outsystems/platforms/android/CordovaLib/CordovaLib.iml" filepath="$PROJECT_DIR$/Outsystems/platforms/android/CordovaLib/CordovaLib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Outsytems/platforms/android/CordovaLib/CordovaLib.iml" filepath="$PROJECT_DIR$/Outsytems/platforms/android/CordovaLib/CordovaLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/MobileECT/MobileECT.iml" filepath="$PROJECT_DIR$/MobileECT/MobileECT.iml" />
       <module fileurl="file://$PROJECT_DIR$/Outsystems/OutSystems.iml" filepath="$PROJECT_DIR$/Outsystems/OutSystems.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Outsytems/OutSytems.iml" filepath="$PROJECT_DIR$/Outsytems/OutSytems.iml" />
       <module fileurl="file://$PROJECT_DIR$/Outsystems/platforms/android/android.iml" filepath="$PROJECT_DIR$/Outsystems/platforms/android/android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Outsytems/platforms/android/android.iml" filepath="$PROJECT_DIR$/Outsytems/platforms/android/android.iml" />
       <module fileurl="file://$PROJECT_DIR$/outsystems-app-android.iml" filepath="$PROJECT_DIR$/outsystems-app-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/Outsystems/platforms/platforms.iml" filepath="$PROJECT_DIR$/Outsystems/platforms/platforms.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Outsytems/platforms/platforms.iml" filepath="$PROJECT_DIR$/Outsytems/platforms/platforms.iml" />
     </modules>
   </component>
 </project>
