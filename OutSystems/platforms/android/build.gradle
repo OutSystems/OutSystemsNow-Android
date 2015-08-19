@@ -30,6 +30,13 @@ android {
     compileSdkVersion 20
     buildToolsVersion "20.0.0"
 
+
+    defaultConfig{
+        applicationId APPLICATION_ID
+        versionName APPLICATION_VERSION
+        versionCode APPLICATION_CODE.toInteger()
+    }
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -53,4 +60,29 @@ android {
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
+
+
+    buildTypes {
+
+        // this is used to alter output directory and file name. If you don't need it
+        // you can safely comment it out.
+        applicationVariants.all { variant ->
+
+            variant.outputs.each { output ->
+                def file = output.outputFile
+
+                String parent = file.parent
+                if( project.hasProperty('OUTPUT_DIR') && new File( (String)OUTPUT_DIR ).exists() )
+                    parent = OUTPUT_DIR
+
+
+                output.outputFile = new File(
+                        parent,
+                        (String)(APPLICATION_NAME + "-" + defaultConfig.versionName + ".apk")
+                )
+            }
+        }
+
+    }
+
 }
