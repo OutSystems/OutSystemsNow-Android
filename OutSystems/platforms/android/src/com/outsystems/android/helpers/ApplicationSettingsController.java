@@ -1,5 +1,6 @@
 package com.outsystems.android.helpers;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -52,6 +53,18 @@ public class ApplicationSettingsController {
         return this.settings != null && settings.hasValidSettings();
     }
 
+
+    public boolean hideActionBar(Activity currentActivity){
+        boolean result = this.hasValidSettings();
+
+        if (result){
+            if(currentActivity instanceof ApplicationsActivity){
+                result = this.settings.skipNativeLogin();
+            }
+        }
+
+        return result;
+    }
 
     public Intent getFirstActivity(){
         Intent result = null;

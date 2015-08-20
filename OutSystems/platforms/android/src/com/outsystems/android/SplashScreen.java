@@ -136,9 +136,9 @@ public class SplashScreen extends Activity {
 	                HubManagerHelper.getInstance().setApplicationHosted(hubApplication.getHost());
 	                HubManagerHelper.getInstance().setJSFApplicationServer(hubApplication.isJSF());
 	            }
-                // TODO:
-	            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-	            if (hubApplication != null) {
+
+                Intent intent = ApplicationSettingsController.getInstance(this).getFirstActivity();
+	            if (hubApplication != null && intent.getComponent().getClassName().equals(LoginActivity.class.getName())) {
 	                intent.putExtra(LoginActivity.KEY_INFRASTRUCTURE_NAME, hubApplication.getName());
 	                intent.putExtra(LoginActivity.KEY_AUTOMATICLY_LOGIN, true);
 	            }

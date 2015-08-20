@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.outsystems.android.adapters.ApplicationsAdapter;
 import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
+import com.outsystems.android.helpers.ApplicationSettingsController;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.helpers.OfflineSupport;
@@ -95,6 +96,13 @@ public class ApplicationsActivity extends BaseActivity {
         setContentView(R.layout.activity_applications);
 
         setupActionBar();
+
+        boolean hideActionBar = ApplicationSettingsController.getInstance(this).hideActionBar(this);
+
+        if(hideActionBar) {
+            // Hide action bar
+            getSupportActionBar().hide();
+        }
 
         mLoadingView = findViewById(R.id.loading_spinner);
         gridView = (GridView) findViewById(R.id.grid_view_applications);

@@ -80,9 +80,9 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        boolean hasAppSettings = ApplicationSettingsController.getInstance(this).hasValidSettings();
+        boolean hideActionBar = ApplicationSettingsController.getInstance(this).hideActionBar(this);
 
-        if(hasAppSettings) {
+        if(hideActionBar) {
             // Hide action bar
             getSupportActionBar().hide();
         }
