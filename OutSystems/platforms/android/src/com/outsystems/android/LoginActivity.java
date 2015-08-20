@@ -32,6 +32,7 @@ import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.Installation;
 import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
+import com.outsystems.android.helpers.ApplicationSettingsController;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.helpers.OfflineSupport;
@@ -78,6 +79,13 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        boolean hasAppSettings = ApplicationSettingsController.getInstance(this).hasValidSettings();
+
+        if(hasAppSettings) {
+            // Hide action bar
+            getSupportActionBar().hide();
+        }
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {

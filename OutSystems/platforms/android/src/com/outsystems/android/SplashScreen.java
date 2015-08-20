@@ -21,6 +21,7 @@ import com.arellomobile.android.push.PushManager;
 import com.crashlytics.android.Crashlytics;
 import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
+import com.outsystems.android.helpers.ApplicationSettingsController;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.helpers.OfflineSupport;
@@ -71,8 +72,7 @@ public class SplashScreen extends Activity {
 
         if(data != null){
         	DeepLinkController.getInstance().createSettingsFromUrl(data);
-        }        
-        
+        }
         
         // Add delay to show splashscreen
         delaySplashScreen();
@@ -89,7 +89,7 @@ public class SplashScreen extends Activity {
     }
 
     protected void goNextActivity() {
-        openHubActivity();
+
         ApplicationOutsystems app = (ApplicationOutsystems)getApplication();
 
         // Working Offline
@@ -125,8 +125,7 @@ public class SplashScreen extends Activity {
         	DeepLink deepLinkSettings = DeepLinkController.getInstance().getDeepLinkSettings();
         	HubManagerHelper.getInstance().setApplicationHosted(deepLinkSettings.getEnvironment());
 
-            Intent intent = new Intent(getApplicationContext(), HubAppActivity.class);
-            startActivity(intent);
+            openFirstApplicationActivity();
 
         }
         else{
@@ -137,6 +136,7 @@ public class SplashScreen extends Activity {
 	                HubManagerHelper.getInstance().setApplicationHosted(hubApplication.getHost());
 	                HubManagerHelper.getInstance().setJSFApplicationServer(hubApplication.isJSF());
 	            }
+                // TODO:
 	            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
 	            if (hubApplication != null) {
 	                intent.putExtra(LoginActivity.KEY_INFRASTRUCTURE_NAME, hubApplication.getName());
@@ -144,13 +144,26 @@ public class SplashScreen extends Activity {
 	            }
 	            startActivity(intent);
 	        }
+            else{
+                openFirstApplicationActivity();
+            }
+
 	    }
         finish();
     }
 
-    private void openHubActivity() {
-        Intent intent = new Intent(this, HubAppActivity.class);
-        startActivity(intent);
+    private void openFirstApplicationActivity() {
+
+        boolean hasAppSettings = ApplicationSettingsController.getInstance(this).hasValidSettings();
+
+        if(hasAppSettings){
+            Intent intent = ApplicationSettingsController.getInstance(this).getFirstActivity();
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(this, HubAppActivity.class);
+            startActivity(intent);
+        }
     }        
           
 }

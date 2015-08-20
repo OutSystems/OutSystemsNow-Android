@@ -90,4 +90,9 @@ public class AppSettings {
     public void setTintColor(String tintColor) {
         TintColor = tintColor;
     }
+
+    public boolean hasValidSettings(){
+        return getDefaultHostname() != null && !getDefaultHostname().isEmpty();
+    }
+
 }

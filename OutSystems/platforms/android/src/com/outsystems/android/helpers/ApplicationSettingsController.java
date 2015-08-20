@@ -1,9 +1,15 @@
 package com.outsystems.android.helpers;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.google.gson.Gson;
+import com.outsystems.android.ApplicationOutsystems;
+import com.outsystems.android.ApplicationsActivity;
+import com.outsystems.android.LoginActivity;
 import com.outsystems.android.R;
+import com.outsystems.android.WebApplicationActivity;
+import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.model.AppSettings;
 
 import java.io.BufferedReader;
@@ -18,9 +24,11 @@ public class ApplicationSettingsController {
 
     private static ApplicationSettingsController _instance;
     private AppSettings settings;
+    private Context context;
 
     public ApplicationSettingsController(Context context){
         this.loadSettings(context);
+        this.context = context;
     }
 
     public static ApplicationSettingsController getInstance(Context context) {
@@ -41,8 +49,39 @@ public class ApplicationSettingsController {
     }
 
     public boolean hasValidSettings(){
-
-        return this.settings != null;
+        return this.settings != null && settings.hasValidSettings();
     }
 
+
+    public Intent getFirstActivity(){
+        Intent result = null;
+
+        // Create Entry to save hub application
+        DatabaseHandler database = new DatabaseHandler(context);
+        if (database.getHubApplication(settings.getDefaultHostname()) == null) {
+            database.addHostHubApplication(settings.getDefaultHostname(), settings.getDefaultHostname(), HubManagerHelper
+                    .getInstance().isJSFApplicationServer());
+        }
+
+        HubManagerHelper.getInstance().setApplicationHosted(settings.getDefaultHostname());
+
+
+        if(settings.skipNativeLogin()){
+            if(settings.skipApplicationList()){
+                result = new Intent(context, WebApplicationActivity.class); // webview
+            }
+            else{
+                result = new Intent(context, ApplicationsActivity.class); // applist
+            }
+        }
+        else {
+            result = new Intent(context, LoginActivity.class);
+
+            result.putExtra(LoginActivity.KEY_AUTOMATICLY_LOGIN, false);
+            result.putExtra(LoginActivity.KEY_INFRASTRUCTURE_NAME, settings.getDefaultHostname());
+
+        }
+
+        return result;
+    }
 }
