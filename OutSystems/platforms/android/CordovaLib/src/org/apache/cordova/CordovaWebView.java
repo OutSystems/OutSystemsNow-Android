@@ -915,6 +915,7 @@ public class CordovaWebView extends WebView {
     {
         WebBackForwardList myList = super.restoreState(savedInstanceState);
         Log.d(TAG, "WebView restoration crew now restoring!");
+        initIfNecessary();
         //Initialize the plugin manager once more
         this.pluginManager.init();
         return myList;
