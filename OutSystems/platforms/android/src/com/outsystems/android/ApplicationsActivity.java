@@ -97,7 +97,7 @@ public class ApplicationsActivity extends BaseActivity {
 
         setupActionBar();
 
-        boolean hideActionBar = ApplicationSettingsController.getInstance(this).hideActionBar(this);
+        boolean hideActionBar = ApplicationSettingsController.getInstance().hideActionBar(this);
 
         if(hideActionBar) {
             // Hide action bar

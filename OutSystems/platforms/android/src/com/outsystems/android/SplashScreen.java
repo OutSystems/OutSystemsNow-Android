@@ -73,7 +73,10 @@ public class SplashScreen extends Activity {
         if(data != null){
         	DeepLinkController.getInstance().createSettingsFromUrl(data);
         }
-        
+
+        // Application Settings
+        ApplicationSettingsController.getInstance().loadSettings(this);
+
         // Add delay to show splashscreen
         delaySplashScreen();
     }
@@ -137,7 +140,7 @@ public class SplashScreen extends Activity {
 	                HubManagerHelper.getInstance().setJSFApplicationServer(hubApplication.isJSF());
 	            }
 
-                Intent intent = ApplicationSettingsController.getInstance(this).getFirstActivity();
+                Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
 	            if (hubApplication != null && intent.getComponent().getClassName().equals(LoginActivity.class.getName())) {
 	                intent.putExtra(LoginActivity.KEY_INFRASTRUCTURE_NAME, hubApplication.getName());
 	                intent.putExtra(LoginActivity.KEY_AUTOMATICLY_LOGIN, true);
@@ -154,10 +157,10 @@ public class SplashScreen extends Activity {
 
     private void openFirstApplicationActivity() {
 
-        boolean hasAppSettings = ApplicationSettingsController.getInstance(this).hasValidSettings();
+        boolean hasAppSettings = ApplicationSettingsController.getInstance().hasValidSettings();
 
         if(hasAppSettings){
-            Intent intent = ApplicationSettingsController.getInstance(this).getFirstActivity();
+            Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
             startActivity(intent);
         }
         else {

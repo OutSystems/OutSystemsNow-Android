@@ -69,6 +69,7 @@ import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.CustomWebView;
 import com.outsystems.android.core.WebServicesClient;
+import com.outsystems.android.helpers.ApplicationSettingsController;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.helpers.OfflineSupport;
@@ -185,6 +186,22 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         // Hide action bar
         getSupportActionBar().hide();
+
+        // Application Settings
+
+        boolean hideNavigationBar = ApplicationSettingsController.getInstance().hideNavigationBar();
+        if(hideNavigationBar){
+
+            View navigationBar = findViewById(R.id.toolbar);
+            if(navigationBar != null)
+                navigationBar.setVisibility(View.GONE);
+
+            View divider = findViewById(R.id.divider_toolbar);
+            if(divider != null)
+                divider.setVisibility(View.GONE);
+
+        }
+
 
         // Check if deep link has valid settings
         if(DeepLinkController.getInstance().hasValidSettings()){
@@ -382,6 +399,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             buttonApplications.setVisibility(View.INVISIBLE);
             buttonApplications.setOnClickListener(null);
         }
+
 
     }
 

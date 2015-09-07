@@ -25,22 +25,19 @@ public class ApplicationSettingsController {
 
     private static ApplicationSettingsController _instance;
     private AppSettings settings;
-    private Context context;
 
-    public ApplicationSettingsController(Context context){
-        this.loadSettings(context);
-        this.context = context;
+    public ApplicationSettingsController(){
     }
 
-    public static ApplicationSettingsController getInstance(Context context) {
+    public static ApplicationSettingsController getInstance() {
         if (_instance == null) {
-            _instance = new ApplicationSettingsController(context);
+            _instance = new ApplicationSettingsController();
         }
         return _instance;
     }
 
 
-    private void loadSettings(Context context){
+    public void loadSettings(Context context){
         Gson gson = new Gson();
         InputStream raw =  context.getResources().openRawResource(R.raw.appsettings);
         Reader rd = new BufferedReader(new InputStreamReader(raw));
@@ -66,7 +63,12 @@ public class ApplicationSettingsController {
         return result;
     }
 
-    public Intent getFirstActivity(){
+    public boolean hideNavigationBar(){
+        return this.hasValidSettings() && this.settings.hideNavigationBar();
+    }
+
+
+    public Intent getFirstActivity(Context context){
         Intent result = null;
 
         // Create Entry to save hub application
