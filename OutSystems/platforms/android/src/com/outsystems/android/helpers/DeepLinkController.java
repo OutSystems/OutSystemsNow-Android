@@ -2,6 +2,8 @@ package com.outsystems.android.helpers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -303,5 +305,36 @@ public class DeepLinkController {
 	public void invalidate(){
 			this.deepLinkSettings.invalidateSettings();
 	}
-	
+
+
+	/**
+	 * Method to extract from url string the data to build Uri
+	 *
+	 * @param urlToOpen
+	 * @return URI with data from link sent by push notification
+	 */
+	public static Uri convertUrlToUri(String urlToOpen, String scheme) {
+		Uri.Builder builder = new Uri.Builder();
+		builder.scheme(scheme);
+		builder.appendPath("openurl");
+
+		Pattern p = Pattern.compile("^\\/?([^:\\/\\s]+)((\\/\\w+)*\\/)([\\w\\-\\.]+[^#?\\s]+)(.*)?(#[\\w\\-]+)?$");
+		Matcher m = p.matcher(urlToOpen);
+		if (m.find()) {
+			if (m.groupCount() > 0) {
+				if (m.group(1) != null) {
+					builder.authority(m.group(1));
+				}
+				if (m.group(2) != null) {
+					String applicationName = m.group(2);
+
+					if (applicationName.substring(0, 1).equals("/")) {
+						applicationName = applicationName.substring(1, applicationName.length());
+					}
+					builder.appendQueryParameter("url", applicationName + m.group(4) + m.group(5));
+				}
+			}
+		}
+		return builder.build();
+	}
 }
