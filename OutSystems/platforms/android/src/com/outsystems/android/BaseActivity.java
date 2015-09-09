@@ -61,12 +61,6 @@ public class BaseActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Keep instance of activities to restart the application when receive an push notification
-        if(BaseActivity.listOfActivities == null){
-            BaseActivity.listOfActivities = new ArrayList<Activity>();
-        }
-        BaseActivity.listOfActivities.add(this);
-
         // Registration receiver
         mBroadcastReceiver = new RegisterBroadcastReceiver() {
             @Override
@@ -264,27 +258,31 @@ public class BaseActivity extends ActionBarActivity {
                 try {
                     final JSONObject messageJson = new JSONObject(message);
                     if (messageJson.has("title")) {
+
                         // Showing a dialog when the app is going to background can cause some crashs
                         // http://blackriver.to/2012/08/android-annoying-exception-unable-to-add-window-is-your-activity-running/
                         if (!isFinishing()) {
                             String title = messageJson.getString("title");
                             AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
+                            builder.setCancelable(true);
                             builder.setMessage(title).setTitle(getString(R.string.app_name));
 
-                            try {
-                                String pnData = messageJson.getString("u");
-                                JSONObject deeplinkJson = new JSONObject(pnData);
+                            if(messageJson.has("u")) {
+                                try {
+                                    String pnData = messageJson.getString("u");
+                                    JSONObject deeplinkJson = new JSONObject(pnData);
 
-                                if (deeplinkJson != null && deeplinkJson.has("deeplink")) {
-                                    builder.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int i) {
-                                            dialog.dismiss();
-                                        }
-                                    });
+                                    if (deeplinkJson != null && deeplinkJson.has("deeplink")) {
+                                        builder.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int i) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                    }
+                                } catch (Exception e) {
+                                    EventLogger.logError(getClass(), e);
                                 }
-                            } catch (Exception e) {
-                                EventLogger.logError(getClass(), e);
                             }
 
                             builder.setNeutralButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
@@ -307,19 +305,12 @@ public class BaseActivity extends ActionBarActivity {
                                         if (urlToOpen != null && !"".equals(urlToOpen)) {
 
                                             Uri uri = DeepLinkController.convertUrlToUri(urlToOpen, "osnow");
+
                                             DeepLinkController.getInstance().createSettingsFromUrl(uri);
 
                                             Intent intent = new Intent(getApplicationContext(), HubAppActivity.class);
-
-                                            if (BaseActivity.listOfActivities != null) {
-                                                for (Activity act : BaseActivity.listOfActivities) {
-                                                    act.finish();
-                                                }
-                                                BaseActivity.listOfActivities.clear();
-                                            }
-
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
-
                                         }
                                     }
 
@@ -328,7 +319,9 @@ public class BaseActivity extends ActionBarActivity {
 
 
                             builder.show();
+
                         }
+
                     }
                 } catch (Exception e) {
                     EventLogger.logError(getClass(), e);

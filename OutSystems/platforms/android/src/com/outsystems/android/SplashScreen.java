@@ -92,7 +92,7 @@ public class SplashScreen extends Activity {
     }
 
     protected void goNextActivity() {
-        openHubActivity();
+
         ApplicationOutsystems app = (ApplicationOutsystems)getApplication();
 
         // Working Offline
@@ -133,7 +133,8 @@ public class SplashScreen extends Activity {
 
         }
         else{
-
+            openHubActivity();
+            
 	        if (hubApplications != null && hubApplications.size() > 0) {
 	            HubApplicationModel hubApplication = hubApplications.get(0);
 	            if (hubApplication != null) {
