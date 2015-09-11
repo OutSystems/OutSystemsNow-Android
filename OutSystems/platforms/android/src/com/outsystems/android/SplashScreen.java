@@ -131,19 +131,39 @@ public class SplashScreen extends Activity {
         	DeepLink deepLinkSettings = DeepLinkController.getInstance().getDeepLinkSettings();
         	HubManagerHelper.getInstance().setApplicationHosted(deepLinkSettings.getEnvironment());
 
-            openFirstApplicationActivity();
+            boolean hasAppSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+
+            if(hasAppSettings){
+                Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
+                startActivity(intent);
+            }
+            else{
+                Intent intent = new Intent(this, HubAppActivity.class);
+                startActivity(intent);
+            }
 
         }
         else{
-            
+
+            boolean hasAppSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+
+            if(!hasAppSettings){
+                Intent intent = new Intent(this, HubAppActivity.class);
+                startActivity(intent);
+            }
+
 	        if (hubApplications != null && hubApplications.size() > 0) {
 	            HubApplicationModel hubApplication = hubApplications.get(0);
 	            if (hubApplication != null) {
 	                HubManagerHelper.getInstance().setApplicationHosted(hubApplication.getHost());
 	                HubManagerHelper.getInstance().setJSFApplicationServer(hubApplication.isJSF());
 	            }
+                Intent intent = null;
+                if(hasAppSettings)
+                    intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
+                else
+                    intent = new Intent(this, LoginActivity.class);
 
-                Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
 	            if (hubApplication != null && intent.getComponent().getClassName().equals(LoginActivity.class.getName())) {
 	                intent.putExtra(LoginActivity.KEY_INFRASTRUCTURE_NAME, hubApplication.getName());
 	                intent.putExtra(LoginActivity.KEY_AUTOMATICLY_LOGIN, true);
@@ -151,25 +171,15 @@ public class SplashScreen extends Activity {
 	            startActivity(intent);
 	        }
             else{
-                openFirstApplicationActivity();
+                if(hasAppSettings){
+                    Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
+                    startActivity(intent);
+                }
             }
 
 	    }
         finish();
     }
 
-    private void openFirstApplicationActivity() {
-
-        boolean hasAppSettings = ApplicationSettingsController.getInstance().hasValidSettings();
-
-        if(hasAppSettings){
-            Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
-            startActivity(intent);
-        }
-        else {
-            Intent intent = new Intent(this, HubAppActivity.class);
-            startActivity(intent);
-        }
-    }        
           
 }
