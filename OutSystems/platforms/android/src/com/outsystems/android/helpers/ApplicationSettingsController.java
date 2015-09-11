@@ -12,6 +12,7 @@ import com.outsystems.android.R;
 import com.outsystems.android.WebApplicationActivity;
 import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.model.AppSettings;
+import com.outsystems.android.model.Application;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -82,8 +83,36 @@ public class ApplicationSettingsController {
 
 
         if(settings.skipNativeLogin()){
-            if(settings.skipApplicationList()){
+            if(settings.skipApplicationList() && settings.getDefaultApplicationURL() != null){
+
+                String url = settings.getDefaultApplicationURL();
+
+                // Ensure that the url format its correct
+                String applicationName = url.replace("\\", "/");
+
+                // Get the application's name
+                if(applicationName.contains("/")){
+
+                    while(applicationName.startsWith("/")){
+                        applicationName = applicationName.substring(1);
+                    }
+
+                    url = applicationName;
+
+                    int slashPosition = applicationName.indexOf("/");
+
+                    if(slashPosition > 0 ){
+                        applicationName = applicationName.substring(0,slashPosition);
+                    }
+                }
+
+                Application application = new Application(applicationName, -1, applicationName);
+                application.setPath(url);
+
                 result = new Intent(context, WebApplicationActivity.class); // webview
+                result.putExtra(WebApplicationActivity.KEY_APPLICATION, application);
+
+
             }
             else{
                 result = new Intent(context, ApplicationsActivity.class); // applist

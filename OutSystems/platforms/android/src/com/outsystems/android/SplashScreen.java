@@ -135,7 +135,6 @@ public class SplashScreen extends Activity {
 
         }
         else{
-            openHubActivity();
             
 	        if (hubApplications != null && hubApplications.size() > 0) {
 	            HubApplicationModel hubApplication = hubApplications.get(0);
