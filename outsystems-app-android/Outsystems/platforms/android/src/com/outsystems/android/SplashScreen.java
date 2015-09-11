@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 
 import com.arellomobile.android.push.PushManager;
 import com.outsystems.android.core.DatabaseHandler;
@@ -45,8 +46,10 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.activity_splashscreen);
 
         // Removing session cookies
+        CookieSyncManager.createInstance(getApplicationContext());
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.removeSessionCookie();
+        CookieSyncManager.getInstance().sync();
 
         // Push Messages    	
         try {
@@ -85,7 +88,7 @@ public class SplashScreen extends Activity {
     }
 
     protected void goNextActivity() {
-        openHubActivity();
+
         ApplicationOutsystems app = (ApplicationOutsystems)getApplication();
 
         // Working Offline
@@ -126,7 +129,8 @@ public class SplashScreen extends Activity {
 
         }
         else{
-
+            openHubActivity();
+            
 	        if (hubApplications != null && hubApplications.size() > 0) {
 	            HubApplicationModel hubApplication = hubApplications.get(0);
 	            if (hubApplication != null) {

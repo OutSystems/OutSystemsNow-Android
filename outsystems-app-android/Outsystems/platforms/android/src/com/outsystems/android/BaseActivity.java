@@ -7,9 +7,9 @@
  */
 package com.outsystems.android;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -38,8 +38,11 @@ import com.arellomobile.android.push.utils.RegisterBroadcastReceiver;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
+import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.widgets.TypefaceSpan;
+
+import java.util.ArrayList;
 
 /**
  * Class Base Activity.
@@ -52,11 +55,12 @@ public class BaseActivity extends ActionBarActivity {
 	
 	private BroadcastReceiver mBroadcastReceiver;
 	private BroadcastReceiver mReceiver;
+    private static ArrayList<Activity> listOfActivities;
 		
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         // Registration receiver
         mBroadcastReceiver = new RegisterBroadcastReceiver() {
             @Override
@@ -72,7 +76,6 @@ public class BaseActivity extends ActionBarActivity {
                 // JSON_DATA_KEY contains JSON payload of push notification.
                 // showMessage("push message is " + intent.getExtras().getString(JSON_DATA_KEY));
                 doOnMessageReceive(intent.getExtras().getString(JSON_DATA_KEY));
-
             }
         };
         
@@ -247,30 +250,78 @@ public class BaseActivity extends ActionBarActivity {
     }
 
     public void doOnMessageReceive(final String message) {
-
+        EventLogger.logMessage(getClass(), "Received push message: " + message);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
 
                 try {
-                    JSONObject messageJson = new JSONObject(message);
+                    final JSONObject messageJson = new JSONObject(message);
                     if (messageJson.has("title")) {
+
                         // Showing a dialog when the app is going to background can cause some crashs
                         // http://blackriver.to/2012/08/android-annoying-exception-unable-to-add-window-is-your-activity-running/
                         if (!isFinishing()) {
                             String title = messageJson.getString("title");
                             AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
+                            builder.setCancelable(true);
                             builder.setMessage(title).setTitle(getString(R.string.app_name));
+
+                            if(messageJson.has("u")) {
+                                try {
+                                    String pnData = messageJson.getString("u");
+                                    JSONObject deeplinkJson = new JSONObject(pnData);
+
+                                    if (deeplinkJson != null && deeplinkJson.has("deeplink")) {
+                                        builder.setNegativeButton(getString(R.string.button_cancel), new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int i) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                    }
+                                } catch (Exception e) {
+                                    EventLogger.logError(getClass(), e);
+                                }
+                            }
+
                             builder.setNeutralButton(getString(R.string.button_ok), new DialogInterface.OnClickListener() {
 
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
+
+                                    if(messageJson.has("u")) {
+
+                                        String urlToOpen = null;
+                                        try {
+                                            String pnData = messageJson.getString("u");
+                                            JSONObject deeplinkJson = new JSONObject(pnData);
+                                            urlToOpen = deeplinkJson.getString("deeplink");
+                                        } catch (Exception e) {
+                                            EventLogger.logError(getClass(), e);
+                                        }
+
+                                        if (urlToOpen != null && !"".equals(urlToOpen)) {
+
+                                            Uri uri = DeepLinkController.convertUrlToUri(urlToOpen, "osnow");
+
+                                            DeepLinkController.getInstance().createSettingsFromUrl(uri);
+
+                                            Intent intent = new Intent(getApplicationContext(), HubAppActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                        }
+                                    }
+
                                 }
                             });
 
+
                             builder.show();
+
                         }
+
                     }
                 } catch (Exception e) {
                     EventLogger.logError(getClass(), e);
