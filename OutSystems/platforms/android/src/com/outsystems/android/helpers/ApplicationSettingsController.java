@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.google.gson.Gson;
-import com.outsystems.android.ApplicationOutsystems;
 import com.outsystems.android.ApplicationsActivity;
 import com.outsystems.android.LoginActivity;
 import com.outsystems.android.R;
@@ -72,6 +71,7 @@ public class ApplicationSettingsController {
     public Intent getFirstActivity(Context context){
         Intent result = null;
 
+
         // Create Entry to save hub application
         DatabaseHandler database = new DatabaseHandler(context);
         if (database.getHubApplication(settings.getDefaultHostname()) == null) {
@@ -111,6 +111,7 @@ public class ApplicationSettingsController {
 
                 result = new Intent(context, WebApplicationActivity.class); // webview
                 result.putExtra(WebApplicationActivity.KEY_APPLICATION, application);
+                result.putExtra(WebApplicationActivity.KEY_SINGLE_APPLICATION,true);
 
 
             }
@@ -121,7 +122,7 @@ public class ApplicationSettingsController {
         else {
             result = new Intent(context, LoginActivity.class);
 
-            result.putExtra(LoginActivity.KEY_AUTOMATICLY_LOGIN, false);
+            result.putExtra(LoginActivity.KEY_AUTOMATICALLY_LOGIN, false);
             result.putExtra(LoginActivity.KEY_INFRASTRUCTURE_NAME, settings.getDefaultHostname());
 
         }

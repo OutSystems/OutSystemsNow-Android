@@ -166,7 +166,9 @@ public class SplashScreen extends Activity {
 
 	            if (hubApplication != null && intent.getComponent().getClassName().equals(LoginActivity.class.getName())) {
 	                intent.putExtra(LoginActivity.KEY_INFRASTRUCTURE_NAME, hubApplication.getName());
-	                intent.putExtra(LoginActivity.KEY_AUTOMATICLY_LOGIN, true);
+                    boolean autoLogin = hubApplication.getUserName() != null && !hubApplication.getUserName().isEmpty()&&
+                                        hubApplication.getPassword() != null && !hubApplication.getPassword().isEmpty();
+	                intent.putExtra(LoginActivity.KEY_AUTOMATICALLY_LOGIN, autoLogin);
 	            }
 	            startActivity(intent);
 	        }

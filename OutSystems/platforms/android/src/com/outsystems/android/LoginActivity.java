@@ -9,8 +9,6 @@ package com.outsystems.android;
 
 import java.util.ArrayList;
 
-import org.apache.http.util.EncodingUtils;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,14 +20,12 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
-import com.outsystems.android.core.Installation;
 import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.ApplicationSettingsController;
@@ -50,7 +46,7 @@ import com.outsystems.android.model.Login;
 public class LoginActivity extends BaseActivity {
 
     public static String KEY_INFRASTRUCTURE_NAME = "infrastructure";
-    public static String KEY_AUTOMATICLY_LOGIN = "key_login_automaticly";
+    public static String KEY_AUTOMATICALLY_LOGIN = "key_login_automatically";
 
     public boolean doLogin = false;
 
@@ -90,7 +86,7 @@ public class LoginActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String infrastructure = bundle.getString(KEY_INFRASTRUCTURE_NAME);
-            doLogin = bundle.getBoolean(KEY_AUTOMATICLY_LOGIN);
+            doLogin = bundle.getBoolean(KEY_AUTOMATICALLY_LOGIN);
 
             ((TextView) findViewById(R.id.text_view_label_application_value)).setText(infrastructure);
         }
@@ -117,7 +113,7 @@ public class LoginActivity extends BaseActivity {
             ((EditText) findViewById(R.id.edit_text_passwod)).setText(hub.getPassword());
             if (doLogin) {
                 callLoginService(buttonLogin, hub.getUserName(), hub.getPassword());
-                getIntent().removeExtra(KEY_AUTOMATICLY_LOGIN);
+                getIntent().removeExtra(KEY_AUTOMATICALLY_LOGIN);
             }
         }
 
