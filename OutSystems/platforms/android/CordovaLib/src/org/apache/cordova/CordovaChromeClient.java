@@ -22,6 +22,7 @@ import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.LOG;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -94,36 +95,37 @@ public class CordovaChromeClient extends WebChromeClient {
      */
     @Override
     public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
-        AlertDialog.Builder dlg = new AlertDialog.Builder(this.cordova.getActivity());
-        dlg.setMessage(message);
-        dlg.setTitle("Alert");
-        //Don't let alerts break the back button
-        dlg.setCancelable(true);
-        dlg.setPositiveButton(android.R.string.ok,
-                new AlertDialog.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+        if (cordova != null && !cordova.getActivity().isFinishing()) {
+            AlertDialog.Builder dlg = new AlertDialog.Builder(this.cordova.getActivity());
+            dlg.setMessage(message);
+            dlg.setTitle("Alert");
+            //Don't let alerts break the back button
+            dlg.setCancelable(true);
+            dlg.setPositiveButton(android.R.string.ok,
+                    new AlertDialog.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            result.confirm();
+                        }
+                    });
+            dlg.setOnCancelListener(
+                    new DialogInterface.OnCancelListener() {
+                        public void onCancel(DialogInterface dialog) {
+                            result.cancel();
+                        }
+                    });
+            dlg.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                //DO NOTHING
+                public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
                         result.confirm();
-                    }
-                });
-        dlg.setOnCancelListener(
-                new DialogInterface.OnCancelListener() {
-                    public void onCancel(DialogInterface dialog) {
-                        result.cancel();
-                    }
-                });
-        dlg.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            //DO NOTHING
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK)
-                {
-                    result.confirm();
-                    return false;
+                        return false;
+                    } else
+                        return true;
                 }
-                else
-                    return true;
-            }
-        });
-        dlg.show();
+            });
+            dlg.show();
+        }
+
         return true;
     }
 
