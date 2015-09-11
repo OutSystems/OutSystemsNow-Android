@@ -141,6 +141,27 @@ public class LoginActivity extends BaseActivity {
                     editText.getViewTreeObserver().removeGlobalOnLayoutListener(this);
             }
         });
+
+        // Application Settings
+
+        boolean hasValidSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+        if(hasValidSettings){
+
+            View applicationLabel = findViewById(R.id.text_view_label_application);
+            if(applicationLabel != null)
+                applicationLabel.setVisibility(View.GONE);
+
+            View environmentLabel = findViewById(R.id.text_view_label_application_value);
+            if(environmentLabel != null)
+                environmentLabel.setVisibility(View.GONE);
+
+            View logoImage = findViewById(R.id.image_view_logo);
+            if(logoImage != null)
+                logoImage.setVisibility(View.VISIBLE);
+
+        }
+
+
     }
 
     public void callLoginService(final View v, final String userName, final String password) {

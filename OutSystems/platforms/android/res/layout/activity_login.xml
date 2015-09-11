@@ -8,6 +8,17 @@
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
+
+    <ImageView
+        android:id="@+id/image_view_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/logo"
+        android:contentDescription="@string/image_logo"
+        android:visibility="gone"/>
+
     <com.outsystems.android.widgets.CustomFontTextView
         android:id="@+id/text_view_label_application"
         android:layout_width="wrap_content"
