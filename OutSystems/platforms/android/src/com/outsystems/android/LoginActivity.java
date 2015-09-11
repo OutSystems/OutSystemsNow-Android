@@ -205,18 +205,15 @@ public class LoginActivity extends BaseActivity {
                                 database.updateHubApplicationCredentials(HubManagerHelper.getInstance()
                                         .getApplicationHosted(), userName, password);
                                 database.addLoginApplications(HubManagerHelper.getInstance()
-                                        .getApplicationHosted(), userName,login.getApplications());
+                                        .getApplicationHosted(), userName, login.getApplications());
 
                                 // Offline Support
                                 OfflineSupport.getInstance(getApplicationContext()).checkCurrentSession(HubManagerHelper.getInstance()
-                                        .getApplicationHosted(),userName);
+                                        .getApplicationHosted(), userName);
 
+                                boolean singleApp = login.getApplications() != null && login.getApplications().size() == 1;
+                                openNextActivity(singleApp, login);
 
-                                if (login.getApplications() != null && login.getApplications().size() == 1) {
-                                    openWebApplicationActivity(login);
-                                } else {
-                                    openApplicationsActivity(login);
-                                }
                             }
                         } else {
                             ((EditText) findViewById(R.id.edit_text_user_mail)).setError(WebServicesClient.PrettyErrorMessage(statusCode)); // getResources().getString(R.string.label_error_login)                            
@@ -227,20 +224,30 @@ public class LoginActivity extends BaseActivity {
                
     }
 
-    /**
-     * Open applications activity.
-     * 
-     * @param login the login
-     */
-    @SuppressWarnings("unchecked")
-    private void openApplicationsActivity(Login login) {
-        Intent intent = new Intent(getApplicationContext(), ApplicationsActivity.class);
-        ArrayList arrayList = (ArrayList)login.getApplications();
-        intent.putParcelableArrayListExtra(ApplicationsActivity.KEY_CONTENT_APPLICATIONS,
-                (ArrayList<? extends Parcelable>)arrayList);
-        intent.putExtra(ApplicationsActivity.KEY_TITLE_ACTION_BAR, getResources().getString(R.string.label_logout));
-        startActivity(intent);
+
+    private void openNextActivity(boolean singleApp, Login login){
+        if (singleApp) {
+            openWebApplicationActivity(login);
+        } else {
+
+            Intent nextIntent = ApplicationSettingsController.getInstance().getNextActivity(this);
+
+            if(nextIntent == null ){
+                nextIntent = new Intent(getApplicationContext(), ApplicationsActivity.class);
+            }
+
+            if(nextIntent.getComponent() != null && nextIntent.getComponent().getClassName().equals(ApplicationsActivity.class))
+            {
+                ArrayList arrayList = (ArrayList)login.getApplications();
+                nextIntent.putParcelableArrayListExtra(ApplicationsActivity.KEY_CONTENT_APPLICATIONS,
+                        (ArrayList<? extends Parcelable>)arrayList);
+                nextIntent.putExtra(ApplicationsActivity.KEY_TITLE_ACTION_BAR, getResources().getString(R.string.label_logout));
+
+            }
+            startActivity(nextIntent);
+        }
     }
+
 
     /**
      * Open web application activity.

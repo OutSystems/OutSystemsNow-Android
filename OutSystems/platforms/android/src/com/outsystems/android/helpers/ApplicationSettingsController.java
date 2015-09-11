@@ -129,4 +129,56 @@ public class ApplicationSettingsController {
 
         return result;
     }
+
+    public Intent getNextActivity(Activity currentActivity){
+        Intent result = null;
+
+        if(currentActivity instanceof LoginActivity){
+
+            if(settings.skipApplicationList()){
+                // Go to WebApplicationActivity
+                if (settings.getDefaultApplicationURL() != null){
+
+                    String url = settings.getDefaultApplicationURL();
+
+                    // Ensure that the url format its correct
+                    String applicationName = url.replace("\\", "/");
+
+                    // Get the application's name
+                    if(applicationName.contains("/")){
+
+                        while(applicationName.startsWith("/")){
+                            applicationName = applicationName.substring(1);
+                        }
+
+                        url = applicationName;
+
+                        int slashPosition = applicationName.indexOf("/");
+
+                        if(slashPosition > 0 ){
+                            applicationName = applicationName.substring(0,slashPosition);
+                        }
+                    }
+
+                    Application application = new Application(applicationName, -1, applicationName);
+                    application.setPath(url);
+
+                    result = new Intent(currentActivity.getApplicationContext(), WebApplicationActivity.class); // webview
+                    result.putExtra(WebApplicationActivity.KEY_APPLICATION, application);
+                    result.putExtra(WebApplicationActivity.KEY_SINGLE_APPLICATION,true);
+
+                    return result;
+                }
+            }
+
+            // Otherwise...
+            // Go to ApplicationsActivity
+            result = new Intent(currentActivity.getApplicationContext(), ApplicationsActivity.class);
+
+        }
+
+
+        return result;
+    }
+
 }
