@@ -181,4 +181,8 @@ public class ApplicationSettingsController {
         return result;
     }
 
+    public AppSettings getSettings(){
+        return settings;
+    }
+
 }

@@ -37,18 +37,27 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.StateSet;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.CookieManager;
@@ -75,6 +84,7 @@ import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.helpers.OfflineSupport;
 import com.outsystems.android.mobileect.MobileECTController;
 import com.outsystems.android.mobileect.interfaces.OSECTContainerListener;
+import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.Application;
 import com.outsystems.android.model.MobileECT;
 import com.phonegap.plugins.barcodescanner.BarcodeScanner;
@@ -186,22 +196,6 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         // Hide action bar
         getSupportActionBar().hide();
-
-        // Application Settings
-
-        boolean hideNavigationBar = ApplicationSettingsController.getInstance().hideNavigationBar();
-        if(hideNavigationBar){
-
-            View navigationBar = findViewById(R.id.toolbar);
-            if(navigationBar != null)
-                navigationBar.setVisibility(View.GONE);
-
-            View divider = findViewById(R.id.divider_toolbar);
-            if(divider != null)
-                divider.setVisibility(View.GONE);
-
-        }
-
 
         // Check if deep link has valid settings
         if(DeepLinkController.getInstance().hasValidSettings()){
@@ -398,6 +392,56 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         if(singleApp){
             buttonApplications.setVisibility(View.INVISIBLE);
             buttonApplications.setOnClickListener(null);
+        }
+
+
+        // Application Settings
+
+        boolean hasValidSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+
+        if(hasValidSettings){
+
+            boolean hideNavigationBar = ApplicationSettingsController.getInstance().hideNavigationBar();
+            if(hideNavigationBar){
+
+                View navigationBar = findViewById(R.id.toolbar);
+                if(navigationBar != null)
+                    navigationBar.setVisibility(View.GONE);
+
+                View divider = findViewById(R.id.divider_toolbar);
+                if(divider != null)
+                    divider.setVisibility(View.GONE);
+
+            }
+
+            AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
+
+            boolean customTintColor = appSettings.getTintColor() != null && !appSettings.getTintColor().isEmpty();
+
+            if(customTintColor){
+                int newColor = Color.parseColor(appSettings.getTintColor());
+                PorterDuff.Mode mMode = PorterDuff.Mode.SRC_ATOP;
+
+                // Back Button
+                Drawable drawable = buttonBack.getDrawable();
+                drawable.setColorFilter(newColor,mMode);
+
+                // Forward Button
+                drawable = buttonForth.getDrawable();
+                drawable.setColorFilter(newColor,mMode);
+
+                // Application List Button
+                drawable = buttonApplications.getDrawable();
+                drawable.setColorFilter(newColor, mMode);
+
+                // ECT Button
+                drawable = buttonECT.getDrawable();
+                drawable.setColorFilter(newColor, mMode);
+
+
+            }
+
+
         }
 
 
@@ -644,6 +688,15 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                     if (buttonECT != null) {
                         boolean showECT = app.isNetworkAvailable() && show;
                         buttonECT.setVisibility(showECT ? View.VISIBLE : View.GONE);
+
+
+                        AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
+                        boolean customTintColor = appSettings.getTintColor() != null && !appSettings.getTintColor().isEmpty();
+
+                        if(customTintColor) {
+
+                        }
+
                         findViewById(R.id.toolbar).invalidate();
                     }
                 }
