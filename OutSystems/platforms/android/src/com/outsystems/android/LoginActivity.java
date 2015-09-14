@@ -11,6 +11,9 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.DisplayMetrics;
@@ -22,6 +25,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.outsystems.android.core.DatabaseHandler;
@@ -32,6 +36,7 @@ import com.outsystems.android.helpers.ApplicationSettingsController;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.helpers.OfflineSupport;
+import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.Application;
 import com.outsystems.android.model.HubApplicationModel;
 import com.outsystems.android.model.Login;
@@ -147,6 +152,7 @@ public class LoginActivity extends BaseActivity {
         boolean hasValidSettings = ApplicationSettingsController.getInstance().hasValidSettings();
         if(hasValidSettings){
 
+            // Show application logo
             View applicationLabel = findViewById(R.id.text_view_label_application);
             if(applicationLabel != null)
                 applicationLabel.setVisibility(View.GONE);
@@ -158,6 +164,30 @@ public class LoginActivity extends BaseActivity {
             View logoImage = findViewById(R.id.image_view_logo);
             if(logoImage != null)
                 logoImage.setVisibility(View.VISIBLE);
+
+            // Change colors
+            AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
+
+            boolean customBgColor = appSettings.getTintColor() != null && !appSettings.getBackgroundColor().isEmpty();
+
+            if(customBgColor){
+                View root = findViewById(R.id.root_view);
+                root.setBackgroundColor(Color.parseColor(appSettings.getBackgroundColor()));
+            }
+
+            boolean customFgColor = appSettings.getTintColor() != null && !appSettings.getForegroundColor().isEmpty();
+            if(customFgColor){
+                int newColor = Color.parseColor(appSettings.getForegroundColor());
+                Drawable drawable = buttonLogin.getBackground();
+                drawable.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
+
+                buttonLogin.setTextColor(newColor);
+
+                ProgressBar progressBar = (ProgressBar)findViewById(R.id.progress_bar);
+                drawable = progressBar.getIndeterminateDrawable();
+                drawable.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
+
+            }
 
         }
 

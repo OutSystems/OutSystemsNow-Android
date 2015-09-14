@@ -68,6 +68,7 @@ import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -87,6 +88,7 @@ import com.outsystems.android.mobileect.interfaces.OSECTContainerListener;
 import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.Application;
 import com.outsystems.android.model.MobileECT;
+import com.outsystems.android.widgets.CustomFontTextView;
 import com.phonegap.plugins.barcodescanner.BarcodeScanner;
 
 /**
@@ -416,6 +418,40 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
             AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
 
+
+            boolean customBgColor = appSettings.getBackgroundColor() != null && !appSettings.getBackgroundColor().isEmpty();
+            if(customBgColor){
+                this.networkErrorView.setBackgroundColor(Color.parseColor(appSettings.getBackgroundColor()));
+            }
+
+            boolean customFgColor = appSettings.getForegroundColor() != null && !appSettings.getForegroundColor().isEmpty();
+            if(customFgColor){
+                int newColor = Color.parseColor(appSettings.getForegroundColor());
+                PorterDuff.Mode mMode = PorterDuff.Mode.SRC_ATOP;
+
+                CustomFontTextView networkErrorHeader = (CustomFontTextView)findViewById(R.id.networkErrorHeader);
+                networkErrorHeader.setTextColor(newColor);
+
+                CustomFontTextView networkErrorMessage = (CustomFontTextView)findViewById(R.id.networkErrorMessage);
+                networkErrorMessage.setTextColor(newColor);
+
+                CustomFontTextView networkErrorAppsListLink = (CustomFontTextView)findViewById(R.id.networkErrorAppsListLink);
+                networkErrorAppsListLink.setTextColor(newColor);
+
+                ImageView networkErrorImage = (ImageView)findViewById(R.id.imgNetworkError);
+                Drawable drawable = networkErrorImage.getDrawable();
+                drawable.setColorFilter(newColor, mMode);
+
+                Button buttonRetry = (Button)findViewById(R.id.networkErrorButtonRetry);
+                drawable = buttonRetry.getBackground();
+                drawable.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
+                buttonRetry.setTextColor(newColor);
+
+                ProgressBar networkErrorProgressBar = (ProgressBar)findViewById(R.id.networkErrorProgressBar);
+                drawable = networkErrorProgressBar.getIndeterminateDrawable();
+                drawable.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
+            }
+
             boolean customTintColor = appSettings.getTintColor() != null && !appSettings.getTintColor().isEmpty();
 
             if(customTintColor){
@@ -438,6 +474,10 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                 drawable = buttonECT.getDrawable();
                 drawable.setColorFilter(newColor, mMode);
 
+                // Progress Bar
+
+                drawable = progressBar.getBackground();
+               // drawable.setColorFilter(newColor, mMode);
 
             }
 
@@ -1198,12 +1238,11 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     protected void showNetworkErrorRetryLoading(boolean show) {
 
         if(this.networkErrorView != null) {
-            ProgressBar progressbar = (ProgressBar) networkErrorView.findViewById(R.id.progress_bar);
+            ProgressBar progressbar = (ProgressBar) networkErrorView.findViewById(R.id.networkErrorProgressBar);
             progressbar.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
 
             View retryButton = networkErrorView.findViewById(R.id.networkErrorButtonRetry);
             retryButton.setVisibility(show ? View.INVISIBLE : View.VISIBLE);
-
 
             if(networkErrorView.getVisibility() == View.VISIBLE && retryButton.getVisibility() == View.VISIBLE){
                 Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);

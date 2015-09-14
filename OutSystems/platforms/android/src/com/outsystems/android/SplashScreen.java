@@ -12,11 +12,17 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.arellomobile.android.push.PushManager;
 import com.crashlytics.android.Crashlytics;
@@ -26,6 +32,7 @@ import com.outsystems.android.helpers.ApplicationSettingsController;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.helpers.OfflineSupport;
+import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.DeepLink;
 import com.outsystems.android.model.HubApplicationModel;
 
@@ -79,6 +86,28 @@ public class SplashScreen extends Activity {
 
         // Application Settings
         ApplicationSettingsController.getInstance().loadSettings(this);
+
+
+        // Application Settings
+
+        boolean hasValidSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+        if(hasValidSettings){
+
+            // Change colors
+            AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
+
+            boolean customBgColor = appSettings.getTintColor() != null && !appSettings.getBackgroundColor().isEmpty();
+
+            if(customBgColor){
+                int newColor = Color.parseColor(appSettings.getBackgroundColor());
+                ImageView backgroundView = (ImageView)findViewById(R.id.image_view_splash_bg);
+
+                Drawable drawable = backgroundView.getBackground();
+                drawable.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
+            }
+
+        }
+
 
         // Add delay to show splashscreen
         delaySplashScreen();
