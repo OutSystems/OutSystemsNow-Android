@@ -394,6 +394,12 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         if(singleApp){
             buttonApplications.setVisibility(View.INVISIBLE);
             buttonApplications.setOnClickListener(null);
+
+            if(this.networkErrorView != null) {
+                View backToAppList = this.networkErrorView.findViewById(R.id.networkErrorAppsListLink);
+                backToAppList.setVisibility(View.GONE);
+            }
+
         }
 
 
