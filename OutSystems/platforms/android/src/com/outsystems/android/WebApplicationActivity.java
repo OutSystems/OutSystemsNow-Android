@@ -43,6 +43,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.StateSet;
@@ -801,7 +802,11 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             Bitmap bitmap = ((BitmapDrawable) imageView.getBackground()).getBitmap();
 
             if(bitmap != null){
-                imageView.setBackground(null);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    imageView.setBackground(null);
+                }
+
                 bitmap.recycle();
                 bitmap = null;
             }
