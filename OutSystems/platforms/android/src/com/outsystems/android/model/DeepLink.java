@@ -92,12 +92,6 @@ public class DeepLink {
 			
 		
 		if(parameters != null){
-			/*
-			StringTokenizer st = new StringTokenizer(parameters,"&");
-			while(st.hasMoreTokens()){
-				this.addParameter(st.nextToken());
-			}
-			*/
 
 			// Get username parameter
 			int paramIndex = parameters.indexOf(KEY_USERNAME_PARAMETER+"=");
