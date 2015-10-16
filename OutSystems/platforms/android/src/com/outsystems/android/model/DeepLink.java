@@ -92,10 +92,38 @@ public class DeepLink {
 			
 		
 		if(parameters != null){
+			/*
 			StringTokenizer st = new StringTokenizer(parameters,"&");
 			while(st.hasMoreTokens()){
 				this.addParameter(st.nextToken());
 			}
+			*/
+
+			// Get username parameter
+			int paramIndex = parameters.indexOf(KEY_USERNAME_PARAMETER+"=");
+			if(paramIndex >= 0){
+				String userStr = parameters.substring(paramIndex);
+				int endOfParam = userStr.indexOf("&");
+				String paramString = userStr.substring(0,endOfParam);
+				this.addParameter(paramString);
+			}
+
+			// Get password parameter
+			paramIndex = parameters.indexOf(KEY_PASSWORD_PARAMETER+"=");
+			if(paramIndex >= 0){
+				String pwdStr = parameters.substring(paramIndex);
+				int endOfParam = pwdStr.indexOf("&");
+				String paramString = pwdStr.substring(0,endOfParam);
+				this.addParameter(paramString);
+			}
+
+			// Get url parameter
+			paramIndex = parameters.indexOf(KEY_URL_PARAMETER+"=");
+			if(paramIndex >= 0){
+				String urlStr = parameters.substring(paramIndex);
+				this.addParameter(urlStr);
+			}
+
 		}
 	}
 	
