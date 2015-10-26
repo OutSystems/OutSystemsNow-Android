@@ -15,9 +15,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
@@ -30,9 +36,11 @@ import android.widget.TextView;
 import com.outsystems.android.adapters.ApplicationsAdapter;
 import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
+import com.outsystems.android.helpers.ApplicationSettingsController;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.helpers.OfflineSupport;
+import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.Application;
 import com.outsystems.android.widgets.ActionBarAlert;
 
@@ -96,6 +104,13 @@ public class ApplicationsActivity extends BaseActivity {
 
         setupActionBar();
 
+        boolean hideActionBar = ApplicationSettingsController.getInstance().hideActionBar(this);
+
+        if(hideActionBar) {
+            // Hide action bar
+            getSupportActionBar().hide();
+        }
+
         mLoadingView = findViewById(R.id.loading_spinner);
         gridView = (GridView) findViewById(R.id.grid_view_applications);
 
@@ -132,6 +147,64 @@ public class ApplicationsActivity extends BaseActivity {
 
         this.registerReceiver(this.mConnReceiver,
                 new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
+
+        // Application Settings
+
+        boolean hasValidSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+
+        if(hasValidSettings){
+
+            boolean hideNavigationBar = ApplicationSettingsController.getInstance().hideNavigationBar();
+            if(hideNavigationBar){
+
+                View navigationBar = findViewById(R.id.toolbar);
+                if(navigationBar != null)
+                    navigationBar.setVisibility(View.GONE);
+
+                View divider = findViewById(R.id.divider_toolbar);
+                if(divider != null)
+                    divider.setVisibility(View.GONE);
+
+            }
+
+            AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
+
+
+            boolean customBgColor = appSettings.getBackgroundColor() != null && !appSettings.getBackgroundColor().isEmpty();
+            if(customBgColor){
+                int newColor = Color.parseColor(appSettings.getBackgroundColor());
+                PorterDuff.Mode mMode = PorterDuff.Mode.SRC_ATOP;
+            }
+
+            boolean customFgColor = appSettings.getForegroundColor() != null && !appSettings.getForegroundColor().isEmpty();
+            if(customFgColor){
+                int newColor = Color.parseColor(appSettings.getForegroundColor());
+                PorterDuff.Mode mMode = PorterDuff.Mode.SRC_ATOP;
+
+                // TODO: Offline Alert
+            }
+
+            boolean customTintColor = appSettings.getTintColor() != null && !appSettings.getTintColor().isEmpty();
+
+            if(customTintColor){
+                int newColor = Color.parseColor(appSettings.getTintColor());
+                PorterDuff.Mode mMode = PorterDuff.Mode.SRC_ATOP;
+
+                Spannable text = new SpannableString(getActionBar().getTitle());
+                text.setSpan(new ForegroundColorSpan(newColor), 0, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                getActionBar().setTitle(text);
+
+
+                Drawable drawable = getResources().getDrawable(R.drawable.icon_chevron_back);
+                drawable.setColorFilter(newColor ,mMode);
+                getActionBar().setLogo(drawable);
+
+            }
+
+
+        }
+
     }
 
     /*

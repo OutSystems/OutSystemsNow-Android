@@ -29,7 +29,8 @@
             android:layout_width="fill_parent"
             android:layout_height="5dp"
             android:orientation="horizontal"
-            android:layout_above="@+id/toolbar"
+            android:layout_alignBottom="@+id/mainView"
+
             android:layout_marginLeft="-5dp"
             android:layout_marginRight="-5dp">
 

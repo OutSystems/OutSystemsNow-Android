@@ -12,19 +12,27 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.arellomobile.android.push.PushManager;
 import com.crashlytics.android.Crashlytics;
 import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
+import com.outsystems.android.helpers.ApplicationSettingsController;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.helpers.OfflineSupport;
+import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.DeepLink;
 import com.outsystems.android.model.HubApplicationModel;
 
@@ -74,9 +82,33 @@ public class SplashScreen extends Activity {
 
         if(data != null){
         	DeepLinkController.getInstance().createSettingsFromUrl(data);
-        }        
-        
-        
+        }
+
+        // Application Settings
+        ApplicationSettingsController.getInstance().loadSettings(this);
+
+
+        // Application Settings
+
+        boolean hasValidSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+        if(hasValidSettings){
+
+            // Change colors
+            AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
+
+            boolean customBgColor = appSettings.getTintColor() != null && !appSettings.getBackgroundColor().isEmpty();
+
+            if(customBgColor){
+                int newColor = Color.parseColor(appSettings.getBackgroundColor());
+                ImageView backgroundView = (ImageView)findViewById(R.id.image_view_splash_bg);
+
+                Drawable drawable = backgroundView.getBackground();
+                drawable.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
+            }
+
+        }
+
+
         // Add delay to show splashscreen
         delaySplashScreen();
     }
@@ -128,33 +160,57 @@ public class SplashScreen extends Activity {
         	DeepLink deepLinkSettings = DeepLinkController.getInstance().getDeepLinkSettings();
         	HubManagerHelper.getInstance().setApplicationHosted(deepLinkSettings.getEnvironment());
 
-            Intent intent = new Intent(getApplicationContext(), HubAppActivity.class);
-            startActivity(intent);
+            boolean hasAppSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+
+            if(hasAppSettings){
+                Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
+                startActivity(intent);
+            }
+            else{
+                Intent intent = new Intent(this, HubAppActivity.class);
+                startActivity(intent);
+            }
 
         }
         else{
-            openHubActivity();
-            
+
+            boolean hasAppSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+
+            if(!hasAppSettings){
+                Intent intent = new Intent(this, HubAppActivity.class);
+                startActivity(intent);
+            }
+
 	        if (hubApplications != null && hubApplications.size() > 0) {
 	            HubApplicationModel hubApplication = hubApplications.get(0);
 	            if (hubApplication != null) {
 	                HubManagerHelper.getInstance().setApplicationHosted(hubApplication.getHost());
 	                HubManagerHelper.getInstance().setJSFApplicationServer(hubApplication.isJSF());
 	            }
-	            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-	            if (hubApplication != null) {
+                Intent intent = null;
+                if(hasAppSettings)
+                    intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
+                else
+                    intent = new Intent(this, LoginActivity.class);
+
+	            if (hubApplication != null && intent.getComponent().getClassName().equals(LoginActivity.class.getName())) {
 	                intent.putExtra(LoginActivity.KEY_INFRASTRUCTURE_NAME, hubApplication.getName());
-	                intent.putExtra(LoginActivity.KEY_AUTOMATICLY_LOGIN, true);
+                    boolean autoLogin = hubApplication.getUserName() != null && !hubApplication.getUserName().isEmpty()&&
+                                        hubApplication.getPassword() != null && !hubApplication.getPassword().isEmpty();
+	                intent.putExtra(LoginActivity.KEY_AUTOMATICALLY_LOGIN, autoLogin);
 	            }
 	            startActivity(intent);
 	        }
+            else{
+                if(hasAppSettings){
+                    Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
+                    startActivity(intent);
+                }
+            }
+
 	    }
         finish();
     }
 
-    private void openHubActivity() {
-        Intent intent = new Intent(this, HubAppActivity.class);
-        startActivity(intent);
-    }        
           
 }

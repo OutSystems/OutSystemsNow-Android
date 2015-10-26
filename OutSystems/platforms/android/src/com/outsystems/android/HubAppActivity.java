@@ -31,9 +31,6 @@ import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.Infrastructure;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 /**
  * Class Hub App Activity.
  * 
@@ -88,7 +85,7 @@ public class HubAppActivity extends BaseActivity {
                     app.setDemoApplications(false);
                     // Start Login Activity
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    intent.putExtra(LoginActivity.KEY_AUTOMATICLY_LOGIN, false);
+                    intent.putExtra(LoginActivity.KEY_AUTOMATICALLY_LOGIN, false);
                     if (infrastructure != null) {
                         intent.putExtra(LoginActivity.KEY_INFRASTRUCTURE_NAME, infrastructure.getName());
                     }
