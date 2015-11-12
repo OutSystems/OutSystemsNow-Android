@@ -9,10 +9,11 @@ package com.outsystems.android;
 
 import java.util.ArrayList;
 
-import org.apache.http.util.EncodingUtils;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.DisplayMetrics;
@@ -22,19 +23,20 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
-import com.outsystems.android.core.Installation;
 import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
+import com.outsystems.android.helpers.ApplicationSettingsController;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.helpers.OfflineSupport;
+import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.Application;
 import com.outsystems.android.model.HubApplicationModel;
 import com.outsystems.android.model.Login;
@@ -49,7 +51,7 @@ import com.outsystems.android.model.Login;
 public class LoginActivity extends BaseActivity {
 
     public static String KEY_INFRASTRUCTURE_NAME = "infrastructure";
-    public static String KEY_AUTOMATICLY_LOGIN = "key_login_automaticly";
+    public static String KEY_AUTOMATICALLY_LOGIN = "key_login_automatically";
 
     public boolean doLogin = false;
 
@@ -79,10 +81,17 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        boolean hideActionBar = ApplicationSettingsController.getInstance().hideActionBar(this);
+
+        if(hideActionBar) {
+            // Hide action bar
+            getSupportActionBar().hide();
+        }
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String infrastructure = bundle.getString(KEY_INFRASTRUCTURE_NAME);
-            doLogin = bundle.getBoolean(KEY_AUTOMATICLY_LOGIN);
+            doLogin = bundle.getBoolean(KEY_AUTOMATICALLY_LOGIN);
 
             ((TextView) findViewById(R.id.text_view_label_application_value)).setText(infrastructure);
         }
@@ -109,7 +118,7 @@ public class LoginActivity extends BaseActivity {
             ((EditText) findViewById(R.id.edit_text_passwod)).setText(hub.getPassword());
             if (doLogin) {
                 callLoginService(buttonLogin, hub.getUserName(), hub.getPassword());
-                getIntent().removeExtra(KEY_AUTOMATICLY_LOGIN);
+                getIntent().removeExtra(KEY_AUTOMATICALLY_LOGIN);
             }
         }
 
@@ -137,6 +146,52 @@ public class LoginActivity extends BaseActivity {
                     editText.getViewTreeObserver().removeGlobalOnLayoutListener(this);
             }
         });
+
+        // Application Settings
+
+        boolean hasValidSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+        if(hasValidSettings){
+
+            // Show application logo
+            View applicationLabel = findViewById(R.id.text_view_label_application);
+            if(applicationLabel != null)
+                applicationLabel.setVisibility(View.GONE);
+
+            View environmentLabel = findViewById(R.id.text_view_label_application_value);
+            if(environmentLabel != null)
+                environmentLabel.setVisibility(View.GONE);
+
+            View logoImage = findViewById(R.id.image_view_logo);
+            if(logoImage != null)
+                logoImage.setVisibility(View.VISIBLE);
+
+            // Change colors
+            AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
+
+            boolean customBgColor = appSettings.getTintColor() != null && !appSettings.getBackgroundColor().isEmpty();
+
+            if(customBgColor){
+                View root = findViewById(R.id.root_view);
+                root.setBackgroundColor(Color.parseColor(appSettings.getBackgroundColor()));
+            }
+
+            boolean customFgColor = appSettings.getTintColor() != null && !appSettings.getForegroundColor().isEmpty();
+            if(customFgColor){
+                int newColor = Color.parseColor(appSettings.getForegroundColor());
+                Drawable drawable = buttonLogin.getBackground();
+                drawable.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
+
+                buttonLogin.setTextColor(newColor);
+
+                ProgressBar progressBar = (ProgressBar)findViewById(R.id.progress_bar);
+                drawable = progressBar.getIndeterminateDrawable();
+                drawable.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
+
+            }
+
+        }
+
+
     }
 
     public void callLoginService(final View v, final String userName, final String password) {
@@ -180,18 +235,15 @@ public class LoginActivity extends BaseActivity {
                                 database.updateHubApplicationCredentials(HubManagerHelper.getInstance()
                                         .getApplicationHosted(), userName, password);
                                 database.addLoginApplications(HubManagerHelper.getInstance()
-                                        .getApplicationHosted(), userName,login.getApplications());
+                                        .getApplicationHosted(), userName, login.getApplications());
 
                                 // Offline Support
                                 OfflineSupport.getInstance(getApplicationContext()).checkCurrentSession(HubManagerHelper.getInstance()
-                                        .getApplicationHosted(),userName);
+                                        .getApplicationHosted(), userName);
 
+                                boolean singleApp = login.getApplications() != null && login.getApplications().size() == 1;
+                                openNextActivity(singleApp, login);
 
-                                if (login.getApplications() != null && login.getApplications().size() == 1) {
-                                    openWebApplicationActivity(login);
-                                } else {
-                                    openApplicationsActivity(login);
-                                }
                             }
                         } else {
                             ((EditText) findViewById(R.id.edit_text_user_mail)).setError(WebServicesClient.PrettyErrorMessage(statusCode)); // getResources().getString(R.string.label_error_login)                            
@@ -202,20 +254,30 @@ public class LoginActivity extends BaseActivity {
                
     }
 
-    /**
-     * Open applications activity.
-     * 
-     * @param login the login
-     */
-    @SuppressWarnings("unchecked")
-    private void openApplicationsActivity(Login login) {
-        Intent intent = new Intent(getApplicationContext(), ApplicationsActivity.class);
-        ArrayList arrayList = (ArrayList)login.getApplications();
-        intent.putParcelableArrayListExtra(ApplicationsActivity.KEY_CONTENT_APPLICATIONS,
-                (ArrayList<? extends Parcelable>)arrayList);
-        intent.putExtra(ApplicationsActivity.KEY_TITLE_ACTION_BAR, getResources().getString(R.string.label_logout));
-        startActivity(intent);
+
+    private void openNextActivity(boolean singleApp, Login login){
+        if (singleApp) {
+            openWebApplicationActivity(login);
+        } else {
+
+            Intent nextIntent = ApplicationSettingsController.getInstance().getNextActivity(this);
+
+            if(nextIntent == null ){
+                nextIntent = new Intent(getApplicationContext(), ApplicationsActivity.class);
+            }
+
+            if(nextIntent.getComponent() != null && nextIntent.getComponent().getClassName().equals(ApplicationsActivity.class))
+            {
+                ArrayList arrayList = (ArrayList)login.getApplications();
+                nextIntent.putParcelableArrayListExtra(ApplicationsActivity.KEY_CONTENT_APPLICATIONS,
+                        (ArrayList<? extends Parcelable>)arrayList);
+                nextIntent.putExtra(ApplicationsActivity.KEY_TITLE_ACTION_BAR, getResources().getString(R.string.label_logout));
+
+            }
+            startActivity(nextIntent);
+        }
     }
+
 
     /**
      * Open web application activity.

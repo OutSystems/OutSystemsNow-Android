@@ -12,6 +12,22 @@ android {
     compileSdkVersion 20
     buildToolsVersion "20.0.0"
 
+
+    defaultConfig{
+
+        if (project.hasProperty('APPLICATION_ID') && !((String)APPLICATION_ID).isEmpty()) {
+            applicationId APPLICATION_ID
+        }
+
+        if (project.hasProperty('APPLICATION_VERSION') && !((String)APPLICATION_VERSION).isEmpty()){
+            versionName APPLICATION_VERSION
+        }
+
+        if (project.hasProperty('APPLICATION_CODE') && !((String)APPLICATION_CODE).isEmpty()){
+            versionCode APPLICATION_CODE.toInteger()
+        }
+    }
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -35,4 +51,41 @@ android {
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
+
+
+    buildTypes {
+
+        if( project.hasProperty('OUTPUT_DIR') && !((String)OUTPUT_DIR).isEmpty()){
+
+            // this is used to alter output directory and file name. If you don't need it
+            // you can safely comment it out.
+            applicationVariants.all { variant ->
+
+                variant.outputs.each { output ->
+                    def file = output.outputFile
+
+                    String parent = file.parent
+                     if ( new File( (String)OUTPUT_DIR ).exists() ) {
+                         parent = OUTPUT_DIR
+                     }
+
+		            if( project.hasProperty('APPLICATION_NAME') && !((String)APPLICATION_NAME).isEmpty()){
+                        output.outputFile = new File(
+                                parent,
+                                (String)(APPLICATION_NAME + "-" + defaultConfig.versionName + ".apk")
+                        )
+                    }
+                    else{
+                        output.outputFile = new File(
+                                parent,
+                                (String)("OutsystemsNow.apk")
+                        )
+                    }
+
+                }
+            }
+        }
+
+    }
+
 }
