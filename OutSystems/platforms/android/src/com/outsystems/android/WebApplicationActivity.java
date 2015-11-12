@@ -286,6 +286,11 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         cordovaWebView.getSettings().setJavaScriptEnabled( true );
         cordovaWebView.getSettings().setCacheMode( WebSettings.LOAD_NO_CACHE );
 
+        // Allow remote debugging
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            cordovaWebView.setWebContentsDebuggingEnabled(true);
+        }
+
         ApplicationOutsystems app = (ApplicationOutsystems)getApplication();
 
         if ( !app.isNetworkAvailable() ) { // loading offline
