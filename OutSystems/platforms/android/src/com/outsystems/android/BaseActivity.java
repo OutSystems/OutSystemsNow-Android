@@ -312,8 +312,17 @@ public class BaseActivity extends ActionBarActivity {
                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
                                         }
+                                    } else if(messageJson.has("l")) {
+                                        try {
+                                            String url = messageJson.getString("l");
+                                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                                            startActivity(browserIntent);
+                                        }
+                                        catch(Exception e)
+                                        {
+                                            EventLogger.logError(getClass(), e);
+                                        }
                                     }
-
                                 }
                             });
 
