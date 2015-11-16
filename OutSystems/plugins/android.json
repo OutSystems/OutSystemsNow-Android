@@ -51,6 +51,10 @@
                         {
                             "xml": "<feature name=\"Sim\"><param name=\"android-package\" value=\"com.pbakondy.Sim\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SQLitePlugin\"><param name=\"android-package\" value=\"io.liteglue.SQLitePlugin\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -648,6 +652,9 @@
             "PACKAGE_NAME": "com.outsystems.android"
         },
         "cordova-plugin-sim": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.outsystems.android"
         }
     },

@@ -287,6 +287,13 @@ module.exports = [
         "clobbers": [
             "window.plugins.sim"
         ]
+    },
+    {
+        "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
+        "id": "cordova-sqlite-storage.SQLitePlugin",
+        "clobbers": [
+            "SQLitePlugin"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -303,7 +310,8 @@ module.exports.metadata =
     "nl.x-services.plugins.calendar": "4.3.1",
     "org.apache.cordova.device": "0.3.0",
     "org.apache.cordova.network-information": "0.2.15",
-    "cordova-plugin-sim": "1.0.2"
+    "cordova-plugin-sim": "1.0.2",
+    "cordova-sqlite-storage": "0.7.12"
 }
 // BOTTOM OF METADATA
 });
