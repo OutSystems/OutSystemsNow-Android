@@ -133,6 +133,9 @@ public class ApplicationSettingsController {
     public Intent getNextActivity(Activity currentActivity){
         Intent result = null;
 
+        if (!this.hasValidSettings())
+            return null;
+
         if(currentActivity instanceof LoginActivity){
 
             if(settings.skipApplicationList()){
