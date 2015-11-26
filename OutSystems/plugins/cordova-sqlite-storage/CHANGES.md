@@ -1,10 +1,16 @@
 # Changes
 
+## 0.7.14
+
+- REGEXP support removed from this version branch
+- Remove src/android/libs/.gitignore (inadvertently added in 0.7.13)
+
 ## 0.7.13
 
+- REGEXP support removed from this version branch
 - Rename Windows C++ Database close function to closedb to resolve conflict for Windows Store certification
 - Android version with sqlite `3.8.10.2` embedded (with error messages fixed)
-- REGEXP and pre-populated database support removed from this version branch
+- Pre-populated database support removed from this version branch
 - Amazon Fire-OS support removed
 - Fix conversion warnings in iOS version
 
