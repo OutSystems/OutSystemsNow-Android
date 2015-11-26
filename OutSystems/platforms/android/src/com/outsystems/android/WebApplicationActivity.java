@@ -852,6 +852,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             super.onPageStarted(view, url, favicon);
             EventLogger.logMessage(getClass(), "________________ ONPAGESTARTED _________________");
 
+            webViewLoadingFailed = false;
 
             EventLogger.logInfoMessage(this.getClass(),"PRELOADER: onPageStarted - hasPreloader:"+applicationHasPreloader);
             if (!applicationHasPreloader) {
