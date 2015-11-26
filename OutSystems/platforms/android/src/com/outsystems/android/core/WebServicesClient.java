@@ -54,7 +54,7 @@ public class WebServicesClient {
 
     public static final String URL_WEB_APPLICATION = "https://%1$s/%2$s";
     public static final String BASE_URL = "https://%1$s/OutSystemsNowService/";
-    public static String DEMO_HOST_NAME = "apps.outsystems.net";
+    public static String DEMO_HOST_NAME = "apps.outsystems.com";
 
     private static volatile WebServicesClient instance = null;
 
