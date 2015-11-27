@@ -606,7 +606,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-
+/*
         // Code to send info about File Chooser
         if (cordovaWebView != null && requestCode == CordovaChromeClient.FILECHOOSER_RESULTCODE) {
             ValueCallback<Uri> mUploadMessage = ((CordovaChromeClient)this.cordovaWebView.getWebChromeClient()).getValueCallback();
@@ -620,6 +620,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             mUploadMessage.onReceiveValue(result);
             mUploadMessage = null;
         }
+        */
 
         CordovaPlugin callback = this.activityResultCallback;
         if (callback != null) {
@@ -852,6 +853,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             super.onPageStarted(view, url, favicon);
             EventLogger.logMessage(getClass(), "________________ ONPAGESTARTED _________________");
 
+            webViewLoadingFailed = false;
 
             EventLogger.logInfoMessage(this.getClass(),"PRELOADER: onPageStarted - hasPreloader:"+applicationHasPreloader);
             if (!applicationHasPreloader) {

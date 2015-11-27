@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">OutSystems</string>
+    <string name="app_name">Outsystems</string>
     <string name="required_module_version">1.1</string>
     <string name="image_splash">SplashScreen</string>
     <string name="image_logo">LogoOutsystems</string>
@@ -23,12 +23,9 @@
     <string name="label_back">Back</string>
     <string name="label_logout">Logout</string>
     <string name="label_loading">Loading</string>
-    
-    <!-- Error Messages -->
     <string name="label_error_empty_address">Please enter a valid OutSystems network address</string>
     <string name="label_error_wrong_address">There was an error trying to connect to the provided environment, please try again.</string>
     <string name="label_error_login">Invalid Login</string>
-    
     <string name="app_picker_name">Applications</string>
     <string name="bookmark_picker_name">Bookmarks</string>
     <string name="button_add_calendar">Add to calendar</string>
