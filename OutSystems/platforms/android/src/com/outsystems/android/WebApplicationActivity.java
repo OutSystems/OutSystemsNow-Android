@@ -7,21 +7,6 @@
  */
 package com.outsystems.android;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import org.apache.cordova.Config;
-import org.apache.cordova.CordovaChromeClient;
-import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
-import org.apache.http.cookie.Cookie;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DownloadManager;
@@ -38,27 +23,20 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
-import android.graphics.drawable.shapes.RoundRectShape;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.StateSet;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.CookieManager;
@@ -66,7 +44,7 @@ import android.webkit.CookieSyncManager;
 import android.webkit.DownloadListener;
 import android.webkit.JsResult;
 import android.webkit.SslErrorHandler;
-import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -76,9 +54,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.outsystems.android.core.CordovaLoaderWebClient;
+import com.outsystems.android.core.CustomWebView;
 import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
-import com.outsystems.android.core.CustomWebView;
 import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.ApplicationSettingsController;
 import com.outsystems.android.helpers.DeepLinkController;
@@ -91,6 +69,24 @@ import com.outsystems.android.model.Application;
 import com.outsystems.android.model.MobileECT;
 import com.outsystems.android.widgets.CustomFontTextView;
 import com.phonegap.plugins.barcodescanner.BarcodeScanner;
+
+import org.apache.cordova.Config;
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaWebViewEngine;
+import org.apache.cordova.CordovaWebViewImpl;
+import org.apache.cordova.engine.SystemWebChromeClient;
+import org.apache.cordova.engine.SystemWebView;
+import org.apache.cordova.engine.SystemWebViewEngine;
+import org.apache.http.cookie.Cookie;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Class description.
@@ -105,7 +101,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     public static String KEY_SINGLE_APPLICATION ="single_application";
     private static String OPEN_URL_EXTERNAL_BROWSER_PREFIX = "external:";
 
-    CordovaWebView cordovaWebView;
+    SystemWebView cordovaWebView;
 
     private final ExecutorService threadPool = Executors.newCachedThreadPool();
 
@@ -155,11 +151,13 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
         @Override
         public void onClick(View v) {
+
             if (cordovaWebView.canGoForward()) {
                 startLoadingAnimation();
                 cordovaWebView.goForward();
                 enableDisableButtonForth();
             }
+
         }
     };
 
@@ -206,9 +204,13 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             DeepLinkController.getInstance().invalidate();
         }
 
-        cordovaWebView = (CustomWebView) this.findViewById(R.id.mainView);
+        cordovaWebView = (SystemWebView) this.findViewById(R.id.mainView);
         imageView = (ImageView) this.findViewById(R.id.image_view);
         Config.init(this);
+
+        SystemWebViewEngine webViewEngine = new SystemWebViewEngine(cordovaWebView);
+        CordovaWebViewImpl cordovaWebViewImpl = new CordovaWebViewImpl(webViewEngine);
+        cordovaWebViewImpl.init(this);
 
         Application application = null;
         boolean singleApp = false;
@@ -230,8 +232,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                     .getApplicationHosted(), application.getPath());
         }
 
-        cordovaWebView.setWebViewClient(new CordovaCustomWebClient(this, cordovaWebView));
-        CordovaCustomChromeClient chromeClient = new CordovaCustomChromeClient(this,cordovaWebView);
+        cordovaWebView.setWebViewClient(new CordovaCustomWebClient(this,webViewEngine));
+        CordovaCustomChromeClient chromeClient = new CordovaCustomChromeClient(webViewEngine);
         cordovaWebView.setWebChromeClient(chromeClient);
 
         cordovaWebView.getSettings().setJavaScriptEnabled(true);
@@ -558,7 +560,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         EventLogger.logMessage(getClass(), "on Destroy called");
         super.onDestroy();
         if (this.cordovaWebView != null) {
-            this.cordovaWebView.handleDestroy();
+            this.cordovaWebView.destroy();
         }
     }
 
@@ -787,8 +789,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
      */
     public class CordovaCustomWebClient extends CordovaLoaderWebClient {
 
-        public CordovaCustomWebClient(CordovaInterface cordova, CordovaWebView view) {
-            super(cordova, view);
+        public CordovaCustomWebClient(CordovaInterface cordova, SystemWebViewEngine engine) {
+            super(cordova, engine);
         }
 
         @SuppressLint("DefaultLocale")
@@ -1274,12 +1276,12 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     /**
      * The Class CordovaCustomWebClient.
      */
-    public class CordovaCustomChromeClient extends CordovaChromeClient{
+    public class CordovaCustomChromeClient extends SystemWebChromeClient {
 
         private ProgressBar progressBar;
 
-        public CordovaCustomChromeClient(CordovaInterface ctx, CordovaWebView app) {
-            super(ctx, app);
+        public CordovaCustomChromeClient(SystemWebViewEngine engine) {
+            super(engine);
         }
 
 

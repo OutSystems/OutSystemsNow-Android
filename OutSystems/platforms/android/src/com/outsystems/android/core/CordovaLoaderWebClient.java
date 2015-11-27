@@ -12,7 +12,9 @@ import java.io.InputStream;
 
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.IceCreamCordovaWebViewClient;
+import org.apache.cordova.CordovaWebViewEngine;
+import org.apache.cordova.engine.SystemWebViewClient;
+import org.apache.cordova.engine.SystemWebViewEngine;
 
 
 import android.content.res.AssetManager;
@@ -27,7 +29,7 @@ import android.webkit.WebView;
  * @version $Revision: 666 $
  * 
  */
-public class CordovaLoaderWebClient extends IceCreamCordovaWebViewClient {
+public class CordovaLoaderWebClient extends SystemWebViewClient {
 
     /** The identifier cordova. */
     private static String IDENTIFIER_CORDOVA = "/cdvload/";
@@ -37,12 +39,13 @@ public class CordovaLoaderWebClient extends IceCreamCordovaWebViewClient {
 
     /**
      * @param cordova
-     * @param view
+     * @param engine
      */
-    public CordovaLoaderWebClient(CordovaInterface cordova, CordovaWebView view) {
-        super(cordova, view);
+    public CordovaLoaderWebClient(CordovaInterface cordova, SystemWebViewEngine engine){
+        super(engine);
         mngr = cordova.getActivity().getAssets();
     }
+
 
     /*
      * (non-Javadoc)
@@ -51,6 +54,7 @@ public class CordovaLoaderWebClient extends IceCreamCordovaWebViewClient {
      */
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+
         if (url.contains(IDENTIFIER_CORDOVA)) {
             // Get path to load local file Cordova JS
             String[] split = url.split(IDENTIFIER_CORDOVA);
@@ -68,6 +72,7 @@ public class CordovaLoaderWebClient extends IceCreamCordovaWebViewClient {
                 EventLogger.logError(getClass(), e);
             }
         }
+
         return null;
     }
 }
