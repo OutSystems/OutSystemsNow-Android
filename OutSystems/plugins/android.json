@@ -55,6 +55,10 @@
                         {
                             "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -84,7 +88,7 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 1
+                            "count": 2
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
@@ -614,6 +618,16 @@
                         }
                     ]
                 }
+            },
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<preference name=\"AndroidPersistentFileLocation\" value=\"Internal\" />",
+                            "count": 1
+                        }
+                    ]
+                }
             }
         }
     },
@@ -655,6 +669,9 @@
             "PACKAGE_NAME": "com.outsystems.android"
         },
         "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "cordova-plugin-file": {
             "PACKAGE_NAME": "com.outsystems.android"
         }
     },

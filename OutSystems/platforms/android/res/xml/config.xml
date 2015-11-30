@@ -18,17 +18,9 @@
     <access launch-external="yes" origin="mailto:*" />
     <access launch-external="yes" origin="sms:*" />
     <access launch-external="yes" origin="market:*" />
-
-    <!-- A wildcard can be used to whitelist the entire network,
-     over HTTP and HTTPS.
-     *NOT RECOMMENDED* -->
     <allow-navigation href="*" />
-    <!-- Allow all unrecognized URLs to open installed apps
-     *NOT RECOMMENDED* -->
     <allow-intent href="*" />
-    <!-- Don't block any requests -->
     <access origin="*" />
-
     <preference name="LoadUrlTimeoutValue" value="30000" />
     <feature name="Loader">
         <param name="android-package" value="com.outsystems.android.Loader" />
@@ -68,6 +60,11 @@
     </feature>
     <feature name="Whitelist">
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+    <feature name="File">
+        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
         <param name="onload" value="true" />
     </feature>
 </widget>
