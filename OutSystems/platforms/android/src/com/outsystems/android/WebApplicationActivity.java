@@ -28,6 +28,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
@@ -71,10 +72,14 @@ import com.outsystems.android.widgets.CustomFontTextView;
 import com.phonegap.plugins.barcodescanner.BarcodeScanner;
 
 import org.apache.cordova.Config;
+import org.apache.cordova.ConfigXmlParser;
 import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaInterfaceImpl;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.CordovaPreferences;
 import org.apache.cordova.CordovaWebViewEngine;
 import org.apache.cordova.CordovaWebViewImpl;
+import org.apache.cordova.PluginEntry;
 import org.apache.cordova.engine.SystemWebChromeClient;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
@@ -83,8 +88,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -188,6 +195,40 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     // when another application (activity) is started.
     protected boolean keepRunning = true;
 
+
+    private void initCordovaWebview(SystemWebViewEngine webViewEngine){
+        CordovaWebViewImpl appView = new CordovaWebViewImpl(webViewEngine);
+
+        // Init Cordova Interface
+        CordovaInterfaceImpl cordovaInterface = new CordovaInterfaceImpl(this) ;
+
+        // Load Config
+        ConfigXmlParser parser = new ConfigXmlParser();
+        parser.parse(this);
+
+        // Get Preferences
+        CordovaPreferences preferences = parser.getPreferences();
+        preferences.setPreferencesBundle(getIntent().getExtras());
+
+        // Get Plugins
+        ArrayList<PluginEntry> pluginEntries = parser.getPluginEntries();
+        pluginEntries = parser.getPluginEntries();
+
+        // Initialize WebView if needed
+        if (!appView.isInitialized()) {
+            appView.init(cordovaInterface, pluginEntries, preferences);
+        }
+
+        cordovaInterface.onCordovaInit(appView.getPluginManager());
+
+        // Wire the hardware volume controls to control media if desired.
+        String volumePref = preferences.getString("DefaultVolumeStream", "");
+        if ("media".equals(volumePref.toLowerCase(Locale.ENGLISH))) {
+            setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        }
+
+    }
+
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     @Override
@@ -204,13 +245,13 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             DeepLinkController.getInstance().invalidate();
         }
 
-        cordovaWebView = (SystemWebView) this.findViewById(R.id.mainView);
         imageView = (ImageView) this.findViewById(R.id.image_view);
-        Config.init(this);
+
+        cordovaWebView = (SystemWebView) this.findViewById(R.id.mainView);
 
         SystemWebViewEngine webViewEngine = new SystemWebViewEngine(cordovaWebView);
-        CordovaWebViewImpl cordovaWebViewImpl = new CordovaWebViewImpl(webViewEngine);
-        cordovaWebViewImpl.init(this);
+
+        initCordovaWebview(webViewEngine);
 
         Application application = null;
         boolean singleApp = false;
@@ -807,7 +848,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                 startActivity(browserIntent);
                 return true;
             }
-            EventLogger.logInfoMessage(this.getClass(),"PRELOADER: shouldOverrideUrlLoading - hasPreloader:"+applicationHasPreloader);
+            EventLogger.logInfoMessage(this.getClass(), "PRELOADER: shouldOverrideUrlLoading - hasPreloader:" + applicationHasPreloader);
             if (!applicationHasPreloader) {
                 if(imageView == null)
                     imageView = (ImageView) findViewById(R.id.image_view);

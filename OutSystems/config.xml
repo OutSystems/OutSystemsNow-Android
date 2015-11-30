@@ -14,37 +14,8 @@
 	<access origin="mailto:*" launch-external="yes"/>
 	<access origin="sms:*" launch-external="yes"/>
 	<access origin="market:*" launch-external="yes"/>
-	
+			
     <access origin="*" />
 
-    <!-- Navigation -->
-    <allow-navigation href="*" />
-
-    <!-- The above is equivalent to these three declarations -->
-    <allow-navigation href="http://*/*" />
-    <allow-navigation href="https://*/*" />
-    <allow-navigation href="data:*" />
-
-    <!-- Intent -->
-
-    <!-- Allow links to web pages to open in a browser -->
-    <allow-intent href="http://*/*" />
-    <allow-intent href="https://*/*" />
-
-    <!-- Allow SMS links to open messaging app -->
-    <allow-intent href="sms:*" />
-
-    <!-- Allow tel: links to open the dialer -->
-    <allow-intent href="tel:*" />
-
-    <!-- Allow geo: links to open maps -->
-    <allow-intent href="geo:*" />
-
-    <!-- Allow all unrecognized URLs to open installed apps
-         *NOT RECOMMENDED* -->
-    <allow-intent href="*" />
-
-    <allow-intent href="mailto:*" />
-    <allow-intent href="market:*" />
 
 </widget>
