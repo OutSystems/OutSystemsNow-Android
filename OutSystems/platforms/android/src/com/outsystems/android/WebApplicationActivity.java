@@ -77,8 +77,10 @@ import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaInterfaceImpl;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaPreferences;
+import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaWebViewEngine;
 import org.apache.cordova.CordovaWebViewImpl;
+import org.apache.cordova.LOG;
 import org.apache.cordova.PluginEntry;
 import org.apache.cordova.engine.SystemWebChromeClient;
 import org.apache.cordova.engine.SystemWebView;
@@ -197,7 +199,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
 
     private void initCordovaWebview(SystemWebViewEngine webViewEngine){
-        CordovaWebViewImpl appView = new CordovaWebViewImpl(webViewEngine);
+        CordovaWebView appView = new CordovaWebViewImpl(webViewEngine);
 
         // Init Cordova Interface
         CordovaInterfaceImpl cordovaInterface = new CordovaInterfaceImpl(this) ;
@@ -227,6 +229,8 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
             setVolumeControlStream(AudioManager.STREAM_MUSIC);
         }
 
+        // If keepRunning
+        this.keepRunning = preferences.getBoolean("KeepRunning", true);
     }
 
     @SuppressWarnings("deprecation")
@@ -574,9 +578,63 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     }
 
     @Override
+    public void onPause(){
+        super.onPause();
+
+        if (this.cordovaWebView != null && this.cordovaWebView.getCordovaWebView() != null) {
+            boolean keepRunning = this.keepRunning || this.activityResultCallback != null;
+            this.cordovaWebView.getCordovaWebView().handlePause(keepRunning);
+        }
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        //Forward to plugins
+        if (this.cordovaWebView != null && this.cordovaWebView.getCordovaWebView() != null){
+            this.cordovaWebView.getCordovaWebView().onNewIntent(intent);
+        }
+    }
+
+
+    @Override
     public void onResume() {
         super.onResume();
         stopLoadingAnimation();
+
+        if (this.cordovaWebView == null || this.cordovaWebView.getCordovaWebView() == null) {
+            return;
+        }
+
+        // Force window to have focus, so application always
+        // receive user input. Workaround for some devices (Samsung Galaxy Note 3 at least)
+        this.getWindow().getDecorView().requestFocus();
+
+        this.cordovaWebView.getCordovaWebView().handleResume(this.keepRunning);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (this.cordovaWebView == null || this.cordovaWebView.getCordovaWebView() == null) {
+            return;
+        }
+
+        this.cordovaWebView.getCordovaWebView().handleStop();
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (this.cordovaWebView == null || this.cordovaWebView.getCordovaWebView() == null) {
+            return;
+        }
+        this.cordovaWebView.getCordovaWebView().handleStart();
     }
 
     @Override
@@ -600,9 +658,11 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
     protected void onDestroy() {
         EventLogger.logMessage(getClass(), "on Destroy called");
         super.onDestroy();
-        if (this.cordovaWebView != null) {
-            this.cordovaWebView.destroy();
+
+        if (this.cordovaWebView != null && this.cordovaWebView.getCordovaWebView() != null){
+            this.cordovaWebView.getCordovaWebView().handleDestroy();
         }
+
     }
 
     @Override
