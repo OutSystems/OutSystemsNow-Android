@@ -45,7 +45,6 @@ import android.webkit.CookieSyncManager;
 import android.webkit.DownloadListener;
 import android.webkit.JsResult;
 import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -55,7 +54,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.outsystems.android.core.CordovaLoaderWebClient;
-import com.outsystems.android.core.CustomWebView;
 import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.WebServicesClient;
@@ -69,18 +67,13 @@ import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.Application;
 import com.outsystems.android.model.MobileECT;
 import com.outsystems.android.widgets.CustomFontTextView;
-import com.phonegap.plugins.barcodescanner.BarcodeScanner;
 
-import org.apache.cordova.Config;
 import org.apache.cordova.ConfigXmlParser;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaInterfaceImpl;
-import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaPreferences;
 import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.CordovaWebViewEngine;
 import org.apache.cordova.CordovaWebViewImpl;
-import org.apache.cordova.LOG;
 import org.apache.cordova.PluginEntry;
 import org.apache.cordova.engine.SystemWebChromeClient;
 import org.apache.cordova.engine.SystemWebView;
@@ -104,21 +97,25 @@ import java.util.concurrent.Executors;
  * @version $Revision: 666 $
  *
  */
-public class WebApplicationActivity extends BaseActivity implements CordovaInterface, OSECTContainerListener {
+public class WebApplicationActivity extends BaseActivity implements OSECTContainerListener {
 
     public static String KEY_APPLICATION = "key_application";
     public static String KEY_SINGLE_APPLICATION ="single_application";
     private static String OPEN_URL_EXTERNAL_BROWSER_PREFIX = "external:";
 
+    // Cordova Webview Settings
+
     SystemWebView cordovaWebView;
+
+    protected CordovaPreferences preferences;
+    protected ArrayList<PluginEntry> pluginEntries;
+    protected CordovaInterfaceImpl cordovaInterface;
+
 
     private final ExecutorService threadPool = Executors.newCachedThreadPool();
 
     @SuppressWarnings("unused")
     private int activityState = 0; // 0=starting, 1=running (after 1st resume), 2=shutting down
-
-    // Plugin to call when activity result is received
-    protected CordovaPlugin activityResultCallback = null;
 
     private ImageButton buttonForth;
     protected ProgressDialog spinnerDialog = null;
@@ -202,35 +199,35 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         CordovaWebView appView = new CordovaWebViewImpl(webViewEngine);
 
         // Init Cordova Interface
-        CordovaInterfaceImpl cordovaInterface = new CordovaInterfaceImpl(this) ;
+        this.cordovaInterface = new CordovaInterfaceImpl(this) ;
 
         // Load Config
         ConfigXmlParser parser = new ConfigXmlParser();
         parser.parse(this);
 
         // Get Preferences
-        CordovaPreferences preferences = parser.getPreferences();
-        preferences.setPreferencesBundle(getIntent().getExtras());
+        this.preferences = parser.getPreferences();
+        this.preferences.setPreferencesBundle(getIntent().getExtras());
 
         // Get Plugins
-        ArrayList<PluginEntry> pluginEntries = parser.getPluginEntries();
-        pluginEntries = parser.getPluginEntries();
+        this.pluginEntries = parser.getPluginEntries();
+        this.pluginEntries = parser.getPluginEntries();
 
         // Initialize WebView if needed
         if (!appView.isInitialized()) {
-            appView.init(cordovaInterface, pluginEntries, preferences);
+            appView.init(this.cordovaInterface, this.pluginEntries, this.preferences);
         }
 
-        cordovaInterface.onCordovaInit(appView.getPluginManager());
+        this.cordovaInterface.onCordovaInit(appView.getPluginManager());
 
         // Wire the hardware volume controls to control media if desired.
-        String volumePref = preferences.getString("DefaultVolumeStream", "");
+        String volumePref = this.preferences.getString("DefaultVolumeStream", "");
         if ("media".equals(volumePref.toLowerCase(Locale.ENGLISH))) {
             setVolumeControlStream(AudioManager.STREAM_MUSIC);
         }
 
         // If keepRunning
-        this.keepRunning = preferences.getBoolean("KeepRunning", true);
+        this.keepRunning = this.preferences.getBoolean("KeepRunning", true);
     }
 
     @SuppressWarnings("deprecation")
@@ -277,7 +274,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
                     .getApplicationHosted(), application.getPath());
         }
 
-        cordovaWebView.setWebViewClient(new CordovaCustomWebClient(this,webViewEngine));
+        cordovaWebView.setWebViewClient(new CordovaCustomWebClient(this.cordovaInterface,webViewEngine));
         CordovaCustomChromeClient chromeClient = new CordovaCustomChromeClient(webViewEngine);
         cordovaWebView.setWebChromeClient(chromeClient);
 
@@ -582,7 +579,7 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
         super.onPause();
 
         if (this.cordovaWebView != null && this.cordovaWebView.getCordovaWebView() != null) {
-            boolean keepRunning = this.keepRunning || this.activityResultCallback != null;
+            boolean keepRunning = this.keepRunning || this.cordovaInterface.getActivityResultCallback() != null;
             this.cordovaWebView.getCordovaWebView().handlePause(keepRunning);
         }
 
@@ -665,39 +662,14 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
 
     }
 
-    @Override
-    public void setActivityResultCallback(CordovaPlugin plugin) {
-        this.activityResultCallback = plugin;
-    }
-
-    /**
-     * Launch an activity for which you would like a result when it finished. When this activity exits, your
-     * onActivityResult() method is called.
-     *
-     * @param command The command object
-     * @param intent The intent to start
-     * @param requestCode The request code that is passed to callback to identify the activity
-     */
-    public void startActivityForResult(CordovaPlugin command, Intent intent, int requestCode) {
-        this.activityResultCallback = command;
-        this.activityResultKeepRunning = this.keepRunning;
-
-        // If multitasking turned on, then disable it for activities that return results
-        if (command != null) {
-            this.keepRunning = false;
-        }
-
-        if (intent.getAction().contains("SCAN")) {
-            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-            startActivityForResult(intent, 0);
-            return;
-        }
-
-        // Start activity
-        super.startActivityForResult(intent, requestCode);
-    }
 
     @Override
+    public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
+        // Capture requestCode here so that it is captured in the setActivityResultCallback() case.
+        cordovaInterface.setActivityResultRequestCode(requestCode);
+        super.startActivityForResult(intent, requestCode, options);
+    }
+
     /**
      * Called when an activity you launched exits, giving you the requestCode you started it with,
      * the resultCode it returned, and any additional data from it.
@@ -705,40 +677,15 @@ public class WebApplicationActivity extends BaseActivity implements CordovaInter
      * @param requestCode       The request code originally supplied to startActivityForResult(),
      *                          allowing you to identify who this result came from.
      * @param resultCode        The integer result code returned by the child activity through its setResult().
-     * @param data              An Intent, which can return result data to the caller (various data can be attached to Intent "extras").
+     * @param intent            An Intent, which can return result data to the caller (various data can be attached to Intent "extras").
      */
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        EventLogger.logMessage(this.getClass(), "Incoming Result. Request code = " + requestCode);
         super.onActivityResult(requestCode, resultCode, intent);
-/*
-        // Code to send info about File Chooser
-        if (cordovaWebView != null && requestCode == CordovaChromeClient.FILECHOOSER_RESULTCODE) {
-            ValueCallback<Uri> mUploadMessage = ((CordovaChromeClient)this.cordovaWebView.getWebChromeClient()).getValueCallback();
-            EventLogger.logMessage(getClass(), "did we get here?");
-            if (null == mUploadMessage)
-                return;
-            Uri result = intent == null || resultCode != Activity.RESULT_OK ? null : intent.getData();
-            EventLogger.logMessage(getClass(), "result = " + result);
-            // Uri filepath = Uri.parse("file://" + FileUtils.getRealPathFromURI(result, this));
-            // Log.d(TAG, "result = " + filepath);
-            mUploadMessage.onReceiveValue(result);
-            mUploadMessage = null;
-        }
-        */
-
-        CordovaPlugin callback = this.activityResultCallback;
-        if (callback != null) {
-            try {
-                if (intent != null && intent.getAction() != null && intent.getAction().contains("SCAN")) {
-                    callback.onActivityResult(BarcodeScanner.REQUEST_CODE, resultCode, intent);
-                } else {
-                    callback.onActivityResult(requestCode, resultCode, intent);
-                }
-            }catch (Exception e){
-                EventLogger.logError(getClass(), e);
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, intent);
+        cordovaInterface.onActivityResult(requestCode, resultCode, intent);
     }
+
 
     /**
      * Get the Android activity.

@@ -37,6 +37,7 @@ public class CordovaInterfaceImpl implements CordovaInterface {
     protected PluginManager pluginManager;
 
     protected ActivityResultHolder savedResult;
+
     protected CordovaPlugin activityResultCallback;
     protected String initCallbackService;
     protected int activityResultRequestCode;
@@ -68,6 +69,10 @@ public class CordovaInterfaceImpl implements CordovaInterface {
             activityResultCallback.onActivityResult(activityResultRequestCode, Activity.RESULT_CANCELED, null);
         }
         activityResultCallback = plugin;
+    }
+
+    public CordovaPlugin getActivityResultCallback() {
+        return activityResultCallback;
     }
 
     @Override
