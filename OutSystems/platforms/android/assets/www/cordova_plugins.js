@@ -8,13 +8,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cordova-plugin-sim/www/sim.js",
-        "id": "cordova-plugin-sim.Sim",
-        "clobbers": [
-            "window.plugins.sim"
-        ]
-    },
-    {
         "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
         "id": "cordova-sqlite-storage.SQLitePlugin",
         "clobbers": [
@@ -316,13 +309,19 @@ module.exports = [
         "clobbers": [
             "Connection"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-sim/www/sim.js",
+        "id": "cordova-plugin-sim.Sim",
+        "clobbers": [
+            "window.plugins.sim"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
     "com.phonegap.plugins.barcodescanner": "2.0.0",
-    "cordova-plugin-sim": "1.0.2",
     "cordova-sqlite-storage": "0.7.13",
     "cordova-plugin-whitelist": "1.2.0",
     "cordova-plugin-file": "3.0.0",
@@ -334,7 +333,8 @@ module.exports.metadata =
     "cordova-plugin-battery-status": "1.1.1",
     "cordova-plugin-console": "1.0.2",
     "cordova-plugin-dialogs": "1.2.0",
-    "cordova-plugin-network-information": "1.1.0"
+    "cordova-plugin-network-information": "1.1.0",
+    "cordova-plugin-sim": "1.1.0"
 }
 // BOTTOM OF METADATA
 });

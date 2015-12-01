@@ -1,11 +1,4 @@
 {
-    "cordova-plugin-sim": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/pbakondy/cordova-plugin-sim",
-            "subdir": "."
-        }
-    },
     "cordova-sqlite-storage": {
         "source": {
             "type": "git",
@@ -99,6 +92,14 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-network-information"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-sim": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-sim"
         },
         "is_top_level": true,
         "variables": {}
