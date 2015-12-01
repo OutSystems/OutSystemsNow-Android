@@ -67,10 +67,12 @@ import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.Application;
 import com.outsystems.android.model.MobileECT;
 import com.outsystems.android.widgets.CustomFontTextView;
+import com.phonegap.plugins.barcodescanner.BarcodeScanner;
 
 import org.apache.cordova.ConfigXmlParser;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaInterfaceImpl;
+import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaPreferences;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaWebViewImpl;
@@ -667,6 +669,13 @@ public class WebApplicationActivity extends BaseActivity implements OSECTContain
     public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
         // Capture requestCode here so that it is captured in the setActivityResultCallback() case.
         cordovaInterface.setActivityResultRequestCode(requestCode);
+
+        if (intent.getAction().contains("SCAN")) {
+            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+            startActivityForResult(intent, 0);
+            return;
+        }
+
         super.startActivityForResult(intent, requestCode, options);
     }
 
@@ -682,6 +691,20 @@ public class WebApplicationActivity extends BaseActivity implements OSECTContain
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         EventLogger.logMessage(this.getClass(), "Incoming Result. Request code = " + requestCode);
+
+        CordovaPlugin callback = this.cordovaInterface.getActivityResultCallback();
+        if (callback != null) {
+            try {
+                if (intent != null && intent.getAction() != null && intent.getAction().contains("SCAN")) {
+                    callback.onActivityResult(BarcodeScanner.REQUEST_CODE, resultCode, intent);
+                } else {
+                    callback.onActivityResult(requestCode, resultCode, intent);
+                }
+            }catch (Exception e){
+                EventLogger.logError(getClass(), e);
+            }
+        }
+
         super.onActivityResult(requestCode, resultCode, intent);
         cordovaInterface.onActivityResult(requestCode, resultCode, intent);
     }
