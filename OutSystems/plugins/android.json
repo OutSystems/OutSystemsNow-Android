@@ -67,14 +67,6 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
-                            "count": 1
-                        },
-                        {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
                             "count": 2
                         },
@@ -96,6 +88,14 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
                             "count": 1
                         }
                     ],
@@ -641,9 +641,6 @@
         "org.apache.cordova.dialogs": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "org.apache.cordova.geolocation": {
-            "PACKAGE_NAME": "com.outsystems.android"
-        },
         "org.apache.cordova.battery-status": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
@@ -672,6 +669,9 @@
             "PACKAGE_NAME": "com.outsystems.android"
         },
         "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.outsystems.android"
         }
     },
