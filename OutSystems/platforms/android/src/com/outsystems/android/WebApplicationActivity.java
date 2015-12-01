@@ -28,7 +28,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
-import android.media.AudioManager;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
@@ -54,6 +53,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.outsystems.android.core.CordovaLoaderWebClient;
+import com.outsystems.android.core.CordovaWebViewActivity;
 import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.WebServicesClient;
@@ -67,16 +67,8 @@ import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.Application;
 import com.outsystems.android.model.MobileECT;
 import com.outsystems.android.widgets.CustomFontTextView;
-import com.phonegap.plugins.barcodescanner.BarcodeScanner;
 
-import org.apache.cordova.ConfigXmlParser;
 import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CordovaInterfaceImpl;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaPreferences;
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.CordovaWebViewImpl;
-import org.apache.cordova.PluginEntry;
 import org.apache.cordova.engine.SystemWebChromeClient;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
@@ -85,12 +77,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Class description.
@@ -99,31 +87,16 @@ import java.util.concurrent.Executors;
  * @version $Revision: 666 $
  *
  */
-public class WebApplicationActivity extends BaseActivity implements OSECTContainerListener {
+public class WebApplicationActivity extends CordovaWebViewActivity implements OSECTContainerListener {
 
     public static String KEY_APPLICATION = "key_application";
     public static String KEY_SINGLE_APPLICATION ="single_application";
     private static String OPEN_URL_EXTERNAL_BROWSER_PREFIX = "external:";
 
-    // Cordova Webview Settings
-
-    SystemWebView cordovaWebView;
-
-    protected CordovaPreferences preferences;
-    protected ArrayList<PluginEntry> pluginEntries;
-    protected CordovaInterfaceImpl cordovaInterface;
-
-
-    private final ExecutorService threadPool = Executors.newCachedThreadPool();
-
-    @SuppressWarnings("unused")
-    private int activityState = 0; // 0=starting, 1=running (after 1st resume), 2=shutting down
-
     private ImageButton buttonForth;
     protected ProgressDialog spinnerDialog = null;
     private ImageView imageView;
 
-    protected boolean activityResultKeepRunning;
     private int flagNumberLoadings = 0;
 
     private MobileECTController mobileECTController;
@@ -196,42 +169,6 @@ public class WebApplicationActivity extends BaseActivity implements OSECTContain
     // when another application (activity) is started.
     protected boolean keepRunning = true;
 
-
-    private void initCordovaWebview(SystemWebViewEngine webViewEngine){
-        CordovaWebView appView = new CordovaWebViewImpl(webViewEngine);
-
-        // Init Cordova Interface
-        this.cordovaInterface = new CordovaInterfaceImpl(this) ;
-
-        // Load Config
-        ConfigXmlParser parser = new ConfigXmlParser();
-        parser.parse(this);
-
-        // Get Preferences
-        this.preferences = parser.getPreferences();
-        this.preferences.setPreferencesBundle(getIntent().getExtras());
-
-        // Get Plugins
-        this.pluginEntries = parser.getPluginEntries();
-        this.pluginEntries = parser.getPluginEntries();
-
-        // Initialize WebView if needed
-        if (!appView.isInitialized()) {
-            appView.init(this.cordovaInterface, this.pluginEntries, this.preferences);
-        }
-
-        this.cordovaInterface.onCordovaInit(appView.getPluginManager());
-
-        // Wire the hardware volume controls to control media if desired.
-        String volumePref = this.preferences.getString("DefaultVolumeStream", "");
-        if ("media".equals(volumePref.toLowerCase(Locale.ENGLISH))) {
-            setVolumeControlStream(AudioManager.STREAM_MUSIC);
-        }
-
-        // If keepRunning
-        this.keepRunning = this.preferences.getBoolean("KeepRunning", true);
-    }
-
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     @Override
@@ -240,7 +177,7 @@ public class WebApplicationActivity extends BaseActivity implements OSECTContain
         setContentView(R.layout.activity_web_application);
 
         // Hide action bar
-        getSupportActionBar().hide();
+       //TODO: getSupportActionBar().hide();
 
         // Check if deep link has valid settings
         if(DeepLinkController.getInstance().hasValidSettings()){
@@ -252,9 +189,9 @@ public class WebApplicationActivity extends BaseActivity implements OSECTContain
 
         cordovaWebView = (SystemWebView) this.findViewById(R.id.mainView);
 
-        SystemWebViewEngine webViewEngine = new SystemWebViewEngine(cordovaWebView);
+        init();
 
-        initCordovaWebview(webViewEngine);
+        SystemWebViewEngine webViewEngine = (SystemWebViewEngine)appView.getEngine();
 
         Application application = null;
         boolean singleApp = false;
@@ -545,16 +482,6 @@ public class WebApplicationActivity extends BaseActivity implements OSECTContain
 
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see android.support.v4.app.FragmentActivity#onSaveInstanceState(android.os.Bundle)
-     */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        cordovaWebView.saveState(outState);
-    }
 
     /*
      * (non-Javadoc)
@@ -569,71 +496,21 @@ public class WebApplicationActivity extends BaseActivity implements OSECTContain
         imageView.setVisibility(View.VISIBLE);
         spinnerStart();
         try {
-            if(savedInstanceState != null)
+            if(savedInstanceState != null) {
+                cordovaInterface.restoreInstanceState(savedInstanceState);
                 cordovaWebView.restoreState(savedInstanceState);
+            }
         }catch(Exception e){
             EventLogger.logError(this.getClass().toString(),e);
         }
     }
 
-    @Override
-    public void onPause(){
-        super.onPause();
-
-        if (this.cordovaWebView != null && this.cordovaWebView.getCordovaWebView() != null) {
-            boolean keepRunning = this.keepRunning || this.cordovaInterface.getActivityResultCallback() != null;
-            this.cordovaWebView.getCordovaWebView().handlePause(keepRunning);
-        }
-
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        //Forward to plugins
-        if (this.cordovaWebView != null && this.cordovaWebView.getCordovaWebView() != null){
-            this.cordovaWebView.getCordovaWebView().onNewIntent(intent);
-        }
-    }
 
 
     @Override
     public void onResume() {
         super.onResume();
         stopLoadingAnimation();
-
-        if (this.cordovaWebView == null || this.cordovaWebView.getCordovaWebView() == null) {
-            return;
-        }
-
-        // Force window to have focus, so application always
-        // receive user input. Workaround for some devices (Samsung Galaxy Note 3 at least)
-        this.getWindow().getDecorView().requestFocus();
-
-        this.cordovaWebView.getCordovaWebView().handleResume(this.keepRunning);
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        if (this.cordovaWebView == null || this.cordovaWebView.getCordovaWebView() == null) {
-            return;
-        }
-
-        this.cordovaWebView.getCordovaWebView().handleStop();
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (this.cordovaWebView == null || this.cordovaWebView.getCordovaWebView() == null) {
-            return;
-        }
-        this.cordovaWebView.getCordovaWebView().handleStart();
     }
 
     @Override
@@ -653,62 +530,6 @@ public class WebApplicationActivity extends BaseActivity implements OSECTContain
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    protected void onDestroy() {
-        EventLogger.logMessage(getClass(), "on Destroy called");
-        super.onDestroy();
-
-        if (this.cordovaWebView != null && this.cordovaWebView.getCordovaWebView() != null){
-            this.cordovaWebView.getCordovaWebView().handleDestroy();
-        }
-
-    }
-
-
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
-        // Capture requestCode here so that it is captured in the setActivityResultCallback() case.
-        cordovaInterface.setActivityResultRequestCode(requestCode);
-
-        if (intent.getAction().contains("SCAN")) {
-            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-            startActivityForResult(intent, 0);
-            return;
-        }
-
-        super.startActivityForResult(intent, requestCode, options);
-    }
-
-    /**
-     * Called when an activity you launched exits, giving you the requestCode you started it with,
-     * the resultCode it returned, and any additional data from it.
-     *
-     * @param requestCode       The request code originally supplied to startActivityForResult(),
-     *                          allowing you to identify who this result came from.
-     * @param resultCode        The integer result code returned by the child activity through its setResult().
-     * @param intent            An Intent, which can return result data to the caller (various data can be attached to Intent "extras").
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        EventLogger.logMessage(this.getClass(), "Incoming Result. Request code = " + requestCode);
-
-        CordovaPlugin callback = this.cordovaInterface.getActivityResultCallback();
-        if (callback != null) {
-            try {
-                if (intent != null && intent.getAction() != null && intent.getAction().contains("SCAN")) {
-                    callback.onActivityResult(BarcodeScanner.REQUEST_CODE, resultCode, intent);
-                } else {
-                    callback.onActivityResult(requestCode, resultCode, intent);
-                }
-            }catch (Exception e){
-                EventLogger.logError(getClass(), e);
-            }
-        }
-
-        super.onActivityResult(requestCode, resultCode, intent);
-        cordovaInterface.onActivityResult(requestCode, resultCode, intent);
-    }
-
 
     /**
      * Get the Android activity.
@@ -719,21 +540,6 @@ public class WebApplicationActivity extends BaseActivity implements OSECTContain
         return this;
     }
 
-    /**
-     * Called when a message is sent to plugin.
-     *
-     * @param id The message id
-     * @param data The message data
-     * @return Object or null
-     */
-    public Object onMessage(String id, Object data) {
-
-        return null;
-    }
-
-    public ExecutorService getThreadPool() {
-        return threadPool;
-    }
 
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
@@ -948,7 +754,6 @@ public class WebApplicationActivity extends BaseActivity implements OSECTContain
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             List<String> trustedHosts = WebServicesClient.getInstance().getTrustedHosts();
             String host = HubManagerHelper.getInstance().getApplicationHosted();
-
 
             // webViewLoadingFailed = true;
 

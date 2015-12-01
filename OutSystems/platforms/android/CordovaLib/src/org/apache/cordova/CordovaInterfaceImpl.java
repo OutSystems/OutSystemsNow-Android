@@ -71,10 +71,6 @@ public class CordovaInterfaceImpl implements CordovaInterface {
         activityResultCallback = plugin;
     }
 
-    public CordovaPlugin getActivityResultCallback() {
-        return activityResultCallback;
-    }
-
     @Override
     public Activity getActivity() {
         return activity;
