@@ -8,21 +8,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.network-information/www/network.js",
-        "id": "org.apache.cordova.network-information.network",
-        "clobbers": [
-            "navigator.connection",
-            "navigator.network.connection"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.network-information/www/Connection.js",
-        "id": "org.apache.cordova.network-information.Connection",
-        "clobbers": [
-            "Connection"
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-sim/www/sim.js",
         "id": "cordova-plugin-sim.Sim",
         "clobbers": [
@@ -316,13 +301,27 @@ module.exports = [
         "merges": [
             "navigator.notification"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-network-information/www/network.js",
+        "id": "cordova-plugin-network-information.network",
+        "clobbers": [
+            "navigator.connection",
+            "navigator.network.connection"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-network-information/www/Connection.js",
+        "id": "cordova-plugin-network-information.Connection",
+        "clobbers": [
+            "Connection"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
     "com.phonegap.plugins.barcodescanner": "2.0.0",
-    "org.apache.cordova.network-information": "0.2.15",
     "cordova-plugin-sim": "1.0.2",
     "cordova-sqlite-storage": "0.7.13",
     "cordova-plugin-whitelist": "1.2.0",
@@ -334,7 +333,8 @@ module.exports.metadata =
     "cordova-plugin-geolocation": "1.0.1",
     "cordova-plugin-battery-status": "1.1.1",
     "cordova-plugin-console": "1.0.2",
-    "cordova-plugin-dialogs": "1.2.0"
+    "cordova-plugin-dialogs": "1.2.0",
+    "cordova-plugin-network-information": "1.1.0"
 }
 // BOTTOM OF METADATA
 });
