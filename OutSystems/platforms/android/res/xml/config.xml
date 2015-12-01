@@ -28,9 +28,6 @@
     <feature name="BarcodeScanner">
         <param name="android-package" value="com.phonegap.plugins.barcodescanner.BarcodeScanner" />
     </feature>
-    <feature name="Contacts">
-        <param name="android-package" value="org.apache.cordova.contacts.ContactManager" />
-    </feature>
     <feature name="Notification">
         <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
     </feature>
@@ -66,5 +63,8 @@
     </feature>
     <feature name="Calendar">
         <param name="android-package" value="nl.xservices.plugins.Calendar" />
+    </feature>
+    <feature name="Contacts">
+        <param name="android-package" value="org.apache.cordova.contacts.ContactManager" />
     </feature>
 </widget>

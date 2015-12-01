@@ -8,69 +8,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.contacts/www/contacts.js",
-        "id": "org.apache.cordova.contacts.contacts",
-        "clobbers": [
-            "navigator.contacts"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.contacts/www/Contact.js",
-        "id": "org.apache.cordova.contacts.Contact",
-        "clobbers": [
-            "Contact"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.contacts/www/ContactAddress.js",
-        "id": "org.apache.cordova.contacts.ContactAddress",
-        "clobbers": [
-            "ContactAddress"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.contacts/www/ContactError.js",
-        "id": "org.apache.cordova.contacts.ContactError",
-        "clobbers": [
-            "ContactError"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.contacts/www/ContactField.js",
-        "id": "org.apache.cordova.contacts.ContactField",
-        "clobbers": [
-            "ContactField"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.contacts/www/ContactFindOptions.js",
-        "id": "org.apache.cordova.contacts.ContactFindOptions",
-        "clobbers": [
-            "ContactFindOptions"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.contacts/www/ContactName.js",
-        "id": "org.apache.cordova.contacts.ContactName",
-        "clobbers": [
-            "ContactName"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.contacts/www/ContactOrganization.js",
-        "id": "org.apache.cordova.contacts.ContactOrganization",
-        "clobbers": [
-            "ContactOrganization"
-        ]
-    },
-    {
-        "file": "plugins/org.apache.cordova.contacts/www/ContactFieldType.js",
-        "id": "org.apache.cordova.contacts.ContactFieldType",
-        "merges": [
-            ""
-        ]
-    },
-    {
         "file": "plugins/org.apache.cordova.dialogs/www/notification.js",
         "id": "org.apache.cordova.dialogs.notification",
         "merges": [
@@ -316,6 +253,69 @@ module.exports = [
     {
         "file": "plugins/cordova-plugin-calendar/test/tests.js",
         "id": "cordova-plugin-calendar.tests"
+    },
+    {
+        "file": "plugins/cordova-plugin-contacts/www/contacts.js",
+        "id": "cordova-plugin-contacts.contacts",
+        "clobbers": [
+            "navigator.contacts"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-contacts/www/Contact.js",
+        "id": "cordova-plugin-contacts.Contact",
+        "clobbers": [
+            "Contact"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-contacts/www/ContactAddress.js",
+        "id": "cordova-plugin-contacts.ContactAddress",
+        "clobbers": [
+            "ContactAddress"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-contacts/www/ContactError.js",
+        "id": "cordova-plugin-contacts.ContactError",
+        "clobbers": [
+            "ContactError"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-contacts/www/ContactField.js",
+        "id": "cordova-plugin-contacts.ContactField",
+        "clobbers": [
+            "ContactField"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-contacts/www/ContactFindOptions.js",
+        "id": "cordova-plugin-contacts.ContactFindOptions",
+        "clobbers": [
+            "ContactFindOptions"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-contacts/www/ContactName.js",
+        "id": "cordova-plugin-contacts.ContactName",
+        "clobbers": [
+            "ContactName"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-contacts/www/ContactOrganization.js",
+        "id": "cordova-plugin-contacts.ContactOrganization",
+        "clobbers": [
+            "ContactOrganization"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-contacts/www/ContactFieldType.js",
+        "id": "cordova-plugin-contacts.ContactFieldType",
+        "merges": [
+            ""
+        ]
     }
 ];
 module.exports.metadata = 
@@ -323,7 +323,6 @@ module.exports.metadata =
 {
     "com.phonegap.plugins.barcodescanner": "2.0.0",
     "org.apache.cordova.console": "0.2.7",
-    "org.apache.cordova.contacts": "0.2.13",
     "org.apache.cordova.dialogs": "0.2.6",
     "org.apache.cordova.geolocation": "0.3.10",
     "org.apache.cordova.battery-status": "0.2.7",
@@ -334,7 +333,8 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.2.0",
     "cordova-plugin-file": "3.0.0",
     "cordova-plugin-camera": "1.2.0",
-    "cordova-plugin-calendar": "4.4.4"
+    "cordova-plugin-calendar": "4.4.4",
+    "cordova-plugin-contacts": "1.1.0"
 }
 // BOTTOM OF METADATA
 });
