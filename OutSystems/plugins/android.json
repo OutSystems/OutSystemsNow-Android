@@ -635,9 +635,6 @@
         "com.phonegap.plugins.barcodescanner": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "org.apache.cordova.console": {
-            "PACKAGE_NAME": "com.outsystems.android"
-        },
         "org.apache.cordova.dialogs": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
@@ -672,6 +669,9 @@
             "PACKAGE_NAME": "com.outsystems.android"
         },
         "cordova-plugin-battery-status": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "cordova-plugin-console": {
             "PACKAGE_NAME": "com.outsystems.android"
         }
     },

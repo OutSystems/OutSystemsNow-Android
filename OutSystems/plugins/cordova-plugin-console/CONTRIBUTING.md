@@ -7,9 +7,9 @@
 # to you under the Apache License, Version 2.0 (the
 # "License"); you may not use this file except in compliance
 # with the License.  You may obtain a copy of the License at
-# 
+#
 # http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing,
 # software distributed under the License is distributed on an
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -18,25 +18,20 @@
 # under the License.
 #
 -->
-# Release Notes
 
-### 0.2.3 (Sept 25, 2013)
-* CB-4889 bumping&resetting version
-* CB-4889 renaming org.apache.cordova.core.console to org.apache.cordova.console
-* Rename CHANGELOG.md -> RELEASENOTES.md
-* [CB-4752] Incremented plugin version on dev branch.
+# Contributing to Apache Cordova
 
- ### 0.2.4 (Oct 28, 2013)
-* CB-5154 log formatting incorrectly to native
-* CB-5128: added repo + issue tag to plugin.xml for console plugin
-* [CB-4915] Incremented plugin version on dev branch.
+Anyone can contribute to Cordova. And we need your contributions.
 
-### 0.2.5 (Dec 4, 2013)
-* add ubuntu platform
+There are multiple ways to contribute: report bugs, improve the docs, and
+contribute code.
 
-### 0.2.6 (Jan 02, 2014)
-* CB-5658 Add doc/index.md for Console plugin
+For instructions on this, start with the 
+[contribution overview](http://cordova.apache.org/contribute/).
 
-### 0.2.7 (Feb 05, 2014)
-* Native console needs to be called DebugConsole to avoid ambiguous reference. This commit requires the 3.4.0 version of the native class factory
-* CB-4718 fixed Console plugin not working on wp
+The details are explained there, but the important items are:
+ - Sign and submit an Apache ICLA (Contributor License Agreement).
+ - Have a Jira issue open that corresponds to your contribution.
+ - Run the tests so your patch doesn't break existing functionality.
+
+We look forward to your contributions!

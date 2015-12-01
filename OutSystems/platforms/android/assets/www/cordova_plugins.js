@@ -322,7 +322,6 @@ module.exports.metadata =
 // TOP OF METADATA
 {
     "com.phonegap.plugins.barcodescanner": "2.0.0",
-    "org.apache.cordova.console": "0.2.7",
     "org.apache.cordova.dialogs": "0.2.6",
     "org.apache.cordova.network-information": "0.2.15",
     "cordova-plugin-sim": "1.0.2",
@@ -334,7 +333,8 @@ module.exports.metadata =
     "cordova-plugin-contacts": "1.1.0",
     "cordova-plugin-device": "1.1.0",
     "cordova-plugin-geolocation": "1.0.1",
-    "cordova-plugin-battery-status": "1.1.1"
+    "cordova-plugin-battery-status": "1.1.1",
+    "cordova-plugin-console": "1.0.2"
 }
 // BOTTOM OF METADATA
 });
