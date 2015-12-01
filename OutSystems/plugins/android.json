@@ -29,10 +29,6 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Calendar\"><param name=\"android-package\" value=\"nl.xservices.plugins.Calendar\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
                             "count": 1
                         },
@@ -58,6 +54,10 @@
                         },
                         {
                             "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Calendar\"><param name=\"android-package\" value=\"nl.xservices.plugins.Calendar\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -650,9 +650,6 @@
         "org.apache.cordova.battery-status": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "nl.x-services.plugins.calendar": {
-            "PACKAGE_NAME": "com.outsystems.android"
-        },
         "org.apache.cordova.device": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
@@ -672,6 +669,9 @@
             "PACKAGE_NAME": "com.outsystems.android"
         },
         "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "cordova-plugin-calendar": {
             "PACKAGE_NAME": "com.outsystems.android"
         }
     },

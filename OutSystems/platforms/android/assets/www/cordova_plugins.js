@@ -92,17 +92,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/nl.x-services.plugins.calendar/www/Calendar.js",
-        "id": "nl.x-services.plugins.calendar.Calendar",
-        "clobbers": [
-            "Calendar"
-        ]
-    },
-    {
-        "file": "plugins/nl.x-services.plugins.calendar/test/tests.js",
-        "id": "nl.x-services.plugins.calendar.tests"
-    },
-    {
         "file": "plugins/org.apache.cordova.device/www/device.js",
         "id": "org.apache.cordova.device.device",
         "clobbers": [
@@ -316,6 +305,17 @@ module.exports = [
         "clobbers": [
             "CameraPopoverHandle"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-calendar/www/Calendar.js",
+        "id": "cordova-plugin-calendar.Calendar",
+        "clobbers": [
+            "Calendar"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-calendar/test/tests.js",
+        "id": "cordova-plugin-calendar.tests"
     }
 ];
 module.exports.metadata = 
@@ -327,14 +327,14 @@ module.exports.metadata =
     "org.apache.cordova.dialogs": "0.2.6",
     "org.apache.cordova.geolocation": "0.3.10",
     "org.apache.cordova.battery-status": "0.2.7",
-    "nl.x-services.plugins.calendar": "4.3.1",
     "org.apache.cordova.device": "0.3.0",
     "org.apache.cordova.network-information": "0.2.15",
     "cordova-plugin-sim": "1.0.2",
     "cordova-sqlite-storage": "0.7.13",
     "cordova-plugin-whitelist": "1.2.0",
     "cordova-plugin-file": "3.0.0",
-    "cordova-plugin-camera": "1.2.0"
+    "cordova-plugin-camera": "1.2.0",
+    "cordova-plugin-calendar": "4.4.4"
 }
 // BOTTOM OF METADATA
 });

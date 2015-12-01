@@ -1,10 +1,4 @@
 {
-    "nl.x-services.plugins.calendar": {
-        "source": {
-            "type": "registry",
-            "id": "nl.x-services.plugins.calendar"
-        }
-    },
     "org.apache.cordova.device": {
         "source": {
             "type": "registry",
@@ -53,6 +47,14 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-camera"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-calendar": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-calendar"
         },
         "is_top_level": true,
         "variables": {}
