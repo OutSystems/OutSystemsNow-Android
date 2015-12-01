@@ -29,13 +29,6 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/org.apache.cordova.device/www/device.js",
-        "id": "org.apache.cordova.device.device",
-        "clobbers": [
-            "device"
-        ]
-    },
-    {
         "file": "plugins/org.apache.cordova.network-information/www/network.js",
         "id": "org.apache.cordova.network-information.network",
         "clobbers": [
@@ -316,6 +309,13 @@ module.exports = [
         "merges": [
             ""
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-device/www/device.js",
+        "id": "cordova-plugin-device.device",
+        "clobbers": [
+            "device"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -326,7 +326,6 @@ module.exports.metadata =
     "org.apache.cordova.dialogs": "0.2.6",
     "org.apache.cordova.geolocation": "0.3.10",
     "org.apache.cordova.battery-status": "0.2.7",
-    "org.apache.cordova.device": "0.3.0",
     "org.apache.cordova.network-information": "0.2.15",
     "cordova-plugin-sim": "1.0.2",
     "cordova-sqlite-storage": "0.7.13",
@@ -334,7 +333,8 @@ module.exports.metadata =
     "cordova-plugin-file": "3.0.0",
     "cordova-plugin-camera": "1.2.0",
     "cordova-plugin-calendar": "4.4.4",
-    "cordova-plugin-contacts": "1.1.0"
+    "cordova-plugin-contacts": "1.1.0",
+    "cordova-plugin-device": "1.1.0"
 }
 // BOTTOM OF METADATA
 });

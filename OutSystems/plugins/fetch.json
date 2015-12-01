@@ -1,10 +1,4 @@
 {
-    "org.apache.cordova.device": {
-        "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.device"
-        }
-    },
     "org.apache.cordova.network-information": {
         "source": {
             "type": "registry",
@@ -63,6 +57,14 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-contacts"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-device": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-device"
         },
         "is_top_level": true,
         "variables": {}
