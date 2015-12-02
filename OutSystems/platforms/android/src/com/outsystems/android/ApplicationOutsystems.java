@@ -81,6 +81,7 @@ public class ApplicationOutsystems extends Application {
                     HubManagerHelper.getInstance().setJSFApplicationServer(hubApplication.isJSF());
                 }
             }
+            database.close();
         }
     }
 

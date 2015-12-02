@@ -68,6 +68,8 @@ public class OfflineSupport {
             this.validCredentials = applications != null && applications.size() > 0;
         }
 
+        database.close();
+
         return validCredentials;
     }
 
@@ -76,6 +78,7 @@ public class OfflineSupport {
         DatabaseHandler database = new DatabaseHandler(applicationContext);
         HubApplicationModel lastHub = database.getLastLoginHubApplicationModel();
         List<Application> applications = database.getLoginApplications(lastHub.getHost(), lastHub.getUserName());
+        database.close();
 
         if (applications != null && applications.size() == 1) {
             openWebApplicationActivity(currentActivity,applications.get(0));
@@ -139,7 +142,7 @@ public class OfflineSupport {
 
         DatabaseHandler database = new DatabaseHandler(applicationContext);
         this.previousSession = database.getLastLoginHubApplicationModel();
-
+        database.close();
     }
 
     /**
@@ -188,6 +191,7 @@ public class OfflineSupport {
 
         DatabaseHandler database = new DatabaseHandler(applicationContext);
         HubApplicationModel lastHub = database.getLastLoginHubApplicationModel();
+        database.close();
 
         if(lastHub == null)
             return;
@@ -211,10 +215,10 @@ public class OfflineSupport {
                                 database.addLoginApplications(HubManagerHelper.getInstance()
                                         .getApplicationHosted(), userName, login.getApplications());
 
+                                database.close();
+
                                 offlineSession = false;
                                 loginSucceeded = true;
-
-
 
                                 // Synchronize WebView cookies with Login Request cookies
                                 CookieSyncManager.createInstance(applicationContext);
@@ -247,9 +251,9 @@ public class OfflineSupport {
         final DisplayMetrics displaymetrics = new DisplayMetrics();
         currentActivity.getWindowManager().getDefaultDisplay().getRealMetrics(displaymetrics);
 
-
         DatabaseHandler database = new DatabaseHandler(applicationContext);
         HubApplicationModel lastHub = database.getLastLoginHubApplicationModel();
+        database.close();
 
         if(lastHub == null)
             return;
@@ -273,6 +277,8 @@ public class OfflineSupport {
                                         .getApplicationHosted(), userName, password);
                                 database.addLoginApplications(HubManagerHelper.getInstance()
                                         .getApplicationHosted(), userName, login.getApplications());
+
+                                database.close();
 
                                 offlineSession = false;
                                 loginSucceeded = true;

@@ -307,6 +307,7 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
         View mainView = findViewById(R.id.mainViewGroup);
         DatabaseHandler database = new DatabaseHandler(getApplicationContext());
         MobileECT mobileECT = database.getMobileECT();
+        database.close();
 
         boolean skipHelper = mobileECT != null && !mobileECT.isFirstLoad();
 
@@ -652,6 +653,7 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
 
         DatabaseHandler database = new DatabaseHandler(getApplicationContext());
         database.addMobileECT(false);
+        database.close();
         mobileECTController.setSkipECTHelper(true);
     }
 
