@@ -345,7 +345,8 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
             if(!url.endsWith("/") && url.indexOf("?") < 0 && !(url.endsWith(".aspx") || url.endsWith(".jsf"))){
                 url = url + "/";
             }
-            cordovaWebView.loadUrl(url);
+            //cordovaWebView.loadUrl(url);
+            this.loadUrl(url);
         } else {
             ((LinearLayout) findViewById(R.id.view_loading)).setVisibility(View.GONE);
         }

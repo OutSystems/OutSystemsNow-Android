@@ -26,6 +26,7 @@ import org.apache.cordova.CordovaWebViewImpl;
 import org.apache.cordova.PluginEntry;
 import org.apache.cordova.PluginManager;
 import org.apache.cordova.engine.SystemWebView;
+import org.apache.cordova.engine.SystemWebViewEngine;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -141,7 +142,7 @@ public class CordovaWebViewActivity extends BaseActivity {
     }
 
     protected CordovaWebViewEngine makeWebViewEngine() {
-        return CordovaWebViewImpl.createEngine(this, preferences);
+        return new SystemWebViewEngine(cordovaWebView,preferences);
     }
 
     protected CordovaWebViewInterface makeCordovaInterface() {
