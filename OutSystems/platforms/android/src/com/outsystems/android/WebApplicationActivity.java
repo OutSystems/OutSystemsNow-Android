@@ -54,6 +54,7 @@ import android.widget.ProgressBar;
 
 import com.outsystems.android.core.CordovaLoaderWebClient;
 import com.outsystems.android.core.CordovaWebViewActivity;
+import com.outsystems.android.core.CordovaWebViewChromeClient;
 import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.WebServicesClient;
@@ -69,6 +70,7 @@ import com.outsystems.android.model.MobileECT;
 import com.outsystems.android.widgets.CustomFontTextView;
 
 import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.engine.SystemWebChromeClient;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
@@ -214,7 +216,7 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
         }
 
         cordovaWebView.setWebViewClient(new CordovaCustomWebClient(this.cordovaInterface,webViewEngine));
-        CordovaCustomChromeClient chromeClient = new CordovaCustomChromeClient(webViewEngine);
+        CordovaCustomChromeClient chromeClient = new CordovaCustomChromeClient(webViewEngine, this.cordovaInterface);
         cordovaWebView.setWebChromeClient(chromeClient);
 
         cordovaWebView.getSettings().setJavaScriptEnabled(true);
@@ -1155,12 +1157,12 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
     /**
      * The Class CordovaCustomWebClient.
      */
-    public class CordovaCustomChromeClient extends SystemWebChromeClient {
+    public class CordovaCustomChromeClient extends CordovaWebViewChromeClient {
 
         private ProgressBar progressBar;
 
-        public CordovaCustomChromeClient(SystemWebViewEngine engine) {
-            super(engine);
+        public CordovaCustomChromeClient(SystemWebViewEngine engine, CordovaInterface cordovaInterface) {
+            super(engine, cordovaInterface);
         }
 
 
