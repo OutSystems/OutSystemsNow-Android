@@ -99,46 +99,71 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
 
         if(single){
 
-            Intent intent = getIntentForType(contentType,fileChooserParams);
-            try {
-                this.cordovaInterface.startActivityForResult(new CordovaPlugin() {
-                    @Override
-                    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-                        Uri[] result = WebChromeClient.FileChooserParams.parseResult(resultCode, intent);
-                        Log.d(LOG_TAG, "Receive file chooser URL: " + result);
-                        filePathsCallback.onReceiveValue(result);
-                    }
-                }, intent, FILECHOOSER_RESULTCODE);
-            } catch (ActivityNotFoundException e) {
-                Log.w("No activity found to handle file chooser intent.", e);
-                filePathsCallback.onReceiveValue(null);
+            Intent intent = getIntentForType(contentType);
+
+            if (intent == null){
+                intent = fileChooserParams.createIntent();
             }
+
+            if(fileChooserParams.isCaptureEnabled()){
+                try {
+                    this.cordovaInterface.startActivityForResult(new CordovaPlugin() {
+                        @Override
+                        public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+                            Uri[] result = WebChromeClient.FileChooserParams.parseResult(resultCode, intent);
+                            Log.d(LOG_TAG, "Receive file chooser URL: " + result);
+                            filePathsCallback.onReceiveValue(result);
+                        }
+                    }, intent, FILECHOOSER_RESULTCODE);
+                } catch (ActivityNotFoundException e) {
+                    Log.w("No activity found to handle file chooser intent.", e);
+                    filePathsCallback.onReceiveValue(null);
+                }
+            }
+            else{
+
+                Intent fileIntent = fileChooserParams.createIntent();
+
+                // Create file chooser intent
+                Intent chooserIntent = Intent.createChooser(fileIntent, "Choose an action");
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{intent});
+
+                try {
+                    this.cordovaInterface.startActivityForResult(new CordovaPlugin() {
+                        @Override
+                        public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+                            Uri[] result = WebChromeClient.FileChooserParams.parseResult(resultCode, intent);
+                            Log.d(LOG_TAG, "Receive file chooser URL: " + result);
+                            filePathsCallback.onReceiveValue(result);
+                        }
+                    }, chooserIntent, FILECHOOSER_RESULTCODE);
+                } catch (ActivityNotFoundException e) {
+                    Log.w("No activity found to handle file chooser intent.", e);
+                    filePathsCallback.onReceiveValue(null);
+                }
+
+            }
+
         }
 
         return single;
     }
 
-    private Intent getIntentForType(String type, final WebChromeClient.FileChooserParams fileChooserParams){
+    private Intent getIntentForType(String type){
         Intent result = null;
 
-        if(fileChooserParams.isCaptureEnabled()){
-            if(type.equalsIgnoreCase(IMAGE_TYPE)){
-                result = getImageIntent();
+        if(type.equalsIgnoreCase(IMAGE_TYPE)){
+            result = getImageIntent();
+        }
+        else{
+            if (type.equalsIgnoreCase(VIDEO_TYPE)){
+                result = getVideoIntent();
             }
             else{
-                if (type.equalsIgnoreCase(VIDEO_TYPE)){
-                    result = getVideoIntent();
-                }
-                else{
-                    if(type.equalsIgnoreCase(AUDIO_TYPE)){
-                        result = getSoundIntent();
-                    }
+                if(type.equalsIgnoreCase(AUDIO_TYPE)){
+                    result = getSoundIntent();
                 }
             }
-        }
-
-        if(result == null){
-            result = fileChooserParams.createIntent();
         }
 
         return result;
