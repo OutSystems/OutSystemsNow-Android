@@ -54,8 +54,7 @@ public class CordovaWebViewInterface extends CordovaInterfaceImpl {
                 EventLogger.logError(getClass(), e);
             }
         }
-        super.onActivityResult(requestCode, resultCode, intent);
-
+        
         return super.onActivityResult(requestCode, resultCode, intent);
     }
 }
