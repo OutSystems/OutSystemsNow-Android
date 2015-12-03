@@ -42,19 +42,10 @@ public class CordovaWebViewInterface extends CordovaInterfaceImpl {
     @Override
     public boolean onActivityResult(int requestCode, int resultCode, Intent intent) {
 
-        CordovaPlugin callback = this.activityResultCallback;
-        if (callback != null) {
-            try {
-                if (intent != null && intent.getAction() != null && intent.getAction().contains("SCAN")) {
-                    callback.onActivityResult(BarcodeScanner.REQUEST_CODE, resultCode, intent);
-                } else {
-                    callback.onActivityResult(requestCode, resultCode, intent);
-                }
-            }catch (Exception e){
-                EventLogger.logError(getClass(), e);
-            }
+        if (intent != null && intent.getAction() != null && intent.getAction().contains("SCAN")) {
+            return super.onActivityResult(BarcodeScanner.REQUEST_CODE, resultCode, intent);
+        } else {
+            return super.onActivityResult(requestCode, resultCode, intent);
         }
-        
-        return super.onActivityResult(requestCode, resultCode, intent);
     }
 }
