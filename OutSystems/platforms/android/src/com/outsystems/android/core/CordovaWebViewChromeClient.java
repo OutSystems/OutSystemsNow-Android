@@ -1,6 +1,7 @@
 package com.outsystems.android.core;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -26,9 +27,9 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
     private static final int FILECHOOSER_RESULTCODE = 5173;
     private static final String LOG_TAG = "CordovaWebViewChromeClient";
 
-    private static final String AUDIO_TYPE = "audio/*";
-    private static final String IMAGE_TYPE = "image/*";
-    private static final String VIDEO_TYPE = "video/*";
+    private static final String MIME_TYPE_AUDIO = "audio/*";
+    private static final String MIME_TYPE_IMAGE = "image/*";
+    private static final String MIME_TYPE_VIDEO = "video/*";
 
     private CordovaInterface cordovaInterface;
 
@@ -37,6 +38,48 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
         this.cordovaInterface = cordovaInterface;
     }
 
+    @Override
+    public void openFileChooser(final ValueCallback<Uri> uploadMsg, String acceptType, String capture)
+    {
+
+        boolean singleIntent = launchSingleIntent(uploadMsg, acceptType, capture);
+
+        if(!singleIntent) {
+
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("*/*");
+
+            // Create file chooser intent
+            Intent chooserIntent = Intent.createChooser(intent, "Choose an action");
+            // Set camera intent to file chooser
+
+            ArrayList<Intent> otherIntents = new ArrayList();
+
+            otherIntents.add(this.getImageIntent());
+            otherIntents.add(this.getVideoIntent());
+            otherIntents.add(this.getSoundIntent());
+            otherIntents.add(this.getMyFilesIntent());
+
+            Parcelable[] parcelables = new Parcelable[otherIntents.size()];
+            for (int i = 0; i < parcelables.length; i++) {
+                parcelables[i] = otherIntents.get(i);
+            }
+
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, parcelables);
+
+            this.cordovaInterface.startActivityForResult(new CordovaPlugin() {
+                @Override
+                public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+                    Uri result = intent == null || resultCode != Activity.RESULT_OK ? null : intent.getData();
+                    Log.d(LOG_TAG, "Receive file chooser URL: " + result);
+                    uploadMsg.onReceiveValue(result);
+                }
+            }, chooserIntent, FILECHOOSER_RESULTCODE);
+
+        }
+
+    }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -82,6 +125,63 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
         }
 
         return true;
+    }
+
+    private boolean launchSingleIntent(final ValueCallback<Uri> uploadMsg, String acceptType, String capture){
+
+        boolean single = false;
+
+        if(acceptType != null && !acceptType.isEmpty()){
+            StringTokenizer st = new StringTokenizer(acceptType,",");
+            single = st.countTokens() == 1;
+        }
+
+        if(single){
+
+            Intent intent = getIntentForType(acceptType);
+
+            if (intent == null){
+                intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("*/*");
+            }
+
+            if(capture != null && !capture.isEmpty()){
+
+                this.cordovaInterface.startActivityForResult(new CordovaPlugin() {
+                    @Override
+                    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+                        Uri result = intent == null || resultCode != Activity.RESULT_OK ? null : intent.getData();
+                        Log.d(LOG_TAG, "Receive file chooser URL: " + result);
+                        uploadMsg.onReceiveValue(result);
+                    }
+                }, intent, FILECHOOSER_RESULTCODE);
+
+            }
+            else{
+
+                Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                fileIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                fileIntent.setType("*/*");
+
+                // Create file chooser intent
+                Intent chooserIntent = Intent.createChooser(fileIntent, "Choose an action");
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{intent});
+
+                this.cordovaInterface.startActivityForResult(new CordovaPlugin() {
+                    @Override
+                    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+                        Uri result = intent == null || resultCode != Activity.RESULT_OK ? null : intent.getData();
+                        Log.d(LOG_TAG, "Receive file chooser URL: " + result);
+                        uploadMsg.onReceiveValue(result);
+                    }
+                }, chooserIntent, FILECHOOSER_RESULTCODE);
+
+            }
+
+        }
+
+        return single;
     }
 
 
@@ -152,15 +252,15 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
     private Intent getIntentForType(String type){
         Intent result = null;
 
-        if(type.equalsIgnoreCase(IMAGE_TYPE)){
+        if(type.equalsIgnoreCase(MIME_TYPE_IMAGE)){
             result = getImageIntent();
         }
         else{
-            if (type.equalsIgnoreCase(VIDEO_TYPE)){
+            if (type.equalsIgnoreCase(MIME_TYPE_VIDEO)){
                 result = getVideoIntent();
             }
             else{
-                if(type.equalsIgnoreCase(AUDIO_TYPE)){
+                if(type.equalsIgnoreCase(MIME_TYPE_AUDIO)){
                     result = getSoundIntent();
                 }
             }
