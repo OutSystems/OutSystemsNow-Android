@@ -3,16 +3,12 @@
     xmlns="http://www.phonegap.com/ns/plugins/1.0" 
     xmlns:android="http://schemas.android.com/apk/res/android" 
     id="com.outsystems.plugins.FileChooser" 
-    version="0.0.0">
+    version="0.0.1">
     
-    <engines>
-        <engine name="cordova" version=">=2.8.0" />
-    </engines>
-
-    <name>KitKat File Chooser</name>
-    <description>File Chooser for Cordova applications running on Android 4.4</description>
+    <name>KitKat FileChooser</name>
+    <description>FileChooser for Cordova applications running on Android 4.4 (KitKat)</description>
     <license>MIT</license>
-    <keywords>cordova,filechooser,android,outsystems</keywords>
+    <keywords>cordova,outsystems,filechooser,android</keywords>
 
     <js-module src="www/FileChooser.js" name="FileChooser">
         <clobbers target="FileChooser" />

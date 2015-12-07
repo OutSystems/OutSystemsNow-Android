@@ -1,5 +1,5 @@
 /**
- * cordova FileChooser plugin
+ * OutSystems R&D
  */
  (function(cordova){
     var FileChooser = function() {

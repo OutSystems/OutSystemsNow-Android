@@ -106,7 +106,7 @@
     "com.outsystems.plugins.FileChooser": {
         "source": {
             "type": "local",
-            "path": "..\\..\\..\\CordovaPlugins\\KitKatFileChooser"
+            "path": "..\\..\\..\\CordovaPlugins\\FileChooser"
         },
         "is_top_level": true,
         "variables": {}

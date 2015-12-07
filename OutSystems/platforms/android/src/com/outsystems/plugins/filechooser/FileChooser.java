@@ -48,9 +48,16 @@ public class FileChooser extends CordovaPlugin {
         return false;
     }
 
-    public void chooseFile(CordovaArgs args, CallbackContext callbackContext) {
-
+    /**
+     * Method to open a file chooser
+     *
+     * @param args
+     * @param callbackContext
+     */
+    public void chooseFile(CordovaArgs args, CallbackContext callbackContext) {  
+        /* Specifies the types of files accepted by the server */      
         String acceptType = null;
+        /* Specifies the media capture directly from the device */
         boolean capture = false;
 
         try {
@@ -61,6 +68,7 @@ public class FileChooser extends CordovaPlugin {
             Log.w(TAG, e.getMessage());
         }
 
+        /* Launch an intent for a single type of file, otherwise returns false */
         boolean singleIntent = launchSingleIntent(acceptType, capture);
 
         if(!singleIntent){
@@ -91,7 +99,13 @@ public class FileChooser extends CordovaPlugin {
         callbackContext.sendPluginResult(pluginResult);
     }
 
-
+    /**
+     * Method to launch an intent for a specific type of file with/without direct capturing
+     *
+     * @param args
+     * @param callbackContext
+     * @returns true if a single intent was launched     
+     */
     private boolean launchSingleIntent(String acceptType, boolean capture){
 
         boolean single = false;
@@ -101,6 +115,7 @@ public class FileChooser extends CordovaPlugin {
             single = st.countTokens() == 1;
         }
 
+        /* If only on type of file was specified lauchn its intent*/
         if(single){
 
             Intent intent = getIntentForType(acceptType);
@@ -115,12 +130,12 @@ public class FileChooser extends CordovaPlugin {
                 cordova.startActivityForResult(this, intent, FILECHOOSER_REQUESTCODE);
             }
             else{
-
+                /* Launch a chooser intent if capture is not defined */
                 Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
                 fileIntent.addCategory(Intent.CATEGORY_OPENABLE);
                 fileIntent.setType("*/*");
 
-                // Create file chooser intent
+                /* Create chooser intent */
                 Intent chooserIntent = Intent.createChooser(fileIntent, "Choose an action");
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Parcelable[]{intent});
 
@@ -132,10 +147,15 @@ public class FileChooser extends CordovaPlugin {
 
         return single;
     }
+    
 
-
-
-    private Intent getIntentForType(String type){
+    /**
+     * Method to get an intent for a specific type of file
+     *
+     * @param type     
+     * @returns an intent     
+     */    
+    private final Intent getIntentForType(String type){
         Intent result = null;
 
         if(type.equalsIgnoreCase(MIME_TYPE_IMAGE)){
@@ -156,7 +176,11 @@ public class FileChooser extends CordovaPlugin {
     }
 
 
-    // Capture image intent
+   /**
+     * Method to get an intent for image files
+     *     
+     * @returns an intent     
+     */ 
     private final Intent getImageIntent(){
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         fileUri = getOutputMediaFile(MIME_TYPE_IMAGE);
@@ -185,18 +209,32 @@ public class FileChooser extends CordovaPlugin {
         return null;
     }
 
-    // Capture video intent
+    /**
+     * Method to get an intent for video files
+     *     
+     * @returns an intent     
+     */ 
     private final Intent getVideoIntent(){
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         return intent;
     }
 
-    // Record audio intent
+    /**
+     * Method to get an intent for audio files
+     *     
+     * @returns an intent     
+     */ 
     private final Intent getSoundIntent(){
         Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
         return intent;
     }
 
+
+    /**
+     * Method to get an intent for "my files" explorer
+     *     
+     * @returns an intent     
+     */ 
     private final Intent getMyFilesIntent(){
         Intent intent = new Intent("com.sec.android.app.myfiles.PICK_DATA");
         intent.putExtra("CONTENT_TYPE", "*/*");

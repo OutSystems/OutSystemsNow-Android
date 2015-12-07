@@ -1,5 +1,5 @@
 cordova.define("com.outsystems.plugins.FileChooser.FileChooser", function(require, exports, module) { /**
- * cordova FileChooser plugin
+ * OutSystems R&D
  */
  (function(cordova){
     var FileChooser = function() {
