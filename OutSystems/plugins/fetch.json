@@ -102,5 +102,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "com.outsystems.plugins.FileChooser": {
+        "source": {
+            "type": "local",
+            "path": "..\\..\\..\\CordovaPlugins\\KitKatFileChooser"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

@@ -316,6 +316,13 @@ module.exports = [
         "clobbers": [
             "SQLitePlugin"
         ]
+    },
+    {
+        "file": "plugins/com.outsystems.plugins.FileChooser/www/FileChooser.js",
+        "id": "com.outsystems.plugins.FileChooser.FileChooser",
+        "clobbers": [
+            "FileChooser"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -334,7 +341,8 @@ module.exports.metadata =
     "cordova-plugin-dialogs": "1.2.0",
     "cordova-plugin-network-information": "1.1.0",
     "cordova-plugin-sim": "1.1.0",
-    "cordova-sqlite-storage": "0.7.14"
+    "cordova-sqlite-storage": "0.7.14",
+    "com.outsystems.plugins.FileChooser": "0.0.0"
 }
 // BOTTOM OF METADATA
 });
