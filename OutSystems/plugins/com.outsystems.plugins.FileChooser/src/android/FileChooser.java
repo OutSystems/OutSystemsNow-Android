@@ -38,10 +38,16 @@ public class FileChooser extends CordovaPlugin {
     private Uri fileUri;
 
     @Override
-    public boolean execute(String action, CordovaArgs args, CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, final CordovaArgs args, final CallbackContext callbackContext) throws JSONException {
 
         if (action.equals(ACTION_OPEN)) {
-            chooseFile(args, callbackContext);
+            this.cordova.getThreadPool().execute(new Runnable() {
+                @Override
+                public void run() {
+                    chooseFile(args, callbackContext);
+                }
+            });
+
             return true;
         }
 
@@ -54,7 +60,7 @@ public class FileChooser extends CordovaPlugin {
      * @param args
      * @param callbackContext
      */
-    public void chooseFile(CordovaArgs args, CallbackContext callbackContext) {  
+    public void chooseFile( CordovaArgs args, CallbackContext callbackContext) {
         /* Specifies the types of files accepted by the server */      
         String acceptType = null;
         /* Specifies the media capture directly from the device */
@@ -63,7 +69,16 @@ public class FileChooser extends CordovaPlugin {
         try {
             JSONObject obj = args.getJSONObject(0);
             acceptType = obj.getString(PARAM_ACCEPT);
-            capture = obj.getBoolean(PARAM_CAPTURE);
+
+            String captureString = obj.getString(PARAM_CAPTURE);
+            if(captureString != null){
+                try{
+                    capture  = captureString.isEmpty() || Boolean.valueOf(captureString);
+                }
+                catch (Exception e){
+                    capture = true;
+                }
+            }
         } catch (JSONException e) {
             Log.w(TAG, e.getMessage());
         }
@@ -102,8 +117,8 @@ public class FileChooser extends CordovaPlugin {
     /**
      * Method to launch an intent for a specific type of file with/without direct capturing
      *
-     * @param args
-     * @param callbackContext
+     * @param acceptType
+     * @param capture
      * @returns true if a single intent was launched     
      */
     private boolean launchSingleIntent(String acceptType, boolean capture){

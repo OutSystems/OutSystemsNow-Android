@@ -342,7 +342,7 @@ module.exports.metadata =
     "cordova-plugin-network-information": "1.1.0",
     "cordova-plugin-sim": "1.1.0",
     "cordova-sqlite-storage": "0.7.14",
-    "com.outsystems.plugins.FileChooser": "0.0.1"
+    "com.outsystems.plugins.FileChooser": "0.0.2"
 }
 // BOTTOM OF METADATA
 });
