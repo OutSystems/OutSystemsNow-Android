@@ -79,6 +79,8 @@ public class ApplicationSettingsController {
                     .getInstance().isJSFApplicationServer());
         }
 
+        database.close();
+
         HubManagerHelper.getInstance().setApplicationHosted(settings.getDefaultHostname());
 
 

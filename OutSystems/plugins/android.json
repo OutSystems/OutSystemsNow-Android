@@ -13,19 +13,11 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Contacts\"><param name=\"android-package\" value=\"org.apache.cordova.contacts.ContactManager\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Geolocation\"><param name=\"android-package\" value=\"org.apache.cordova.geolocation.GeoBroker\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Battery\"><param name=\"android-package\" value=\"org.apache.cordova.batterystatus.BatteryListener\" /></feature>",
+                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
                         {
@@ -41,7 +33,19 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Contacts\"><param name=\"android-package\" value=\"org.apache.cordova.contacts.ContactManager\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Battery\"><param name=\"android-package\" value=\"org.apache.cordova.batterystatus.BatteryListener\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
                             "count": 1
                         },
                         {
@@ -56,12 +60,22 @@
                             "xml": "<feature name=\"SQLitePlugin\"><param name=\"android-package\" value=\"io.liteglue.SQLitePlugin\" /></feature>",
                             "count": 1
                         }
+                    ],
+                    "/widget": [
+                        {
+                            "xml": "<feature name=\"FileChooser\"><param name=\"android-package\" value=\"com.outsystems.plugins.filechooser.FileChooser\" /></feature>",
+                            "count": 1
+                        }
                     ]
                 }
             },
             "AndroidManifest.xml": {
                 "parents": {
                     "/*": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 2
+                        },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.READ_CONTACTS\" />",
                             "count": 1
@@ -81,10 +95,6 @@
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
                             "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 2
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
@@ -114,6 +124,14 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_CALENDAR\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
                             "count": 1
                         }
                     ],
@@ -614,6 +632,16 @@
                         }
                     ]
                 }
+            },
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<preference name=\"AndroidPersistentFileLocation\" value=\"Internal\" />",
+                            "count": 1
+                        }
+                    ]
+                }
             }
         }
     },
@@ -621,40 +649,46 @@
         "com.phonegap.plugins.barcodescanner": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "org.apache.cordova.console": {
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "org.apache.cordova.contacts": {
+        "cordova-plugin-file": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "org.apache.cordova.dialogs": {
+        "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "org.apache.cordova.geolocation": {
+        "cordova-plugin-calendar": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "org.apache.cordova.battery-status": {
+        "cordova-plugin-contacts": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "org.apache.cordova.file": {
+        "cordova-plugin-device": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "org.apache.cordova.camera": {
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "nl.x-services.plugins.calendar": {
+        "cordova-plugin-battery-status": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "org.apache.cordova.device": {
+        "cordova-plugin-console": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "org.apache.cordova.network-information": {
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
         "cordova-plugin-sim": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
         "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "com.outsystems.plugins.FileChooser": {
             "PACKAGE_NAME": "com.outsystems.android"
         }
     },

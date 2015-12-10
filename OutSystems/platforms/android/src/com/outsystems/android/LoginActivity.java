@@ -101,7 +101,8 @@ public class LoginActivity extends BaseActivity {
 
         DatabaseHandler database = new DatabaseHandler(getApplicationContext());
         HubApplicationModel hub = database.getHubApplication(HubManagerHelper.getInstance().getApplicationHosted());
-        
+        database.close();
+
         // Check if deep link has valid settings                
         if(DeepLinkController.getInstance().hasValidSettings()){
 
@@ -236,6 +237,8 @@ public class LoginActivity extends BaseActivity {
                                         .getApplicationHosted(), userName, password);
                                 database.addLoginApplications(HubManagerHelper.getInstance()
                                         .getApplicationHosted(), userName, login.getApplications());
+
+                                database.close();
 
                                 // Offline Support
                                 OfflineSupport.getInstance(getApplicationContext()).checkCurrentSession(HubManagerHelper.getInstance()

@@ -14,6 +14,8 @@
 	<access origin="mailto:*" launch-external="yes"/>
 	<access origin="sms:*" launch-external="yes"/>
 	<access origin="market:*" launch-external="yes"/>
-	
+			
     <access origin="*" />
+
+
 </widget>

@@ -156,6 +156,8 @@ public class SplashScreen extends Activity {
 
         }
 
+        database.close();
+
         if(DeepLinkController.getInstance().hasValidSettings()){
         	DeepLink deepLinkSettings = DeepLinkController.getInstance().getDeepLinkSettings();
         	HubManagerHelper.getInstance().setApplicationHosted(deepLinkSettings.getEnvironment());

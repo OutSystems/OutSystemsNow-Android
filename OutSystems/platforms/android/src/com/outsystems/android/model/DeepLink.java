@@ -134,11 +134,6 @@ public class DeepLink {
 
 		String key = parameter.substring(0,separator).toLowerCase();
 		String value = parameter.substring(separator+1);
-			
-		if(key.contains("password"))
-			LOG.v(TAG, "Deep Link - Parameter: "+key+" - ******"); // Just to ensure that password value was passed
-		else
-			LOG.v(TAG, "Deep Link - Parameter: "+key+" - "+value);
 		
 		this.getParameters().put(key, value);
 	}

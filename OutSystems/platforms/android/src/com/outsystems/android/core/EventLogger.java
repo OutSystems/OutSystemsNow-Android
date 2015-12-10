@@ -9,6 +9,8 @@ package com.outsystems.android.core;
 
 import android.util.Log;
 
+import com.outsystems.android.BuildConfig;
+
 /**
  * Class description.
  * 
@@ -24,7 +26,9 @@ public class EventLogger {
      * @param message the message
      */
     public static void logMessage(String className, String message) {
-        Log.d("[ OutSystems - " + className + "]", message);
+        if (BuildConfig.DEBUG) {
+            Log.d("[ OutSystems - " + className + "]", message);
+        }
     }
 
     /**
@@ -34,7 +38,9 @@ public class EventLogger {
      * @param message the message
      */
     public static void logMessage(Class<?> classObject, String message) {
-        Log.d("[ OutSystems - " + classObject.getName() + "]", message);
+        if (BuildConfig.DEBUG) {
+            Log.d("[ OutSystems - " + classObject.getName() + "]", message);
+        }
     }
 
     /**
@@ -44,7 +50,9 @@ public class EventLogger {
      * @param message the message
      */
     public static void logInfoMessage(String className, String message) {
-        Log.i("[ OutSystems - " + className + "]", message);
+        if (BuildConfig.DEBUG) {
+            Log.i("[ OutSystems - " + className + "]", message);
+        }
     }
 
     /**
@@ -54,7 +62,9 @@ public class EventLogger {
      * @param message the message
      */
     public static void logInfoMessage(Class<?> classObject, String message) {
-        Log.i("[ OutSystems - " + classObject.getName() + "]", message);
+        if (BuildConfig.DEBUG) {
+            Log.i("[ OutSystems - " + classObject.getName() + "]", message);
+        }
     }
 
     /**
@@ -64,7 +74,9 @@ public class EventLogger {
      * @param errorMessage the error message
      */
     public static void logError(String className, String errorMessage) {
-        Log.e("[ OutSystems - " + className + "]", errorMessage);
+        if (BuildConfig.DEBUG) {
+            Log.e("[ OutSystems - " + className + "]", errorMessage);
+        }
     }
 
     /**
@@ -74,7 +86,9 @@ public class EventLogger {
      * @param ex the ex
      */
     public static void logError(String className, Exception ex) {
-        Log.e("[ OutSystems - " + className + "]", ex.getMessage(), ex);
+        if (BuildConfig.DEBUG) {
+            Log.e("[ OutSystems - " + className + "]", ex.getMessage(), ex);
+        }
     }
 
     /**
@@ -84,7 +98,9 @@ public class EventLogger {
      * @param ex the ex
      */
     public static void logError(Class<?> classObject, Exception ex) {
-        Log.e("[ OutSystems - " + classObject.getName() + "]", ex.getMessage(), ex);
+        if (BuildConfig.DEBUG) {
+            Log.e("[ OutSystems - " + classObject.getName() + "]", ex.getMessage(), ex);
+        }
     }
 
     /**
@@ -94,7 +110,9 @@ public class EventLogger {
      * @param errorMessage the error message
      */
     public static void logError(Class<?> classObject, String errorMessage) {
-        Log.e("[ OutSystems - " + classObject.getName() + "]", errorMessage);
+        if (BuildConfig.DEBUG) {
+            Log.e("[ OutSystems - " + classObject.getName() + "]", errorMessage);
+        }
     }
 
 }

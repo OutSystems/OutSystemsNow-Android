@@ -78,6 +78,7 @@ public class HubAppActivity extends BaseActivity {
                         database.addHostHubApplication(urlHubApp, infrastructure.getName(), HubManagerHelper
                                 .getInstance().isJSFApplicationServer());
                     }
+                    database.close();
 
                     HubManagerHelper.getInstance().setApplicationHosted(urlHubApp);
 
