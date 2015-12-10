@@ -984,7 +984,10 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
         }
 
         DownloadManager.Request r = new DownloadManager.Request(Uri.parse(fileUrl));
+
         String cookie = CookieManager.getInstance().getCookie(cordovaWebView.getUrl());
+        cookie = cookie.replace('\n', ' ').replace('\r', ' '); // http://cwe.mitre.org/data/definitions/113.html escape CR and LF chars from cookie string
+
         r.addRequestHeader("Cookie", cookie);
         r.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
         final DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);

@@ -12,6 +12,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.outsystems.android.core.EventLogger;
+
 public class ActionBarAlert{
     private FrameLayout mLayout;
     private TextView mTextView;
@@ -37,7 +39,7 @@ public class ActionBarAlert{
                 height = TypedValue.complexToDimensionPixelSize(tv.data, act.getResources().getDisplayMetrics());
             }//if
         }catch(Exception e){
-            System.out.println("Error trying to get Action Bar Height " + e.getMessage());
+            EventLogger.logError(getClass(), "Error trying to get Action Bar Height");
         }//try
 
         //...........................................
