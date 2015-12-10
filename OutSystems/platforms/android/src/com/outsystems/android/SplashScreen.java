@@ -135,7 +135,7 @@ public class SplashScreen extends Activity {
                 boolean hasAppSettings = ApplicationSettingsController.getInstance().hasValidSettings();
 
                 if(hasAppSettings) {
-                    Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
+                    Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this, true);
                     startActivity(intent);
                 }
                 else {
@@ -174,7 +174,7 @@ public class SplashScreen extends Activity {
             boolean hasAppSettings = ApplicationSettingsController.getInstance().hasValidSettings();
 
             if(hasAppSettings){
-                Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
+                Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this, false);
                 startActivity(intent);
             }
             else{
@@ -200,7 +200,7 @@ public class SplashScreen extends Activity {
 	            }
                 Intent intent = null;
                 if(hasAppSettings)
-                    intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
+                    intent = ApplicationSettingsController.getInstance().getFirstActivity(this, false);
                 else
                     intent = new Intent(this, LoginActivity.class);
 
@@ -214,7 +214,7 @@ public class SplashScreen extends Activity {
 	        }
             else{
                 if(hasAppSettings){
-                    Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
+                    Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this, false);
                     startActivity(intent);
                 }
             }

@@ -68,7 +68,7 @@ public class ApplicationSettingsController {
     }
 
 
-    public Intent getFirstActivity(Context context){
+    public Intent getFirstActivity(Context context, boolean offline){
         Intent result = null;
 
 
@@ -84,7 +84,7 @@ public class ApplicationSettingsController {
         HubManagerHelper.getInstance().setApplicationHosted(settings.getDefaultHostname());
 
 
-        if(settings.skipNativeLogin()){
+        if(offline || settings.skipNativeLogin()){
             if(settings.skipApplicationList() && settings.getDefaultApplicationURL() != null){
 
                 String url = settings.getDefaultApplicationURL();
