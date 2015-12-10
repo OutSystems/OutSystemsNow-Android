@@ -1,14 +1,14 @@
 # Cordova-Plugin-FileChooser
 
-The purpose of this plugin is to provide a file chooser for Hybrid Applications running on Android 4.4 (KitKat). With this plugin the users can succussful upload files through a webview.
+The purpose of this plugin is to provide a file chooser for Hybrid Applications running on Android 4.4.2 (KitKat). With this plugin the users can succussful upload files through a webview.
 
-This plugin was created as a workaround for a known issue with the file input element on webviews running on Android 4.4 (KitKat). Thus, we recommend you to only use this plugin for that Android version.
+This plugin was created as a workaround for a known issue with the file input element on webviews running on Android 4.4.2 (KitKat). Thus, we recommend you to only use this plugin for that Android version.
 
 As with all the cordova plugins, the plugin isn't available until the execution of `deviceready` event.
 
 ## Supported Platforms
 
-- Android 4.4
+- Android 4.4.2
 
 ## Installation
 - Run the following command:

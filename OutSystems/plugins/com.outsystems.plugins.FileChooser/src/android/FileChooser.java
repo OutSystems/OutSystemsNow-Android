@@ -6,16 +6,24 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Base64;
+import android.util.Base64OutputStream;
 import android.util.Log;
 
-import org.apache.cordova.CordovaArgs;
+import com.ipaulpro.afilechooser.utils.FileUtils;
+
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaArgs;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -268,16 +276,16 @@ public class FileChooser extends CordovaPlugin {
                     Uri uri = data.getData();
 
                     if (uri != null) {
-                        Log.w(TAG, uri.toString());
-                        callback.success(uri.toString());
+                        String base64 = getFileContent(uri);
+                        callback.success(base64);
                     } else {
                         callback.error("File uri was null");
                     }
                 }
                 else{
                     if(fileUri != null){
-                        Log.w(TAG, fileUri.toString());
-                        callback.success(fileUri.toString());
+                        String base64 = getFileContent(fileUri);
+                        callback.success(base64);
                         fileUri = null;
                     } else {
                         callback.error("File uri was null");
@@ -293,4 +301,44 @@ public class FileChooser extends CordovaPlugin {
 
         }
     }
+
+    private String getFileContent(Uri uri){
+        File file = null;
+        InputStream inputStream = null;
+
+        byte[] buffer = new byte[8192];
+        int bytesRead;
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        Base64OutputStream output64 = new Base64OutputStream(output, Base64.DEFAULT);
+
+        String result = null;
+
+        try {
+
+            String filePath = FileUtils.getPath(this.cordova.getActivity().getApplicationContext(),uri);
+
+            file =  new File(filePath);
+            inputStream = new FileInputStream(file);
+
+            try {
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    output64.write(buffer, 0, bytesRead);
+                }
+            } catch (IOException e) {
+                Log.e(TAG, "Failed to read file");
+            }
+            output64.close();
+
+            result = output.toString();
+
+        } catch (Exception e) {
+            Log.e(TAG,"Failed to get file contents");
+        }
+        return result;
+    }
+
+
+
 }
+
+

@@ -3,7 +3,7 @@
     xmlns="http://www.phonegap.com/ns/plugins/1.0" 
     xmlns:android="http://schemas.android.com/apk/res/android" 
     id="com.outsystems.plugins.FileChooser" 
-    version="0.0.2">
+    version="0.0.3">
     
     <name>KitKat FileChooser</name>
     <description>FileChooser for Cordova applications running on Android 4.4 (KitKat)</description>
@@ -16,6 +16,11 @@
 
     <platform name="android">
 
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        </config-file>
+
         <config-file target="res/xml/config.xml" parent="/widget">        
             <feature name="FileChooser">
                 <param name="android-package" value="com.outsystems.plugins.filechooser.FileChooser"/>
@@ -23,6 +28,8 @@
         </config-file> 
                 
         <source-file src="src/android/FileChooser.java" target-dir="src/com/outsystems/plugins/filechooser"/>
+        <source-file src="src/android/filechooser/FileUtils.java" target-dir="src/com/ipaulpro/afilechooser/utils" />        
+        <source-file src="src/android/localstorage/LocalStorageProvider.java" target-dir="src/com/ianhanniballake/localstorage" />
                         
     </platform>
     

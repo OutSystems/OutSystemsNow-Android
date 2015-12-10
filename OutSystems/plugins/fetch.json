@@ -105,9 +105,8 @@
     },
     "com.outsystems.plugins.FileChooser": {
         "source": {
-            "type": "git",
-            "url": "https://github.com/OutSystems/Cordova-Plugin-FileChooser.git",
-            "subdir": "."
+            "type": "local",
+            "path": "..\\..\\..\\CordovaPlugins\\FileChooser"
         },
         "is_top_level": true,
         "variables": {}
