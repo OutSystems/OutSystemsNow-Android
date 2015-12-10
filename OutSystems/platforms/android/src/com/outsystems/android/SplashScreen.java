@@ -131,7 +131,16 @@ public class SplashScreen extends Activity {
         if(!app.isNetworkAvailable()) {
             // Check if the last credentials were valid
             if(OfflineSupport.getInstance(getApplicationContext()).hasValidCredentials()){
-               OfflineSupport.getInstance(getApplicationContext()).redirectToApplicationList(this);
+
+                boolean hasAppSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+
+                if(hasAppSettings) {
+                    Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
+                    startActivity(intent);
+                }
+                else {
+                    OfflineSupport.getInstance(getApplicationContext()).redirectToApplicationList(this);
+                }
 
                // Finish activity
                finish();

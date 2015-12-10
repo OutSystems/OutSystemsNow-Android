@@ -233,8 +233,8 @@ public class ApplicationsActivity extends BaseActivity {
 
                     @Override
                     public void requestFinish(Object result, boolean error, int statusCode) {
+                        ArrayList<Application> applications = null;
                         if (!error) {
-                        	
                         	ApplicationOutsystems app = (ApplicationOutsystems) getApplication();
                             app.setDemoApplications(true);
                             if(app.demoApplications) {
@@ -246,14 +246,11 @@ public class ApplicationsActivity extends BaseActivity {
                                 url = url.replace("https", "http");
                                 webView.loadUrl(url);
                             }
-                        	
-                            @SuppressWarnings("unchecked")
-                            ArrayList<Application> applications = (ArrayList<Application>) result;
-                            if (applications != null && applications.size() > 0) {
-                                loadContentInGridview(applications);
-                            }
 
+                            applications = (ArrayList<Application>) result;
                         }
+
+                        loadContentInGridview(applications);
                     }
                 });
     }
