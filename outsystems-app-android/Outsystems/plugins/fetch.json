@@ -1,27 +1,115 @@
 {
-    "nl.x-services.plugins.calendar": {
+    "cordova-plugin-whitelist": {
         "source": {
             "type": "registry",
-            "id": "nl.x-services.plugins.calendar"
-        }
+            "id": "cordova-plugin-whitelist"
+        },
+        "is_top_level": true,
+        "variables": {}
     },
-    "org.apache.cordova.device": {
+    "cordova-plugin-file": {
         "source": {
             "type": "registry",
-            "id": "org.apache.cordova.device"
-        }
+            "id": "cordova-plugin-file"
+        },
+        "is_top_level": true,
+        "variables": {}
     },
-    "org.apache.cordova.network-information": {
+    "cordova-plugin-camera": {
         "source": {
             "type": "registry",
-            "id": "org.apache.cordova.network-information"
-        }
+            "id": "cordova-plugin-camera"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-calendar": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-calendar"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-contacts": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-contacts"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-device": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-device"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-geolocation": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-geolocation"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-battery-status": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-battery-status"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-console": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-console"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-dialogs"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-network-information": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-network-information"
+        },
+        "is_top_level": true,
+        "variables": {}
     },
     "cordova-plugin-sim": {
         "source": {
+            "type": "registry",
+            "id": "cordova-plugin-sim"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-sqlite-storage": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-sqlite-storage"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.outsystems.plugins.FileChooser": {
+        "source": {
             "type": "git",
-            "url": "https://github.com/pbakondy/cordova-plugin-sim",
+            "url": "https://github.com/OutSystems/Cordova-Plugin-FileChooser.git",
             "subdir": "."
-        }
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

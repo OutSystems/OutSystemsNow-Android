@@ -92,7 +92,14 @@ public class AppSettings {
     }
 
     public boolean hasValidSettings(){
+        return hasValidHostname() || hasValidApplicationURL();
+    }
+
+    public boolean hasValidHostname(){
         return getDefaultHostname() != null && !getDefaultHostname().isEmpty();
     }
 
+    public boolean hasValidApplicationURL(){
+        return getDefaultApplicationURL() != null && !getDefaultApplicationURL().isEmpty();
+    }
 }

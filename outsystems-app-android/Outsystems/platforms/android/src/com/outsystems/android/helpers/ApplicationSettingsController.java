@@ -6,21 +6,20 @@ import android.content.Intent;
 
 import com.google.gson.Gson;
 import com.outsystems.android.ApplicationsActivity;
+import com.outsystems.android.HubAppActivity;
 import com.outsystems.android.LoginActivity;
 import com.outsystems.android.R;
 import com.outsystems.android.WebApplicationActivity;
 import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.Application;
+import com.outsystems.android.model.DeepLink;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-/**
- * Created by lrs on 8/19/2015.
- */
 public class ApplicationSettingsController {
 
     private static ApplicationSettingsController _instance;
@@ -68,9 +67,12 @@ public class ApplicationSettingsController {
     }
 
 
-    public Intent getFirstActivity(Context context){
+    public Intent getFirstActivity(Context context, boolean offline){
         Intent result = null;
 
+        if(hasValidSettings() && !this.settings.hasValidHostname()){
+            return  new Intent(context, HubAppActivity.class);
+        }
 
         // Create Entry to save hub application
         DatabaseHandler database = new DatabaseHandler(context);
@@ -79,11 +81,13 @@ public class ApplicationSettingsController {
                     .getInstance().isJSFApplicationServer());
         }
 
+        database.close();
+
         HubManagerHelper.getInstance().setApplicationHosted(settings.getDefaultHostname());
 
 
-        if(settings.skipNativeLogin()){
-            if(settings.skipApplicationList() && settings.getDefaultApplicationURL() != null){
+        if(offline || settings.skipNativeLogin()){
+            if(settings.skipApplicationList() && settings.hasValidApplicationURL()){
 
                 String url = settings.getDefaultApplicationURL();
 
@@ -133,6 +137,9 @@ public class ApplicationSettingsController {
     public Intent getNextActivity(Activity currentActivity){
         Intent result = null;
 
+        if (!this.hasValidSettings())
+            return null;
+
         if(currentActivity instanceof LoginActivity){
 
             if(settings.skipApplicationList()){
@@ -140,6 +147,10 @@ public class ApplicationSettingsController {
                 if (settings.getDefaultApplicationURL() != null){
 
                     String url = settings.getDefaultApplicationURL();
+
+                    if(DeepLinkController.getInstance().hasValidSettings()){
+                        url = DeepLinkController.getInstance().getParameterValue(DeepLink.KEY_URL_PARAMETER);
+                    }
 
                     // Ensure that the url format its correct
                     String applicationName = url.replace("\\", "/");
@@ -176,7 +187,53 @@ public class ApplicationSettingsController {
             result = new Intent(currentActivity.getApplicationContext(), ApplicationsActivity.class);
 
         }
+        else{
+            if(currentActivity instanceof HubAppActivity) {
 
+                if(settings.skipNativeLogin() ) {
+
+                    if (settings.skipApplicationList()) {
+                        // Go to WebApplicationActivity
+                        if (settings.getDefaultApplicationURL() != null) {
+
+                            String url = settings.getDefaultApplicationURL();
+
+                            // Ensure that the url format its correct
+                            String applicationName = url.replace("\\", "/");
+
+                            // Get the application's name
+                            if (applicationName.contains("/")) {
+
+                                while (applicationName.startsWith("/")) {
+                                    applicationName = applicationName.substring(1);
+                                }
+
+                                url = applicationName;
+
+                                int slashPosition = applicationName.indexOf("/");
+
+                                if (slashPosition > 0) {
+                                    applicationName = applicationName.substring(0, slashPosition);
+                                }
+                            }
+
+                            Application application = new Application(applicationName, -1, applicationName);
+                            application.setPath(url);
+
+                            result = new Intent(currentActivity.getApplicationContext(), WebApplicationActivity.class); // webview
+                            result.putExtra(WebApplicationActivity.KEY_APPLICATION, application);
+                            result.putExtra(WebApplicationActivity.KEY_SINGLE_APPLICATION, true);
+
+                            return result;
+                        }
+                    }
+
+                    // Otherwise...
+                    // Go to ApplicationsActivity
+                    result = new Intent(currentActivity.getApplicationContext(), ApplicationsActivity.class);
+                }
+            }
+        }
 
         return result;
     }

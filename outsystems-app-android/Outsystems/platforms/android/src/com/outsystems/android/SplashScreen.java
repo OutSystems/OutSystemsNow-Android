@@ -64,7 +64,6 @@ public class SplashScreen extends Activity {
             // Create and start push manager
             pushManager = PushManager.getInstance(this);
 
-            // Start push manager, this will count app open for Pushwoosh stats as well
             pushManager.onStartup(this);
 
             // Register for push!
@@ -93,7 +92,7 @@ public class SplashScreen extends Activity {
             // Change colors
             AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
 
-            boolean customBgColor = appSettings.getTintColor() != null && !appSettings.getBackgroundColor().isEmpty();
+            boolean customBgColor = appSettings.getBackgroundColor() != null && !appSettings.getBackgroundColor().isEmpty();
 
             if(customBgColor){
                 int newColor = Color.parseColor(appSettings.getBackgroundColor());
@@ -128,7 +127,16 @@ public class SplashScreen extends Activity {
         if(!app.isNetworkAvailable()) {
             // Check if the last credentials were valid
             if(OfflineSupport.getInstance(getApplicationContext()).hasValidCredentials()){
-               OfflineSupport.getInstance(getApplicationContext()).redirectToApplicationList(this);
+
+                boolean hasAppSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+
+                if(hasAppSettings) {
+                    Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this, true);
+                    startActivity(intent);
+                }
+                else {
+                    OfflineSupport.getInstance(getApplicationContext()).redirectToApplicationList(this);
+                }
 
                // Finish activity
                finish();
@@ -153,6 +161,8 @@ public class SplashScreen extends Activity {
 
         }
 
+        database.close();
+
         if(DeepLinkController.getInstance().hasValidSettings()){
         	DeepLink deepLinkSettings = DeepLinkController.getInstance().getDeepLinkSettings();
         	HubManagerHelper.getInstance().setApplicationHosted(deepLinkSettings.getEnvironment());
@@ -160,7 +170,7 @@ public class SplashScreen extends Activity {
             boolean hasAppSettings = ApplicationSettingsController.getInstance().hasValidSettings();
 
             if(hasAppSettings){
-                Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
+                Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this, false);
                 startActivity(intent);
             }
             else{
@@ -186,7 +196,7 @@ public class SplashScreen extends Activity {
 	            }
                 Intent intent = null;
                 if(hasAppSettings)
-                    intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
+                    intent = ApplicationSettingsController.getInstance().getFirstActivity(this, false);
                 else
                     intent = new Intent(this, LoginActivity.class);
 
@@ -200,7 +210,7 @@ public class SplashScreen extends Activity {
 	        }
             else{
                 if(hasAppSettings){
-                    Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this);
+                    Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this, false);
                     startActivity(intent);
                 }
             }

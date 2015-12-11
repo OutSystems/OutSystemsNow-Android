@@ -10,7 +10,7 @@
         android:layout_height="fill_parent">
 
 
-        <com.outsystems.android.core.CustomWebView
+        <org.apache.cordova.engine.SystemWebView
             android:id="@+id/mainView"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

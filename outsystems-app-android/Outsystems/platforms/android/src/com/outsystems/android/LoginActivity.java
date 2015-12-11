@@ -101,7 +101,8 @@ public class LoginActivity extends BaseActivity {
 
         DatabaseHandler database = new DatabaseHandler(getApplicationContext());
         HubApplicationModel hub = database.getHubApplication(HubManagerHelper.getInstance().getApplicationHosted());
-        
+        database.close();
+
         // Check if deep link has valid settings                
         if(DeepLinkController.getInstance().hasValidSettings()){
 
@@ -168,14 +169,14 @@ public class LoginActivity extends BaseActivity {
             // Change colors
             AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
 
-            boolean customBgColor = appSettings.getTintColor() != null && !appSettings.getBackgroundColor().isEmpty();
+            boolean customBgColor = appSettings.getBackgroundColor() != null && !appSettings.getBackgroundColor().isEmpty();
 
             if(customBgColor){
                 View root = findViewById(R.id.root_view);
                 root.setBackgroundColor(Color.parseColor(appSettings.getBackgroundColor()));
             }
 
-            boolean customFgColor = appSettings.getTintColor() != null && !appSettings.getForegroundColor().isEmpty();
+            boolean customFgColor = appSettings.getForegroundColor() != null && !appSettings.getForegroundColor().isEmpty();
             if(customFgColor){
                 int newColor = Color.parseColor(appSettings.getForegroundColor());
                 Drawable drawable = buttonLogin.getBackground();
@@ -236,6 +237,8 @@ public class LoginActivity extends BaseActivity {
                                         .getApplicationHosted(), userName, password);
                                 database.addLoginApplications(HubManagerHelper.getInstance()
                                         .getApplicationHosted(), userName, login.getApplications());
+
+                                database.close();
 
                                 // Offline Support
                                 OfflineSupport.getInstance(getApplicationContext()).checkCurrentSession(HubManagerHelper.getInstance()
