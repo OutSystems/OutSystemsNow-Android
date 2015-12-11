@@ -27,8 +27,11 @@ import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
+import com.outsystems.android.helpers.ApplicationSettingsController;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
+import com.outsystems.android.helpers.OfflineSupport;
+import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.Infrastructure;
 
 /**
@@ -48,6 +51,8 @@ public class HubAppActivity extends BaseActivity {
     }
     
     private void callInfrastructureService(final View v, final String urlHubApp) {
+
+        final HubAppActivity activity = this;
 
         showLoading(v);
         WebServicesClient.getInstance().getInfrastructure(urlHubApp, new WSRequestHandler() {
@@ -84,12 +89,23 @@ public class HubAppActivity extends BaseActivity {
 
                     ApplicationOutsystems app = (ApplicationOutsystems) getApplication();
                     app.setDemoApplications(false);
-                    // Start Login Activity
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    intent.putExtra(LoginActivity.KEY_AUTOMATICALLY_LOGIN, false);
-                    if (infrastructure != null) {
-                        intent.putExtra(LoginActivity.KEY_INFRASTRUCTURE_NAME, infrastructure.getName());
+
+                    boolean hasAppSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+                    Intent intent = null;
+
+                    if(hasAppSettings) {
+                        intent = ApplicationSettingsController.getInstance().getNextActivity(activity);
                     }
+
+                    if(intent == null) {
+                        // Start Login Activity
+                        intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        intent.putExtra(LoginActivity.KEY_AUTOMATICALLY_LOGIN, false);
+                        if (infrastructure != null) {
+                            intent.putExtra(LoginActivity.KEY_INFRASTRUCTURE_NAME, infrastructure.getName());
+                        }
+                    }
+
                     startActivity(intent);
                 } else {
                     ((EditText) findViewById(R.id.edit_text_hub_url))

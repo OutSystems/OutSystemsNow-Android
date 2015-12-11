@@ -137,9 +137,13 @@ public class DeepLinkController {
 				else{
 					// LoginActivity
 					if(activity instanceof LoginActivity){
-						if(!(lastActivity instanceof HubAppActivity)){
-							this.invalidate();
-							return;
+
+						if(!(lastActivity instanceof HubAppActivity))
+						{
+							if(!ApplicationSettingsController.getInstance().hasValidSettings() ) {
+								this.invalidate();
+								return;
+							}
 						}
 						
 						LoginActivity loginActivity = (LoginActivity)activity;		
@@ -195,8 +199,10 @@ public class DeepLinkController {
 					if(activity instanceof LoginActivity){
 						
 						if(!(lastActivity instanceof HubAppActivity)){
-							this.invalidate();
-							return;
+							if(!ApplicationSettingsController.getInstance().hasValidSettings() ) {
+								this.invalidate();
+								return;
+							}
 						}
 						
 						LoginActivity loginActivity = (LoginActivity)activity;		
@@ -234,10 +240,12 @@ public class DeepLinkController {
 					}
 					else{
 						if(activity instanceof ApplicationsActivity){
-							
+
 							if(!(lastActivity instanceof LoginActivity)){
-								this.invalidate();
-								return;
+								if(!ApplicationSettingsController.getInstance().hasValidSettings() ) {
+									this.invalidate();
+									return;
+								}
 							}
 							
 							ApplicationsActivity appActivity = (ApplicationsActivity)activity;				
