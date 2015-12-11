@@ -582,7 +582,7 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
         BitmapDrawable disabled = getDisableButton(icon);
 
         drawable.addState(new int[] { -android.R.attr.state_pressed }, icon);
-        drawable.addState(new int[] { -android.R.attr.state_enabled }, icon);
+        drawable.addState(new int[]{-android.R.attr.state_enabled}, icon);
         drawable.addState(StateSet.WILD_CARD, disabled);
 
         return drawable;
@@ -625,12 +625,21 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
                         boolean showECT = app.isNetworkAvailable() && show;
                         buttonECT.setVisibility(showECT ? View.VISIBLE : View.GONE);
 
+                        // Application Settings
+                        boolean hasValidSettings = ApplicationSettingsController.getInstance().hasValidSettings();
 
-                        AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
-                        boolean customTintColor = appSettings.getTintColor() != null && !appSettings.getTintColor().isEmpty();
+                        if(hasValidSettings) {
 
-                        if(customTintColor) {
+                            AppSettings appSettings = ApplicationSettingsController.getInstance().getSettings();
+                            boolean customTintColor = appSettings.getTintColor() != null && !appSettings.getTintColor().isEmpty();
 
+                            if (customTintColor) {
+                                int newColor = Color.parseColor(appSettings.getTintColor());
+                                PorterDuff.Mode mMode = PorterDuff.Mode.SRC_ATOP;
+
+                                Drawable drawable = buttonECT.getDrawable();
+                                drawable.setColorFilter(newColor, mMode);
+                            }
                         }
 
                         findViewById(R.id.toolbar).invalidate();
