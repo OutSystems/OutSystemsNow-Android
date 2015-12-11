@@ -125,7 +125,8 @@
             android:layout_below="@+id/view_hub_application"
             android:layout_marginBottom="10dp"
             android:gravity="center_horizontal|bottom"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:id="@+id/try_our_demo">
 
             <com.outsystems.android.widgets.CustomFontTextView
                 android:id="@+id/text_view_demo"

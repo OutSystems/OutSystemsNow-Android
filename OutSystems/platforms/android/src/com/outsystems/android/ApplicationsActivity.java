@@ -177,28 +177,21 @@ public class ApplicationsActivity extends BaseActivity {
                 PorterDuff.Mode mMode = PorterDuff.Mode.SRC_ATOP;
             }
 
-            boolean customFgColor = appSettings.getForegroundColor() != null && !appSettings.getForegroundColor().isEmpty();
-            if(customFgColor){
-                int newColor = Color.parseColor(appSettings.getForegroundColor());
-                PorterDuff.Mode mMode = PorterDuff.Mode.SRC_ATOP;
-
-                // TODO: Offline Alert
-            }
-
             boolean customTintColor = appSettings.getTintColor() != null && !appSettings.getTintColor().isEmpty();
 
             if(customTintColor){
                 int newColor = Color.parseColor(appSettings.getTintColor());
                 PorterDuff.Mode mMode = PorterDuff.Mode.SRC_ATOP;
 
-                Spannable text = new SpannableString(getActionBar().getTitle());
+                Spannable text = new SpannableString(getSupportActionBar().getTitle());
                 text.setSpan(new ForegroundColorSpan(newColor), 0, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-                getActionBar().setTitle(text);
-
+                getSupportActionBar().setTitle(text);
 
                 Drawable drawable = getResources().getDrawable(R.drawable.icon_chevron_back);
                 drawable.setColorFilter(newColor ,mMode);
-                getActionBar().setLogo(drawable);
+                getSupportActionBar().setDisplayUseLogoEnabled(false);
+                getSupportActionBar().setDisplayShowHomeEnabled(true);
+                getSupportActionBar().setLogo(drawable);
 
             }
 

@@ -9,6 +9,9 @@ package com.outsystems.android;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
@@ -33,6 +37,7 @@ import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.helpers.OfflineSupport;
 import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.Infrastructure;
+import com.outsystems.android.widgets.CustomFontTextView;
 
 /**
  * Class Hub App Activity.
@@ -192,11 +197,40 @@ public class HubAppActivity extends BaseActivity {
             if (viewHelp.getVisibility() == View.VISIBLE) {
                 viewHelp.setVisibility(View.GONE);
                 imageButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.icon_help));
+
+                // Application Settings
+                boolean hasValidSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+                if(hasValidSettings){
+                    // Change colors
+                    AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
+
+                    boolean customFgColor = appSettings.getTintColor() != null && !appSettings.getForegroundColor().isEmpty();
+                    if(customFgColor){
+                        int newColor = Color.parseColor(appSettings.getForegroundColor());
+                        Drawable drawable = imageButton.getBackground();
+                        drawable.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
+                    }
+                }
+
             } else {
                 Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_top);
                 viewHelp.startAnimation(anim);
                 viewHelp.setVisibility(View.VISIBLE);
                 imageButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.icon_close));
+
+                // Application Settings
+                boolean hasValidSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+                if(hasValidSettings){
+                    // Change colors
+                    AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
+
+                    boolean customFgColor = appSettings.getTintColor() != null && !appSettings.getForegroundColor().isEmpty();
+                    if(customFgColor){
+                        int newColor = Color.parseColor(appSettings.getForegroundColor());
+                        Drawable drawable = imageButton.getBackground();
+                        drawable.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
+                    }
+                }
             }
         }
     };
@@ -269,7 +303,54 @@ public class HubAppActivity extends BaseActivity {
                     editText.getViewTreeObserver().removeGlobalOnLayoutListener(this);
             }
         });
-        
+
+
+        // Application Settings
+        boolean hasValidSettings = ApplicationSettingsController.getInstance().hasValidSettings();
+        if(hasValidSettings){
+
+            // Hide Demo
+            View tryOurDemo = findViewById(R.id.try_our_demo);
+            if(tryOurDemo != null){
+                tryOurDemo.setVisibility(View.GONE);
+            }
+
+            // Change colors
+            AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
+
+            boolean customBgColor = appSettings.getTintColor() != null && !appSettings.getBackgroundColor().isEmpty();
+
+            if(customBgColor){
+                View root = findViewById(R.id.root_view);
+                root.setBackgroundColor(Color.parseColor(appSettings.getBackgroundColor()));
+            }
+
+            boolean customFgColor = appSettings.getTintColor() != null && !appSettings.getForegroundColor().isEmpty();
+            if(customFgColor){
+                int newColor = Color.parseColor(appSettings.getForegroundColor());
+                Drawable drawable = buttonGO.getBackground();
+                drawable.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
+                buttonGO.setTextColor(newColor);
+
+                drawable = buttonHelp.getBackground();
+                drawable.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
+
+                ProgressBar progressBar = (ProgressBar)findViewById(R.id.progress_bar);
+                drawable = progressBar.getIndeterminateDrawable();
+                drawable.setColorFilter(newColor, PorterDuff.Mode.SRC_ATOP);
+
+                CustomFontTextView environmentLabel = (CustomFontTextView)findViewById(R.id.text_view_title_hub);
+                if(environmentLabel != null){
+                    environmentLabel.setTextColor(newColor);
+                }
+
+                CustomFontTextView helpLabel = (CustomFontTextView)findViewById(R.id.text_view_help);
+                if(helpLabel != null){
+                    helpLabel.setTextColor(newColor);
+                }
+            }
+
+        }
 
     }
 
