@@ -318,14 +318,14 @@ public class HubAppActivity extends BaseActivity {
             // Change colors
             AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
 
-            boolean customBgColor = appSettings.getTintColor() != null && !appSettings.getBackgroundColor().isEmpty();
+            boolean customBgColor = appSettings.getBackgroundColor() != null && !appSettings.getBackgroundColor().isEmpty();
 
             if(customBgColor){
                 View root = findViewById(R.id.root_view);
                 root.setBackgroundColor(Color.parseColor(appSettings.getBackgroundColor()));
             }
 
-            boolean customFgColor = appSettings.getTintColor() != null && !appSettings.getForegroundColor().isEmpty();
+            boolean customFgColor = appSettings.getForegroundColor() != null && !appSettings.getForegroundColor().isEmpty();
             if(customFgColor){
                 int newColor = Color.parseColor(appSettings.getForegroundColor());
                 Drawable drawable = buttonGO.getBackground();

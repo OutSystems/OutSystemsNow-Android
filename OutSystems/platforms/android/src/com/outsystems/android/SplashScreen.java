@@ -96,7 +96,7 @@ public class SplashScreen extends Activity {
             // Change colors
             AppSettings appSettings =  ApplicationSettingsController.getInstance().getSettings();
 
-            boolean customBgColor = appSettings.getTintColor() != null && !appSettings.getBackgroundColor().isEmpty();
+            boolean customBgColor = appSettings.getBackgroundColor() != null && !appSettings.getBackgroundColor().isEmpty();
 
             if(customBgColor){
                 int newColor = Color.parseColor(appSettings.getBackgroundColor());
