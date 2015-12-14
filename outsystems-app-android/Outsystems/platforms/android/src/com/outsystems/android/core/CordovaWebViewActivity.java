@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -296,7 +297,7 @@ public class CordovaWebViewActivity extends BaseActivity {
         cordovaInterface.onActivityResult(requestCode, resultCode, intent);
     }
 
-  
+
     /*
      * Hook in Cordova for menu plugins
      */
@@ -360,5 +361,17 @@ public class CordovaWebViewActivity extends BaseActivity {
         if (pm != null) {
             pm.onConfigurationChanged(newConfig);
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        /* Pressing menu button causes crash in Activity with no ActionBar
+          http://stackoverflow.com/questions/19275447/pressing-menu-button-causes-crash-in-activity-with-no-actionbar/19320065#19320065
+         */
+        if ( keyCode == KeyEvent.KEYCODE_MENU ) {
+            // do nothing
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
