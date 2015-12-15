@@ -139,7 +139,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private void upgradeTables(SQLiteDatabase db){
 
         try {
-            db.execSQL("SELECT "+KEY_APPLICATION_PRELOADER+" FROM "+TABLE_LOGIN_APPLICATIONS);
+            db.rawQuery("SELECT "+KEY_APPLICATION_PRELOADER+" FROM "+TABLE_LOGIN_APPLICATIONS, null);
         }catch(Exception e){
             EventLogger.logMessage(this.getClass(), "The current database model is invalid. Start upgrading database model.");
 
@@ -494,7 +494,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                              " WHERE "+KEY_APPLICATION_HOST+"= ?" +
                              " AND "+KEY_APPLICATION_USER_NAME +"= ?";
 
-        Cursor cursor = db.rawQuery(selectQuery, new String[]{hostname,username});
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{hostname, username});
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
