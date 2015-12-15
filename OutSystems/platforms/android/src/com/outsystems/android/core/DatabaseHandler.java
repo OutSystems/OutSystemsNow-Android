@@ -85,62 +85,86 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Creating Tables
-    @Override
-    public void onCreate(SQLiteDatabase db) {
+    private void createTables(SQLiteDatabase db){
 
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_HUB_APPLICATION + "(" + KEY_HOST + " TEXT PRIMARY KEY,"
+        String dropTableHubApplication = "DROP TABLE IF EXISTS "+ TABLE_HUB_APPLICATION;
+        String createTableHubApplication = "CREATE TABLE " + TABLE_HUB_APPLICATION + "(" + KEY_HOST + " TEXT PRIMARY KEY,"
                 + KEY_USER_NAME + " TEXT," + KEY_PASSWORD + " TEXT," + KEY_DATE_LAST_LOGIN + " DATETIME," + KEY_NAME
                 + " TEXT," + KEY_ISJSF + " NUMERIC" + ")";
         try {
-            db.execSQL(CREATE_CONTACTS_TABLE);
+            db.execSQL(dropTableHubApplication);
+            db.execSQL(createTableHubApplication);
         }catch(Exception e){
-            e.printStackTrace();
+            EventLogger.logMessage(getClass(), "Unable to create table: " + TABLE_HUB_APPLICATION);
         }
 
         // Mobile ECT
-        String createMobileECTTable = "CREATE TABLE " + TABLE_MOBILE_ECT + "(" + KEY_MOBILE_ECT_FIRST_LOAD + " NUMERIC PRIMARY KEY" + ")";
+        String dropTableMobileECT = "DROP TABLE IF EXISTS "+ TABLE_MOBILE_ECT;
+        String createTableMobileECT = "CREATE TABLE " + TABLE_MOBILE_ECT + "(" + KEY_MOBILE_ECT_FIRST_LOAD + " NUMERIC PRIMARY KEY" + ")";
         try {
-            db.execSQL(createMobileECTTable);
+            db.execSQL(dropTableMobileECT);
+            db.execSQL(createTableMobileECT);
         }catch(Exception e){
-            e.printStackTrace();
+            EventLogger.logMessage(getClass(), "Unable to create table: " + TABLE_MOBILE_ECT);
         }
 
         // Offline support
-        String createApplicationsTable = "CREATE TABLE " + TABLE_LOGIN_APPLICATIONS +
+        String dropTableLoginApplications = "DROP TABLE IF EXISTS "+ TABLE_LOGIN_APPLICATIONS;
+        String createTableLoginApplications = "CREATE TABLE " + TABLE_LOGIN_APPLICATIONS +
                 "(" + KEY_APPLICATION_HOST          + " TEXT,"
-                    + KEY_APPLICATION_USER_NAME     + " TEXT,"
-                    + KEY_APPLICATION_NAME          + " TEXT,"
-                    + KEY_APPLICATION_DESCRIPTION   + " TEXT,"
-                    + KEY_APPLICATION_IMAGE         + " NUMERIC,"
-                    + KEY_APPLICATION_PATH          + " TEXT,"
-                    + KEY_APPLICATION_PRELOADER     + " NUMERIC,"
-                    + " PRIMARY KEY ("+KEY_APPLICATION_HOST+", "+KEY_APPLICATION_USER_NAME+", "+KEY_APPLICATION_NAME+")"
+                + KEY_APPLICATION_USER_NAME     + " TEXT,"
+                + KEY_APPLICATION_NAME          + " TEXT,"
+                + KEY_APPLICATION_DESCRIPTION   + " TEXT,"
+                + KEY_APPLICATION_IMAGE         + " NUMERIC,"
+                + KEY_APPLICATION_PATH          + " TEXT,"
+                + KEY_APPLICATION_PRELOADER     + " NUMERIC,"
+                + " PRIMARY KEY ("+KEY_APPLICATION_HOST+", "+KEY_APPLICATION_USER_NAME+", "+KEY_APPLICATION_NAME+")"
                 +")";
 
         try {
-            db.execSQL(createApplicationsTable);
+            db.execSQL(dropTableLoginApplications);
+            db.execSQL(createTableLoginApplications);
         }catch(Exception e){
-            e.printStackTrace();
+            EventLogger.logMessage(getClass(),"Unable to create table: "+TABLE_LOGIN_APPLICATIONS);
         }
     }
+
+    // Creating database
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        createTables(db);
+    }
+
+    // Upgrade Tables
+    private void upgradeTables(SQLiteDatabase db){
+
+        try {
+            db.execSQL("SELECT "+KEY_APPLICATION_PRELOADER+" FROM "+TABLE_LOGIN_APPLICATIONS);
+        }catch(Exception e){
+            EventLogger.logMessage(this.getClass(), "The current database model is invalid. Start upgrading database model.");
+
+            try {
+                db.execSQL("ALTER TABLE " + TABLE_LOGIN_APPLICATIONS + " ADD " + KEY_APPLICATION_PRELOADER  + " NUMERIC");
+            }catch(Exception ex){
+                EventLogger.logMessage(this.getClass(), "Failed to upgrade database. Start creating a new database model.");
+                // Create tables again
+                onCreate(db);
+            }
+        }
+
+    }
+
 
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        try {
+        // Upgrade database model
+        upgradeTables(db);
 
-            // Update Applications table
-            db.execSQL("ALTER TABLE "+TABLE_LOGIN_APPLICATIONS+" ADD "+ KEY_APPLICATION_PRELOADER  + " NUMERIC");
+        // Upgrade Users' passwords
+        upgradeDatabasePasswords(db);
 
-            // Upgrade Users' passwords
-            upgradeDatabasePasswords(db);
-
-        }catch(Exception e){
-            EventLogger.logMessage(this.getClass(), "Failed to upgrade database");
-            // Create tables again
-            onCreate(db);
-        }
     }
 
     // Adding new contact
@@ -528,5 +552,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
 
     }
+
 
 }
