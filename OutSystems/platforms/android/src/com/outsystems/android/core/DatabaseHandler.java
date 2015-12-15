@@ -7,6 +7,18 @@
  */
 package com.outsystems.android.core;
 
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import com.outsystems.android.core.security.AESCipher;
+import com.outsystems.android.model.Application;
+import com.outsystems.android.model.HubApplicationModel;
+import com.outsystems.android.model.MobileECT;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,17 +27,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import android.annotation.SuppressLint;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
-import com.outsystems.android.model.Application;
-import com.outsystems.android.model.HubApplicationModel;
-import com.outsystems.android.model.MobileECT;
 
 /**
  * Class description.
@@ -38,7 +39,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     // Database Name
     private static final String DATABASE_NAME = "hubManager";
@@ -127,26 +128,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        /*
-        // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HUB_APPLICATION);
-
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOBILE_ECT);
-
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGIN_APPLICATIONS);
-        */
-
         try {
 
             // Update Applications table
             db.execSQL("ALTER TABLE "+TABLE_LOGIN_APPLICATIONS+" ADD "+ KEY_APPLICATION_PRELOADER  + " NUMERIC");
 
-        }catch(Exception e){
+            // Upgrade Users' passwords
+            upgradeDatabasePasswords(db);
 
+        }catch(Exception e){
+            EventLogger.logMessage(this.getClass(), "Failed to upgrade database");
             // Create tables again
             onCreate(db);
-
-            e.printStackTrace();
         }
     }
 
@@ -157,7 +150,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_HOST, hubApplication.getHost());
         values.put(KEY_USER_NAME, hubApplication.getUserName());
-        values.put(KEY_PASSWORD, hubApplication.getPassword());
+
+        String password = null;
+
+        try {
+            password = AESCipher.getInstance().encrypt(hubApplication.getPassword());
+        } catch (Exception e) {
+            EventLogger.logError(this.getClass(),"Unable to encrypt password");
+        }
+
+
+        values.put(KEY_PASSWORD, password);
         values.put(KEY_DATE_LAST_LOGIN, getDateTime(hubApplication.getDateLastLogin()));
         values.put(KEY_NAME, hubApplication.getName());
         values.put(KEY_ISJSF, hubApplication.isJSF());
@@ -195,8 +198,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null) {
             if (cursor.getCount() > 0) {
                 // boolean value =cursor.getString(5).contains("true");
+                String password = null;
+
+                try {
+                    password = AESCipher.getInstance().decrypt(cursor.getString(2));
+                } catch (Exception e) {
+                    EventLogger.logError(this.getClass(),"Unable to encrypt password");
+                }
                 HubApplicationModel hubApplication = new HubApplicationModel(cursor.getString(0), cursor.getString(1),
-                        cursor.getString(2), convertStringToDate(cursor.getString(3)), cursor.getString(4),
+                        password, convertStringToDate(cursor.getString(3)), cursor.getString(4),
                         cursor.getInt(5) > 0);
                 // return contact
                 cursor.close();
@@ -224,7 +234,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 HubApplicationModel hubApplication = new HubApplicationModel();
                 hubApplication.setHost(cursor.getString(0));
                 hubApplication.setUserName(cursor.getString(1));
-                hubApplication.setPassword(cursor.getString(2));
+
+                String password = null;
+
+                try {
+                    password = AESCipher.getInstance().encrypt(cursor.getString(2));
+                } catch (Exception e) {
+                    EventLogger.logError(this.getClass(),"Unable to encrypt password");
+                }
+
+                hubApplication.setPassword(password);
                 String date = cursor.getString(3);
                 hubApplication.setDateLastLogin(convertStringToDate(date));
                 hubApplication.setName(cursor.getString(4));
@@ -263,7 +282,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_USER_NAME, hubApplicationModel.getUserName());
-        values.put(KEY_PASSWORD, hubApplicationModel.getPassword());
+
+        String password = null;
+
+        try {
+            password = AESCipher.getInstance().encrypt(hubApplicationModel.getPassword());
+        } catch (Exception e) {
+            EventLogger.logError(this.getClass(),"Unable to encrypt password");
+        }
+
+        values.put(KEY_PASSWORD, password);
         values.put(KEY_DATE_LAST_LOGIN, hubApplicationModel.getDateLastLogin().toString());
         values.put(KEY_NAME, hubApplicationModel.getName());
         values.put(KEY_ISJSF, hubApplicationModel.isJSF());
@@ -280,7 +308,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_USER_NAME, username);
-        values.put(KEY_PASSWORD, password);
+
+        String pwd = null;
+
+        try {
+            pwd = AESCipher.getInstance().encrypt(password);
+        } catch (Exception e) {
+            EventLogger.logError(this.getClass(),"Unable to encrypt password");
+        }
+
+        values.put(KEY_PASSWORD, pwd);
         values.put(KEY_DATE_LAST_LOGIN, getDateTime(new Date()));
 
         // updating row
@@ -304,7 +341,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             result = new HubApplicationModel();
             result.setHost(cursor.getString(0));
             result.setUserName(cursor.getString(1));
-            result.setPassword(cursor.getString(2));
+
+            String password = null;
+
+            try {
+                password = AESCipher.getInstance().decrypt(cursor.getString(2));
+            } catch (Exception e) {
+                EventLogger.logError(this.getClass(),"Unable to decrypt password");
+            }
+
+            result.setPassword(password);
             String date = cursor.getString(3);
             result.setDateLastLogin(convertStringToDate(date));
             result.setName(cursor.getString(4));
@@ -449,4 +495,38 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return result;
     }
+
+    void upgradeDatabasePasswords(SQLiteDatabase db){
+
+        String hostname = null;
+        String password = null;
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_HUB_APPLICATION;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                hostname = cursor.getString(0);
+
+                try {
+                    password = AESCipher.getInstance().encrypt(cursor.getString(2));
+                } catch (Exception e) {
+                    EventLogger.logError(this.getClass(),"Unable to encrypt password");
+                }
+
+                ContentValues values = new ContentValues();
+                values.put(KEY_PASSWORD, password);
+
+                // updating row
+                int result = db.update(TABLE_HUB_APPLICATION, values, KEY_HOST + " = ?",
+                        new String[] { hostname });
+
+            } while (cursor.moveToNext());
+        }
+
+    }
+
 }
