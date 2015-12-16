@@ -539,4 +539,11 @@ public class WebServicesClient {
     public List<Cookie> getHttpCookies(){
         return  this.myCookieStore.getCookies();
     }
+
+
+    public void resetLoginHeaders(){
+        if(this.loginHeaders != null){
+            this.loginHeaders.clear();
+        }
+    }
 }

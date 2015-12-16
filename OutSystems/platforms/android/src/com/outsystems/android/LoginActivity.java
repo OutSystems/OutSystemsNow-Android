@@ -304,4 +304,11 @@ public class LoginActivity extends BaseActivity {
             inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        WebServicesClient.getInstance().resetLoginHeaders();
+    }
 }
