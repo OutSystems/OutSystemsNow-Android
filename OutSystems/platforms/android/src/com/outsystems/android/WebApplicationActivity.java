@@ -33,6 +33,7 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.StateSet;
 import android.view.KeyEvent;
 import android.view.View;
@@ -162,14 +163,7 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
     };
 
 
-    /*
-     * The variables below are used to cache some of the activity properties.
-     */
-
-    // Keep app running when pause is received. (default = true)
-    // If true, then the JavaScript and native code continue to run in the background
-    // when another application (activity) is started.
-    protected boolean keepRunning = true;
+    private long LOADING_TIMEOUT = 350;
 
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
@@ -177,9 +171,6 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_application);
-
-        // Hide action bar
-       //TODO: getSupportActionBar().hide();
 
         // Check if deep link has valid settings
         if(DeepLinkController.getInstance().hasValidSettings()){
@@ -347,7 +338,6 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
             if(!url.endsWith("/") && url.indexOf("?") < 0 && !(url.endsWith(".aspx") || url.endsWith(".jsf"))){
                 url = url + "/";
             }
-            //cordovaWebView.loadUrl(url);
             this.loadUrl(url);
         } else {
             ((LinearLayout) findViewById(R.id.view_loading)).setVisibility(View.GONE);
@@ -472,12 +462,7 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
                 // ECT Button
                 drawable = buttonECT.getDrawable();
                 drawable.setColorFilter(newColor, mMode);
-
-                // Progress Bar
-
-                drawable = progressBar.getBackground();
-               // drawable.setColorFilter(newColor, mMode);
-
+                
             }
 
 
@@ -704,7 +689,16 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
                     imageView = (ImageView) findViewById(R.id.image_view);
 
                 if (imageView.getVisibility() != View.VISIBLE) {
-                    startLoadingAnimation();
+
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            startLoadingAnimation();
+                        }
+                    },LOADING_TIMEOUT);
 
                     if(progressBar != null) {
                         progressBar.setProgress(5);
@@ -754,7 +748,14 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
                     imageView = (ImageView) findViewById(R.id.image_view);
 
                 if (imageView.getVisibility() != View.VISIBLE) {
-                    startLoadingAnimation();
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            startLoadingAnimation();
+                        }
+                    }, LOADING_TIMEOUT);
 
                     if(progressBar != null) {
                         progressBar.setProgress(5);
