@@ -297,7 +297,7 @@ public class CordovaWebViewActivity extends BaseActivity {
         cordovaInterface.onActivityResult(requestCode, resultCode, intent);
     }
 
-
+  
     /*
      * Hook in Cordova for menu plugins
      */
