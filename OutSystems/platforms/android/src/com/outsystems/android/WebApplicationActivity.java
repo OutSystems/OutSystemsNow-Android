@@ -462,7 +462,7 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
                 // ECT Button
                 drawable = buttonECT.getDrawable();
                 drawable.setColorFilter(newColor, mMode);
-                
+
             }
 
 
