@@ -1,43 +1,50 @@
 package com.outsystems.android.frameworks;
 
 import android.app.Activity;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
-import android.widget.Button;
+import android.webkit.WebViewClient;
+import android.widget.ImageButton;
 
 import com.outsystems.android.mobileect.MobileECTController;
+import com.outsystems.android.mobileect.interfaces.OSECTContainerListener;
 
-
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OSECTContainerListener {
 
     MobileECTController mobileECTController;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(getActionBar() != null)
+            getActionBar().hide();
+
         WebView webView = (WebView)this.findViewById(R.id.mainWebView);
-        webView.loadUrl("http://labsdev.outsystems.net/Native");
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onReceivedSslError (WebView view, SslErrorHandler handler, SslError error) {
+                handler.proceed();
+            }
+        });
 
-
-        View containerView = findViewById(R.id.ectViewGroup);
+        webView.loadUrl("https://labsdev.outsystems.net/CarAccidentReporting");
 
         View mainView = findViewById(R.id.mainViewGroup);
-
+        View containerView = findViewById(R.id.ectViewGroup);
 
         mobileECTController = new MobileECTController(this,
-                mainView,
-                containerView,
-                webView,
-                "labsdev.outsystems.net",
-                false);
+                mainView, containerView, webView, "https://labsdev.outsystems.net", true);
 
-        Button openButton = (Button)this.findViewById(R.id.openButton);
+        ImageButton openButton = (ImageButton)this.findViewById(R.id.button_ect);
+
         openButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +52,6 @@ public class MainActivity extends Activity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,5 +73,25 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSendFeedbackClickListener() {
+        mobileECTController.sendFeedback();
+    }
+
+    @Override
+    public void onCloseECTClickListener() {
+        mobileECTController.closeECTView();
+    }
+
+    @Override
+    public void onCloseECTHelperClickListener() {
+        mobileECTController.setSkipECTHelper(true);
+    }
+
+    @Override
+    public void onShowECTFeatureListener(boolean show) {
+
     }
 }

@@ -55,6 +55,8 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
     private String audioFile;
     private boolean skipHelper;
 
+    private OSAudioRecorderDialog audioRecorderDialog;
+
     public boolean hasAudioComments() {
         return hasAudioComments;
     }
@@ -732,10 +734,9 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
     private View.OnClickListener onClickListenerRecordAudio  = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
             initAudioRecorder();
 
-            OSAudioRecorderDialog audioRecorderDialog = OSAudioRecorderDialog.newInstance(OSECTContainer.this);
+            audioRecorderDialog = OSAudioRecorderDialog.newInstance(OSECTContainer.this);
             audioRecorderDialog.show(getFragmentManager(),"AudioRecorder");
 
             startRecording();
@@ -967,10 +968,14 @@ public class OSECTContainer extends Fragment implements OSECTAudioRecorderListen
             playButton.startAnimation(fadeOut);
             stopButton.startAnimation(fadeIn);
         }
-
     }
 
     public void releaseMedia(){
+
+        if(this.audioRecorderDialog != null) {
+            this.audioRecorderDialog.dismiss();
+            audioRecorderDialog = null;
+        }
 
         if(this.mediaRecorder != null)
             this.mediaRecorder.release();

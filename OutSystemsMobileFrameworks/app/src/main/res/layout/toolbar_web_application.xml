@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="horizontal"
+    android:weightSum="1"
+    android:gravity="center_vertical|center_horizontal">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical|start"
+        android:layout_weight="0.33">
+
+        <ImageButton
+            android:id="@+id/button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_chevron_left"
+            android:background="@android:color/transparent"
+            android:padding="10dp"/>
+
+        <ImageButton
+            android:id="@+id/button_forth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_chevron_right_inactive"
+            android:background="@android:color/transparent"
+            android:padding="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_weight="0.33">
+
+        <ImageButton
+            android:id="@+id/button_ect"
+            android:src="@drawable/icon_speech_bubble"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:padding="10dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.33"
+        android:gravity="center_vertical|end">
+
+        <ImageButton
+            android:id="@+id/button_applications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_app_list"
+            android:background="@android:color/transparent"
+            android:padding="10dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
