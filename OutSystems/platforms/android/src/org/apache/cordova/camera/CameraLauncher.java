@@ -397,7 +397,9 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
             }
             else
             {
-                bitmap = getScaledBitmap(FileHelper.stripFileProtocol(imageUri.toString()));
+                if(imageUri != null) {
+                    bitmap = getScaledBitmap(FileHelper.stripFileProtocol(imageUri.toString()));
+                }
             }
             if (bitmap == null) {
                 // Try to get the bitmap from intent.
