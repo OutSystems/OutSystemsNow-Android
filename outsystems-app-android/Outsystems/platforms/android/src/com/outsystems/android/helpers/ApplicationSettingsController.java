@@ -90,7 +90,9 @@ public class ApplicationSettingsController {
             if(settings.skipApplicationList() && settings.hasValidApplicationURL()){
 
                 String url = settings.getDefaultApplicationURL();
-
+                if(DeepLinkController.getInstance().hasValidSettings()){
+                    url = DeepLinkController.getInstance().getParameterValue(DeepLink.KEY_URL_PARAMETER);
+                }
                 // Ensure that the url format its correct
                 String applicationName = url.replace("\\", "/");
 
