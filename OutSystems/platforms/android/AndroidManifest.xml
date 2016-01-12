@@ -71,7 +71,7 @@
         <meta-data android:name="PW_APPID" android:value="32B53-F301A" />
         <meta-data android:name="PW_PROJECT_ID" android:value="A705010638295" />
     </application>
-    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="19" />
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="22" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
