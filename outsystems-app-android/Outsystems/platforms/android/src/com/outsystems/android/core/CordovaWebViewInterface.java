@@ -28,7 +28,7 @@ public class CordovaWebViewInterface extends CordovaInterfaceImpl {
     @Override
     public void startActivityForResult(CordovaPlugin command, Intent intent, int requestCode) {
 
-        if (intent.getAction().contains("SCAN")) {
+        if (intent.getAction() != null && intent.getAction().contains("SCAN")) {
             intent.putExtra("requestCode",requestCode);
             super.startActivityForResult(command, intent, 0x0000c0de);
         }
