@@ -34,7 +34,6 @@ import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.ApplicationSettingsController;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
-import com.outsystems.android.helpers.OfflineSupport;
 import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.Infrastructure;
 import com.outsystems.android.widgets.CustomFontTextView;
@@ -313,6 +312,11 @@ public class HubAppActivity extends BaseActivity {
             View tryOurDemo = findViewById(R.id.try_our_demo);
             if(tryOurDemo != null){
                 tryOurDemo.setVisibility(View.GONE);
+            }
+
+            View tryOurDemoFooter = findViewById(R.id.try_our_demo_footer);
+            if(tryOurDemoFooter != null){
+                tryOurDemoFooter.setVisibility(View.GONE);
             }
 
             // Change colors

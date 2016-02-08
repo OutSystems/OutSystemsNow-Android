@@ -126,6 +126,7 @@
             </FrameLayout>
 
             <LinearLayout
+                android:id="@+id/try_our_demo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -157,6 +158,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/try_our_demo_footer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/root_view"
