@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -18,7 +19,10 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.engine.SystemWebChromeClient;
 import org.apache.cordova.engine.SystemWebViewEngine;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 
@@ -32,12 +36,14 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
     private static final String MIME_TYPE_VIDEO = "video/*";
 
     private CordovaInterface cordovaInterface;
+    private Uri fileUri;
 
     public CordovaWebViewChromeClient(SystemWebViewEngine parentEngine,CordovaInterface cordovaInterface) {
         super(parentEngine);
         this.cordovaInterface = cordovaInterface;
     }
 
+    // For Android 3.0+
     @Override
     public void openFileChooser(final ValueCallback<Uri> uploadMsg, String acceptType, String capture)
     {
@@ -81,6 +87,7 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
 
     }
 
+    // For Android 5.0
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public boolean onShowFileChooser(WebView webView, final ValueCallback<Uri[]> filePathsCallback, final WebChromeClient.FileChooserParams fileChooserParams) {
@@ -127,6 +134,7 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
         return true;
     }
 
+    // For Android 3.0+
     private boolean launchSingleIntent(final ValueCallback<Uri> uploadMsg, String acceptType, String capture){
 
         boolean single = false;
@@ -172,6 +180,9 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
                     @Override
                     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
                         Uri result = intent == null || resultCode != Activity.RESULT_OK ? null : intent.getData();
+                        if(result == null){
+                            result = fileUri;
+                        }
                         Log.d(LOG_TAG, "Receive file chooser URL: " + result);
                         uploadMsg.onReceiveValue(result);
                     }
@@ -185,6 +196,7 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
     }
 
 
+    // For Android 5.0
     private boolean launchSingleIntent(final ValueCallback<Uri[]> filePathsCallback, final WebChromeClient.FileChooserParams fileChooserParams){
 
         String[] types = fileChooserParams.getAcceptTypes();
@@ -211,6 +223,9 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
                         @Override
                         public void onActivityResult(int requestCode, int resultCode, Intent intent) {
                             Uri[] result = WebChromeClient.FileChooserParams.parseResult(resultCode, intent);
+                            if(result == null){
+                                result = new Uri[]{fileUri};
+                            }
                             Log.d(LOG_TAG, "Receive file chooser URL: " + result);
                             filePathsCallback.onReceiveValue(result);
                         }
@@ -233,6 +248,9 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
                         @Override
                         public void onActivityResult(int requestCode, int resultCode, Intent intent) {
                             Uri[] result = WebChromeClient.FileChooserParams.parseResult(resultCode, intent);
+                            if(result == null){
+                                result = new Uri[]{fileUri};
+                            }
                             Log.d(LOG_TAG, "Receive file chooser URL: " + result);
                             filePathsCallback.onReceiveValue(result);
                         }
@@ -247,6 +265,41 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
         }
 
         return single;
+    }
+
+    public Uri getOutputMediaFile(String type)
+    {
+        if(Environment.getExternalStorageState() != null) {
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+            if(type.equalsIgnoreCase(MIME_TYPE_IMAGE)) {
+                File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),"");
+
+                File mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                            "IMG_"+ timeStamp + ".jpeg");
+
+                return Uri.fromFile(mediaFile);
+            }
+            else if (type.equalsIgnoreCase(MIME_TYPE_AUDIO)){
+                File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC),"");
+
+                File mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                        "AUD_"+ timeStamp + ".3gp");
+
+                return Uri.fromFile(mediaFile);
+            }
+            else if (type.equalsIgnoreCase(MIME_TYPE_VIDEO)){
+                File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES),"");
+
+                File mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                        "VID_"+ timeStamp + ".mp4");
+
+                return Uri.fromFile(mediaFile);
+            }
+
+        }
+
+        return null;
     }
 
     private Intent getIntentForType(String type){
@@ -273,6 +326,8 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
     // Capture image intent
     private final Intent getImageIntent(){
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        fileUri = getOutputMediaFile(MIME_TYPE_IMAGE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
         return intent;
     }
 
