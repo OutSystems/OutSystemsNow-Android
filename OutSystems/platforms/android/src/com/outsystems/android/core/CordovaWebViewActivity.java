@@ -2,7 +2,6 @@ package com.outsystems.android.core;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,16 +9,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 import com.outsystems.android.BaseActivity;
 
-import org.apache.cordova.Config;
 import org.apache.cordova.ConfigXmlParser;
-import org.apache.cordova.CordovaInterfaceImpl;
 import org.apache.cordova.CordovaPreferences;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaWebViewEngine;
@@ -69,10 +63,12 @@ public class CordovaWebViewActivity extends BaseActivity {
 
         // need to activate preferences before super.onCreate to avoid "requestFeature() must be called before adding content" exception
         loadConfig();
+       /*
         if(!preferences.getBoolean("ShowTitle", false))
         {
             getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        }
+
+        }*/
 
         if(preferences.getBoolean("SetFullscreen", false))
         {
@@ -96,6 +92,11 @@ public class CordovaWebViewActivity extends BaseActivity {
         }
 
         super.onCreate(savedInstanceState);
+
+        // Hide Action Bar
+        if(!preferences.getBoolean("ShowTitle", false)) {
+            getActionBar().hide();
+        }
 
         cordovaInterface = makeCordovaInterface();
         if(savedInstanceState != null)
