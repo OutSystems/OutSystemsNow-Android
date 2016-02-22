@@ -28,12 +28,7 @@ public class MainActivity extends Activity implements OSECTContainerListener {
 
         WebView webView = (WebView)this.findViewById(R.id.mainWebView);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public void onReceivedSslError (WebView view, SslErrorHandler handler, SslError error) {
-                handler.proceed();
-            }
-        });
+        webView.setWebViewClient(new WebViewClient());
 
         webView.loadUrl("https://labsdev.outsystems.net/CarAccidentReporting");
 
