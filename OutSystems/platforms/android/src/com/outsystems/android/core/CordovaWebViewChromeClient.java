@@ -78,7 +78,7 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
                 @Override
                 public void onActivityResult(int requestCode, int resultCode, Intent intent) {
                     Uri result = intent == null || resultCode != Activity.RESULT_OK ? null : intent.getData();
-                    Log.d(LOG_TAG, "Receive file chooser URL: " + result);
+                    EventLogger.logMessage(LOG_TAG, "Receive file chooser URL: " + result);
                     uploadMsg.onReceiveValue(result);
                 }
             }, chooserIntent, FILECHOOSER_RESULTCODE);
@@ -121,12 +121,12 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
                     @Override
                     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
                         Uri[] result = WebChromeClient.FileChooserParams.parseResult(resultCode, intent);
-                        Log.d(LOG_TAG, "Receive file chooser URL: " + result);
+                        EventLogger.logMessage(LOG_TAG, "Receive file chooser URL: " + result);
                         filePathsCallback.onReceiveValue(result);
                     }
                 }, chooserIntent, FILECHOOSER_RESULTCODE);
             } catch (ActivityNotFoundException e) {
-                Log.w("No activity found to handle file chooser intent.", e);
+                EventLogger.logMessage(LOG_TAG,"No activity found to handle file chooser intent."+ e);
                 filePathsCallback.onReceiveValue(null);
             }
         }
@@ -160,7 +160,7 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
                     @Override
                     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
                         Uri result = intent == null || resultCode != Activity.RESULT_OK ? null : intent.getData();
-                        Log.d(LOG_TAG, "Receive file chooser URL: " + result);
+                        EventLogger.logMessage(LOG_TAG, "Receive file chooser URL: " + result);
                         uploadMsg.onReceiveValue(result);
                     }
                 }, intent, FILECHOOSER_RESULTCODE);
@@ -181,9 +181,10 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
                     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
                         Uri result = intent == null || resultCode != Activity.RESULT_OK ? null : intent.getData();
                         if(result == null){
-                            result = fileUri;
+                            if(resultCode == Activity.RESULT_OK)
+                                result = fileUri;
                         }
-                        Log.d(LOG_TAG, "Receive file chooser URL: " + result);
+                        EventLogger.logMessage(LOG_TAG, "Receive file chooser URL: " + result);
                         uploadMsg.onReceiveValue(result);
                     }
                 }, chooserIntent, FILECHOOSER_RESULTCODE);
@@ -224,14 +225,15 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
                         public void onActivityResult(int requestCode, int resultCode, Intent intent) {
                             Uri[] result = WebChromeClient.FileChooserParams.parseResult(resultCode, intent);
                             if(result == null){
-                                result = new Uri[]{fileUri};
+                                if(resultCode == Activity.RESULT_OK)
+                                    result = new Uri[]{fileUri};
                             }
-                            Log.d(LOG_TAG, "Receive file chooser URL: " + result);
+                            EventLogger.logMessage(LOG_TAG, "Receive file chooser URL: " + result);
                             filePathsCallback.onReceiveValue(result);
                         }
                     }, intent, FILECHOOSER_RESULTCODE);
                 } catch (ActivityNotFoundException e) {
-                    Log.w("No activity found to handle file chooser intent.", e);
+                    EventLogger.logMessage(LOG_TAG,"No activity found to handle file chooser intent." + e);
                     filePathsCallback.onReceiveValue(null);
                 }
             }
@@ -249,14 +251,15 @@ public class CordovaWebViewChromeClient extends SystemWebChromeClient{
                         public void onActivityResult(int requestCode, int resultCode, Intent intent) {
                             Uri[] result = WebChromeClient.FileChooserParams.parseResult(resultCode, intent);
                             if(result == null){
-                                result = new Uri[]{fileUri};
+                                if(resultCode == Activity.RESULT_OK)
+                                    result = new Uri[]{fileUri};
                             }
-                            Log.d(LOG_TAG, "Receive file chooser URL: " + result);
+                            EventLogger.logMessage(LOG_TAG, "Receive file chooser URL: " + result);
                             filePathsCallback.onReceiveValue(result);
                         }
                     }, chooserIntent, FILECHOOSER_RESULTCODE);
                 } catch (ActivityNotFoundException e) {
-                    Log.w("No activity found to handle file chooser intent.", e);
+                    EventLogger.logMessage(LOG_TAG,"No activity found to handle file chooser intent." + e);
                     filePathsCallback.onReceiveValue(null);
                 }
 
