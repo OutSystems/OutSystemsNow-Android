@@ -10,6 +10,8 @@ package com.outsystems.android;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -204,7 +206,7 @@ public class LoginActivity extends BaseActivity {
         WebServicesClient.getInstance().loginPlattform(getApplicationContext(), userName, password,
                 HubManagerHelper.getInstance().getDeviceId(), (int)(displaymetrics.widthPixels / displaymetrics.density), (int)(displaymetrics.heightPixels / displaymetrics.density), new WSRequestHandler() {
                     @Override
-                    public void requestFinish(Object result, boolean error, int statusCode) {
+                    public void requestFinish(Object result, boolean error, final int statusCode) {
                         stopLoading(v);
                         ((EditText) findViewById(R.id.edit_text_user_mail)).setError(null);
                         ((EditText) findViewById(R.id.edit_text_passwod)).setError(null);
@@ -249,8 +251,35 @@ public class LoginActivity extends BaseActivity {
 
                             }
                         } else {
-                            ((EditText) findViewById(R.id.edit_text_user_mail)).setError(WebServicesClient.PrettyErrorMessage(statusCode)); // getResources().getString(R.string.label_error_login)                            
-                            showError(findViewById(R.id.root_view));
+
+
+                            if(statusCode == WebServicesClient.INVALID_SSL) {
+
+                                new AlertDialog.Builder(LoginActivity.this)
+                                        .setTitle(R.string.invalid_ssl_title)
+                                        .setMessage(R.string.invalid_ssl_message)
+                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                WebServicesClient.getInstance().addTrustedHostname(HubManagerHelper.getInstance().getApplicationHosted());
+
+                                                Button buttonLogin = (Button) findViewById(R.id.button_login);
+                                                buttonLogin.performClick();
+                                            }
+                                        })
+                                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                ((EditText) findViewById(R.id.edit_text_user_mail)).setError(WebServicesClient.PrettyErrorMessage(statusCode));
+                                                showError(findViewById(R.id.root_view));
+                                            }
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
+
+                            }
+                            else{
+                                ((EditText) findViewById(R.id.edit_text_user_mail)).setError(WebServicesClient.PrettyErrorMessage(statusCode)); // getResources().getString(R.string.label_error_login)
+                                showError(findViewById(R.id.root_view));
+                            }
                         }
                     }
                 });

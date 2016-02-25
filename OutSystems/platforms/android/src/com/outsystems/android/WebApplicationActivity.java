@@ -767,9 +767,21 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            webViewLoadingFailed = true;
             EventLogger.logMessage(getClass(), "onReceivedSslError: "+error.toString());
 
+            List<String> trustedHosts = WebServicesClient.getInstance().getTrustedHosts();
+            String host = HubManagerHelper.getInstance().getApplicationHosted();
+
+            if (trustedHosts != null && host != null) {
+                for (String trustedHost : trustedHosts) {
+                    if (host.contains(trustedHost)) {
+                        handler.proceed();
+                        return;
+                    }
+                }
+            }
+
+            webViewLoadingFailed = true;
             super.onReceivedSslError(view, handler, error);
         }
 

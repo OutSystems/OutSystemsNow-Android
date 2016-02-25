@@ -148,4 +148,6 @@
     <string name="wifi_type_label">Type</string>
     <string name="button_text_retry">RETRY</string>
     <string name="link_applications_list">Back to Applications</string>
+    <string name="invalid_ssl_title">Invalid certificate</string>
+    <string name="invalid_ssl_message">The security certificate of the server is invalid. Are you sure you want to continue?</string>
 </resources>

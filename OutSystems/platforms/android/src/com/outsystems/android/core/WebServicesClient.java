@@ -54,6 +54,8 @@ public class WebServicesClient {
     public static final String BASE_URL = "https://%1$s/OutSystemsNowService/";
     public static String DEMO_HOST_NAME = "apps.outsystems.com";
 
+    public static final int INVALID_SSL = -1202;
+
     private static volatile WebServicesClient instance = null;
 
     private AsyncHttpClient client = null;
@@ -91,8 +93,8 @@ public class WebServicesClient {
                 return "An SSL error has occurred and a secure connection to the server cannot be made.";
             case 404:
                 return "The required OutSystems Now service was not detected. If the location entered above is accurate, please check the instructions on preparing your installation at labs.outsystems.net/Native.";
-            case -1202:
-                return "An SSL error has occurred because the server's certificate is not trusted.";
+            case INVALID_SSL:
+                return "An SSL error has occurred because the server's certificate is invalid. Are you sure you want to continue?";
             default:
                 return "There was an error trying to connect to the provided environment, please try again.";
         }
@@ -135,16 +137,15 @@ public class WebServicesClient {
             params = new RequestParams(parameters);
         }
 
-        // TODO remove comments to force the check the validity of SSL
         // certificates, except for list of trusted servers
-        // if (trustedHosts != null && hubApp != null) {
-        //  for (String trustedHost : trustedHosts) {
-        //      if (hubApp.contains(trustedHost)) {
-        //         client.setSSLSocketFactory(getSSLMySSLSocketFactory());
-        //         break;
-        //      }
-        //  }
-        // }
+        if (trustedHosts != null && hubApp != null) {
+          for (String trustedHost : trustedHosts) {
+              if (hubApp.contains(trustedHost)) {
+                 client.setSSLSocketFactory(getSSLMySSLSocketFactory());
+                 break;
+              }
+          }
+        }
 
         client.post(context, getAbsoluteUrl(hubApp, urlPath), params,
                 asyncHttpResponseHandler);
@@ -158,16 +159,17 @@ public class WebServicesClient {
             params = new RequestParams(parameters);
         }
 
-        // TODO remove comments to force the check the validity of SSL
+
         // certificates, except for list of trusted servers
-        // if (trustedHosts != null && hubApp != null) {
-        // for (String trustedHost : trustedHosts) {
-        // if (hubApp.contains(trustedHost)) {
-        //  client.setSSLSocketFactory(getSSLMySSLSocketFactory());
-        //  break;
-        // }
-        // }
-        // }
+        if (trustedHosts != null && hubApp != null) {
+            for (String trustedHost : trustedHosts) {
+                if (hubApp.contains(trustedHost)) {
+                    client.setSSLSocketFactory(getSSLMySSLSocketFactory());
+                    break;
+                }
+            }
+        }
+
         client.get(getAbsoluteUrl(hubApp, urlPath), params,
                 asyncHttpResponseHandler);
     }
@@ -239,7 +241,7 @@ public class WebServicesClient {
                             } else if (error.getMessage().indexOf("SocketTimeoutException") != -1) {
                                 statusCode = -1001; // NSURLErrorTimedOut
                             } else if (error instanceof SSLPeerUnverifiedException) {
-                                statusCode = -1202; // NSURLErrorServerCertificateUntrusted
+                                statusCode = INVALID_SSL; // NSURLErrorServerCertificateUntrusted
                             }
                         }
                     } catch (Exception e) {
@@ -302,7 +304,7 @@ public class WebServicesClient {
                                     } else if (arg3.getMessage().indexOf("SocketTimeoutException") != -1) {
                                         statusCode = -1001; // NSURLErrorTimedOut
                                     } else if(arg3 instanceof SSLPeerUnverifiedException){
-                                        statusCode = -1202; // NSURLErrorServerCertificateUntrusted
+                                        statusCode = INVALID_SSL; // NSURLErrorServerCertificateUntrusted
                                     }
                                 }
                             } catch (Exception ex) {
@@ -505,7 +507,7 @@ public class WebServicesClient {
         } catch (KeyStoreException e) {
             EventLogger.logError(getClass(), e);
         }
-        sf.setHostnameVerifier(MySSLSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+        sf.setHostnameVerifier(MySSLSocketFactory.STRICT_HOSTNAME_VERIFIER);
         return sf;
     }
 
@@ -528,6 +530,15 @@ public class WebServicesClient {
         this.trustedHosts = trustedHosts;
     }
 
+    /**
+     * Add an hostname to the trusted hosts.
+     *
+     * @param hostname
+     *            the new trusted hostname
+     */
+    public void addTrustedHostname(String hostname){
+        this.trustedHosts.add(hostname);
+    }
 
     /**
      * Gets a list of cookies

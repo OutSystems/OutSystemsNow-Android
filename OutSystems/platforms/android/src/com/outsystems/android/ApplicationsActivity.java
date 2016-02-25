@@ -11,8 +11,10 @@ import java.util.ArrayList;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -30,6 +32,8 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -225,7 +229,7 @@ public class ApplicationsActivity extends BaseActivity {
                 new WSRequestHandler() {
 
                     @Override
-                    public void requestFinish(Object result, boolean error, int statusCode) {
+                    public void requestFinish(Object result, boolean error, final int statusCode) {
                         ArrayList<Application> applications = null;
                         if (!error) {
                         	ApplicationOutsystems app = (ApplicationOutsystems) getApplication();
@@ -241,6 +245,29 @@ public class ApplicationsActivity extends BaseActivity {
                             }
 
                             applications = (ArrayList<Application>) result;
+                        }
+                        else{
+
+                            if(statusCode == WebServicesClient.INVALID_SSL) {
+
+                                new AlertDialog.Builder(ApplicationsActivity.this)
+                                        .setTitle(R.string.invalid_ssl_title)
+                                        .setMessage(R.string.invalid_ssl_message)
+                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                WebServicesClient.getInstance().addTrustedHostname(HubManagerHelper.getInstance().getApplicationHosted());
+                                                loadApplications();
+                                            }
+                                        })
+                                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // do nothing
+                                            }
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
+
+                            }
                         }
 
                         loadContentInGridview(applications);
