@@ -11,6 +11,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -115,10 +116,12 @@ public class HubAppActivity extends BaseActivity {
                     startActivity(intent);
                 } else {
                     if(statusCode == WebServicesClient.INVALID_SSL) {
+                        Resources res = getResources();
+                        String message = String.format(res.getString(R.string.invalid_ssl_message), HubManagerHelper.getInstance().getApplicationHosted());
 
                         new AlertDialog.Builder(HubAppActivity.this)
                                 .setTitle(R.string.invalid_ssl_title)
-                                .setMessage(R.string.invalid_ssl_message)
+                                .setMessage(message)
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         WebServicesClient.getInstance().addTrustedHostname(urlHubApp);

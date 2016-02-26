@@ -9,16 +9,19 @@ package com.outsystems.android;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -71,8 +74,6 @@ import com.outsystems.android.model.MobileECT;
 import com.outsystems.android.widgets.CustomFontTextView;
 
 import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.engine.SystemWebChromeClient;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
 import org.apache.http.cookie.Cookie;
@@ -113,6 +114,8 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
     // Mobile Improvements
     private boolean applicationHasPreloader = false;
     private ProgressBar progressBar;
+
+    private String failingUrl;
 
     public OnClickListener onClickListenerBack = new OnClickListener() {
 
@@ -674,6 +677,7 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             EventLogger.logMessage(getClass(), "--------------- shouldOverrideUrlLoading ---------------");
+
 			if(url.equals("about:blank"))
             	return super.shouldOverrideUrlLoading(view, url);
 
@@ -768,7 +772,7 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             EventLogger.logMessage(getClass(), "onReceivedSslError: "+error.toString());
-
+            failingUrl = view.getUrl();
             List<String> trustedHosts = WebServicesClient.getInstance().getTrustedHosts();
             String host = HubManagerHelper.getInstance().getApplicationHosted();
 
@@ -781,14 +785,48 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
                 }
             }
 
-            webViewLoadingFailed = true;
-            super.onReceivedSslError(view, handler, error);
+            if(networkErrorView == null || networkErrorView.getVisibility() != View.VISIBLE ){
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Resources res = getResources();
+                        String message = String.format(res.getString(R.string.invalid_ssl_message), HubManagerHelper.getInstance().getApplicationHosted());
+
+                        new AlertDialog.Builder(WebApplicationActivity.this)
+                                .setTitle(R.string.invalid_ssl_title)
+                                .setMessage(message)
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        WebServicesClient.getInstance().addTrustedHostname(HubManagerHelper.getInstance().getApplicationHosted());
+                                        EventLogger.logError(this.getClass(),"URL: "+ failingUrl);
+                                        cordovaWebView.loadUrl(failingUrl);
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // do nothing
+                                        webViewLoadingFailed = true;
+                                        showNetworkErrorView(true);
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                    }
+                });
+            }
+            else{
+                webViewLoadingFailed = true;
+                showNetworkErrorRetryLoading(true);
+            }
+
+            handler.cancel();
         }
 
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
             EventLogger.logMessage(getClass(), "________________ ONRECEIVEDERROR _________________");
+            EventLogger.logMessage(getClass(), "ErrorCode: "+errorCode+" - Description: "+description);
 
             cordovaWebView.setVisibility(View.INVISIBLE);
             webViewLoadingFailed = true;
@@ -1143,8 +1181,7 @@ public class WebApplicationActivity extends CordovaWebViewActivity implements OS
 
         ApplicationOutsystems app = (ApplicationOutsystems)getApplication();
 
-        OfflineSupport.getInstance(getApplicationContext()).retryWebViewAction(this,app,cordovaWebView);
-
+        OfflineSupport.getInstance(getApplicationContext()).retryWebViewAction(this,app,cordovaWebView, failingUrl);
     }
 
 

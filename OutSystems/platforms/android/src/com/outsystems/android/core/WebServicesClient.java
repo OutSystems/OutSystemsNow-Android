@@ -94,7 +94,7 @@ public class WebServicesClient {
             case 404:
                 return "The required OutSystems Now service was not detected. If the location entered above is accurate, please check the instructions on preparing your installation at labs.outsystems.net/Native.";
             case INVALID_SSL:
-                return "An SSL error has occurred because the server's certificate is invalid. Are you sure you want to continue?";
+                return "An SSL error has occurred because the server's certificate is invalid.";
             default:
                 return "There was an error trying to connect to the provided environment, please try again.";
         }
@@ -240,7 +240,8 @@ public class WebServicesClient {
                                 statusCode = -1206; // NSURLErrorClientCertificateRequired
                             } else if (error.getMessage().indexOf("SocketTimeoutException") != -1) {
                                 statusCode = -1001; // NSURLErrorTimedOut
-                            } else if (error instanceof SSLPeerUnverifiedException) {
+                            } else if (error.getMessage().indexOf("No peer certificate") != -1 ||
+                                    error.getMessage().indexOf("Trust anchor for certification path not found.") != -1 ) {
                                 statusCode = INVALID_SSL; // NSURLErrorServerCertificateUntrusted
                             }
                         }
@@ -256,10 +257,12 @@ public class WebServicesClient {
 
     public void loginPlattform(final Context ctx, final String username, final String password,
                                final String device, final int width, final int height, final WSRequestHandler handler) {
+        /*
         if (username == null || password == null) {
             handler.requestFinish(null, true, -1);
             return;
         }
+        */
 
         this.context = ctx;
 
