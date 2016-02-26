@@ -117,7 +117,7 @@ public class HubAppActivity extends BaseActivity {
                 } else {
                     if(statusCode == WebServicesClient.INVALID_SSL) {
                         Resources res = getResources();
-                        String message = String.format(res.getString(R.string.invalid_ssl_message), HubManagerHelper.getInstance().getApplicationHosted());
+                        String message = String.format(res.getString(R.string.invalid_ssl_message), urlHubApp);
 
                         new AlertDialog.Builder(HubAppActivity.this)
                                 .setTitle(R.string.invalid_ssl_title)
