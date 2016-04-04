@@ -19,8 +19,8 @@ public class AESCipher {
 
     private static final String CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
 
-    private static final String HASH_KEY = "your.hash.key";
-    private static final String INIT_KEY = "your.init.key";
+    private static final String HASH_KEY = "89ce0c4997af151eee329654e94d4a83367689afd69acb0996f7a62845b1b451";
+    private static final String INIT_KEY = "51e310978b74e0e587cadda93dbd7b18";
 
     private static AESCipher _instance;
 

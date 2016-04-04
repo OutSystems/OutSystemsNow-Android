@@ -7,6 +7,25 @@
  */
 package com.outsystems.android.core;
 
+import android.content.Context;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.MySSLSocketFactory;
+import com.loopj.android.http.RequestParams;
+import com.outsystems.android.core.parsing.GenericResponseParsingTask;
+import com.outsystems.android.helpers.HubManagerHelper;
+import com.outsystems.android.model.Application;
+import com.outsystems.android.model.Infrastructure;
+import com.outsystems.android.model.Login;
+
+import org.apache.http.Header;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.BasicCookieStore;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
@@ -20,28 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.http.Header;
-import org.apache.http.HeaderElement;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.cookie.BasicClientCookie;
-
-import android.content.Context;
-import android.util.EventLog;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.MySSLSocketFactory;
-import com.loopj.android.http.PersistentCookieStore;
-import com.loopj.android.http.RequestParams;
-import com.outsystems.android.core.parsing.GenericResponseParsingTask;
-import com.outsystems.android.helpers.HubManagerHelper;
-import com.outsystems.android.model.Application;
-import com.outsystems.android.model.Infrastructure;
-import com.outsystems.android.model.Login;
+import javax.net.ssl.SSLPeerUnverifiedException;
 
 /**
  * Class description.
@@ -55,6 +53,8 @@ public class WebServicesClient {
     public static final String URL_WEB_APPLICATION = "https://%1$s/%2$s";
     public static final String BASE_URL = "https://%1$s/OutSystemsNowService/";
     public static String DEMO_HOST_NAME = "your.demo.server";
+
+    public static final int INVALID_SSL = -1202;
 
     private static volatile WebServicesClient instance = null;
 
@@ -93,6 +93,8 @@ public class WebServicesClient {
                 return "An SSL error has occurred and a secure connection to the server cannot be made.";
             case 404:
                 return "The required OutSystems Now service was not detected. If the location entered above is accurate, please check the instructions on preparing your installation at labs.outsystems.net/Native.";
+            case INVALID_SSL:
+                return "An SSL error has occurred because the server's certificate is invalid.";
             default:
                 return "There was an error trying to connect to the provided environment, please try again.";
         }
@@ -135,16 +137,15 @@ public class WebServicesClient {
             params = new RequestParams(parameters);
         }
 
-        // TODO remove comments to force the check the validity of SSL
         // certificates, except for list of trusted servers
-        // if (trustedHosts != null && hubApp != null) {
-        // for (String trustedHost : trustedHosts) {
-        // if (hubApp.contains(trustedHost)) {
-        client.setSSLSocketFactory(getSSLMySSLSocketFactory());
-        // break;
-        // }
-        // }
-        // }
+        if (trustedHosts != null && hubApp != null) {
+          for (String trustedHost : trustedHosts) {
+              if (hubApp.contains(trustedHost)) {
+                 client.setSSLSocketFactory(getSSLMySSLSocketFactory());
+                 break;
+              }
+          }
+        }
 
         client.post(context, getAbsoluteUrl(hubApp, urlPath), params,
                 asyncHttpResponseHandler);
@@ -158,16 +159,17 @@ public class WebServicesClient {
             params = new RequestParams(parameters);
         }
 
-        // TODO remove comments to force the check the validity of SSL
+
         // certificates, except for list of trusted servers
-        // if (trustedHosts != null && hubApp != null) {
-        // for (String trustedHost : trustedHosts) {
-        // if (hubApp.contains(trustedHost)) {
-        client.setSSLSocketFactory(getSSLMySSLSocketFactory());
-        // break;
-        // }
-        // }
-        // }
+        if (trustedHosts != null && hubApp != null) {
+            for (String trustedHost : trustedHosts) {
+                if (hubApp.contains(trustedHost)) {
+                    client.setSSLSocketFactory(getSSLMySSLSocketFactory());
+                    break;
+                }
+            }
+        }
+
         client.get(getAbsoluteUrl(hubApp, urlPath), params,
                 asyncHttpResponseHandler);
     }
@@ -231,16 +233,20 @@ public class WebServicesClient {
                     getInfrastructure(urlHubApp, handler);
                 } else {
                     try {
-                        if(error != null && error.getMessage() !=  null) {
-                            if(error.getMessage().indexOf("UnknownHostException") != -1) {
+                        if (error != null && error.getMessage() != null) {
+                            if (error.getMessage().indexOf("UnknownHostException") != -1) {
                                 statusCode = -1003; // NSURLErrorCannotFindHost
                             } else if (error.getMessage().indexOf("SSL handshake timed out") != -1) {
                                 statusCode = -1206; // NSURLErrorClientCertificateRequired
                             } else if (error.getMessage().indexOf("SocketTimeoutException") != -1) {
                                 statusCode = -1001; // NSURLErrorTimedOut
+                            } else if (error.getMessage().indexOf("No peer certificate") != -1 ||
+                                    error.getMessage().indexOf("Trust anchor for certification path not found") != -1 ||
+                                    error.getMessage().indexOf("hostname in certificate didn't match") != -1) {
+                                statusCode = INVALID_SSL; // NSURLErrorServerCertificateUntrusted
                             }
                         }
-                    } catch(Exception e) {
+                    } catch (Exception e) {
                         statusCode = -1;
                     }
 
@@ -252,10 +258,12 @@ public class WebServicesClient {
 
     public void loginPlattform(final Context ctx, final String username, final String password,
                                final String device, final int width, final int height, final WSRequestHandler handler) {
+        /*
         if (username == null || password == null) {
             handler.requestFinish(null, true, -1);
             return;
         }
+        */
 
         this.context = ctx;
 
@@ -299,6 +307,8 @@ public class WebServicesClient {
                                         statusCode = -1206; // NSURLErrorClientCertificateRequired
                                     } else if (arg3.getMessage().indexOf("SocketTimeoutException") != -1) {
                                         statusCode = -1001; // NSURLErrorTimedOut
+                                    } else if(arg3 instanceof SSLPeerUnverifiedException){
+                                        statusCode = INVALID_SSL; // NSURLErrorServerCertificateUntrusted
                                     }
                                 }
                             } catch (Exception ex) {
@@ -467,7 +477,7 @@ public class WebServicesClient {
                         .isJSFApplicationServer()) {
                     HubManagerHelper.getInstance()
                             .setJSFApplicationServer(true);
-                    getApplications(ctx,urlHubApp,width,height, handler);
+                    getApplications(ctx, urlHubApp, width, height, handler);
                 } else {
                     handler.requestFinish(null, true, statusCode);
                 }
@@ -501,7 +511,7 @@ public class WebServicesClient {
         } catch (KeyStoreException e) {
             EventLogger.logError(getClass(), e);
         }
-        sf.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+        sf.setHostnameVerifier(MySSLSocketFactory.STRICT_HOSTNAME_VERIFIER);
         return sf;
     }
 
@@ -524,6 +534,15 @@ public class WebServicesClient {
         this.trustedHosts = trustedHosts;
     }
 
+    /**
+     * Add an hostname to the trusted hosts.
+     *
+     * @param hostname
+     *            the new trusted hostname
+     */
+    public void addTrustedHostname(String hostname){
+        this.trustedHosts.add(hostname);
+    }
 
     /**
      * Gets a list of cookies

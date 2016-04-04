@@ -72,6 +72,7 @@
     <string name="menu_help">Help</string>
     <string name="menu_history">History</string>
     <string name="menu_share">Share</string>
+    <string name="menu_settings">Settings</string>
     <string name="msg_bulk_mode_scanned">Bulk mode: barcode scanned and saved</string>
     <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>
     <string name="msg_default_format">Format</string>
@@ -147,4 +148,6 @@
     <string name="wifi_type_label">Type</string>
     <string name="button_text_retry">RETRY</string>
     <string name="link_applications_list">Back to Applications</string>
+    <string name="invalid_ssl_title">Connection failed</string>
+    <string name="invalid_ssl_message">The certificate for this server is invalid. You might be connecting to a server that is pretending to be \"%1$s\" which could put your confidential information at risk. Are you sure you want to continue?</string>
 </resources>

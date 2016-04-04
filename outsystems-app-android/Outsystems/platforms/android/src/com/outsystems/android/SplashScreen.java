@@ -64,7 +64,6 @@ public class SplashScreen extends Activity {
             // Create and start push manager
             pushManager = PushManager.getInstance(this);
 
-            // Start push manager, this will count app open for Pushwoosh stats as well
             pushManager.onStartup(this);
 
             // Register for push!

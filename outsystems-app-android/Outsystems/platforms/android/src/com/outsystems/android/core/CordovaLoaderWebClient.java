@@ -32,7 +32,7 @@ import android.webkit.WebView;
 public class CordovaLoaderWebClient extends SystemWebViewClient {
 
     /** The identifier cordova. */
-    private static String IDENTIFIER_CORDOVA = "/cdvload/";
+    private static String[] CORDOVA_IDENTIFIERS = {"/cdvload/", "/scripts/"};
 
     /** The mngr. */
     private AssetManager mngr;
@@ -55,21 +55,28 @@ public class CordovaLoaderWebClient extends SystemWebViewClient {
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
 
-        if (url.contains(IDENTIFIER_CORDOVA)) {
-            // Get path to load local file Cordova JS
-            String[] split = url.split(IDENTIFIER_CORDOVA);
-            String path = "";
-            if (split.length > 1) {
-                path = split[1];
-            }
+        for (String cordovaID: CORDOVA_IDENTIFIERS) {
+            if (url.contains(cordovaID)) {
+                // Get path to load local file Cordova JS
+                String[] split = url.split(cordovaID);
 
-            try {
-                InputStream stream = mngr.open("www/" + path);
-                WebResourceResponse response = new WebResourceResponse("text/javascript", "UTF-8", stream);
-                return response;
+                String path = "";
+                if (split.length > 1) {
+                    path = split[1];
+                }
 
-            } catch (IOException e) {
-                EventLogger.logError(getClass(), e);
+                if(path.contains("cordova.js?")) {
+                    path = path.split("\\?")[0];
+                }
+
+                try {
+                    InputStream stream = mngr.open("www/" + path);
+                    WebResourceResponse response = new WebResourceResponse("text/javascript", "UTF-8", stream);
+                    return response;
+
+                } catch (IOException e) {
+                    //EventLogger.logError(getClass(), e);
+                }
             }
         }
 

@@ -8,7 +8,10 @@
 package com.outsystems.android;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -34,7 +37,6 @@ import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.ApplicationSettingsController;
 import com.outsystems.android.helpers.DeepLinkController;
 import com.outsystems.android.helpers.HubManagerHelper;
-import com.outsystems.android.helpers.OfflineSupport;
 import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.Infrastructure;
 import com.outsystems.android.widgets.CustomFontTextView;
@@ -63,7 +65,7 @@ public class HubAppActivity extends BaseActivity {
         WebServicesClient.getInstance().getInfrastructure(urlHubApp, new WSRequestHandler() {
 
             @Override
-            public void requestFinish(Object result, boolean error, int statusCode) {
+            public void requestFinish(Object result, boolean error, final int statusCode) {
                 EventLogger.logMessage(getClass(), "Status Code: " + statusCode);
                 if (!error) {
                     Infrastructure infrastructure = (Infrastructure) result;
@@ -113,11 +115,39 @@ public class HubAppActivity extends BaseActivity {
 
                     startActivity(intent);
                 } else {
-                    ((EditText) findViewById(R.id.edit_text_hub_url))
-                            .setError(WebServicesClient.PrettyErrorMessage(statusCode)); // getString(R.string.label_error_wrong_address)
-                    // avoid crashes
-                    //  ((EditText) findViewById(R.id.edit_text_hub_url)).setMovementMethod(LinkMovementMethod.getInstance()); // enable links
-                    showError(findViewById(R.id.root_view));
+                    if(statusCode == WebServicesClient.INVALID_SSL) {
+                        Resources res = getResources();
+                        String message = String.format(res.getString(R.string.invalid_ssl_message), urlHubApp);
+
+                        new AlertDialog.Builder(HubAppActivity.this)
+                                .setTitle(R.string.invalid_ssl_title)
+                                .setMessage(message)
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        WebServicesClient.getInstance().addTrustedHostname(urlHubApp);
+
+                                        Button buttonGO = (Button) findViewById(R.id.button_go);
+                                        buttonGO.performClick();
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        ((EditText) findViewById(R.id.edit_text_hub_url))
+                                                .setError(WebServicesClient.PrettyErrorMessage(statusCode));
+
+                                        showError(findViewById(R.id.root_view));
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+
+                    }
+                    else{
+                        ((EditText) findViewById(R.id.edit_text_hub_url))
+                                .setError(WebServicesClient.PrettyErrorMessage(statusCode));
+
+                        showError(findViewById(R.id.root_view));
+                    }
                 }
                 stopLoading(v);
             }
@@ -313,6 +343,11 @@ public class HubAppActivity extends BaseActivity {
             View tryOurDemo = findViewById(R.id.try_our_demo);
             if(tryOurDemo != null){
                 tryOurDemo.setVisibility(View.GONE);
+            }
+
+            View tryOurDemoFooter = findViewById(R.id.try_our_demo_footer);
+            if(tryOurDemoFooter != null){
+                tryOurDemoFooter.setVisibility(View.GONE);
             }
 
             // Change colors

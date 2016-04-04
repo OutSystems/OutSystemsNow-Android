@@ -1,13 +1,18 @@
 package com.outsystems.android.helpers;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Parcelable;
 import android.util.DisplayMetrics;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.outsystems.android.ApplicationOutsystems;
 import com.outsystems.android.ApplicationsActivity;
@@ -53,6 +58,9 @@ public class OfflineSupport {
         if (_instance == null) {
             _instance = new OfflineSupport(context);
         }
+
+        _instance.applicationContext = context;
+
         return _instance;
     }
 
@@ -163,7 +171,7 @@ public class OfflineSupport {
 
     }
 
-    public void retryWebViewAction(Activity currentActivity, ApplicationOutsystems app, WebView webView){
+    public void retryWebViewAction(Activity currentActivity, ApplicationOutsystems app, WebView webView, String failingUrl){
 
         if (app.isNetworkAvailable()) {
             webView.setNetworkAvailable(true);
@@ -175,14 +183,17 @@ public class OfflineSupport {
 
         EventLogger.logMessage(getClass(), "retryWebViewAction: offlineSession:"+this.offlineSession);
         if(this.offlineSession){
-            this.loginAndReloadWebView(currentActivity, webView);
+            this.loginAndReloadWebView(currentActivity, webView,failingUrl);
         }
         else {
-            webView.reload();
+            if(webView.getUrl() != null)
+                webView.reload();
+            else
+                webView.loadUrl(failingUrl);
         }
     }
 
-    private void loginAndReloadWebView(Activity currentActivity, final WebView webView) {
+    private void loginAndReloadWebView(final Activity currentActivity, final WebView webView, final String failingUrl) {
 
 
         final DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -234,9 +245,42 @@ public class OfflineSupport {
 
                             }
                         }
+                        else {
+
+
+                            if(statusCode == WebServicesClient.INVALID_SSL) {
+                                Resources res = currentActivity.getResources();
+                                String message = String.format(res.getString(R.string.invalid_ssl_message), HubManagerHelper.getInstance().getApplicationHosted());
+
+                                new AlertDialog.Builder(currentActivity.getWindow().getContext())
+                                        .setTitle(R.string.invalid_ssl_title)
+                                        .setMessage(message)
+                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                WebServicesClient.getInstance().addTrustedHostname(HubManagerHelper.getInstance().getApplicationHosted());
+                                                webView.loadUrl(failingUrl);
+                                            }
+                                        })
+                                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                webView.loadUrl(failingUrl);
+                                            }
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
+
+
+                                return;
+                            }
+
+                        }
 
                         EventLogger.logMessage(getClass(), "loginAndReloadWebView: loginSucceeded:"+loginSucceeded);
-                        webView.reload();
+
+                        if(webView.getUrl() != null)
+                            webView.reload();
+                        else
+                            webView.loadUrl(failingUrl);
                     }
                 });
 
