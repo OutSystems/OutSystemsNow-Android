@@ -17,27 +17,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Calendar\"><param name=\"android-package\" value=\"nl.xservices.plugins.Calendar\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Contacts\"><param name=\"android-package\" value=\"org.apache.cordova.contacts.ContactManager\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
                             "count": 1
                         },
                         {
@@ -45,15 +25,31 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Calendar\"><param name=\"android-package\" value=\"nl.xservices.plugins.Calendar\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"NetworkStatus\"><param name=\"android-package\" value=\"org.apache.cordova.networkinformation.NetworkManager\" /></feature>",
+                            "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
                         {
                             "xml": "<feature name=\"Sim\"><param name=\"android-package\" value=\"com.pbakondy.Sim\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
                         {
@@ -73,10 +69,6 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 2
-                        },
-                        {
                             "xml": "<uses-permission android:name=\"android.permission.READ_CONTACTS\" />",
                             "count": 1
                         },
@@ -89,15 +81,15 @@
                             "count": 1
                         },
                         {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 2
+                        },
+                        {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\" />",
                             "count": 1
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
                             "count": 1
                         },
                         {
@@ -119,19 +111,19 @@
                             "count": 1
                         },
                         {
-                            "xml": "<uses-permission android:name=\"android.permission.READ_CALENDAR\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.WRITE_CALENDAR\" />",
-                            "count": 1
-                        },
-                        {
                             "xml": "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />",
                             "count": 1
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.READ_CALENDAR\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.WRITE_CALENDAR\" />",
                             "count": 1
                         }
                     ],
@@ -649,46 +641,43 @@
         "com.phonegap.plugins.barcodescanner": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.outsystems.android"
-        },
-        "cordova-plugin-file": {
-            "PACKAGE_NAME": "com.outsystems.android"
-        },
-        "cordova-plugin-camera": {
-            "PACKAGE_NAME": "com.outsystems.android"
-        },
-        "cordova-plugin-calendar": {
+        "com.outsystems.plugins.FileChooser": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
         "cordova-plugin-contacts": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.outsystems.android"
-        },
-        "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.outsystems.android"
-        },
         "cordova-plugin-battery-status": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "cordova-plugin-calendar": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
         "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "cordova-plugin-network-information": {
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.outsystems.android"
+        },
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
         "cordova-plugin-sim": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "cordova-sqlite-storage": {
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.outsystems.android"
         },
-        "com.outsystems.plugins.FileChooser": {
+        "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.outsystems.android"
         }
     },
