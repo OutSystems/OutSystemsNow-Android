@@ -55,8 +55,8 @@ public class BaseActivity extends ActionBarActivity {
 	
 	private BroadcastReceiver mBroadcastReceiver;
 	private BroadcastReceiver mReceiver;
-    private static ArrayList<Activity> listOfActivities;
-		
+    private boolean broadcastReceiversRegistered = false;
+
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,14 +78,14 @@ public class BaseActivity extends ActionBarActivity {
                 doOnMessageReceive(intent.getExtras().getString(JSON_DATA_KEY));
             }
         };
-        
+
         // Register receivers for push notifications
         registerReceivers();
-        
+
         checkMessage(getIntent());
 
-    }	
-	
+    }
+
     private OnClickListener onClickListenerHyperLink = new OnClickListener() {
 
         @Override
@@ -121,7 +121,7 @@ public class BaseActivity extends ActionBarActivity {
 
     /**
      * Sets the title action bar.
-     * 
+     *
      * @param title the new title action bar
      */
     protected void setTitleActionBar(String title) {
@@ -158,7 +158,7 @@ public class BaseActivity extends ActionBarActivity {
 
     /**
      * Show loading.
-     * 
+     *
      * @param buttonClick the button click
      */
     protected void showLoading(View buttonClick) {
@@ -169,7 +169,7 @@ public class BaseActivity extends ActionBarActivity {
 
     /**
      * Stop loading.
-     * 
+     *
      * @param buttonClick the button click
      */
     protected void stopLoading(View buttonClick) {
@@ -180,23 +180,27 @@ public class BaseActivity extends ActionBarActivity {
 
     /**
      * Show error.
-     * 
+     *
      * @param viewError the view error
      */
     protected void showError(View viewError) {
         Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
         viewError.startAnimation(shake);
-    }    
-    
-    /** Methods to Push Notifications */ 
+    }
+
+    /** Methods to Push Notifications */
     // Registration of the receivers
     public void registerReceivers() {
-        IntentFilter intentFilter = new IntentFilter(getPackageName() + ".action.PUSH_MESSAGE_RECEIVE");
+        if(!broadcastReceiversRegistered) {
+            IntentFilter intentFilter = new IntentFilter(getPackageName() + ".action.PUSH_MESSAGE_RECEIVE");
 
-        registerReceiver(mReceiver, intentFilter);
+            registerReceiver(mReceiver, intentFilter);
 
-        registerReceiver(mBroadcastReceiver, new IntentFilter(getPackageName() + "."
-                + PushManager.REGISTER_BROAD_CAST_ACTION));
+            registerReceiver(mBroadcastReceiver, new IntentFilter(getPackageName() + "."
+                    + PushManager.REGISTER_BROAD_CAST_ACTION));
+
+            broadcastReceiversRegistered = true;
+        }
     }
 
     public void unregisterReceivers() {
@@ -212,6 +216,8 @@ public class BaseActivity extends ActionBarActivity {
         } catch (Exception e) {
             EventLogger.logError(getClass(), e);
         }
+
+        broadcastReceiversRegistered = false;
     }
 
     protected void checkMessage(Intent intent) {
@@ -222,7 +228,8 @@ public class BaseActivity extends ActionBarActivity {
             } else if (intent.hasExtra(PushManager.REGISTER_EVENT)) {
                 String deviceId = intent.getExtras().getString(PushManager.REGISTER_EVENT);
                 HubManagerHelper.getInstance().setDeviceId(deviceId);
-                callRegisterToken(deviceId);
+                final ApplicationOutsystems app = (ApplicationOutsystems) getApplication();
+                app.callRegisterToken(deviceId);
             } else if (intent.hasExtra(PushManager.UNREGISTER_EVENT)) {
                 showMessage("unregister");
             } else if (intent.hasExtra(PushManager.REGISTER_ERROR_EVENT)) {
