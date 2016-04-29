@@ -10,6 +10,8 @@ package com.outsystems.android;
 import java.util.List;
 
 import com.outsystems.android.core.DatabaseHandler;
+import com.outsystems.android.core.EventLogger;
+import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.HubApplicationModel;
@@ -21,12 +23,27 @@ import android.net.NetworkInfo;
 
 /**
  * Class description.
- * 
+ *
  * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
  * @version $Revision: 666 $
- * 
+ *
  */
 public class ApplicationOutsystems extends Application {
+
+    private boolean isNotificationsTokenRegistered = false;
+    public void callRegisterToken(String deviceId) {
+        // Only call register token if we didn't already for this run...
+        if(!isNotificationsTokenRegistered) {
+            WebServicesClient.getInstance().registerToken(this, deviceId, new WSRequestHandler() {
+
+                @Override
+                public void requestFinish(Object result, boolean error, int statusCode) {
+                    ApplicationOutsystems.this.isNotificationsTokenRegistered = true;
+                    EventLogger.logMessage(getClass(), "Register Token in the server");
+                }
+            });
+        }
+    }
 
     /** The demo applications. */
     public boolean demoApplications = false;
