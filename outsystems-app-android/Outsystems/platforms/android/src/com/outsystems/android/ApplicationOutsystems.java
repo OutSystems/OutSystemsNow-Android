@@ -13,6 +13,7 @@ import com.outsystems.android.core.DatabaseHandler;
 import com.outsystems.android.core.EventLogger;
 import com.outsystems.android.core.WSRequestHandler;
 import com.outsystems.android.core.WebServicesClient;
+import com.outsystems.android.helpers.ApplicationSettingsController;
 import com.outsystems.android.helpers.HubManagerHelper;
 import com.outsystems.android.model.HubApplicationModel;
 
@@ -48,9 +49,18 @@ public class ApplicationOutsystems extends Application {
     /** The demo applications. */
     public boolean demoApplications = false;
 
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        // Application Settings
+        ApplicationSettingsController.getInstance().loadSettings(this);
+    }
+
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see android.app.Application#onLowMemory()
      */
     @Override
@@ -60,7 +70,7 @@ public class ApplicationOutsystems extends Application {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see android.app.Application#onTrimMemory(int)
      */
     @Override

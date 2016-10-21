@@ -7,8 +7,6 @@
  */
 package com.outsystems.android;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,11 +15,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import com.arellomobile.android.push.PushManager;
 import com.outsystems.android.core.DatabaseHandler;
@@ -34,12 +30,14 @@ import com.outsystems.android.model.AppSettings;
 import com.outsystems.android.model.DeepLink;
 import com.outsystems.android.model.HubApplicationModel;
 
+import java.util.List;
+
 /**
  * Class description.
- * 
+ *
  * @author <a href="mailto:vmfo@xpand-it.com">vmfo</a>
  * @version $Revision: 666 $
- * 
+ *
  */
 public class SplashScreen extends Activity {
 
@@ -47,7 +45,7 @@ public class SplashScreen extends Activity {
     public static int TIME_SPLASH_SCREEN = 2000;
     private static PushManager pushManager;
 
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,11 +57,12 @@ public class SplashScreen extends Activity {
         cookieManager.removeSessionCookie();
         CookieSyncManager.getInstance().sync();
 
-        // Push Messages    	
+        // Push Messages
         try {
             // Create and start push manager
             pushManager = PushManager.getInstance(this);
 
+            // Start push manager, this will count app open for Pushwoosh stats as well
             pushManager.onStartup(this);
 
             // Register for push!
@@ -72,16 +71,13 @@ public class SplashScreen extends Activity {
             // push notifications are not available or AndroidManifest.xml is not configured properly
             EventLogger.logError(getClass(), e);
         }
-  
+
         // Get data from Deep Link
         Uri data = this.getIntent().getData();
 
         if(data != null){
-        	DeepLinkController.getInstance().createSettingsFromUrl(data);
+            DeepLinkController.getInstance().createSettingsFromUrl(data);
         }
-
-        // Application Settings
-        ApplicationSettingsController.getInstance().loadSettings(this);
 
 
         // Application Settings
@@ -138,9 +134,9 @@ public class SplashScreen extends Activity {
                     OfflineSupport.getInstance(getApplicationContext()).redirectToApplicationList(this);
                 }
 
-               // Finish activity
-               finish();
-               return;
+                // Finish activity
+                finish();
+                return;
             }
         }
 
@@ -164,8 +160,8 @@ public class SplashScreen extends Activity {
         database.close();
 
         if(DeepLinkController.getInstance().hasValidSettings()){
-        	DeepLink deepLinkSettings = DeepLinkController.getInstance().getDeepLinkSettings();
-        	HubManagerHelper.getInstance().setApplicationHosted(deepLinkSettings.getEnvironment());
+            DeepLink deepLinkSettings = DeepLinkController.getInstance().getDeepLinkSettings();
+            HubManagerHelper.getInstance().setApplicationHosted(deepLinkSettings.getEnvironment());
 
             boolean hasAppSettings = ApplicationSettingsController.getInstance().hasValidSettings();
 
@@ -188,26 +184,26 @@ public class SplashScreen extends Activity {
                 startActivity(intent);
             }
 
-	        if (hubApplications != null && hubApplications.size() > 0) {
-	            HubApplicationModel hubApplication = hubApplications.get(0);
-	            if (hubApplication != null) {
-	                HubManagerHelper.getInstance().setApplicationHosted(hubApplication.getHost());
-	                HubManagerHelper.getInstance().setJSFApplicationServer(hubApplication.isJSF());
-	            }
+            if (hubApplications != null && hubApplications.size() > 0) {
+                HubApplicationModel hubApplication = hubApplications.get(0);
+                if (hubApplication != null) {
+                    HubManagerHelper.getInstance().setApplicationHosted(hubApplication.getHost());
+                    HubManagerHelper.getInstance().setJSFApplicationServer(hubApplication.isJSF());
+                }
                 Intent intent = null;
                 if(hasAppSettings)
                     intent = ApplicationSettingsController.getInstance().getFirstActivity(this, false);
                 else
                     intent = new Intent(this, LoginActivity.class);
 
-	            if (hubApplication != null && intent.getComponent().getClassName().equals(LoginActivity.class.getName())) {
-	                intent.putExtra(LoginActivity.KEY_INFRASTRUCTURE_NAME, hubApplication.getName());
+                if (hubApplication != null && intent.getComponent().getClassName().equals(LoginActivity.class.getName())) {
+                    intent.putExtra(LoginActivity.KEY_INFRASTRUCTURE_NAME, hubApplication.getName());
                     boolean autoLogin = hubApplication.getUserName() != null && !hubApplication.getUserName().isEmpty()&&
-                                        hubApplication.getPassword() != null && !hubApplication.getPassword().isEmpty();
-	                intent.putExtra(LoginActivity.KEY_AUTOMATICALLY_LOGIN, autoLogin);
-	            }
-	            startActivity(intent);
-	        }
+                            hubApplication.getPassword() != null && !hubApplication.getPassword().isEmpty();
+                    intent.putExtra(LoginActivity.KEY_AUTOMATICALLY_LOGIN, autoLogin);
+                }
+                startActivity(intent);
+            }
             else{
                 if(hasAppSettings){
                     Intent intent = ApplicationSettingsController.getInstance().getFirstActivity(this, false);
@@ -215,9 +211,9 @@ public class SplashScreen extends Activity {
                 }
             }
 
-	    }
+        }
         finish();
     }
 
-          
+
 }
